@@ -10,8 +10,7 @@
   "homepage": "http://foundation.zurb.com",
   "dependencies": {
     "foundation-sites": "~6.3.0",
-    "motion-ui": "~1.2.2",
-    "angular": "^1.6.1"
+    "motion-ui": "~1.2.2"
   },
   "ignore": [
     "**/.*",

@@ -6,6 +6,7 @@
  * instead attached to a filter or action hook.
  */
 
+require get_template_directory() . '/app/app.component.php';
 // require get_template_directory() . '/etc/projects/projects.php';
 // require get_template_directory() . '/etc/members/members.php';
 
@@ -21,10 +22,12 @@ function mtf_setup() {
 	 * Make theme available for translation.
 	 * Translations can be filed in the /languages/ directory.
 	 */
-	load_theme_textdomain( 'mtf', get_template_directory() . '/languages' );
+	load_theme_textdomain( 'mtf' );
 
 	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
+
+    // disable comments feed
     add_filter( 'feed_links_show_comments_feed', 'return_false' ); 
 
 	/*
@@ -56,19 +59,20 @@ function mtf_setup() {
 	) );
 
 	/*
-	 * This theme styles the visual editor to resemble the theme style,
-	 * specifically font, colors, icons, and column width.
+	 * Enable support for Post Formats.
 	 */
-	add_editor_style( array( 'css/editor-style.css' ) );
+	add_theme_support( 'post-formats', array(
+		'aside',
+		'image',
+		'video',
+		'quote',
+		'link',
+		'gallery',
+		'audio',
+	) );
 
-	// Indicate widget sidebars can use selective refresh in the Customizer.
-	add_theme_support( 'customize-selective-refresh-widgets' );
-	
-	// Ready for WooCommerce
-    add_theme_support( 'woocommerce' );
-	
 	// Allow theme customizations
-	add_theme_support( 'custom-background', array( 'wp-head-callback' => null ) );
+	add_theme_support( 'custom-background', array( 'wp-head-callback' => 'return_false' ) );
 	add_theme_support( 'custom-logo' );
 	function change_logo_class( $html ) {
 	
@@ -79,20 +83,17 @@ function mtf_setup() {
 	}
 	add_filter( 'get_custom_logo', 'change_logo_class' );	
 
-	// All actions related to emojis
-	remove_action( 'admin_print_styles', 'print_emoji_styles' );
-	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
-	remove_action( 'wp_print_styles', 'print_emoji_styles' );
-	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
-	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
-	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+	/*
+	 * This theme styles the visual editor to resemble the theme style,
+	 * specifically font, colors, icons, and column width.
+	 */
+	add_editor_style( array( 'css/editor-style.css' ) );
+
+	// Indicate widget sidebars can use selective refresh in the Customizer.
+	add_theme_support( 'customize-selective-refresh-widgets' );
 	
-	// Filter to remove TinyMCE emojis
-	add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
-	
-	// Remove generator tags
-	remove_action('wp_head', 'wp_generator');
+	// Ready for WooCommerce
+    add_theme_support( 'woocommerce' );
 }
 endif; // mtf_setup
 add_action( 'after_setup_theme', 'mtf_setup' );
@@ -106,8 +107,6 @@ function mtf_javascript_detection() {
 	echo "<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>\n";
 }
 add_action( 'wp_head', 'mtf_javascript_detection', 0 );
-
-remove_action( 'wp_head', 'wp_resource_hints', 2 );
 
 function hex2rgb($hex, $a = 1) {
    $hex = str_replace("#", "", $hex);
@@ -131,26 +130,24 @@ function hex2rgb($hex, $a = 1) {
  */
 function mtf_scripts() {
 	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'mtf-fonts', get_template_directory_uri() . '/fonts/fonts.css', array( 'mtf-style' ) );
+	wp_enqueue_style( 'mtf-fonts', get_theme_file_uri( '/fonts/fonts.css' ), array( 'mtf-style' ) );
 
 	// Theme stylesheet.
 	wp_enqueue_style( 'mtf-style', get_stylesheet_uri() );
 
-	// Load the Internet Explorer specific stylesheet.
-	wp_enqueue_style( 'mtf-ie', get_template_directory_uri() . '/css/ie.css', array( 'mtf-style' ) );
-	wp_style_add_data( 'mtf-ie', 'conditional', 'lt IE 10' );
+	// Load the Internet Explorer 9 specific stylesheet, to fix display issues in the Customizer.
+	if ( is_customize_preview() ) {
+		wp_enqueue_style( 'mtf-ie9', get_theme_file_uri( '/assets/css/ie9.css' ), array( 'mtf-style' ), '1.0' );
+		wp_style_add_data( 'mtf-ie9', 'conditional', 'IE 9' );
+	}
 
 	// Load the Internet Explorer 8 specific stylesheet.
-	wp_enqueue_style( 'mtf-ie8', get_template_directory_uri() . '/css/ie8.css', array( 'mtf-style' ) );
+	wp_enqueue_style( 'mtf-ie8', get_theme_file_uri( '/assets/css/ie8.css' ), array( 'mtf-style' ), '1.0' );
 	wp_style_add_data( 'mtf-ie8', 'conditional', 'lt IE 9' );
 
-	// Load the Internet Explorer 7 specific stylesheet.
-	wp_enqueue_style( 'mtf-ie7', get_template_directory_uri() . '/css/ie7.css', array( 'mtf-style' ) );
-	wp_style_add_data( 'mtf-ie7', 'conditional', 'lt IE 8' );
-
 	// Load the html5 shiv.
-	wp_enqueue_script( 'mtf-html5', get_template_directory_uri() . '/js/html5.js', array(), '3.7.3' );
-	wp_script_add_data( 'mtf-html5', 'conditional', 'lt IE 9' );
+	wp_enqueue_script( 'html5', get_theme_file_uri( '/assets/js/html5.js' ), array(), '3.7.3' );
+	wp_script_add_data( 'html5', 'conditional', 'lt IE 9' );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -159,11 +156,9 @@ function mtf_scripts() {
 	//Remove donation styles
 	wp_dequeue_style( 'hm-wcdon-frontend-styles' );
 
-	wp_enqueue_script( 'foundation', get_template_directory_uri() . '/bower_components/foundation-sites/dist/foundation.min.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'foundation', get_theme_file_uri( '/bower_components/foundation-sites/dist/foundation.min.js' ), array( 'jquery' ), null, true );
 
-	wp_enqueue_script( 'mtf-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), null, true );
-
-	wp_enqueue_script( 'mtf-middleware', get_template_directory_uri() . '/js/app.js', array( 'jquery' ), null, true );
+	wp_enqueue_script( 'mtf-script', get_theme_file_uri( '/js/functions.js' ), array( 'jquery' ), null, true );
 
 	wp_localize_script( 'mtf-script', 'screenReaderText', array(
 		'expand'   => __( 'expand child menu', 'mtf' ),
@@ -172,13 +167,57 @@ function mtf_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'mtf_scripts' );
 
-/**
- * Optimize WooCommerce Scripts
- * Remove WooCommerce Generator tag, styles, and scripts from non WooCommerce pages.
- */
-function mtf_child_manage_woocommerce_styles() {
+function mtf_app() {
+	wp_enqueue_script( 'IE_polyfill', get_theme_file_uri( '/node_modules/core-js/client/shim.min.js' ) );
+	
+	wp_enqueue_script( 'zone_js', get_theme_file_uri( '/node_modules/zone.js/dist/zone.js' ) );
+	wp_enqueue_script( 'reflect-metadata', get_theme_file_uri( '/node_modules/reflect-metadata/Reflect.js' ) );
+	
+	wp_enqueue_script( 'rxjs', get_theme_file_uri( '/node_modules/rxjs/bundles/Rx.js' ) );
+	wp_enqueue_script( 'angular_core', get_theme_file_uri( '/node_modules/@angular/core/bundles/core.umd.js' ) );
+	wp_enqueue_script( 'angular_common', get_theme_file_uri( '/node_modules/@angular/common/bundles/common.umd.js' ) );
+	wp_enqueue_script( 'angular_compiler', get_theme_file_uri( '/node_modules/@angular/compiler/bundles/compiler.umd.js' ) );
+	wp_enqueue_script( 'angular_http', get_theme_file_uri( '/node_modules/@angular/http/bundles/http.umd.js' ) );
+	wp_enqueue_script( 'angular_platform', get_theme_file_uri( '/node_modules/@angular/platform-browser/bundles/platform-browser.umd.js' ) );
+	wp_enqueue_script( 'angular_dynamic_browser', get_theme_file_uri( '/node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js' ) );
+
+	wp_enqueue_script( 'mtf_app_component', get_theme_file_uri( '/app/app.component.ts' ) );
+	wp_enqueue_script( 'mtf_app_module', get_theme_file_uri( '/app/app.module.ts' ) );
+	wp_enqueue_script( 'mtf_app', get_theme_file_uri( '/app/main.ts' ) );
+	
+	wp_localize_script(
+		'mtf_app',
+		'angularPartials',
+		array(
+			'partials' => trailingslashit( get_theme_file_uri( 'app/' )),
+			)
+	);
+}
+add_action( 'wp_enqueue_scripts', 'mtf_app' );
+
+function return_false() {
+	return false;
+}
+
+function mtf_clean_up() {
 	//remove generator meta tag
 	remove_action( 'wp_head', array( $GLOBALS['woocommerce'], 'generator' ) );
+	remove_action( 'wp_head', 'wp_resource_hints', 2 );
+	
+	// All actions related to emojis
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+	
+	// Filter to remove TinyMCE emojis
+	add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
+	
+	// Remove generator tags
+	remove_action('wp_head', 'wp_generator');
 
 	//first check that woo exists to prevent fatal errors
 	if ( function_exists( 'is_woocommerce' ) ) {
@@ -210,4 +249,4 @@ function mtf_child_manage_woocommerce_styles() {
 		}
 	}
 }
-add_action( 'wp_enqueue_scripts', 'mtf_child_manage_woocommerce_styles', 99 );
+add_action( 'wp_enqueue_scripts', 'mtf_clean_up', 99 );

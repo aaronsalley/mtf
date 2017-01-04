@@ -17,6 +17,7 @@ Copyright © Aaron Salley Design
 @import 'settings';
 @import 'foundation';
 @import 'motion-ui';
+@import 'horizontalAccordion';
 
 @include foundation-global-styles;
 @include foundation-grid;
@@ -25,7 +26,8 @@ Copyright © Aaron Salley Design
 @include foundation-button;
 // @include foundation-forms;
 // @include foundation-range-input;
-@include foundation-accordion;
+// @include foundation-accordion;
+@include foundation-horizontal-accordion;
 // @include foundation-accordion-menu;
 // @include foundation-badge;
 // @include foundation-breadcrumbs;
@@ -57,27 +59,63 @@ Copyright © Aaron Salley Design
 // @include foundation-tooltip;
 // @include foundation-top-bar;
 // @include foundation-visibility-classes;
-// @include foundation-float-classes;
+@include foundation-float-classes;
 // @include foundation-flex-classes;
 
 // @include motion-ui-transitions;
 // @include motion-ui-animations;
 
+@import 'core';
+@import 'animate';
+// @import 'autoheight';
+// @import 'lazyload';
+// @import 'video';
+
 // Mixins
 
 // Template Parts
+.site {
+	.container {
+		@include grid-row;
+	}
+	
+	.carousel {
+		@extend .owl-carousel;
+	}
+	
+	.section-title {
+		text-transform: uppercase;
+	}
+}
+
 .header {
 	@include grid-row;
+	@include clearfix;
 	
 	.mtf-logo {
+		width: rem-calc(357);
+		float: left;
 	}
 	
-	menu.user {
+	.navigation {
 		@include grid-column(6);
-	}
-	
-	.site-nav {
-		@include grid-column(6);
+		
+		.site {
+			.menu {
+				@include menu-base;
+				@extend .align-right;
+			}
+		}
+		
+		.user {
+			padding: 0;
+			text-align: right;
+			
+			.menu {
+				@include menu-simple;
+				display: inline-block;
+			}
+		}
 	}
 }
 
@@ -86,16 +124,38 @@ Copyright © Aaron Salley Design
 }
 
 .footer {
-	@include grid-row;
-	
+	background-color: black;
+	color: white;
+
+	a {
+		color: inherit;
+	}
+
 	.site-nav {
+		@include grid-column(9);
 		@include menu-base;
 
 		.menu {
 			@include menu-simple;
 			
-			& > .menu-item {
-				@include menu-direction( 'vertical' );
+			.menu-item {
+				vertical-align: top;
+				text-transform: uppercase;
+			}
+			
+			.sub-menu {
+				@include menu-direction(vertical);
+				margin-left: 0;
+			}
+		}
+	}
+	
+	.widgets {
+		@include grid-column(3);
+		
+		.widget {
+			.title {
+				text-transform: uppercase;
 			}
 		}
 	}
@@ -105,25 +165,49 @@ Copyright © Aaron Salley Design
 .home .content {
 	
 	#mission {
-		@include accordion-container;
-		transform: rotate(-90deg);
-		max-width: 36rem;
+		@include horizontal-accordion-container;
 		
 		& > * {
-			@include accordion-item;
+			@include horizontal-accordion-item;
 			
 			.lead {
-				@include accordion-title;
+				@include horizontal-accordion-title;
 			}
 			
 			.excerpt {
-				@include accordion-content;
+				@include horizontal-accordion-content;
 			}
 		}
 	}
 	
 	#events {
-		@include grid-column(12);
+		.carousel {
+			@include grid-column(12);
+			
+			.event {
+				position: relative;
+				text-align: center;
+				
+				.image {
+					position: relative;
+					
+					&:before {
+						content: '';
+						display: block;
+						padding-top: 100%;
+						background-color: grey;
+					}
+					
+					img {
+						position: absolute;
+						top: 0;
+						right: 0;
+						bottom: 0;
+						left: 0;					
+					}
+				}
+			}
+		}
 	}
 	
 	#blog {

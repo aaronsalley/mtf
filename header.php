@@ -10,20 +10,30 @@
 
 <body <?php body_class( 'site' ); ?>>
 	<header class="header">
-		<a href="" class="mtf-logo"><?php the_custom_logo(); ?></a>
-		<menu class="user">
-			<span><?php echo 'Welcome back, {{$user name}}!'; ?></span>
+		<div class="branding">
+			<a href="" class="mtf-logo"><?php the_custom_logo(); ?></a>
+		</div>
+		<nav class="navigation">
+			<menu class="user">
+				<?php if( is_user_logged_in() ) {
+					$user = wp_get_current_user();
+					
+					echo "<span>Welcome back, {$user->display_name}!</span>";
+				} else {
+					echo _e( 'Sign up or log in!', 'mtf' );
+				} ?>
+				<?php wp_nav_menu( array(
+					'container'			=> '',
+					'container_class'	=> 'user',
+					'theme_location'	=> 'action'
+				)); ?>
+			</menu>
 			<?php wp_nav_menu( array(
-				'container'			=> '',
-				'container_class'	=> 'user',
-				'theme_location'	=> 'action'
+				'container'			=> 'nav',
+				'container_class'	=> 'site',
+				'theme_location'	=> 'main'
 			)); ?>
-		</menu>
-		<?php wp_nav_menu( array(
-			'container'			=> 'nav',
-			'container_class'	=> 'site-nav',
-			'theme_location'	=> 'main'
-		)); ?>
+		</nav>
 	</header>
 	
 	<div class="content">

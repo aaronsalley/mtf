@@ -42,6 +42,16 @@ function mtf_setup() {
 		'action' => __( 'Action Menu', 'mtf' ),
 	) );
 	
+	// And sidebar widgets in the footer.
+	register_sidebar( array(
+		'name' => __( 'Footer widgets', 'mtf' ),
+		'id' => 'footer-widgets',
+		'before_widget' => '<div class="widget">',
+		'after_widget'  => '</div>',
+		'before_title' => '<h4 class="title">',
+		'after_title' => '</h4>'
+	) );
+	
 	/*
 	 * Switch default core markup for search form, comment form, and comments
 	 * to output valid HTML5.
@@ -126,23 +136,23 @@ function hex2rgb($hex, $a = 1) {
  */
 function mtf_scripts() {
 	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'mtf-fonts', get_theme_file_uri( '/fonts/fonts.css' ), array( 'mtf-style' ) );
+	wp_enqueue_style( 'mtf-fonts', get_theme_file_uri( '/dist/fonts/fonts.css' ), array( 'mtf-style' ) );
 
 	// Theme stylesheet.
 	wp_enqueue_style( 'mtf-style', get_stylesheet_uri() );
 
 	// Load the Internet Explorer 9 specific stylesheet, to fix display issues in the Customizer.
 	if ( is_customize_preview() ) {
-		wp_enqueue_style( 'mtf-ie9', get_theme_file_uri( '/css/ie9.css' ), array( 'mtf-style' ), '1.0' );
+		wp_enqueue_style( 'mtf-ie9', get_theme_file_uri( '/dist/css/ie9.css' ), array( 'mtf-style' ), '1.0' );
 		wp_style_add_data( 'mtf-ie9', 'conditional', 'IE 9' );
 	}
 
 	// Load the Internet Explorer 8 specific stylesheet.
-	wp_enqueue_style( 'mtf-ie8', get_theme_file_uri( '/css/ie8.css' ), array( 'mtf-style' ), '1.0' );
+	wp_enqueue_style( 'mtf-ie8', get_theme_file_uri( '/dist/css/ie8.css' ), array( 'mtf-style' ), '1.0' );
 	wp_style_add_data( 'mtf-ie8', 'conditional', 'lt IE 9' );
 
 	// Load the html5 shiv.
-	wp_enqueue_script( 'html5', get_theme_file_uri( '/js/html5.js' ), array(), '3.7.3' );
+	wp_enqueue_script( 'html5', get_theme_file_uri( '/dist/js/html5.js' ), array(), '3.7.3' );
 	wp_script_add_data( 'html5', 'conditional', 'lt IE 9' );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -152,11 +162,7 @@ function mtf_scripts() {
 	//Remove donation styles
 	wp_dequeue_style( 'hm-wcdon-frontend-styles' );
 
-	wp_enqueue_script( 'foundation', get_theme_file_uri( '/bower_components/foundation-sites/dist/js/foundation.min.js' ), array( 'jquery' ), null, true );
-
-	wp_enqueue_script( 'HorizontalAccordion', get_theme_file_uri( '/js/hAccord.js' ), array( 'jquery' ), null, true );
-
-	wp_enqueue_script( 'mtf-script', get_theme_file_uri( '/js/functions.js' ), array( 'jquery' ), null, true );
+	wp_enqueue_script( 'mtf-script', get_theme_file_uri( '/dist/js/scripts.min.js' ), array( 'jquery' ), null, true );
 
 	wp_localize_script( 'mtf-script', 'screenReaderText', array(
 		'expand'   => __( 'expand child menu', 'mtf' ),

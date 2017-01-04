@@ -1,10 +1,22 @@
 (function( $ ) {
 	$(document).foundation();
 	
-	var elem = new Foundation.HorizontalAccordion( $('#mission'), {
-		tab: 'article',
-		content: '.excerpt'		
+	$('.carousel').owlCarousel({
+		responsive: {
+			0 : {
+				items: 4,
+				margin: 10
+			}
+		},
+		itemElement: 'article',
+		loop: true
 	});
-	$('#mission').height(parseInt( $('#mission').closest('section').width() ) + 'px');
-	$('#mission').find('.excerpt').height(parseInt( $('section').width() - $('#mission article').height() ) + 'px')
+	
+	// Initalize Foundation components
+	var elem = new Foundation.DropdownMenu( $('.header .navigation .site') );
+
+	var elem = new Foundation.horizontalAccordion( $('#mission'), {
+		accordionItem: 'article',
+		tabContent: '.excerpt'		
+	});
 })(jQuery);

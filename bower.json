@@ -10,8 +10,7 @@
   "homepage": "http://foundation.zurb.com",
   "dependencies": {
     "foundation-sites": "~6.3.0",
-    "motion-ui": "~1.2.2",
-    "owl.carousel": "^2.2.0"
+    "motion-ui": "~1.2.2"
   },
   "ignore": [
     "**/.*",
@@ -20,5 +19,10 @@
     "test",
     "tests"
   ],
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "colourBrightness.js": "https://github.com/jamiebrittain/colourBrightness.js.git",
+    "owl.carousel": "^2.2.0",
+    "background-check": "https://github.com/kennethcachia/background-check.git#^1.2.2"
+  }
 }

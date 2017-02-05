@@ -7,6 +7,7 @@
  */
 
 if ( ! function_exists( 'mtf_setup' ) ) :
+require_once( 'etc/custom-post-types.php' );
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -40,6 +41,7 @@ function mtf_setup() {
 	register_nav_menus( array(
 		'main' => __( 'Primary Navigation Menu', 'mtf' ),
 		'action' => __( 'Action Menu', 'mtf' ),
+		'social' => __( 'Social Media', 'mtf' )
 	) );
 	
 	// And sidebar widgets in the footer.
@@ -48,8 +50,8 @@ function mtf_setup() {
 		'id' => 'footer-widgets',
 		'before_widget' => '<div class="widget">',
 		'after_widget'  => '</div>',
-		'before_title' => '<h4 class="title">',
-		'after_title' => '</h4>'
+		'before_title' => '<h5 class="title">',
+		'after_title' => '</h5>'
 	) );
 	
 	/*
@@ -61,7 +63,7 @@ function mtf_setup() {
 		'comment-form',
 		'comment-list',
 		'gallery',
-		'caption',
+		'caption'
 	) );
 
 	/*
@@ -74,7 +76,7 @@ function mtf_setup() {
 		'quote',
 		'link',
 		'gallery',
-		'audio',
+		'audio'
 	) );
 
 	// Allow theme customizations
@@ -100,9 +102,57 @@ function mtf_setup() {
 	
 	// Ready for WooCommerce
     add_theme_support( 'woocommerce' );
+
+	// Create Work post type
+	new custom_post_type( 'project', null, null, array(
+		'menu_icon'	=> 'dashicons-star-filled',
+        'hierarchical' => true,
+        'supports' => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'custom-fields', 'excerpt' )
+	) );
+	
+	new custom_taxonomy( 'project_cat', 'category', 'categories', 'project', array(
+		'hierarchical' => true,
+        'show_admin_column'  => true
+	) );
+	new custom_taxonomy( 'project_tag', 'project', 'tags', 'tag', array(
+        'show_admin_column'  => true
+	) );
+	
+	define ( 'BP_ENABLE_ROOT_PROFILES', true );
 }
 endif; // mtf_setup
 add_action( 'after_setup_theme', 'mtf_setup' );
+
+function mtf_change_role_name() {
+	global $wp_roles;
+	if ( ! isset( $wp_roles ) )
+	$wp_roles = new WP_Roles();
+	$wp_roles->roles['editor']['name'] = 'Staff';
+	$wp_roles->role_names['editor'] = 'Staff';
+	$wp_roles->roles['contributor']['name'] = 'Member';
+	$wp_roles->role_names['contributor'] = 'Member';
+}
+add_action('init', 'mtf_change_role_name');
+
+function mtf_custom_group_types() {
+    bp_groups_register_group_type( 'membership', array(
+        'labels' => array(
+            'name' => 'Membership'
+        ),
+        'show_in_create_screen' => true,
+        'show_in_list' => true,
+    ) );
+
+    bp_groups_register_group_type( 'projects', array(
+        'labels' => array(
+            'name' => 'Projects',
+            'single_name' => 'Project'
+        ),
+        'show_in_create_screen' => true,
+        'show_in_list' => true,
+    ) );
+}
+add_action( 'bp_groups_register_group_types', 'mtf_custom_group_types' );
 
 /**
  * Handles JavaScript detection.
@@ -136,23 +186,23 @@ function hex2rgb($hex, $a = 1) {
  */
 function mtf_scripts() {
 	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'mtf-fonts', get_theme_file_uri( '/dist/fonts/fonts.css' ), array( 'mtf-style' ) );
+	wp_enqueue_style( 'mtf-fonts', get_theme_file_uri( '/src/fonts/fonts.css' ), array( 'mtf-style' ) );
 
 	// Theme stylesheet.
 	wp_enqueue_style( 'mtf-style', get_stylesheet_uri() );
 
 	// Load the Internet Explorer 9 specific stylesheet, to fix display issues in the Customizer.
 	if ( is_customize_preview() ) {
-		wp_enqueue_style( 'mtf-ie9', get_theme_file_uri( '/dist/css/ie9.css' ), array( 'mtf-style' ), '1.0' );
+		wp_enqueue_style( 'mtf-ie9', get_theme_file_uri( '/src/css/ie9.css' ), array( 'mtf-style' ), '1.0' );
 		wp_style_add_data( 'mtf-ie9', 'conditional', 'IE 9' );
 	}
 
 	// Load the Internet Explorer 8 specific stylesheet.
-	wp_enqueue_style( 'mtf-ie8', get_theme_file_uri( '/dist/css/ie8.css' ), array( 'mtf-style' ), '1.0' );
+	wp_enqueue_style( 'mtf-ie8', get_theme_file_uri( '/src/css/ie8.css' ), array( 'mtf-style' ), '1.0' );
 	wp_style_add_data( 'mtf-ie8', 'conditional', 'lt IE 9' );
 
 	// Load the html5 shiv.
-	wp_enqueue_script( 'html5', get_theme_file_uri( '/dist/js/html5.js' ), array(), '3.7.3' );
+	wp_enqueue_script( 'html5', get_theme_file_uri( '/js/html5.js' ), array(), '3.7.3' );
 	wp_script_add_data( 'html5', 'conditional', 'lt IE 9' );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -162,11 +212,12 @@ function mtf_scripts() {
 	//Remove donation styles
 	wp_dequeue_style( 'hm-wcdon-frontend-styles' );
 
-	wp_enqueue_script( 'mtf-script', get_theme_file_uri( '/dist/js/scripts.min.js' ), array( 'jquery' ), null, true );
+	wp_enqueue_script( 'background-check', get_theme_file_uri( '/bower_components/background-check/background-check.min.js' ), array( 'jquery' ), null, true );
+	wp_enqueue_script( 'mtf-script', get_theme_file_uri( '/js/scripts.min.js' ), array( 'jquery' ), null, true );
 
 	wp_localize_script( 'mtf-script', 'screenReaderText', array(
 		'expand'   => __( 'expand child menu', 'mtf' ),
-		'collapse' => __( 'collapse child menu', 'mtf' ),
+		'collapse' => __( 'collapse child menu', 'mtf' )
 	) );
 }
 add_action( 'wp_enqueue_scripts', 'mtf_scripts' );
@@ -174,6 +225,16 @@ add_action( 'wp_enqueue_scripts', 'mtf_scripts' );
 function return_false() {
 	return false;
 }
+
+function events_modify_category() {
+    $tribe_events_cat = get_taxonomy( 'tribe_events_cat' );
+	$singular = 'program';
+	$plural = 'programs';
+    $tribe_events_cat->rewrite['slug'] = $plural;
+    
+    register_taxonomy( 'tribe_events_cat', 'tribe_events', (array) $tribe_events_cat );
+}
+add_action( 'init', 'events_modify_category', 11 );
 
 function mtf_clean_up() {
 	//remove generator meta tag
@@ -226,3 +287,17 @@ function mtf_clean_up() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'mtf_clean_up', 99 );
+
+function mtf_ga() {
+	echo "<script type='text/javascript'>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-91342172-1', 'auto');
+	  ga('send', 'pageview');
+	
+	</script>";
+}
+add_action( 'wp_footer', 'mtf_ga' );

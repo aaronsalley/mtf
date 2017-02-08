@@ -10,7 +10,7 @@
 	<article <?php post_class( $i == 1 ? 'is-active' : '' ); ?>>
 		<div class="background" style="background-image:url(<?php the_post_thumbnail_url(); ?>)"></div>
 		<a class="lead" href="#"><h3><?php the_title(); ?></h3></a>
-		<div class="excerpt"><a href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a></div>
+		<content class="excerpt"><a href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a></content>
 	</article>
 	<?php 
 		$i++; endwhile; endif; wp_reset_postdata();
@@ -35,8 +35,8 @@
 		<article class="<?php echo $class; ?>">
 			<a href="<?php the_permalink(); ?>">
 				<div class="image"><img alt="<?php the_title(); ?>" src="<?php the_post_thumbnail_url( 'full' ); ?>"/></div>
-				<h4 class="time"><?php echo $this_date; ?> @ <?php echo $this_time; ?></h4>
-				<h3 class="title"><?php the_title(); ?></h3>
+				<h3 class="time"><?php echo $this_date; ?> @ <?php echo $this_time; ?></h3>
+				<h4 class="title"><?php the_title(); ?></h4>
 			</a>
 		</article>
 		<?php 
@@ -56,10 +56,12 @@
 	?>
 	<article <?php post_class(); ?>>
 		<header class="header">
-			<h3 class="title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-			<h4 class="categories"><?php the_terms( $post->ID, 'category' ); ?></h4>
+			<h4 class="title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
+			<h5 class="categories"><?php the_terms( $post->ID, 'category' ); ?></h5>
 		</header>
-		<?php the_excerpt(); ?>
+		<content class="excerpt">
+			<?php the_excerpt(); ?>
+		</content>
 		<footer><span class="related"><?php the_terms( $post->ID, 'post_tag', '', ',', ' | ' ); ?></span><span class="date"><?php the_date(); ?></span></footer>
 	</article>
 	<?php endwhile; endif; wp_reset_postdata(); ?>
@@ -74,7 +76,9 @@
 	if( $support->have_posts() ) : while( $support->have_posts() ) : $support->the_post(); ?>
 	<article <?php post_class(); ?>>
 		<h2 class="title"><?php the_title(); ?></h3>
-		<?php the_excerpt(); ?>
+		<content class="excerpt">
+			<?php the_excerpt(); ?>
+		</content>
 	</article>
 	<?php endwhile; endif; wp_reset_postdata(); ?>
 </section>
@@ -88,7 +92,9 @@
 	if( $volunteer->have_posts() ) : while( $volunteer->have_posts() ) : $volunteer->the_post(); ?>
 	<article <?php post_class(); ?>>
 		<h2 class="title"><?php the_title(); ?></h3>
-		<?php the_excerpt(); ?>
+		<content class="excerpt">
+			<?php the_excerpt(); ?>
+		</content>
 	</article>
 	<?php endwhile; endif; wp_reset_postdata(); ?>
 </section>

@@ -1,6 +1,6 @@
 	</div>
 	
-	<footer id="footer">
+	<footer class="footer">
 		<div class="container">
 			<?php wp_nav_menu( array(
 				'container'			=> 'nav',

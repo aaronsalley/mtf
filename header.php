@@ -9,18 +9,18 @@
 </head>
 
 <body <?php body_class( 'site' ); ?>>
-	<header id="header">
-		<menu class="user">
+	<header class="header">
+		<menu class="action">
 			<?php if( is_user_logged_in() ) {
 				$user = wp_get_current_user();
-				
-				echo "<span>Welcome back, {$user->display_name}!</span>";
+				echo "<a href='{$url}'>Welcome back, {$user->display_name}!</a>";
 			} else {
-				echo _e( 'Sign up or log in!', 'mtf' );
+				$url = wp_registration_url();
+				echo _e( "<a href='{$url}'>Sign up or log in!</a>", 'mtf' );
 			} ?>
 			<?php wp_nav_menu( array(
 				'container'			=> '',
-				'container_class'	=> 'user',
+				'container_class'	=> 'action',
 				'theme_location'	=> 'action'
 			)); ?>
 		</menu>
@@ -32,4 +32,11 @@
 		)); ?>
 	</header>
 	
-	<div id="content" class="<?php echo $post->post_name; ?>">
+	<?php 
+		if ( $post->post_name !=='' ) {
+			$id = $post->post_name;
+		} else {
+			$id = 'profile';
+		}
+	?>
+	<div id="<?php echo $id; ?>" class="content">

@@ -8,6 +8,7 @@
 
 if ( ! function_exists( 'mtf_setup' ) ) :
 require_once( 'etc/custom-post-types.php' );
+require_once( 'etc/app.php' );
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -103,56 +104,62 @@ function mtf_setup() {
 	// Ready for WooCommerce
     add_theme_support( 'woocommerce' );
 
-	// Create Work post type
-	new custom_post_type( 'project', null, null, array(
+	// Create Podcasts post type
+	new custom_post_type( 'podcast', null, null, array(
 		'menu_icon'	=> 'dashicons-star-filled',
+        'public' => false,
+        'publicly_queryable' => true,
+        'show_ui' => true,
+        'supports' => array( 'title', 'editor', 'custom-fields' )
+	) );
+	
+	new custom_taxonomy( 'podcast_channel', 'podcast', 'channels', 'channel', array(
+		'hierarchical' => true,
+        'show_admin_column'  => true
+	) );
+	new custom_taxonomy( 'podcast_tag', 'podcast', 'tags', 'tag', array(
+        'show_admin_column'  => true
+	) );
+
+	// Create Projects post type
+	new custom_post_type( 'project', null, null, array(
+		'menu_icon'	=> 'dashicons-image-filter',
         'hierarchical' => true,
         'supports' => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'custom-fields', 'excerpt' )
 	) );
 	
-	new custom_taxonomy( 'project_cat', 'category', 'categories', 'project', array(
+	new custom_taxonomy( 'project_cat', 'project', 'categories', 'category', array(
 		'hierarchical' => true,
         'show_admin_column'  => true
 	) );
 	new custom_taxonomy( 'project_tag', 'project', 'tags', 'tag', array(
         'show_admin_column'  => true
 	) );
-	
-	define ( 'BP_ENABLE_ROOT_PROFILES', true );
 }
 endif; // mtf_setup
 add_action( 'after_setup_theme', 'mtf_setup' );
 
-function mtf_change_role_name() {
-	global $wp_roles;
-	if ( ! isset( $wp_roles ) )
-	$wp_roles = new WP_Roles();
-	$wp_roles->roles['editor']['name'] = 'Staff';
-	$wp_roles->role_names['editor'] = 'Staff';
-	$wp_roles->roles['contributor']['name'] = 'Member';
-	$wp_roles->role_names['contributor'] = 'Member';
+function podcast_feed_rss2( $for_comments ) {
+    $rss_template = get_template_directory() . '/etc/feed-podcast-rss2.php';
+    if( get_query_var( 'post_type' ) == 'podcast' and file_exists( $rss_template ) )
+        load_template( $rss_template );
+    else
+        do_feed_rss2( $for_comments ); // Call default function
 }
-add_action('init', 'mtf_change_role_name');
+remove_all_actions( 'do_feed_rss2' );
+add_action( 'do_feed_rss2', 'podcast_feed_rss2', 10, 1 );
 
-function mtf_custom_group_types() {
-    bp_groups_register_group_type( 'membership', array(
-        'labels' => array(
-            'name' => 'Membership'
-        ),
-        'show_in_create_screen' => true,
-        'show_in_list' => true,
-    ) );
-
-    bp_groups_register_group_type( 'projects', array(
-        'labels' => array(
-            'name' => 'Projects',
-            'single_name' => 'Project'
-        ),
-        'show_in_create_screen' => true,
-        'show_in_list' => true,
-    ) );
+function mtf_feeds() {
+	$post_types = array('podcast');
+	foreach( $post_types as $post_type ) {
+	    $feed = get_post_type_archive_feed_link( $post_type );
+	    if ( $feed === '' || !is_string( $feed ) ) {
+	        $feed =  get_bloginfo( 'rss2_url' ) . "?post_type=$post_type";
+	    }
+	    printf(__('<link rel="%1$s" type="%2$s" title="%3$s" href="%4$s" />'), "alternate", "application/rss+xml", get_bloginfo()." &#8211; Podcasts", $feed);
+	}
 }
-add_action( 'bp_groups_register_group_types', 'mtf_custom_group_types' );
+add_action( 'wp_head', 'mtf_feeds', 1 );
 
 /**
  * Handles JavaScript detection.
@@ -288,7 +295,12 @@ function mtf_clean_up() {
 }
 add_action( 'wp_enqueue_scripts', 'mtf_clean_up', 99 );
 
-function mtf_ga() {
+function mtf_google() {
+	echo "<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MJC2VLF');</script>";
 	echo "<script type='text/javascript'>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -300,4 +312,18 @@ function mtf_ga() {
 	
 	</script>";
 }
-add_action( 'wp_footer', 'mtf_ga' );
+add_action( 'wp_head', 'mtf_google' );
+
+function my_upload_directory( $param ) {
+  $mydir          = '/headshots';
+  $param['path']  = $param['basedir'] . $mydir;
+  $param['url']   = $param['baseurl'] . $mydir;
+  return $param;
+}
+
+function my_acf_upload_prefilter( $errors, $file, $field ) {
+  // change the upload directory
+  add_filter('upload_dir', 'my_upload_directory');
+  return $errors;
+}
+add_filter('acf/upload_prefilter/name=headshot', 'my_acf_upload_prefilter');

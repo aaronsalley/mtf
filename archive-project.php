@@ -4,9 +4,9 @@
 		<div class="background" style="background-image:url(<?php the_post_thumbnail_url(); ?>)"></div>
 		<h1 class="title"><?php the_title(); ?></h1>
 	</header>
-	<div class="content">
+	<content class="content">
 		<?php the_content(); ?>
-	</div>
+	</content>
 	<footer class="footer">
 	</footer>
 <?php endwhile; endif; ?>

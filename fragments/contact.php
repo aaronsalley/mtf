@@ -14,9 +14,12 @@
 <section id="<?php echo $this_directory; ?>" class="members">
 	<h2 class="directory"><?php echo $directory_name; ?></h2>
 	<?php foreach ( $users->results as $user ) :
-	$user = $wpdb->get_row("SELECT c_id FROM " . $wpdb->prefix . "wc_crm_customer_list WHERE user_id = '$user->ID'");
-	$this_user = new WC_CRM_Customer($user->c_id);
+	$this_user = $wpdb->get_row("SELECT c_id FROM " . $wpdb->prefix . "wc_crm_customer_list WHERE user_id = '$user->ID'");
+	$this_user = new WC_CRM_Customer($this_user->c_id);
     $group_ids = $this_user->get_groups();
+
+    $peepso = new PeepSoUser($user->ID);
+
 	$groups = array();
 		foreach ( $group_ids as $id ) {
 			$groups[] = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "wc_crm_groups WHERE ID = '$id'");
@@ -26,7 +29,7 @@
 			?> 
 		<article class="member">
 			<a href="mailto:<?php echo $this_user->email; ?>">
-				<div class="headshot"><?php echo get_avatar(); ?></div>
+				<div class="headshot"><img class="avatar" src="<?php echo $peepso->get_avatar(true); ?>"/></div>
 				<h5 class="name"><?php echo $this_user->name; ?></h5>
 				<h5 class="position"><?php echo $this_user->title; ?></h5>
 				<h5 class="contact"><?php echo $this_user->email; ?></h5>

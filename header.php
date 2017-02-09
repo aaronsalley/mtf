@@ -33,7 +33,10 @@
 	</header>
 	
 	<?php 
-		if ( $post->post_name !=='' ) {
+		if ( is_archive() ) {
+			$label = get_queried_object()->labels->name;
+			$id = strtolower( str_replace(' ', '_', $label) );
+		} elseif ( $post->post_name !=='' ) {
 			$id = $post->post_name;
 		} else {
 			$id = 'profile';

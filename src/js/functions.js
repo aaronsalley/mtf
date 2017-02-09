@@ -26,4 +26,13 @@
 		  changeParent: true
 		});
 	}
+	
+/*
+	$('.filter').isotope({
+		getSortData: {
+			sort: '[data-sort]'
+		},
+		sortBy: 'sort'
+	});
+*/
 })(jQuery);

@@ -40,16 +40,17 @@ gulp.task('scripts', function() {
 		'bower_components/foundation-sites/dist/js/plugins/foundation.dropdownMenu.js',
 		'bower_components/owl.carousel/dist/owl.carousel.js',
 		'bower_components/colourBrightness.js/jquery.colourbrightness.js',
+		'bower_components/isotope/dist/isotope.pkgd.js',
 		'src/js/*.js'
 		])
         .pipe(babel({
             presets: ['es2015']
         }))
         .pipe(concat('scripts.js'))
-        .pipe(gulp.dest('js'))
+        .pipe(gulp.dest('dist/js'))
         .pipe(rename('scripts.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('js'));
+        .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('scripts-watch', ['scripts'], function() {

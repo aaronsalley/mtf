@@ -10,7 +10,7 @@
 			<aside class="widgets">
 				<?php dynamic_sidebar( 'footer-widgets' ); ?>
 			</aside>
-			<img class="mtf-logo" src="<?php echo get_theme_file_uri() . '/src/img/MTF-Script-Red.png'; ?>" alt="MTF logo with script" />
+			<img class="mtf-logo" src="<?php echo get_theme_file_uri() . '/dist/img/MTF-Script-Red.png'; ?>" alt="MTF logo with script" />
 		</div>
 	</footer>
 	<?php wp_footer(); ?>

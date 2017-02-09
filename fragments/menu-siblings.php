@@ -1,7 +1,16 @@
 <?php
 	global $post;
 	
-	$menu_class = $post->post_name . '-pages';
+	if ( is_archive() ) {
+		$label = get_queried_object()->labels->singular_name;
+		$menu_id = strtolower( str_replace(' ', '_', $label) );
+	} elseif ( $post->post_name !=='' ) {
+		$menu_id = $post->post_name;
+	} else {
+		$menu_id = 'profile';
+	}
+
+	$menu_id = $menu_id . '-pages';
     $section_id = empty( $post->ancestors ) ? $post->ID : end( $post->ancestors );
     $locations = get_nav_menu_locations();
     $menu = wp_get_nav_menu_object( $locations[ 'main' ] );
@@ -14,16 +23,18 @@
     $menu_items = wp_get_nav_menu_items( $menu->term_id, array( 
     	'numberposts' => -1
     ) );
-
+    
     if( !empty( $menu_items ) ) {
-        $sibling_pages = "<menu class='{$menu_class}'><ul class='menu'>";
+	    $sibling_pages = '';
+	    
         foreach( $menu_items as $menu_item ) {
 	        $classes = implode( ' ', array('page-item', ''));
 	        if ( $menu_item->menu_item_parent == $section_id || $menu_item->ID == $section_id )
             	$sibling_pages .= "<li class={$classes}><a href='" . $menu_item->url . "'>" . $menu_item->title . "</a></li>";
         }
-        $sibling_pages .= '</ul></menu>';
     }
     
-    echo $sibling_pages;
+    if ( !empty( $sibling_pages )) {
+	    echo "<menu id='{$menu_id}'><ul class='menu'>{$sibling_pages}</ul></menu>";
+	}
 ?>	

@@ -125,14 +125,6 @@ body {
 					text-transform: uppercase;
 				}
 				
-				.opens-left .sub-menu {
-					right: 0;
-		
-					.menu-item {
-						text-align: right;
-					}
-				}
-	
 				.sub-menu {
 					top: 3rem;
 					left: auto;
@@ -141,13 +133,22 @@ body {
 					padding-right: .5rem;
 					padding-left: .5rem;
 					border: none;
-					
+					box-shadow: rem-calc(0 6 10) black;
+										
 					.menu-item {
 						list-style: none;
 						font-family: inherit;
 						text-align: left;
 					}
 				}
+
+				.opens-left .sub-menu {
+					right: 0;
+		
+					.menu-item {
+						text-align: right;
+					}
+				}	
 			}
 		}
 		
@@ -176,7 +177,7 @@ body {
 	
 	& > .footer {
 		padding: rem-calc(120 0);
-		background-image: url(src/img/MTF-brushstroke-footer-background.png);
+		background-image: url(dist/img/MTF-brushstroke-footer-background.png);
 		background-repeat: repeat-x;
 		font-family: 'MTF Grotesk';
 		color: rgba(white, 1);
@@ -266,19 +267,19 @@ body {
 						}
 						
 						&.facebook:before {
-							background-image: url(src/img/facebook.png);
+							background-image: url(dist/img/facebook.png);
 						}
 						
 						&.twitter-bird:before {
-							background-image: url(src/img/twitter-bird.png);
+							background-image: url(dist/img/twitter-bird.png);
 						}
 						
 						&.instagram:before {
-							background-image: url(src/img/instagram.png);
+							background-image: url(dist/img/instagram.png);
 						}
 						
 						&.youtube:before {
-							background-image: url(src/img/youtube.png);
+							background-image: url(dist/img/youtube.png);
 						}
 					}
 				}
@@ -446,13 +447,16 @@ body {
 	}		
 }
 
-.page .content:not(#home) {
+.page .content:not(#home),
+.archive .content,
+.single .content {
 	.header {
 		position: relative;
 		height: rem-calc(360);
 		background: black;
 		padding: $global-padding;
 		overflow: hidden;
+		box-shadow: rem-calc(0 0 10) black;
 		
 		.background {
 			position: absolute;
@@ -476,13 +480,14 @@ body {
 		}	
 	}
 	
-	menu[class*="-pages"] {
+	menu[id*="-pages"] {
 		@include menu-base;
 		clear: both;
 		margin-bottom: $global-margin;
 		padding: $global-padding;
 		background-color: black;
 		text-align: center;
+		box-shadow: rem-calc(0 0 10) black;
 		
 		.menu {
 			@include menu-simple;
@@ -555,6 +560,15 @@ body {
 	
 	.sidebar {
 		@include grid-column(5);
+		
+		.members {
+			@include grid-column(12);
+			
+			.member {
+				@include grid-column(4);
+				@include grid-column-end;
+			}
+		}
 	}
 
 	.footer {
@@ -589,6 +603,42 @@ body {
 		}
 	}
 	
-	&#buddypress {
+	&#projects {
+		.content {
+			@include grid-column(4);
+			padding-top: rem-calc(70);
+			float: right;
+		}
+		
+		.projects {
+			@include grid-column(7);
+			@include grid-column-end;
+			float: left;
+			
+			.project {
+				@include grid-column(4);
+				@include grid-column-end;
+				
+				.artwork {
+					position: relative;
+					width: 100%;
+					background: black;
+					margin-bottom: rem-calc(8);
+					
+					&:before {
+						content: '';
+						display: block;
+						padding-top: 100%;
+					}
+					
+					.image {
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+					}
+				}
+			}
+		}
 	}
 }

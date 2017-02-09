@@ -9,6 +9,7 @@
 if ( ! function_exists( 'mtf_setup' ) ) :
 require_once( 'etc/custom-post-types.php' );
 require_once( 'etc/app.php' );
+
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -114,10 +115,18 @@ function mtf_setup() {
 	) );
 	
 	new custom_taxonomy( 'podcast_channel', 'podcast', 'channels', 'channel', array(
+		'labels'=> array(
+			'name' => 'Podcast Channels',
+			'menu_name' => 'Channels'
+		),
 		'hierarchical' => true,
         'show_admin_column'  => true
 	) );
 	new custom_taxonomy( 'podcast_tag', 'podcast', 'tags', 'tag', array(
+		'labels'=> array(
+			'name' => 'Podcast Tags',
+			'menu_name' => 'Tags'
+		),
         'show_admin_column'  => true
 	) );
 
@@ -125,21 +134,57 @@ function mtf_setup() {
 	new custom_post_type( 'project', null, null, array(
 		'menu_icon'	=> 'dashicons-image-filter',
         'hierarchical' => true,
+        'has_archive' => false,
         'supports' => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'custom-fields', 'excerpt' )
 	) );
 	
 	new custom_taxonomy( 'project_cat', 'project', 'categories', 'category', array(
+		'labels'=> array(
+			'name' => 'Project Categories',
+			'menu_name' => 'Categories'
+		),
 		'hierarchical' => true,
         'show_admin_column'  => true
 	) );
 	new custom_taxonomy( 'project_tag', 'project', 'tags', 'tag', array(
+		'labels'=> array(
+			'name' => 'Project Tags',
+			'menu_name' => 'Tags'
+		),
         'show_admin_column'  => true
 	) );
 }
 endif; // mtf_setup
 add_action( 'after_setup_theme', 'mtf_setup' );
 
-function podcast_feed_rss2( $for_comments ) {
+function mtf_archive_title( $title ) {
+    if ( is_category() ) {
+        $title = single_cat_title( '', false );
+    } elseif ( is_tag() ) {
+        $title = single_tag_title( '', false );
+    } elseif ( is_author() ) {
+        $title = '<span class="vcard">' . get_the_author() . '</span>';
+    } elseif ( is_post_type_archive() ) {
+        $title = post_type_archive_title( '', false );
+    } elseif ( is_tax() ) {
+        $title = single_term_title( '', false );
+    }
+  
+    return $title;
+}
+add_filter( 'get_the_archive_title', 'mtf_archive_title' );
+
+function mtf_events_category() {
+    $tribe_events_cat = get_taxonomy( 'tribe_events_cat' );
+	$singular = 'program';
+	$plural = 'programs';
+    $tribe_events_cat->rewrite['slug'] = $plural;
+    
+    register_taxonomy( 'tribe_events_cat', 'tribe_events', (array) $tribe_events_cat );
+}
+add_action( 'init', 'mtf_events_category', 11 );
+
+function mtf_podcast_feed_rss2( $for_comments ) {
     $rss_template = get_template_directory() . '/etc/feed-podcast-rss2.php';
     if( get_query_var( 'post_type' ) == 'podcast' and file_exists( $rss_template ) )
         load_template( $rss_template );
@@ -147,7 +192,7 @@ function podcast_feed_rss2( $for_comments ) {
         do_feed_rss2( $for_comments ); // Call default function
 }
 remove_all_actions( 'do_feed_rss2' );
-add_action( 'do_feed_rss2', 'podcast_feed_rss2', 10, 1 );
+add_action( 'do_feed_rss2', 'mtf_podcast_feed_rss2', 10, 1 );
 
 function mtf_feeds() {
 	$post_types = array('podcast');
@@ -171,45 +216,28 @@ function mtf_javascript_detection() {
 }
 add_action( 'wp_head', 'mtf_javascript_detection', 0 );
 
-function hex2rgb($hex, $a = 1) {
-   $hex = str_replace("#", "", $hex);
-
-   if(strlen($hex) == 3) {
-      $r = hexdec(substr($hex,0,1).substr($hex,0,1));
-      $g = hexdec(substr($hex,1,1).substr($hex,1,1));
-      $b = hexdec(substr($hex,2,1).substr($hex,2,1));
-   } else {
-      $r = hexdec(substr($hex,0,2));
-      $g = hexdec(substr($hex,2,2));
-      $b = hexdec(substr($hex,4,2));
-   }
-   $rgba = array($r, $g, $b, $a);
-   return implode(",", $rgba); // returns the rgb values separated by commas
-   //return $rgb; // returns an array with the rgb values
-}
-
 /**
  * Enqueues scripts and styles.
  */
 function mtf_scripts() {
 	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'mtf-fonts', get_theme_file_uri( '/src/fonts/fonts.css' ), array( 'mtf-style' ) );
+	wp_enqueue_style( 'mtf-fonts', get_theme_file_uri( '/dist/fonts/fonts.css' ), array( 'mtf-style' ) );
 
 	// Theme stylesheet.
 	wp_enqueue_style( 'mtf-style', get_stylesheet_uri() );
 
 	// Load the Internet Explorer 9 specific stylesheet, to fix display issues in the Customizer.
 	if ( is_customize_preview() ) {
-		wp_enqueue_style( 'mtf-ie9', get_theme_file_uri( '/src/css/ie9.css' ), array( 'mtf-style' ), '1.0' );
+		wp_enqueue_style( 'mtf-ie9', get_theme_file_uri( '/dist/css/ie9.css' ), array( 'mtf-style' ), '1.0' );
 		wp_style_add_data( 'mtf-ie9', 'conditional', 'IE 9' );
 	}
 
 	// Load the Internet Explorer 8 specific stylesheet.
-	wp_enqueue_style( 'mtf-ie8', get_theme_file_uri( '/src/css/ie8.css' ), array( 'mtf-style' ), '1.0' );
+	wp_enqueue_style( 'mtf-ie8', get_theme_file_uri( '/dist/css/ie8.css' ), array( 'mtf-style' ), '1.0' );
 	wp_style_add_data( 'mtf-ie8', 'conditional', 'lt IE 9' );
 
 	// Load the html5 shiv.
-	wp_enqueue_script( 'html5', get_theme_file_uri( '/js/html5.js' ), array(), '3.7.3' );
+	wp_enqueue_script( 'html5', get_theme_file_uri( '/dist/js/html5.js' ), array(), '3.7.3' );
 	wp_script_add_data( 'html5', 'conditional', 'lt IE 9' );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -220,7 +248,7 @@ function mtf_scripts() {
 	wp_dequeue_style( 'hm-wcdon-frontend-styles' );
 
 	wp_enqueue_script( 'background-check', get_theme_file_uri( '/bower_components/background-check/background-check.min.js' ), array( 'jquery' ), null, true );
-	wp_enqueue_script( 'mtf-script', get_theme_file_uri( '/js/scripts.min.js' ), array( 'jquery' ), null, true );
+	wp_enqueue_script( 'mtf-script', get_theme_file_uri( '/dist/js/scripts.min.js' ), array( 'jquery' ), null, true );
 
 	wp_localize_script( 'mtf-script', 'screenReaderText', array(
 		'expand'   => __( 'expand child menu', 'mtf' ),
@@ -228,20 +256,6 @@ function mtf_scripts() {
 	) );
 }
 add_action( 'wp_enqueue_scripts', 'mtf_scripts' );
-
-function return_false() {
-	return false;
-}
-
-function events_modify_category() {
-    $tribe_events_cat = get_taxonomy( 'tribe_events_cat' );
-	$singular = 'program';
-	$plural = 'programs';
-    $tribe_events_cat->rewrite['slug'] = $plural;
-    
-    register_taxonomy( 'tribe_events_cat', 'tribe_events', (array) $tribe_events_cat );
-}
-add_action( 'init', 'events_modify_category', 11 );
 
 function mtf_clean_up() {
 	//remove generator meta tag
@@ -266,7 +280,7 @@ function mtf_clean_up() {
 	//first check that woo exists to prevent fatal errors
 	if ( function_exists( 'is_woocommerce' ) ) {
 		//dequeue scripts and styles
-		if ( ! is_woocommerce() && ! is_cart() && ! is_checkout() ) {
+		if ( ! is_woocommerce() ) {
 			wp_dequeue_style( 'woocommerce-general' );
 			wp_dequeue_style( 'woocommerce-smallscreen' );
 			wp_dequeue_style( 'woocommerce-layout' );
@@ -313,17 +327,3 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	</script>";
 }
 add_action( 'wp_head', 'mtf_google' );
-
-function my_upload_directory( $param ) {
-  $mydir          = '/headshots';
-  $param['path']  = $param['basedir'] . $mydir;
-  $param['url']   = $param['baseurl'] . $mydir;
-  return $param;
-}
-
-function my_acf_upload_prefilter( $errors, $file, $field ) {
-  // change the upload directory
-  add_filter('upload_dir', 'my_upload_directory');
-  return $errors;
-}
-add_filter('acf/upload_prefilter/name=headshot', 'my_acf_upload_prefilter');

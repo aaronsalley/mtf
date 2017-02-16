@@ -1637,6 +1637,426 @@ function _classCallCheck(instance, Constructor) {
 }(jQuery);
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+!function ($) {
+
+  /**
+   * OffCanvas module.
+   * @module foundation.offcanvas
+   * @requires foundation.util.mediaQuery
+   * @requires foundation.util.triggers
+   * @requires foundation.util.motion
+   */
+
+  var OffCanvas = function () {
+    /**
+     * Creates a new instance of an off-canvas wrapper.
+     * @class
+     * @fires OffCanvas#init
+     * @param {Object} element - jQuery object to initialize.
+     * @param {Object} options - Overrides to the default plugin settings.
+     */
+    function OffCanvas(element, options) {
+      _classCallCheck(this, OffCanvas);
+
+      this.$element = element;
+      this.options = $.extend({}, OffCanvas.defaults, this.$element.data(), options);
+      this.$lastTrigger = $();
+      this.$triggers = $();
+
+      this._init();
+      this._events();
+
+      Foundation.registerPlugin(this, 'OffCanvas');
+      Foundation.Keyboard.register('OffCanvas', {
+        'ESCAPE': 'close'
+      });
+    }
+
+    /**
+     * Initializes the off-canvas wrapper by adding the exit overlay (if needed).
+     * @function
+     * @private
+     */
+
+
+    _createClass(OffCanvas, [{
+      key: '_init',
+      value: function _init() {
+        var id = this.$element.attr('id');
+
+        this.$element.attr('aria-hidden', 'true');
+
+        this.$element.addClass('is-transition-' + this.options.transition);
+
+        // Find triggers that affect this element and add aria-expanded to them
+        this.$triggers = $(document).find('[data-open="' + id + '"], [data-close="' + id + '"], [data-toggle="' + id + '"]').attr('aria-expanded', 'false').attr('aria-controls', id);
+
+        // Add an overlay over the content if necessary
+        if (this.options.contentOverlay === true) {
+          var overlay = document.createElement('div');
+          var overlayPosition = $(this.$element).css("position") === 'fixed' ? 'is-overlay-fixed' : 'is-overlay-absolute';
+          overlay.setAttribute('class', 'js-off-canvas-overlay ' + overlayPosition);
+          this.$overlay = $(overlay);
+          if (overlayPosition === 'is-overlay-fixed') {
+            $('body').append(this.$overlay);
+          } else {
+            this.$element.siblings('[data-off-canvas-content]').append(this.$overlay);
+          }
+        }
+
+        this.options.isRevealed = this.options.isRevealed || new RegExp(this.options.revealClass, 'g').test(this.$element[0].className);
+
+        if (this.options.isRevealed === true) {
+          this.options.revealOn = this.options.revealOn || this.$element[0].className.match(/(reveal-for-medium|reveal-for-large)/g)[0].split('-')[2];
+          this._setMQChecker();
+        }
+        if (!this.options.transitionTime === true) {
+          this.options.transitionTime = parseFloat(window.getComputedStyle($('[data-off-canvas]')[0]).transitionDuration) * 1000;
+        }
+      }
+
+      /**
+       * Adds event handlers to the off-canvas wrapper and the exit overlay.
+       * @function
+       * @private
+       */
+
+    }, {
+      key: '_events',
+      value: function _events() {
+        this.$element.off('.zf.trigger .zf.offcanvas').on({
+          'open.zf.trigger': this.open.bind(this),
+          'close.zf.trigger': this.close.bind(this),
+          'toggle.zf.trigger': this.toggle.bind(this),
+          'keydown.zf.offcanvas': this._handleKeyboard.bind(this)
+        });
+
+        if (this.options.closeOnClick === true) {
+          var $target = this.options.contentOverlay ? this.$overlay : $('[data-off-canvas-content]');
+          $target.on({ 'click.zf.offcanvas': this.close.bind(this) });
+        }
+      }
+
+      /**
+       * Applies event listener for elements that will reveal at certain breakpoints.
+       * @private
+       */
+
+    }, {
+      key: '_setMQChecker',
+      value: function _setMQChecker() {
+        var _this = this;
+
+        $(window).on('changed.zf.mediaquery', function () {
+          if (Foundation.MediaQuery.atLeast(_this.options.revealOn)) {
+            _this.reveal(true);
+          } else {
+            _this.reveal(false);
+          }
+        }).one('load.zf.offcanvas', function () {
+          if (Foundation.MediaQuery.atLeast(_this.options.revealOn)) {
+            _this.reveal(true);
+          }
+        });
+      }
+
+      /**
+       * Handles the revealing/hiding the off-canvas at breakpoints, not the same as open.
+       * @param {Boolean} isRevealed - true if element should be revealed.
+       * @function
+       */
+
+    }, {
+      key: 'reveal',
+      value: function reveal(isRevealed) {
+        var $closer = this.$element.find('[data-close]');
+        if (isRevealed) {
+          this.close();
+          this.isRevealed = true;
+          this.$element.attr('aria-hidden', 'false');
+          this.$element.off('open.zf.trigger toggle.zf.trigger');
+          if ($closer.length) {
+            $closer.hide();
+          }
+        } else {
+          this.isRevealed = false;
+          this.$element.attr('aria-hidden', 'true');
+          this.$element.on({
+            'open.zf.trigger': this.open.bind(this),
+            'toggle.zf.trigger': this.toggle.bind(this)
+          });
+          if ($closer.length) {
+            $closer.show();
+          }
+        }
+      }
+
+      /**
+       * Stops scrolling of the body when offcanvas is open on mobile Safari and other troublesome browsers.
+       * @private
+       */
+
+    }, {
+      key: '_stopScrolling',
+      value: function _stopScrolling(event) {
+        return false;
+      }
+
+      /**
+       * Opens the off-canvas menu.
+       * @function
+       * @param {Object} event - Event object passed from listener.
+       * @param {jQuery} trigger - element that triggered the off-canvas to open.
+       * @fires OffCanvas#opened
+       */
+
+    }, {
+      key: 'open',
+      value: function open(event, trigger) {
+        if (this.$element.hasClass('is-open') || this.isRevealed) {
+          return;
+        }
+        var _this = this;
+
+        if (trigger) {
+          this.$lastTrigger = trigger;
+        }
+
+        if (this.options.forceTo === 'top') {
+          window.scrollTo(0, 0);
+        } else if (this.options.forceTo === 'bottom') {
+          window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        /**
+         * Fires when the off-canvas menu opens.
+         * @event OffCanvas#opened
+         */
+        _this.$element.addClass('is-open');
+
+        this.$triggers.attr('aria-expanded', 'true');
+        this.$element.attr('aria-hidden', 'false').trigger('opened.zf.offcanvas');
+
+        // If `contentScroll` is set to false, add class and disable scrolling on touch devices.
+        if (this.options.contentScroll === false) {
+          $('body').addClass('is-off-canvas-open').on('touchmove', this._stopScrolling);
+        }
+
+        if (this.options.contentOverlay === true) {
+          this.$overlay.addClass('is-visible');
+        }
+
+        if (this.options.closeOnClick === true && this.options.contentOverlay === true) {
+          this.$overlay.addClass('is-closable');
+        }
+
+        if (this.options.autoFocus === true) {
+          this.$element.one(Foundation.transitionend(this.$element), function () {
+            _this.$element.find('a, button').eq(0).focus();
+          });
+        }
+
+        if (this.options.trapFocus === true) {
+          this.$element.siblings('[data-off-canvas-content]').attr('tabindex', '-1');
+          Foundation.Keyboard.trapFocus(this.$element);
+        }
+      }
+
+      /**
+       * Closes the off-canvas menu.
+       * @function
+       * @param {Function} cb - optional cb to fire after closure.
+       * @fires OffCanvas#closed
+       */
+
+    }, {
+      key: 'close',
+      value: function close(cb) {
+        if (!this.$element.hasClass('is-open') || this.isRevealed) {
+          return;
+        }
+
+        var _this = this;
+
+        _this.$element.removeClass('is-open');
+
+        this.$element.attr('aria-hidden', 'true')
+        /**
+         * Fires when the off-canvas menu opens.
+         * @event OffCanvas#closed
+         */
+        .trigger('closed.zf.offcanvas');
+
+        // If `contentScroll` is set to false, remove class and re-enable scrolling on touch devices.
+        if (this.options.contentScroll === false) {
+          $('body').removeClass('is-off-canvas-open').off('touchmove', this._stopScrolling);
+        }
+
+        if (this.options.contentOverlay === true) {
+          this.$overlay.removeClass('is-visible');
+        }
+
+        if (this.options.closeOnClick === true && this.options.contentOverlay === true) {
+          this.$overlay.removeClass('is-closable');
+        }
+
+        this.$triggers.attr('aria-expanded', 'false');
+
+        if (this.options.trapFocus === true) {
+          this.$element.siblings('[data-off-canvas-content]').removeAttr('tabindex');
+          Foundation.Keyboard.releaseFocus(this.$element);
+        }
+      }
+
+      /**
+       * Toggles the off-canvas menu open or closed.
+       * @function
+       * @param {Object} event - Event object passed from listener.
+       * @param {jQuery} trigger - element that triggered the off-canvas to open.
+       */
+
+    }, {
+      key: 'toggle',
+      value: function toggle(event, trigger) {
+        if (this.$element.hasClass('is-open')) {
+          this.close(event, trigger);
+        } else {
+          this.open(event, trigger);
+        }
+      }
+
+      /**
+       * Handles keyboard input when detected. When the escape key is pressed, the off-canvas menu closes, and focus is restored to the element that opened the menu.
+       * @function
+       * @private
+       */
+
+    }, {
+      key: '_handleKeyboard',
+      value: function _handleKeyboard(e) {
+        var _this2 = this;
+
+        Foundation.Keyboard.handleKey(e, 'OffCanvas', {
+          close: function close() {
+            _this2.close();
+            _this2.$lastTrigger.focus();
+            return true;
+          },
+          handled: function handled() {
+            e.stopPropagation();
+            e.preventDefault();
+          }
+        });
+      }
+
+      /**
+       * Destroys the offcanvas plugin.
+       * @function
+       */
+
+    }, {
+      key: 'destroy',
+      value: function destroy() {
+        this.close();
+        this.$element.off('.zf.trigger .zf.offcanvas');
+        this.$overlay.off('.zf.offcanvas');
+
+        Foundation.unregisterPlugin(this);
+      }
+    }]);
+
+    return OffCanvas;
+  }();
+
+  OffCanvas.defaults = {
+    /**
+     * Allow the user to click outside of the menu to close it.
+     * @option
+     * @example true
+     */
+    closeOnClick: true,
+
+    /**
+     * Adds an overlay on top of `[data-off-canvas-content]`.
+     * @option
+     * @example true
+     */
+    contentOverlay: true,
+
+    /**
+     * Enable/disable scrolling of the main content when an off canvas panel is open.
+     * @option
+     * @example true
+     */
+    contentScroll: true,
+
+    /**
+     * Amount of time in ms the open and close transition requires. If none selected, pulls from body style.
+     * @option
+     * @example 500
+     */
+    transitionTime: 0,
+
+    /**
+     * Type of transition for the offcanvas menu. Options are 'push', 'detached' or 'slide'.
+     * @option
+     * @example push
+     */
+    transition: 'push',
+
+    /**
+     * Force the page to scroll to top or bottom on open.
+     * @option
+     * @example top
+     */
+    forceTo: null,
+
+    /**
+     * Allow the offcanvas to remain open for certain breakpoints.
+     * @option
+     * @example false
+     */
+    isRevealed: false,
+
+    /**
+     * Breakpoint at which to reveal. JS will use a RegExp to target standard classes, if changing classnames, pass your class with the `revealClass` option.
+     * @option
+     * @example reveal-for-large
+     */
+    revealOn: null,
+
+    /**
+     * Force focus to the offcanvas on open. If true, will focus the opening trigger on close.
+     * @option
+     * @example true
+     */
+    autoFocus: true,
+
+    /**
+     * Class used to force an offcanvas to remain open. Foundation defaults for this are `reveal-for-large` & `reveal-for-medium`.
+     * @option
+     * TODO improve the regex testing for this.
+     * @example reveal-for-large
+     */
+    revealClass: 'reveal-for-',
+
+    /**
+     * Triggers optional focus trapping when opening an offcanvas. Sets tabindex of [data-off-canvas-content] to -1 for accessibility purposes.
+     * @option
+     * @example true
+     */
+    trapFocus: false
+  };
+
+  // Window exports
+  Foundation.plugin(OffCanvas, 'OffCanvas');
+}(jQuery);
+'use strict';
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
@@ -8256,6 +8676,271 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+!function ($) {
+
+  /**
+   * Accordion module.
+   * @module foundation.accordion
+   * @requires foundation.util.keyboard
+   * @requires foundation.util.motion
+   */
+
+  var Accordion = function () {
+    /**
+     * Creates a new instance of an accordion.
+     * @class
+     * @fires Accordion#init
+     * @param {jQuery} element - jQuery object to make into an accordion.
+     * @param {Object} options - a plain object with settings to override the default options.
+     */
+    function Accordion(element, options) {
+      _classCallCheck(this, Accordion);
+
+      this.$element = element;
+      this.options = $.extend({}, Accordion.defaults, this.$element.data(), options);
+
+      this._init();
+
+      Foundation.registerPlugin(this, 'Accordion');
+      Foundation.Keyboard.register('Accordion', {
+        'ENTER': 'toggle',
+        'SPACE': 'toggle',
+        'ARROW_DOWN': 'next',
+        'ARROW_UP': 'previous'
+      });
+    }
+
+    /**
+     * Initializes the accordion by animating the preset active pane(s).
+     * @private
+     */
+
+
+    _createClass(Accordion, [{
+      key: '_init',
+      value: function _init() {
+        var accordionItem = this.options.accordionItem,
+            tabContent = this.options.tabContent;
+
+        this.$element.attr('role', 'tablist');
+        this.$tabs = this.$element.children(accordionItem);
+
+        this.$tabs.each(function (idx, el) {
+          var $el = $(el),
+              $content = $el.children(tabContent),
+              id = $content[0].id || Foundation.GetYoDigits(6, 'accordion'),
+              linkId = el.id || id + '-label';
+
+          $el.find('a:first').attr({
+            'aria-controls': id,
+            'role': 'tab',
+            'id': linkId,
+            'aria-expanded': false,
+            'aria-selected': false
+          });
+
+          $content.attr({ 'role': 'tabpanel', 'aria-labelledby': linkId, 'aria-hidden': true, 'id': id });
+        });
+        var $initActive = this.$element.find('.is-active').children(tabContent);
+        if ($initActive.length) {
+          this.down($initActive, true);
+        }
+        this._events();
+      }
+
+      /**
+       * Adds event handlers for items within the accordion.
+       * @private
+       */
+
+    }, {
+      key: '_events',
+      value: function _events() {
+        var _this = this;
+
+        this.$tabs.each(function () {
+          var $elem = $(this);
+          var $tabContent = $elem.children(_this.options.tabContent);
+          if ($tabContent.length) {
+            $elem.children('a').off('click.zf.accordion keydown.zf.accordion').on('click.zf.accordion', function (e) {
+              e.preventDefault();
+              _this.toggle($tabContent);
+            }).on('keydown.zf.accordion', function (e) {
+              Foundation.Keyboard.handleKey(e, 'Accordion', {
+                toggle: function toggle() {
+                  _this.toggle($tabContent);
+                },
+                next: function next() {
+                  var $a = $elem.next().find('a').focus();
+                  if (!_this.options.multiExpand) {
+                    $a.trigger('click.zf.accordion');
+                  }
+                },
+                previous: function previous() {
+                  var $a = $elem.prev().find('a').focus();
+                  if (!_this.options.multiExpand) {
+                    $a.trigger('click.zf.accordion');
+                  }
+                },
+                handled: function handled() {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+              });
+            });
+          }
+        });
+      }
+
+      /**
+       * Toggles the selected content pane's open/close state.
+       * @param {jQuery} $target - jQuery object of the pane to toggle (`.accordion-content`).
+       * @function
+       */
+
+    }, {
+      key: 'toggle',
+      value: function toggle($target) {
+        if ($target.parent().hasClass('is-active')) {
+          this.up($target);
+        } else {
+          this.down($target);
+        }
+      }
+
+      /**
+       * Opens the accordion tab defined by `$target`.
+       * @param {jQuery} $target - Accordion pane to open (`.accordion-content`).
+       * @param {Boolean} firstTime - flag to determine if reflow should happen.
+       * @fires Accordion#down
+       * @function
+       */
+
+    }, {
+      key: 'down',
+      value: function down($target, firstTime) {
+        var _this2 = this;
+
+        $target.attr('aria-hidden', false).parent(this.options.tabContent).addBack().parent().addClass('is-active');
+
+        if (!this.options.multiExpand && !firstTime) {
+          var $currentActive = this.$element.children('.is-active').children(this.options.tabContent);
+          if ($currentActive.length) {
+            this.up($currentActive.not($target));
+          }
+        }
+
+        $target.slideDown(this.options.slideSpeed, function () {
+          /**
+           * Fires when the tab is done opening.
+           * @event Accordion#down
+           */
+          _this2.$element.trigger('down.zf.accordion', [$target]);
+        });
+
+        $('#' + $target.attr('aria-labelledby')).attr({
+          'aria-expanded': true,
+          'aria-selected': true
+        });
+      }
+
+      /**
+       * Closes the tab defined by `$target`.
+       * @param {jQuery} $target - Accordion tab to close (`.accordion-content`).
+       * @fires Accordion#up
+       * @function
+       */
+
+    }, {
+      key: 'up',
+      value: function up($target) {
+        var $aunts = $target.parent().siblings(),
+            _this = this;
+
+        if (!this.options.allowAllClosed && !$aunts.hasClass('is-active') || !$target.parent().hasClass('is-active')) {
+          return;
+        }
+
+        // Foundation.Move(this.options.slideSpeed, $target, function(){
+        $target.slideUp(_this.options.slideSpeed, function () {
+          /**
+           * Fires when the tab is done collapsing up.
+           * @event Accordion#up
+           */
+          _this.$element.trigger('up.zf.accordion', [$target]);
+        });
+        // });
+
+        $target.attr('aria-hidden', true).parent().removeClass('is-active');
+
+        $('#' + $target.attr('aria-labelledby')).attr({
+          'aria-expanded': false,
+          'aria-selected': false
+        });
+      }
+
+      /**
+       * Destroys an instance of an accordion.
+       * @fires Accordion#destroyed
+       * @function
+       */
+
+    }, {
+      key: 'destroy',
+      value: function destroy() {
+        this.$element.find(this.options.tabContent).stop(true).slideUp(0).css('display', '');
+        this.$element.find('a').off('.zf.accordion');
+
+        Foundation.unregisterPlugin(this);
+      }
+    }]);
+
+    return Accordion;
+  }();
+
+  Accordion.defaults = {
+    /**
+     * Amount of time to animate the opening of an accordion pane.
+     * @option
+     * @example 250
+     */
+    slideSpeed: 250,
+    /**
+     * Allow the accordion to have multiple open panes.
+     * @option
+     * @example false
+     */
+    multiExpand: false,
+    /**
+     * Allow the accordion to close all panes.
+     * @option
+     * @example false
+     */
+    allowAllClosed: false,
+    /**
+     * Tab item element.
+     * @option
+     * @example 250
+     */
+    accordionItem: '[data-accordion-item]',
+    /**
+     * Element containing tab content.
+     * @option
+     * @example 250
+     */
+    tabContent: '[data-tab-content]'
+
+  };
+
+  // Window exports
+  Foundation.plugin(Accordion, 'Accordion');
+}(jQuery);
+'use strict';
+
 var _createClass = function () {
   function defineProperties(target, props) {
     for (var i = 0; i < props.length; i++) {
@@ -8534,22 +9219,27 @@ function _classCallCheck(instance, Constructor) {
 
 	// Initalize Foundation components
 	var elem = new Foundation.DropdownMenu($('.header .site'));
-
-	var elem = new Foundation.horizontalAccordion($('#mission'), {
-		accordionItem: 'article',
-		tabContent: '.excerpt'
-	});
+	//  	var elem = new Foundation.OffCanvas($('site'));
 
 	$('.carousel').owlCarousel({
 		responsive: {
 			0: {
+				items: 2,
+				margin: 10
+			},
+			640: {
 				items: 4,
 				margin: 10
+			},
+			1024: {
+				items: 5,
+				margin: 20
 			}
 		},
 		itemElement: 'article',
 		loop: true
 	});
+
 	if ($('.background').length) {
 		BackgroundCheck.init({
 			targets: '.background',
@@ -8566,4 +9256,22 @@ function _classCallCheck(instance, Constructor) {
  		sortBy: 'sort'
  	});
  */
+
+	$(window).on('resize', function () {
+		var accordionOptions = {
+			accordionItem: 'article',
+			tabContent: '.excerpt'
+		};
+		if (Foundation.MediaQuery.atLeast('medium')) {
+			var elem = new Foundation.horizontalAccordion($('#mission'), accordionOptions);
+		} else {
+			$('#mission').children('.is-active').removeAttr('style');
+			$('#mission').children('.is-active').children(accordionOptions.tabContent).removeAttr('style', 'width');
+			$('#mission').children(accordionOptions.accordionItem).each(function (idx, el) {
+				var $el = $(el);
+				$el.find('a:first').removeAttr('style');
+			});
+			var elem = new Foundation.Accordion($('#mission'), accordionOptions);
+		}
+	}).resize();
 })(jQuery);

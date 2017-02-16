@@ -25,13 +25,16 @@
 			)); ?>
 		</menu>
 		<?php the_custom_logo(); ?>
+		
+		<button class="menu-icon" type="button" data-toggle="offCanvas"></button>
+		
 		<?php wp_nav_menu( array(
 			'container'			=> 'nav',
 			'container_class'	=> 'site',
 			'theme_location'	=> 'main'
 		)); ?>
 	</header>
-	
+
 	<?php 
 		if ( is_archive() ) {
 			$label = get_queried_object()->labels->name;

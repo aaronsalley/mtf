@@ -135,7 +135,7 @@ function mtf_setup() {
 		'menu_icon'	=> 'dashicons-image-filter',
         'hierarchical' => true,
         'has_archive' => false,
-        'supports' => array( 'title', 'editor', 'thumbnail', 'revisions', 'page-attributes', 'custom-fields', 'excerpt' )
+        'supports' => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'excerpt' )
 	) );
 	
 	new custom_taxonomy( 'project_cat', 'project', 'categories', 'category', array(

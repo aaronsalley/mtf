@@ -9,7 +9,10 @@
 		<?php the_content(); ?>
 	</content>
 	<aside class="sidebar">
-		<section class="members">
+		<section id="members">
+			<header class="header">
+				<h2 class="title">Company</h2>
+			</header>
 		<?php $users = new WP_User_Query( array(
 			'role__not_in'	=> 'subscriber',
 			)); 
@@ -38,7 +41,10 @@
 			endforeach; endif;
 		?>
 		</section>
-		<section class="blog">
+		<section id="blog">
+			<header class="header">
+				<h2 class="title">Blog</h2>
+			</header>
 		<?php $blog = new WP_Query( array(
 			'post_type' => 'post',
 			'tax_query' => array(
@@ -60,11 +66,16 @@
 				<content class="excerpt">
 					<?php the_excerpt(); ?>
 				</content>
-				<footer><span class="related"><?php the_terms( $post->ID, 'post_tag', '', ',', ' | ' ); ?></span><span class="date"><?php the_date(); ?></span></footer>
+				<footer>
+					<span class="date"><?php the_date(); ?></span>
+				</footer>
 			</article>
 		<?php endwhile; endif; wp_reset_postdata(); ?>
 		</section>
-		<section class="related">
+		<section id="related">
+			<header class="header">
+				<h2 class="title">Related Projects</h2>
+			</header>
 		</section>
 		<?php dynamic_sidebar(); ?>
 	</aside>

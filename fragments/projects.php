@@ -10,8 +10,7 @@ if ( $projects->have_posts() ) : echo "<section class='projects'>"; while ( $pro
 	<article <?php post_class(); ?>>
 		<a href="<?php the_permalink(); ?>">
 			<div class="artwork"></div>
-			<h2 class="title"><?php the_title(); ?></h2>
-			<div class="excerpt"><?php the_excerpt(); ?></div>
+			<h3 class="title"><?php the_title(); ?></h3>
 		</a>
 	</article>
 <?php 

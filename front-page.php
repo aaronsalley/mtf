@@ -62,7 +62,7 @@
 		<content class="excerpt">
 			<?php the_excerpt(); ?>
 		</content>
-		<footer><span class="related"><?php the_terms( $post->ID, 'post_tag', '', ',', ' | ' ); ?></span><span class="date"><?php the_date(); ?></span></footer>
+		<footer><span class="related"><?php the_terms( $post->ID, 'post_tag', '', ', ', ' | ' ); ?></span><span class="date"><?php the_date(); ?></span></footer>
 	</article>
 	<?php endwhile; endif; wp_reset_postdata(); ?>
 </section>

@@ -38,6 +38,7 @@ gulp.task('scripts', function() {
 		'bower_components/foundation-sites/dist/js/plugins/foundation.util.nest.js',
 		'bower_components/foundation-sites/dist/js/plugins/foundation.util.motion.js',
 		'bower_components/foundation-sites/dist/js/plugins/foundation.dropdownMenu.js',
+		'bower_components/foundation-sites/js/foundation.offcanvas.js',
 		'bower_components/owl.carousel/dist/owl.carousel.js',
 		'bower_components/colourBrightness.js/jquery.colourbrightness.js',
 		'bower_components/isotope/dist/isotope.pkgd.js',

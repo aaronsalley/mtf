@@ -104,6 +104,7 @@ function mtf_setup() {
 	
 	// Ready for WooCommerce
     add_theme_support( 'woocommerce' );
+// 	add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
 
 	// Create Podcasts post type
 	new custom_post_type( 'podcast', null, null, array(
@@ -320,7 +321,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	
+
 	  ga('create', 'UA-91342172-1', 'auto');
 	  ga('send', 'pageview');
 	

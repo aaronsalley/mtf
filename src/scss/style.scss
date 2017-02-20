@@ -618,6 +618,7 @@ body {
 		
 		&:first-of-type .member {
 			@include grid-column-end;
+			@include grid-column(4);
 
 			@include breakpoint(medium) {
 				@include grid-column(2);
@@ -653,10 +654,10 @@ body {
 	
 	.sidebar {
 		@include grid-column-end;
-		float: right;
 
 		@include breakpoint(medium) {
 			@include grid-column(4);
+			float: right;
 		}
 		
 		section > .header {
@@ -696,16 +697,15 @@ body {
 	&#contact {
 		.content {
 			padding-top: rem-calc(70);
-			float: right;
 
 			@include breakpoint(medium) {
 				@include grid-column(4);
+				float: right;
 			}
 		}
 		
 		.members {
 			@include grid-column-end;
-			float: left;
 
 			@include breakpoint(medium) {
 				@include grid-column(7);
@@ -734,16 +734,15 @@ body {
 	&#projects {
 		.content {
 			padding-top: rem-calc(70);
-			float: right;
 
 			@include breakpoint(medium) {
 				@include grid-column(5);
+				float: right;
 			}
 		}
 		
 		.projects {
 			@include grid-column-end;
-			float: left;
 
 			@include breakpoint(medium) {
 				@include grid-column(7);
@@ -785,6 +784,37 @@ body {
 					}
 				}
 			}
+		}
+	}
+	
+	&#donate {
+		.product {
+			@include grid-row;
+			
+			.images {
+				@include breakpoint(medium){
+					@include grid-column(6);
+				}
+			}
+			
+			.summary {
+				@include breakpoint(medium){
+					@include grid-column(6);
+				}
+			}
+			
+			.woocommerce-tabs {
+				@include breakpoint(medium){
+					@include grid-column(6);
+					clear: none;
+				}				
+			}
+		}
+	}
+	
+	&#profile {
+		.content {
+			@include grid-column(12);
 		}
 	}
 }

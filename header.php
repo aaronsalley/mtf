@@ -8,7 +8,7 @@
 <?php wp_head(); ?>
 </head>
 
-<body <?php body_class( 'site' ); ?>>
+<body id="perspective" <?php body_class( 'site' ); ?>>
 	<header class="header">
 		<menu class="action">
 			<?php

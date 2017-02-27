@@ -5,6 +5,54 @@
 	var elem = new Foundation.DropdownMenu( $('.header .site') );
 //  	var elem = new Foundation.OffCanvas($('site'));
 
+/*
+	function perspective(args) {
+		var showMenu = $( args.trigger ),
+			perspective = $( args.target );
+			
+			perspective.addClass('perspective effect-' + args.effect).wrapInner('<div class="wrapper"></div>').wrapInner('<div class="container"></div>');
+			
+			$('.outer-nav').appendTo(perspective);
+			container = perspective.children( '.container' ),
+			wrapper = container.children( '.wrapper' );
+			
+		showMenu.on( 'click touchstart', function( event ) {
+			event.stopPropagation();
+			event.preventDefault();
+			docscroll = window.pageYOffset || $().scrollTop;
+			// change top of wrapper
+			wrapper[0].top = docscroll * -1 + 'px';
+			// mac chrome issue:
+			$('body').scrollTop = $().scrollTop = 0;
+			// add modalview class
+			perspective.addClass( 'modalview' );
+			// animate..
+			setTimeout( function() { perspective.addClass( 'animate' ); }, 25 );
+		});
+		
+		container.on( 'click touchstart', function( event ) {
+			container.addClass( 'transform' );
+			if( perspective.hasClass( 'animate' ) ) {
+					
+				perspective.removeClass( 'modalview' );
+				container.removeClass( 'transform' );
+				// mac chrome issue:
+				$('body').scrollTop = $().scrollTop = 0;
+				// change top of wrapper
+				wrapper.top = '0px';
+
+				perspective.removeClass( 'animate' );
+			}
+		});
+	}
+	
+	perspective({
+		effect: 'airbnb',
+		target: 'body',
+		trigger: '.menu-icon'
+	});
+*/
+
 	$('.carousel').owlCarousel({
 		responsive: {
 			0 : {

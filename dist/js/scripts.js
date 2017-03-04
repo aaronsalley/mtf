@@ -9306,20 +9306,23 @@ function _classCallCheck(instance, Constructor) {
  */
 
 	$(window).on('resize', function () {
-		var accordionOptions = {
-			accordionItem: 'article',
-			tabContent: '.excerpt'
-		};
-		if (Foundation.MediaQuery.atLeast('medium')) {
-			var elem = new Foundation.horizontalAccordion($('#mission'), accordionOptions);
-		} else {
-			$('#mission').children('.is-active').removeAttr('style');
-			$('#mission').children('.is-active').children(accordionOptions.tabContent).removeAttr('style', 'width');
-			$('#mission').children(accordionOptions.accordionItem).each(function (idx, el) {
-				var $el = $(el);
-				$el.find('a:first').removeAttr('style');
-			});
-			var elem = new Foundation.Accordion($('#mission'), accordionOptions);
+		function updateAccordion() {
+			var accordionOptions = {
+				accordionItem: 'article',
+				tabContent: '.excerpt'
+			};
+			if (Foundation.MediaQuery.atLeast('medium')) {
+				var elem = new Foundation.horizontalAccordion($('#mission'), accordionOptions);
+			} else {
+				$('#mission').children('.is-active').removeAttr('style');
+				$('#mission').children('.is-active').children(accordionOptions.tabContent).removeAttr('style', 'width');
+				$('#mission').children(accordionOptions.accordionItem).each(function (idx, el) {
+					var $el = $(el);
+					$el.find('a:first').removeAttr('style');
+				});
+				var elem = new Foundation.Accordion($('#mission'), accordionOptions);
+			}
 		}
+		updateAccordion();
 	}).resize();
 })(jQuery);

@@ -618,7 +618,6 @@ body {
 		}
 		
 		&:first-of-type .member {
-			@include grid-column-end;
 			@include grid-column(4);
 
 			@include breakpoint(medium) {
@@ -654,8 +653,6 @@ body {
 	}
 	
 	.sidebar {
-		@include grid-column-end;
-
 		@include breakpoint(medium) {
 			@include grid-column(4);
 			float: right;
@@ -706,15 +703,11 @@ body {
 		}
 		
 		.members {
-			@include grid-column-end;
-
 			@include breakpoint(medium) {
 				@include grid-column(7);
 			}
 			
 			&:first-of-type() .member {
-				@include grid-column-end;
-
 				@include breakpoint(medium) {
 					@include grid-column(3);
 				}
@@ -733,6 +726,10 @@ body {
 	}
 	
 	&#projects {
+		#projects-pages {
+			visibility: hidden;
+		}
+
 		.content {
 			padding-top: rem-calc(70);
 
@@ -745,7 +742,6 @@ body {
 		.projects {
 			@include breakpoint(medium) {
 				@include grid-column(7);
-				@include grid-column-end;
 			}
 			
 			.project {
@@ -753,14 +749,6 @@ body {
 
 				@include breakpoint(medium) {
 					@include grid-column(4);
-				}
-				
-				.title {
-					position: absolute;
-					right: 2 * $global-padding;
-					bottom: 0;
-					left: 2 * $global-padding;
-					color: white;
 				}
 				
 				.artwork {
@@ -781,6 +769,14 @@ body {
 						left: 0;
 						width: 100%;
 					}
+				}
+				
+				.title {
+					height: 4em;
+				}
+				
+				.summary {
+					display: none;
 				}
 			}
 		}

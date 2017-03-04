@@ -11,6 +11,7 @@ if ( $projects->have_posts() ) : echo "<section class='projects'>"; while ( $pro
 		<a href="<?php the_permalink(); ?>">
 			<div class="artwork"></div>
 			<h3 class="title"><?php the_title(); ?></h3>
+			<div class="summary"><?php the_excerpt(); ?></div>
 		</a>
 	</article>
 <?php 

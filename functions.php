@@ -327,4 +327,4 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	
 	</script>";
 }
-// add_action( 'wp_head', 'mtf_google' );
+add_action( 'wp_head', 'mtf_google' );

@@ -17,7 +17,8 @@ Copyright © Aaron Salley Design
 @import 'settings';
 @import 'foundation';
 @import 'motion-ui';
-@import 'horizontalAccordion';
+// @import 'horizontalAccordion';
+@import 'blurAccordion';
 // @import 'perspective';
 
 @include foundation-global-styles;
@@ -28,7 +29,6 @@ Copyright © Aaron Salley Design
 @include foundation-forms;
 // @include foundation-range-input;
 // @include foundation-accordion;
-@include foundation-horizontal-accordion;
 // @include foundation-accordion-menu;
 // @include foundation-badge;
 // @include foundation-breadcrumbs;
@@ -369,7 +369,7 @@ body {
 		}
 		
 		@include breakpoint(medium){
-			@include horizontal-accordion-container;
+			@include blur-accordion-container();
 		}
 		
 		& > * {
@@ -381,13 +381,12 @@ body {
 			}
 	
 			@include breakpoint(medium){
-				@include horizontal-accordion-item;
+				@include blur-accordion-item;
 			}
 
 			&.is-active {
 				.lead {
 					@include breakpoint(medium){
-						opacity: 0;
 					}
 				}
 			}
@@ -407,15 +406,12 @@ body {
 			}
 			
 			.lead {
-				opacity: 1;
-				transition: opacity ease-in-out .5s;
-				
 				@include breakpoint(small only){
-					@include accordion-title;
+					@include accordion-title();
 				}
 				
 				@include breakpoint(medium){
-					@include horizontal-accordion-title($height: 450);					
+					@include blur-accordion-title();
 				}
 				
 				h3 {
@@ -425,15 +421,11 @@ body {
 			
 			.excerpt {				
 				@include breakpoint(small only){
-					@include accordion-content;
+					@include accordion-content();
 				}
 				
 				@include breakpoint(medium){
-					@include horizontal-accordion-content;					
-					top: auto;
-					bottom: 0;
-					padding-right: rem-calc(75);
-					padding-bottom: $global-padding;
+					@include blur-accordion-content();
 				}
 				
 				p {

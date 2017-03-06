@@ -96,7 +96,7 @@
 						tabContent: '.excerpt'	
 					};
 			if( Foundation.MediaQuery.atLeast('medium') ){
-				var elem = new Foundation.horizontalAccordion( $('#mission'), accordionOptions );
+				var elem = new Foundation.blurAccordion( $('#mission'), accordionOptions);
 			} else {
 		        $('#mission').children('.is-active').removeAttr( 'style' );
 		        $('#mission').children('.is-active').children(accordionOptions.tabContent).removeAttr( 'style', 'width' );
@@ -108,7 +108,6 @@
 			}
 		}
 		updateAccordion();
-		
 		
 	}).resize();
 })(jQuery);

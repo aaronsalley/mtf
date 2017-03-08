@@ -63,9 +63,12 @@ $blur-accordion-height: rem-calc(600) !default;
 	float: left;
 	height: rem-calc($height);
 	
+	&, & > * {
+		transition: ease-in-out all .5s;
+	}
+		
 	.background {
 		filter: blur(0px);
-		transition: ease-in-out all .5s;
 	}
 	
 	&.blur .background {

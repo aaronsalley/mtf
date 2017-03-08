@@ -9105,8 +9105,10 @@ function _classCallCheck(instance, Constructor) {
             shrink = _this.options.shrink,
             tabs = _this.$tabs;
 
-        $target.parent().siblings().addClass('blur').width($target.parent().width() - shrink);
-        $target.parent().addClass('is-active').width($target.parent().width() + shrink * tabs.length);
+        this.shrinkWidth = _this.$element.width() / tabs.length - shrink;
+
+        $target.parent().siblings().addClass('blur').width(this.shrinkWidth);
+        $target.parent().addClass('is-active').width(_this.$element.width() - this.shrinkWidth * (tabs.length - 1));
 
         _this.$element.trigger('down.zf.accordion', [$target]);
 
@@ -9547,6 +9549,7 @@ function _classCallCheck(instance, Constructor) {
 	$(window).on('resize', function () {
 		function updateAccordion() {
 			var accordionOptions = {
+				shrink: 100,
 				accordionItem: 'article',
 				tabContent: '.excerpt'
 			};

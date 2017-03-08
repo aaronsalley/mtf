@@ -151,9 +151,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var _this = this,
         	shrink = _this.options.shrink,
         	tabs = _this.$tabs;
-        
-        $target.parent().siblings().addClass('blur').width($target.parent().width()-shrink);
-        $target.parent().addClass('is-active').width($target.parent().width()+(shrink*tabs.length));
+        	        
+			this.shrinkWidth = _this.$element.width()/tabs.length-shrink;
+
+        $target.parent().siblings().addClass('blur').width( this.shrinkWidth );
+        $target.parent().addClass('is-active').width( _this.$element.width() - (this.shrinkWidth * (tabs.length - 1)) );
         
         _this.$element.trigger('down.zf.accordion', [$target]);
 

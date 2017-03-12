@@ -25,6 +25,7 @@
     "owl.carousel": "^2.2.0",
     "background-check": "https://github.com/kennethcachia/background-check.git#^1.2.2",
     "isotope": "isotope-layout#^3.0.2",
-    "PerspectivePageViewNavigation": "https://github.com/codrops/PerspectivePageViewNavigation.git"
+    "PerspectivePageViewNavigation": "https://github.com/codrops/PerspectivePageViewNavigation.git",
+    "jsforce": "https://github.com/jsforce/jsforce.git#^1.7.1"
   }
 }

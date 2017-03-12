@@ -4,7 +4,34 @@
 	// Initalize Foundation components
 	var elem = new Foundation.DropdownMenu( $('.header .site') );
 //  	var elem = new Foundation.OffCanvas($('site'));
+	
+	$('.carousel').owlCarousel({
+		responsive: {
+			0 : {
+				items: 2,
+				margin: 10
+			},
+			640 : {
+				items: 4,
+				margin: 10
+			},
+			1024 : {
+				items: 5,
+				margin: 20
+			}
+		},
+		itemElement: 'article',
+		loop: true
+	});
 
+	if ( $('.background').length ){
+		BackgroundCheck.init({
+		  targets: '.background',
+		  images: '.background',
+		  changeParent: true
+		});
+	}
+	
 /*
 	function perspective(args) {
 		var showMenu = $( args.trigger ),
@@ -53,33 +80,6 @@
 	});
 */
 
-	$('.carousel').owlCarousel({
-		responsive: {
-			0 : {
-				items: 2,
-				margin: 10
-			},
-			640 : {
-				items: 4,
-				margin: 10
-			},
-			1024 : {
-				items: 5,
-				margin: 20
-			}
-		},
-		itemElement: 'article',
-		loop: true
-	});
-
-	if ( $('.background').length ){
-		BackgroundCheck.init({
-		  targets: '.background',
-		  images: '.background',
-		  changeParent: true
-		});
-	}
-	
 /*
 	$('.filter').isotope({
 		getSortData: {

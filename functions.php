@@ -249,7 +249,7 @@ function mtf_scripts() {
 	wp_dequeue_style( 'hm-wcdon-frontend-styles' );
 
 	wp_enqueue_script( 'background-check', get_theme_file_uri( '/bower_components/background-check/background-check.min.js' ), array( 'jquery' ), null, true );
-	wp_enqueue_script( 'mtf-script', get_theme_file_uri( '/dist/js/scripts.min.js' ), array( 'jquery' ), null, true );
+	wp_enqueue_script( 'mtf-script', get_theme_file_uri( '/dist/js/scripts.js' ), array( 'jquery' ), null, true );
 
 	wp_localize_script( 'mtf-script', 'screenReaderText', array(
 		'expand'   => __( 'expand child menu', 'mtf' ),

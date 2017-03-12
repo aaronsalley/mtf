@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "gulp",
-    "build": "gulp sass",
+    "build": "gulp sass scripts",
     "scripts": "gulp scripts",
     "scripts-watch": "gulp scripts-watch"
   },

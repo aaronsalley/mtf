@@ -73,6 +73,9 @@ Copyright © Aaron Salley Design
 // @import 'video';
 
 // Mixins
+$mtf-red: #ff2c1d;
+
+
 
 // Template Parts
 body {
@@ -87,6 +90,11 @@ body {
 		&:hover {
 			opacity: .5;
 		}
+	}
+	
+	img[src*='.svg']{
+		width: 100%;
+		height: auto;
 	}
 	
 	input {
@@ -194,6 +202,13 @@ body {
 			font-family: Helvetica, Roboto, Arial, sans-serif;
 		}
 		
+		.content {
+			
+			a {
+				font-weight: bold;
+				color: $mtf-red !important;
+			}
+		}
 	}
 	
 	& > .footer {
@@ -330,6 +345,8 @@ body {
 		}
 		
 		.mtf-logo {
+			object-fit: contain;
+			
 			@include breakpoint(medium) {
 				@include grid-column(3);
 				position: absolute;
@@ -340,7 +357,7 @@ body {
 	}
 
 	.donate {
-		color: rgba(255,44,29,1) !important;
+		color: $mtf-red !important;
 	}
 
 	.container {

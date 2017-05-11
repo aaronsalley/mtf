@@ -26,11 +26,11 @@
 				if ( $project == $post->ID ) {
 					$customer = $wpdb->get_row("SELECT c_id FROM " . $wpdb->prefix . "wc_crm_customer_list WHERE user_id = '{$user->ID}'");
 					$this_user = new WC_CRM_Customer($customer->c_id);
-					$peepso = new PeepSoUser($user->ID);
+// 					$peepso = new PeepSoUser($user->ID);
 				?>
 				<article class="member">
-					<a href="<?php echo $peepso->get_profileurl(); ?>">
-						<div class="headshot"><img class="avatar" src="<?php echo $peepso->get_avatar(true); ?>"/></div>
+					<a href="<?php echo /* $peepso->get_profileurl(); */ ?>">
+						<div class="headshot"><img class="avatar" src="<?php /* echo $peepso->get_avatar(true); */ ?>"/></div>
 						<h5 class="name"><?php echo $this_user->name; ?></h5>
 						<h5 class="role"><?php echo ''; ?></h5>
 					</a>

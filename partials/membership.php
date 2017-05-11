@@ -19,11 +19,11 @@
 		$user = new WC_CRM_Customer;
 		$this_user = $user->get_customer($customer_id);
 	
-    $peepso = new PeepSoUser($wp_user_id);
+//     $peepso = new PeepSoUser($wp_user_id);
 
 	if( $user->status == $this_directory || 'leadership' ) : ?> 
 		<article class="member">
-			<div class="headshot"><img class="avatar" src="<?php echo $peepso->get_avatar(true); ?>"/></div>
+			<div class="headshot"><img class="avatar" src="<?php /* echo $peepso->get_avatar(true); */ ?>"/></div>
 			<h5 class="name"><?php echo $user->get_name(); ?></h5>
 			<h5 class="position"><?php echo $user->customer_categories; ?></h5>
 		</article>

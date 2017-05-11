@@ -11,19 +11,15 @@
 <body id="perspective" <?php body_class( 'site' ); ?>>
 	<header class="header">
 		<menu class="action">
-			<?php
-			$url = PeepSo::get_page('profile');
-			if( is_user_logged_in() ) {
-				$user = wp_get_current_user();
-				echo "<a href='{$url}'>Welcome back, {$user->display_name}!</a>";
-			} else {
-				echo _e( "<a href='{$url}'>Sign up or log in!</a>", 'mtf' );
-			} ?>
-			<?php wp_nav_menu( array(
+			<?php 
+/*
+			wp_nav_menu( array(
 				'container'			=> '',
 				'container_class'	=> 'action',
 				'theme_location'	=> 'action'
-			)); ?>
+			)); 
+*/
+			?>
 		</menu>
 		<?php the_custom_logo(); ?>
 		

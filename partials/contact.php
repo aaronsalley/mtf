@@ -21,8 +21,6 @@
 				
     $group_ids = $user->get_groups();
 
-    $peepso = new PeepSoUser($wp_user_id);
-
 	$groups = array();
 		foreach ( $group_ids as $group_id ) {
 			$groups[] = $wpdb->get_row("SELECT * FROM " . $wpdb->prefix . "wc_crm_groups WHERE ID = '$group_id'");
@@ -32,7 +30,7 @@
 			?> 
 			<article class="member">
 				<a href="mailto:<?php echo $user->get_email(); ?>">
-					<div class="headshot"><img class="avatar" src="<?php echo $peepso->get_avatar(true); ?>"/></div>
+					<div class="headshot"><img class="avatar" src="#"/></div>
 					<h5 class="name"><?php echo $user->get_name(); ?></h5>
 					<h5 class="position"><?php echo $user->__get('title'); ?></h5>
 					<h5 class="contact"><?php echo $user->get_email(); ?></h5>

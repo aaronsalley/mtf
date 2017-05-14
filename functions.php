@@ -8,7 +8,7 @@
 
 if ( ! function_exists( 'mtf_setup' ) ) :
 require_once( 'etc/custom-post-types.php' );
-// require_once( 'm/app.php' );
+require_once( 'm/app.php' );
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.
@@ -105,6 +105,17 @@ function mtf_setup() {
 	// Ready for WooCommerce
     add_theme_support( 'woocommerce' );
 // 	add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
+
+    add_theme_support( 'church-theme-content' );
+ 
+    /**
+     * Plugin Features
+     *
+     * When array of arguments not given, plugin defaults are used (enabling all taxonomies
+     * and fields for feature). It is recommended to explicitly specify taxonomies and
+     * fields used by theme so plugin updates don't reveal unsupported features.
+     */
+    add_theme_support( 'ctc-people' );
 
 	// Create Podcasts post type
 	new custom_post_type( 'podcast', null, null, array(
@@ -337,6 +348,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-MJC2VLF');</script>";
+/*
 	echo "<script type='text/javascript'>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -347,5 +359,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	  ga('send', 'pageview');
 	
 	</script>";
+*/
 }
 add_action( 'wp_head', 'mtf_google' );

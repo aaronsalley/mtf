@@ -95,8 +95,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           var $tabContent = $elem.children(_this.options.tabContent);
           if ($tabContent.length) {
-            $elem.off('click.zf.accordion keydown.zf.accordion').on('mouseenter mouseleave click.zf.accordion', function (e) {
-              e.preventDefault();
+            $elem.off('keydown.zf.accordion').on('mouseenter mouseleave', function (e) {
+//               e.preventDefault();
               _this.toggle($tabContent);
             }).on('keydown.zf.accordion', function (e) {
               Foundation.Keyboard.handleKey(e, 'blurAccordion', {
@@ -152,7 +152,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         	shrink = _this.options.shrink,
         	tabs = _this.$tabs;
         	        
-			this.shrinkWidth = _this.$element.width()/tabs.length-shrink;
+			this.shrinkWidth = shrink;
 
         $target.parent().siblings().addClass('blur').width( this.shrinkWidth );
         $target.parent().addClass('is-active').width( _this.$element.width() - (this.shrinkWidth * (tabs.length - 1)) );

@@ -92,7 +92,7 @@
 	$(window).on( 'resize', function(){
 		function updateAccordion() {
 			var accordionOptions = {
-						shrink: 100,
+						shrink: 75,
 						accordionItem: 'article',
 						tabContent: '.excerpt'	
 					};

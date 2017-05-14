@@ -9,8 +9,8 @@
 	if ( $mission->have_posts() ) : $i = 1 ; while( $mission->have_posts() ) : $mission->the_post(); ?>
 	<article <?php post_class( $i == 1 ? 'is-active' : '' ); ?>>
 		<div class="background" style="background-image:url(<?php the_post_thumbnail_url(); ?>)"></div>
-		<a class="lead" href="#"><h3><?php the_title(); ?></h3></a>
-		<content class="excerpt"><a href="<?php the_permalink(); ?>"><?php the_excerpt(); ?></a></content>
+		<a class="lead" href="<?php the_permalink(); ?>"><h3><?php the_title(); ?></h3></a>
+		<content class="excerpt"><?php the_excerpt(); ?></content>
 	</article>
 	<?php 
 		$i++; endwhile; endif; wp_reset_postdata();

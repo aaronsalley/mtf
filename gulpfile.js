@@ -25,10 +25,6 @@ gulp.task('sass', function() {
     .pipe(gulp.dest(''));
 });
 
-gulp.task('default', ['sass'], function() {
-  gulp.watch(['src/scss/**/*.scss'], ['sass']);
-});
-
 gulp.task('scripts', function() {
     return gulp.src([
     	'bower_components/foundation-sites/dist/js/plugins/foundation.core.js',
@@ -58,6 +54,6 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('scripts-watch', ['scripts'], function() {
-  gulp.watch(['src/js/**/*.js'], ['scripts']);
+gulp.task('default', ['sass'], function() {
+  gulp.watch(['src/scss/**/*.scss', 'src/js/**/*.js'], ['sass', 'scripts']);
 });

@@ -39,6 +39,8 @@ function mtf_setup() {
 	 */
 	add_theme_support( 'post-thumbnails' );
 	
+	add_post_type_support( 'page', 'excerpt' );
+	
 	// This theme uses wp_nav_menu().
 	register_nav_menus( array(
 		'main' => __( 'Primary Navigation Menu', 'mtf' ),
@@ -97,7 +99,7 @@ function mtf_setup() {
 	 * This theme styles the visual editor to resemble the theme style,
 	 * specifically font, colors, icons, and column width.
 	 */
-	add_editor_style( array( 'css/editor-style.css' ) );
+	add_editor_style( array( 'dist/css/editor-style.css' ) );
 
 	// Indicate widget sidebars can use selective refresh in the Customizer.
 	add_theme_support( 'customize-selective-refresh-widgets' );
@@ -165,6 +167,26 @@ function mtf_setup() {
 		),
         'show_admin_column'  => true
 	) );
+	
+	function project_columns_head($defaults){
+		$new = array();
+		foreach($defaults as $key => $title) {
+			if ($key=='title') // Put the Thumbnail column before the Author column
+				$new['artwork'] = 'Show Artwork';
+			$new[$key] = $title;
+		}
+		return $new;
+	}
+	function project_columns_content($column_name, $post_ID){
+	    if ($column_name == 'artwork') {
+		    $post_thumbnail_id = get_post_thumbnail_id($post_ID);
+		    if ($post_thumbnail_id) {
+				echo wp_get_attachment_image($post_thumbnail_id, array(80,80));
+		    }
+	    }
+	}
+	add_filter('manage_project_posts_columns', 'project_columns_head');
+	add_action('manage_project_posts_custom_column', 'project_columns_content', 10, 2);
 }
 endif; // mtf_setup
 add_action( 'after_setup_theme', 'mtf_setup' );
@@ -289,6 +311,11 @@ function mtf_scripts() {
 	) );
 }
 add_action( 'wp_enqueue_scripts', 'mtf_scripts' );
+
+function mtf_admin_scripts() {
+	wp_enqueue_style( 'mtf-admin', get_theme_file_uri( '/dist/css/admin.css' ) );
+}
+add_action( 'admin_enqueue_scripts', 'mtf_admin_scripts' );
 
 function mtf_clean_up() {
 	//remove generator meta tag

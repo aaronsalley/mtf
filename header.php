@@ -21,13 +21,11 @@
 */
 			?>
 		</menu>
-		<?php the_custom_logo(); ?>
-		
 		<button class="menu-icon" type="button" data-toggle="offCanvas"></button>
-		
+		<?php the_custom_logo(); ?>		
 		<?php wp_nav_menu( array(
 			'container'			=> 'nav',
-			'container_class'	=> 'site',
+			'container_class'	=> 'site-nav outer-nav',
 			'theme_location'	=> 'main'
 		)); ?>
 	</header>

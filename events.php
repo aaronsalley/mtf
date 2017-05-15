@@ -19,7 +19,7 @@ get_header();
 	<?php if ( is_tax() ) { ?>
 		<?php echo term_description(); ?>
 	<? } else { ?>
-		<?php tribe_events_before_html(); ?>
+<!-- 		<?php tribe_events_before_html(); ?> -->
 		<?php tribe_get_view(); ?>
 		<?php tribe_events_after_html(); ?>
 	<? } ?>

@@ -8,17 +8,17 @@ html, body, .perspective {
 	position: relative;
 }
 
-.container {
+body > .container {
 	background: #fff;
 	min-height: 100%;
 	position: relative;
 	outline: 1px solid rgba(0,0,0,0);
 	z-index: 10;
 }
-.container.transform {
+body > .container.transform {
 	transform: translateZ(0) translateX(0) rotateY(0deg);
 }
-.container::after {
+body > .container::after {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -193,7 +193,6 @@ html, body, .perspective {
 }
 
 .effect-moveleft .outer-nav a {
-	color: #e86a32;
 	opacity: 0;
 	transform: translateX(100px) translateZ(-1000px);
 	transition: transform 0.4s, opacity 0.4s;

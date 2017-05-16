@@ -127,28 +127,14 @@ $mtf-red: #ff2c1d;
 				}
 				
 				.sub-menu {
-					top: 3rem;
-					left: auto;
-					margin-right: .5rem;
-					margin-left: .5rem;
-					padding-right: .5rem;
-					padding-left: .5rem;
-					border: none;
-					box-shadow: rem-calc(0 6 10) black;
-										
-					.menu-item {
-						list-style: none;
-						font-family: inherit;
-						text-align: left;
-						color: black;
-					}
+					display: none;
 				}
 			}
 		}
 	}
 
 	& > .header,
-	& > .container .wrapper .header {
+	& > .container > .wrapper > .header {
 		@include grid-row;
 		position: relative;
 		padding-top: $global-padding;
@@ -250,8 +236,15 @@ $mtf-red: #ff2c1d;
 	}
 	
 	& > .content,
-	& > .container .wrapper .content {
+	& > .container > .wrapper > .content {
 		@include grid-row;
+		padding-right: $global-padding;
+		padding-left: $global-padding;
+		
+		@include breakpoint(medium){
+			padding-right: 0;
+			padding-left: 0;
+		}
 		
 		p, input, .nf-field-element {
 			font-family: Helvetica, Roboto, Arial, sans-serif;
@@ -264,7 +257,6 @@ $mtf-red: #ff2c1d;
 		}
 		
 		.content {
-			
 			a {
 				font-weight: bold;
 				color: $mtf-red !important;
@@ -273,7 +265,7 @@ $mtf-red: #ff2c1d;
 	}
 	
 	& > .footer,
-	& > .container .wrapper .footer {
+	& > .container > .wrapper > .footer {
 		padding-top: rem-calc(120);
 		padding-right: rem-calc(0);
 		padding-bottom: $global-padding;
@@ -464,9 +456,15 @@ $mtf-red: #ff2c1d;
 					opacity: .5;
 				}
 				
-				.lead {					
+				.lead {
+					&:focus,
+					&:hover {
+						background-color: transparent;
+					}
+					
 					@include breakpoint(medium){
-						&:hover {
+						&:hover,
+						&:focus {
 							opacity: 1;
 						}
 					}
@@ -507,6 +505,8 @@ $mtf-red: #ff2c1d;
 			.excerpt {				
 				@include breakpoint(small only){
 					@include accordion-content();
+					position: relative;
+					z-index: 9;
 					background-color: transparent;
 					color: white;
 				}

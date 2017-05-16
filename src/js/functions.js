@@ -2,7 +2,9 @@
 	$(document).foundation();
 	
 	// Initalize Foundation components
-	var elem = new Foundation.DropdownMenu( $('.header .site-nav') );
+	if( Foundation.MediaQuery.atLeast('medium') ){
+		var elem = new Foundation.DropdownMenu( $('.header .site-nav') );
+	}
 	
 	$('.carousel').owlCarousel({
 		responsive: {

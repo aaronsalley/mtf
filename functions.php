@@ -8,7 +8,6 @@
 
 if ( ! function_exists( 'mtf_setup' ) ) :
 require_once( 'etc/custom-post-types.php' );
-require_once( 'm/app.php' );
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.
@@ -86,6 +85,7 @@ function mtf_setup() {
 	// Allow theme customizations
 	add_theme_support( 'custom-background', array( 'wp-head-callback' => 'return_false' ) );
 	add_theme_support( 'custom-logo' );
+	
 	function change_logo_class( $html ) {
 	
 	    $html = str_replace( 'custom-logo', 'mtf-logo', $html );
@@ -95,14 +95,14 @@ function mtf_setup() {
 	}
 	add_filter( 'get_custom_logo', 'change_logo_class' );	
 
+	// Indicate widget sidebars can use selective refresh in the Customizer.
+	add_theme_support( 'customize-selective-refresh-widgets' );
+	
 	/*
 	 * This theme styles the visual editor to resemble the theme style,
 	 * specifically font, colors, icons, and column width.
 	 */
 	add_editor_style( array( 'dist/css/editor-style.css' ) );
-
-	// Indicate widget sidebars can use selective refresh in the Customizer.
-	add_theme_support( 'customize-selective-refresh-widgets' );
 	
 	// Ready for WooCommerce
     add_theme_support( 'woocommerce' );
@@ -229,6 +229,66 @@ function mtf_archive_title( $title ) {
 }
 add_filter( 'get_the_archive_title', 'mtf_archive_title' );
 
+function mtf_excerpt_more( $link ) {
+	if ( is_admin() ) {
+		return $link;
+	}
+
+	$format = get_post_format( get_the_ID() );
+	$text = '';
+	
+	$permalink = get_permalink( get_the_ID() );
+		
+	switch ($format) {
+		case "aside":
+			$text = "";
+			break;
+		case "chat":
+			$text = "";
+			break;
+		case "gallery":
+			$text = "View Gallery";
+			break;
+		case "link":
+			$text = "Follow Link";
+			$permalink = get_post_meta( get_the_ID(), "URL", true );
+			break;
+		case "image":
+			$text = "See Image";
+			break;
+		case "quote":
+			$text = "";
+			break;
+		case "status":
+			$text = "";
+			break;
+		case "video":
+			$text = "Watch Video";
+			break;
+		case "audio":
+			$text = "Listen";
+			break;
+		default:
+			$text = "Continue Reading";
+			break;
+	}
+
+    return sprintf( '<p class="read-more"><a href="%1$s">%2$s</a></p>',
+        $permalink,
+        __( $text . '→', 'mtf' )
+    );
+
+/*
+	$link = sprintf( '<p class="link-more"><a href="%1$s" class="more-link">%2$s</a></p>',
+		esc_url( get_permalink( get_the_ID() ) ),
+// 		translators: %s: Name of current post
+		sprintf( __( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'mtf' ), get_the_title( get_the_ID() ) )
+	);
+	return ' &hellip; ' . $link;
+*/
+}
+add_filter( 'excerpt_more', 'mtf_excerpt_more' );
+
 function mtf_events_category() {
     $tribe_events_cat = get_taxonomy( 'tribe_events_cat' );
 	$singular = 'program';
@@ -303,7 +363,7 @@ function mtf_scripts() {
 	wp_dequeue_style( 'hm-wcdon-frontend-styles' );
 
 	wp_enqueue_script( 'background-check', get_theme_file_uri( '/bower_components/background-check/background-check.min.js' ), array( 'jquery' ), null, true );
-	wp_enqueue_script( 'mtf-script', get_theme_file_uri( '/dist/js/scripts.js' ), array( 'jquery' ), null, true );
+	wp_enqueue_script( 'mtf-script', get_theme_file_uri( '/dist/js/scripts.min.js' ), array( 'jquery' ), null, true );
 
 	wp_localize_script( 'mtf-script', 'screenReaderText', array(
 		'expand'   => __( 'expand child menu', 'mtf' ),

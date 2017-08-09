@@ -18,7 +18,7 @@
 </section>
 
 <section id="events">
-	<h2 class="section-title"><?php echo _e('Upcoming Events', 'mtf'); ?></h2>
+	<h2 class="section-title"><?php echo _e('Hot at the Factory', 'mtf'); ?></h2>
 	<div class="carousel">
 		<?php 
 			$events = new WP_Query( array(
@@ -35,7 +35,7 @@
 		<article class="<?php echo $class; ?>">
 			<a href="<?php the_permalink(); ?>">
 				<div class="image"><img alt="<?php the_title(); ?>" src="<?php the_post_thumbnail_url( 'full' ); ?>"/></div>
-				<h3 class="time"><?php echo $this_date; ?> @ <?php echo $this_time; ?></h3>
+				<h3 class="time"><?php echo $this_date; ?></h3>
 				<h4 class="title"><?php the_title(); ?></h4>
 			</a>
 		</article>
@@ -75,10 +75,12 @@
 	
 	if( $support->have_posts() ) : while( $support->have_posts() ) : $support->the_post(); ?>
 	<article <?php post_class(); ?>>
-		<h2 class="title"><?php the_title(); ?></h3>
-		<content class="excerpt">
-			<?php the_excerpt(); ?>
-		</content>
+		<a href="<?php the_permalink();?>">
+			<h2 class="title"><?php the_title(); ?></h3>
+			<content class="excerpt">
+				<?php the_excerpt(); ?>
+			</content>
+		</a>
 	</article>
 	<?php endwhile; endif; wp_reset_postdata(); ?>
 </section>
@@ -91,18 +93,13 @@
 	
 	if( $volunteer->have_posts() ) : while( $volunteer->have_posts() ) : $volunteer->the_post(); ?>
 	<article <?php post_class(); ?>>
-		<h2 class="title"><?php the_title(); ?></h3>
-		<content class="excerpt">
-			<?php the_excerpt(); ?>
-		</content>
+		<a href="<?php the_permalink();?>">
+			<h2 class="title"><?php the_title(); ?></h3>
+			<content class="excerpt">
+				<?php the_excerpt(); ?>
+			</content>
+		</a>
 	</article>
 	<?php endwhile; endif; wp_reset_postdata(); ?>
 </section>
-
-<section id="gallery">
-</section>
-
-<section id="">
-</section>
-
 <?php get_footer(); ?>

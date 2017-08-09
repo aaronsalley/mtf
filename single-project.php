@@ -29,7 +29,7 @@
 // 					$peepso = new PeepSoUser($user->ID);
 				?>
 				<article class="member">
-					<a href="<?php echo /* $peepso->get_profileurl(); */ ?>">
+					<a href="<?php echo '';/* $peepso->get_profileurl(); */ ?>">
 						<div class="headshot"><img class="avatar" src="<?php /* echo $peepso->get_avatar(true); */ ?>"/></div>
 						<h5 class="name"><?php echo $this_user->name; ?></h5>
 						<h5 class="role"><?php echo ''; ?></h5>

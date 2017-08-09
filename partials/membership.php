@@ -15,7 +15,7 @@ $members = new WP_Query( array(
 if ( $members->have_posts() ) : ?> 
 <section id="<?php echo 'members'; ?>" class="members">
 	<?php while ( $members->have_posts() ) : $members->the_post(); ?>
-	<article class="member">
+	<article <?php echo post_class('member'); ?>>
 		<div class="headshot"><?php echo wp_get_attachment_image( get_metadata('post', $post->ID, '_thumbnail_id', true), 'thumbnail', false, array('class'=>'avatar') ); ?></div>
 		<h5 class="name"><?php the_title(); ?></h5>
 	</article>

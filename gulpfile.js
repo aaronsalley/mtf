@@ -38,6 +38,7 @@ gulp.task('scripts', function() {
 		'bower_components/owl.carousel/dist/owl.carousel.js',
 		'bower_components/colourBrightness.js/jquery.colourbrightness.js',
 		'bower_components/isotope/dist/isotope.pkgd.js',
+// 		'bower_components/background-check/background-check.js',
 /*
 		'bower_components/PerspectivePageViewNavigation/js/menu.js',
 		'bower_components/PerspectivePageViewNavigation/js/classie.js',

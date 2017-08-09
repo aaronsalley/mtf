@@ -32,7 +32,17 @@
 		  changeParent: true
 		});
 	}
-	
+
+	function supportsInlineSVG() {
+		var div = document.createElement( 'div' );
+		div.innerHTML = '<svg/>';
+		return 'http://www.w3.org/2000/svg' === ( 'undefined' !== typeof SVGRect && div.firstChild && div.firstChild.namespaceURI );
+	}
+
+	if ( true === supportsInlineSVG() ) {
+		document.documentElement.className = document.documentElement.className.replace( /(\s*)no-svg(\s*)/, '$1svg$2' );
+	}
+
 	function perspective(args) {
 		var showMenu = $( args.trigger ),
 			perspective = $( args.target );

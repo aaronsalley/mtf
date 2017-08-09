@@ -6,7 +6,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   "use strict";
 
-  var FOUNDATION_VERSION = '6.3.0';
+  var FOUNDATION_VERSION = '6.3.1';
 
   // Global Foundation object
   // This is attached to the window, or used as a module for AMD/Browserify
@@ -1282,7 +1282,7 @@ function _classCallCheck(instance, Constructor) {
 
         // Handle Leaf element Clicks
         if (_this.options.closeOnClickInside) {
-          this.$menuItems.on('click.zf.dropdownmenu touchend.zf.dropdownmenu', function (e) {
+          this.$menuItems.on('click.zf.dropdownmenu', function (e) {
             var $elem = $(this),
                 hasSub = $elem.hasClass(parClass);
             if (!hasSub) {
@@ -1566,68 +1566,79 @@ function _classCallCheck(instance, Constructor) {
     /**
      * Disallows hover events from opening submenus
      * @option
-     * @example false
+     * @type {boolean}
+     * @default false
      */
     disableHover: false,
     /**
      * Allow a submenu to automatically close on a mouseleave event, if not clicked open.
      * @option
-     * @example true
+     * @type {boolean}
+     * @default true
      */
     autoclose: true,
     /**
      * Amount of time to delay opening a submenu on hover event.
      * @option
-     * @example 50
+     * @type {number}
+     * @default 50
      */
     hoverDelay: 50,
     /**
      * Allow a submenu to open/remain open on parent click event. Allows cursor to move away from menu.
      * @option
-     * @example true
+     * @type {boolean}
+     * @default false
      */
     clickOpen: false,
     /**
      * Amount of time to delay closing a submenu on a mouseleave event.
      * @option
-     * @example 500
+     * @type {number}
+     * @default 500
      */
 
     closingTime: 500,
     /**
-     * Position of the menu relative to what direction the submenus should open. Handled by JS.
+     * Position of the menu relative to what direction the submenus should open. Handled by JS. Can be `'left'` or `'right'`.
      * @option
-     * @example 'left'
+     * @type {string}
+     * @default 'left'
      */
     alignment: 'left',
     /**
      * Allow clicks on the body to close any open submenus.
      * @option
-     * @example true
+     * @type {boolean}
+     * @default true
      */
     closeOnClick: true,
     /**
      * Allow clicks on leaf anchor links to close any open submenus.
      * @option
-     * @example true
+     * @type {boolean}
+     * @default true
      */
     closeOnClickInside: true,
     /**
      * Class applied to vertical oriented menus, Foundation default is `vertical`. Update this if using your own class.
      * @option
-     * @example 'vertical'
+     * @type {string}
+     * @default 'vertical'
      */
     verticalClass: 'vertical',
     /**
      * Class applied to right-side oriented menus, Foundation default is `align-right`. Update this if using your own class.
      * @option
-     * @example 'align-right'
+     * @type {string}
+     * @default 'align-right'
      */
     rightClass: 'align-right',
     /**
      * Boolean to force overide the clicking of links to perform default action, on second touch event for mobile.
      * @option
-     * @example false
+     * @type {boolean}
+     * @default true
      */
     forceFollow: true
   };
@@ -1646,6 +1657,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   /**
    * OffCanvas module.
    * @module foundation.offcanvas
+   * @requires foundation.util.keyboard
    * @requires foundation.util.mediaQuery
    * @requires foundation.util.triggers
    * @requires foundation.util.motion
@@ -1785,7 +1797,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         } else {
           this.isRevealed = false;
           this.$element.attr('aria-hidden', 'true');
-          this.$element.on({
+          this.$element.off('open.zf.trigger toggle.zf.trigger').on({
             'open.zf.trigger': this.open.bind(this),
             'toggle.zf.trigger': this.toggle.bind(this)
           });
@@ -1804,6 +1816,44 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       key: '_stopScrolling',
       value: function _stopScrolling(event) {
         return false;
+      }
+
+      // Taken and adapted from http://stackoverflow.com/questions/16889447/prevent-full-page-scrolling-ios
+      // Only really works for y, not sure how to extend to x or if we need to.
+
+    }, {
+      key: '_recordScrollable',
+      value: function _recordScrollable(event) {
+        var elem = this; // called from event handler context with this as elem
+
+        // If the element is scrollable (content overflows), then...
+        if (elem.scrollHeight !== elem.clientHeight) {
+          // If we're at the top, scroll down one pixel to allow scrolling up
+          if (elem.scrollTop === 0) {
+            elem.scrollTop = 1;
+          }
+          // If we're at the bottom, scroll up one pixel to allow scrolling down
+          if (elem.scrollTop === elem.scrollHeight - elem.clientHeight) {
+            elem.scrollTop = elem.scrollHeight - elem.clientHeight - 1;
+          }
+        }
+        elem.allowUp = elem.scrollTop > 0;
+        elem.allowDown = elem.scrollTop < elem.scrollHeight - elem.clientHeight;
+        elem.lastY = event.originalEvent.pageY;
+      }
+    }, {
+      key: '_stopScrollPropagation',
+      value: function _stopScrollPropagation(event) {
+        var elem = this; // called from event handler context with this as elem
+        var up = event.pageY < elem.lastY;
+        var down = !up;
+        elem.lastY = event.pageY;
+
+        if (up && elem.allowUp || down && elem.allowDown) {
+          event.stopPropagation();
+        } else {
+          event.preventDefault();
+        }
       }
 
       /**
@@ -1844,6 +1894,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         // If `contentScroll` is set to false, add class and disable scrolling on touch devices.
         if (this.options.contentScroll === false) {
           $('body').addClass('is-off-canvas-open').on('touchmove', this._stopScrolling);
+          this.$element.on('touchstart', this._recordScrollable);
+          this.$element.on('touchmove', this._stopScrollPropagation);
         }
 
         if (this.options.contentOverlay === true) {
@@ -1856,7 +1908,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         if (this.options.autoFocus === true) {
           this.$element.one(Foundation.transitionend(this.$element), function () {
-            _this.$element.find('a, button').eq(0).focus();
+            var canvasFocus = _this.$element.find('[data-autofocus]');
+            if (canvasFocus.length) {
+              canvasFocus.eq(0).focus();
+            } else {
+              _this.$element.find('a, button').eq(0).focus();
+            }
           });
         }
 
@@ -1894,6 +1951,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         // If `contentScroll` is set to false, remove class and re-enable scrolling on touch devices.
         if (this.options.contentScroll === false) {
           $('body').removeClass('is-off-canvas-open').off('touchmove', this._stopScrolling);
+          this.$element.off('touchstart', this._recordScrollable);
+          this.$element.off('touchmove', this._stopScrollPropagation);
         }
 
         if (this.options.contentOverlay === true) {
@@ -1976,93 +2035,103 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /**
      * Allow the user to click outside of the menu to close it.
      * @option
-     * @example true
+     * @type {boolean}
+     * @default true
      */
     closeOnClick: true,
 
     /**
      * Adds an overlay on top of `[data-off-canvas-content]`.
      * @option
-     * @example true
+     * @type {boolean}
+     * @default true
      */
     contentOverlay: true,
 
     /**
      * Enable/disable scrolling of the main content when an off canvas panel is open.
      * @option
-     * @example true
+     * @type {boolean}
+     * @default true
      */
     contentScroll: true,
 
     /**
      * Amount of time in ms the open and close transition requires. If none selected, pulls from body style.
      * @option
-     * @example 500
+     * @type {number}
+     * @default 0
      */
     transitionTime: 0,
 
     /**
      * Type of transition for the offcanvas menu. Options are 'push', 'detached' or 'slide'.
      * @option
-     * @example push
+     * @type {string}
+     * @default push
      */
     transition: 'push',
 
     /**
      * Force the page to scroll to top or bottom on open.
      * @option
-     * @example top
+     * @type {?string}
+     * @default null
      */
     forceTo: null,
 
     /**
      * Allow the offcanvas to remain open for certain breakpoints.
      * @option
-     * @example false
+     * @type {boolean}
+     * @default false
      */
     isRevealed: false,
 
     /**
      * Breakpoint at which to reveal. JS will use a RegExp to target standard classes, if changing classnames, pass your class with the `revealClass` option.
      * @option
-     * @example reveal-for-large
+     * @type {?string}
+     * @default null
      */
     revealOn: null,
 
     /**
      * Force focus to the offcanvas on open. If true, will focus the opening trigger on close.
      * @option
-     * @example true
+     * @type {boolean}
+     * @default true
      */
     autoFocus: true,
 
     /**
      * Class used to force an offcanvas to remain open. Foundation defaults for this are `reveal-for-large` & `reveal-for-medium`.
      * @option
-     * TODO improve the regex testing for this.
-     * @example reveal-for-large
+     * @type {string}
+     * @default reveal-for-
+     * @todo improve the regex testing for this.
      */
     revealClass: 'reveal-for-',
 
     /**
      * Triggers optional focus trapping when opening an offcanvas. Sets tabindex of [data-off-canvas-content] to -1 for accessibility purposes.
      * @option
-     * @example true
+     * @type {boolean}
+     * @default false
      */
     trapFocus: false
-  };
 
-  // Window exports
-  Foundation.plugin(OffCanvas, 'OffCanvas');
+    // Window exports
+  };Foundation.plugin(OffCanvas, 'OffCanvas');
 }(jQuery);
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
- * Owl Carousel v2.2.0
- * Copyright 2013-2016 David Deutsch
- * Licensed under MIT (https://github.com/OwlCarousel2/OwlCarousel2/blob/master/LICENSE)
+ * Owl Carousel v2.2.1
+ * Copyright 2013-2017 David Deutsch
+ * Licensed under  ()
  */
 /**
  * Owl carousel
@@ -2386,7 +2455,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			var clones = [],
 			    items = this._items,
 			    settings = this.settings,
-			    view = Math.max(settings.items * 2, 4),
+
+			// TODO: Should be computed from number of min width items in stage
+			view = Math.max(settings.items * 2, 4),
 			    size = Math.ceil(items.length / 2) * 2,
 			    repeat = settings.loop && items.length ? settings.rewind ? view : Math.max(view, size) : 0,
 			    append = '',
@@ -2395,6 +2466,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			repeat /= 2;
 
 			while (repeat--) {
+				// Switch to only using appended clones
 				clones.push(this.normalize(clones.length / 2, true));
 				append = append + items[clones[clones.length - 1]][0].outerHTML;
 				clones.push(this.normalize(items.length - 1 - (clones.length - 1) / 2, true));
@@ -3342,7 +3414,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		} else if (document.documentElement && document.documentElement.clientWidth) {
 			width = document.documentElement.clientWidth;
 		} else {
-			throw 'Can not detect viewport width.';
+			console.warn('Can not detect viewport width.');
 		}
 		return width;
 	};
@@ -3966,7 +4038,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				image = new Image();
 				image.onload = $.proxy(function () {
 					$element.css({
-						'background-image': 'url(' + url + ')',
+						'background-image': 'url("' + url + '")',
 						'opacity': '1'
 					});
 					this._core.trigger('loaded', { element: $element, url: url }, 'lazy');
@@ -4359,7 +4431,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		this._core.reset(item.index());
 
 		if (video.type === 'youtube') {
-			html = '<iframe width="' + width + '" height="' + height + '" src="//www.youtube.com/embed/' + video.id + '?autoplay=1&v=' + video.id + '" frameborder="0" allowfullscreen></iframe>';
+			html = '<iframe width="' + width + '" height="' + height + '" src="//www.youtube.com/embed/' + video.id + '?autoplay=1&rel=0&v=' + video.id + '" frameborder="0" allowfullscreen></iframe>';
 		} else if (video.type === 'vimeo') {
 			html = '<iframe src="//player.vimeo.com/video/' + video.id + '?autoplay=1" width="' + width + '" height="' + height + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 		} else if (video.type === 'vzaar') {
@@ -5354,13 +5426,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /*!
- * Isotope PACKAGED v3.0.2
+ * Isotope PACKAGED v3.0.4
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
  *
  * http://isotope.metafizzy.co
- * Copyright 2016 Metafizzy
+ * Copyright 2017 Metafizzy
  */
 
 /**
@@ -5795,7 +5867,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /**
- * matchesSelector v2.0.1
+ * matchesSelector v2.0.2
  * matchesSelector( element, '.selector' )
  * MIT license
  */
@@ -5821,7 +5893,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   'use strict';
 
   var matchesMethod = function () {
-    var ElemProto = Element.prototype;
+    var ElemProto = window.Element.prototype;
     // check for the standard method name first
     if (ElemProto.matches) {
       return 'matches';
@@ -5848,7 +5920,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /**
- * Fizzy UI utils v2.0.3
+ * Fizzy UI utils v2.0.5
  * MIT license
  */
 
@@ -5898,7 +5970,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     if (Array.isArray(obj)) {
       // use object if already an array
       ary = obj;
-    } else if (obj && typeof obj.length == 'number') {
+    } else if (obj && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) == 'object' && typeof obj.length == 'number') {
       // convert nodeList to array
       for (var i = 0; i < obj.length; i++) {
         ary.push(obj[i]);
@@ -5922,7 +5994,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   // ----- getParent ----- //
 
   utils.getParent = function (elem, selector) {
-    while (elem != document.body) {
+    while (elem.parentNode && elem != document.body) {
       elem = elem.parentNode;
       if (matchesSelector(elem, selector)) {
         return elem;
@@ -7722,7 +7794,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /*!
- * Masonry v4.1.1
+ * Masonry v4.2.0
  * Cascading grid layout library
  * http://masonry.desandro.com
  * MIT License
@@ -7751,7 +7823,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   // isFitWidth -> fitWidth
   Masonry.compatOptions.fitWidth = 'isFitWidth';
 
-  Masonry.prototype._resetLayout = function () {
+  var proto = Masonry.prototype;
+
+  proto._resetLayout = function () {
     this.getSize();
     this._getMeasurement('columnWidth', 'outerWidth');
     this._getMeasurement('gutter', 'outerWidth');
@@ -7764,9 +7838,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     this.maxY = 0;
+    this.horizontalColIndex = 0;
   };
 
-  Masonry.prototype.measureColumns = function () {
+  proto.measureColumns = function () {
     this.getContainerWidth();
     // if columnWidth is 0, default to outerWidth of first item
     if (!this.columnWidth) {
@@ -7791,7 +7866,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     this.cols = Math.max(cols, 1);
   };
 
-  Masonry.prototype.getContainerWidth = function () {
+  proto.getContainerWidth = function () {
     // container is parent if fit width
     var isFitWidth = this._getOption('fitWidth');
     var container = isFitWidth ? this.element.parentNode : this.element;
@@ -7801,7 +7876,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     this.containerWidth = size && size.innerWidth;
   };
 
-  Masonry.prototype._getItemLayoutPosition = function (item) {
+  proto._getItemLayoutPosition = function (item) {
     item.getSize();
     // how many columns does this brick span
     var remainder = item.size.outerWidth % this.columnWidth;
@@ -7809,33 +7884,40 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // round if off by 1 pixel, otherwise use ceil
     var colSpan = Math[mathMethod](item.size.outerWidth / this.columnWidth);
     colSpan = Math.min(colSpan, this.cols);
-
-    var colGroup = this._getColGroup(colSpan);
-    // get the minimum Y value from the columns
-    var minimumY = Math.min.apply(Math, colGroup);
-    var shortColIndex = colGroup.indexOf(minimumY);
-
+    // use horizontal or top column position
+    var colPosMethod = this.options.horizontalOrder ? '_getHorizontalColPosition' : '_getTopColPosition';
+    var colPosition = this[colPosMethod](colSpan, item);
     // position the brick
     var position = {
-      x: this.columnWidth * shortColIndex,
-      y: minimumY
+      x: this.columnWidth * colPosition.col,
+      y: colPosition.y
     };
-
     // apply setHeight to necessary columns
-    var setHeight = minimumY + item.size.outerHeight;
-    var setSpan = this.cols + 1 - colGroup.length;
-    for (var i = 0; i < setSpan; i++) {
-      this.colYs[shortColIndex + i] = setHeight;
+    var setHeight = colPosition.y + item.size.outerHeight;
+    var setMax = colSpan + colPosition.col;
+    for (var i = colPosition.col; i < setMax; i++) {
+      this.colYs[i] = setHeight;
     }
 
     return position;
+  };
+
+  proto._getTopColPosition = function (colSpan) {
+    var colGroup = this._getTopColGroup(colSpan);
+    // get the minimum Y value from the columns
+    var minimumY = Math.min.apply(Math, colGroup);
+
+    return {
+      col: colGroup.indexOf(minimumY),
+      y: minimumY
+    };
   };
 
   /**
    * @param {Number} colSpan - number of columns the element spans
    * @returns {Array} colGroup
    */
-  Masonry.prototype._getColGroup = function (colSpan) {
+  proto._getTopColGroup = function (colSpan) {
     if (colSpan < 2) {
       // if brick spans only one column, use all the column Ys
       return this.colYs;
@@ -7846,15 +7928,38 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     var groupCount = this.cols + 1 - colSpan;
     // for each group potential horizontal position
     for (var i = 0; i < groupCount; i++) {
-      // make an array of colY values for that one group
-      var groupColYs = this.colYs.slice(i, i + colSpan);
-      // and get the max value of the array
-      colGroup[i] = Math.max.apply(Math, groupColYs);
+      colGroup[i] = this._getColGroupY(i, colSpan);
     }
     return colGroup;
   };
 
-  Masonry.prototype._manageStamp = function (stamp) {
+  proto._getColGroupY = function (col, colSpan) {
+    if (colSpan < 2) {
+      return this.colYs[col];
+    }
+    // make an array of colY values for that one group
+    var groupColYs = this.colYs.slice(col, col + colSpan);
+    // and get the max value of the array
+    return Math.max.apply(Math, groupColYs);
+  };
+
+  // get column position based on horizontal index. #873
+  proto._getHorizontalColPosition = function (colSpan, item) {
+    var col = this.horizontalColIndex % this.cols;
+    var isOver = colSpan > 1 && col + colSpan > this.cols;
+    // shift to next row if item can't fit on current row
+    col = isOver ? 0 : col;
+    // don't let zero-size items take up space
+    var hasSize = item.size.outerWidth && item.size.outerHeight;
+    this.horizontalColIndex = hasSize ? col + colSpan : this.horizontalColIndex;
+
+    return {
+      col: col,
+      y: this._getColGroupY(col, colSpan)
+    };
+  };
+
+  proto._manageStamp = function (stamp) {
     var stampSize = getSize(stamp);
     var offset = this._getElementOffset(stamp);
     // get the columns that this stamp affects
@@ -7876,7 +7981,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
   };
 
-  Masonry.prototype._getContainerSize = function () {
+  proto._getContainerSize = function () {
     this.maxY = Math.max.apply(Math, this.colYs);
     var size = {
       height: this.maxY
@@ -7889,7 +7994,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return size;
   };
 
-  Masonry.prototype._getContainerFitWidth = function () {
+  proto._getContainerFitWidth = function () {
     var unusedCols = 0;
     // count unused columns
     var i = this.cols;
@@ -7903,7 +8008,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return (this.cols - unusedCols) * this.columnWidth - this.gutter;
   };
 
-  Masonry.prototype.needsResizeLayout = function () {
+  proto.needsResizeLayout = function () {
     var previousWidth = this.containerWidth;
     this.getContainerWidth();
     return previousWidth != this.containerWidth;
@@ -8081,13 +8186,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /*!
- * Isotope v3.0.2
+ * Isotope v3.0.4
  *
  * Licensed GPLv3 for open source use
  * or Isotope Commercial License for commercial use
  *
  * http://isotope.metafizzy.co
- * Copyright 2016 Metafizzy
+ * Copyright 2017 Metafizzy
  */
 
 (function (window, factory) {
@@ -8466,20 +8571,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   // sort filteredItem order
   proto._sort = function () {
-    var sortByOpt = this.options.sortBy;
-    if (!sortByOpt) {
+    if (!this.options.sortBy) {
       return;
     }
-    // concat all sortBy and sortHistory
-    var sortBys = [].concat.apply(sortByOpt, this.sortHistory);
-    // sort magic
-    var itemSorter = getItemSorter(sortBys, this.options.sortAscending);
-    this.filteredItems.sort(itemSorter);
     // keep track of sortBy History
-    if (sortByOpt != this.sortHistory[0]) {
-      // add to front, oldest goes in last
-      this.sortHistory.unshift(sortByOpt);
+    var sortBys = utils.makeArray(this.options.sortBy);
+    if (!this._getIsSameSortBy(sortBys)) {
+      // concat all sortBy and sortHistory, add to front, oldest goes in last
+      this.sortHistory = sortBys.concat(this.sortHistory);
     }
+    // sort magic
+    var itemSorter = getItemSorter(this.sortHistory, this.options.sortAscending);
+    this.filteredItems.sort(itemSorter);
+  };
+
+  // check if sortBys is same as start of sortHistory
+  proto._getIsSameSortBy = function (sortBys) {
+    for (var i = 0; i < sortBys.length; i++) {
+      if (sortBys[i] != this.sortHistory[i]) {
+        return false;
+      }
+    }
+    return true;
   };
 
   // returns a function used for sorting
@@ -9511,6 +9624,16 @@ function _classCallCheck(instance, Constructor) {
 			images: '.background',
 			changeParent: true
 		});
+	}
+
+	function supportsInlineSVG() {
+		var div = document.createElement('div');
+		div.innerHTML = '<svg/>';
+		return 'http://www.w3.org/2000/svg' === ('undefined' !== typeof SVGRect && div.firstChild && div.firstChild.namespaceURI);
+	}
+
+	if (true === supportsInlineSVG()) {
+		document.documentElement.className = document.documentElement.className.replace(/(\s*)no-svg(\s*)/, '$1svg$2');
 	}
 
 	function perspective(args) {

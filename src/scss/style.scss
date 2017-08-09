@@ -655,8 +655,12 @@ $mtf-red: #ff2c1d;
 		box-shadow: rem-calc(0 0 10) black;
 		
 		.menu {
-			@include menu-simple;
-			display: inline-block;
+			@include menu-direction(vertical);
+
+			@include breakpoint(medium){
+				@include menu-simple;
+				display: inline-block;
+			}
 			
 			.page-item {
 				@extend h4;
@@ -672,6 +676,10 @@ $mtf-red: #ff2c1d;
 
 		@include breakpoint(medium) {
 			@include grid-column(7);
+		}
+		
+		&.full-width {
+			@include grid-column(12);
 		}
 	}
 
@@ -709,6 +717,7 @@ $mtf-red: #ff2c1d;
 				width: 100%;
 				background: black;
 				margin-bottom: rem-calc(8);
+				overflow: hidden;
 				
 				&:before {
 					content: '';
@@ -783,12 +792,16 @@ $mtf-red: #ff2c1d;
 		}
 		
 		.members {
+			@include grid-column(12);
+			
 			@include breakpoint(medium) {
 				@include grid-column(7);
 			}
 			
 			&#board-of-directors,
 			&#advisory-board {
+				@include grid-column(12);
+
 				@include breakpoint(medium) {
 					@include grid-column(6);
 				}
@@ -898,6 +911,61 @@ $mtf-red: #ff2c1d;
 	&#profile {
 		.content {
 			@include grid-column(12);
+		}
+	}
+	
+	#tribe-events {
+		.tribe-events-button,
+		.button {
+			@include button-style( rgba(255,44,29,1), rgba(255,44,29,.5) );
+			padding: .5 * $global-padding $global-padding;
+			line-height: 1.8;
+		}
+		
+		#tribe-events-content table.tribe-events-calendar .type-tribe_events.tribe-event-featured,
+		.tribe-events-calendar td.tribe-events-present div[id*=tribe-events-daynum-],
+		.tribe-events-calendar td.tribe-events-present.mobile-active,
+		.tribe-events-calendar td.mobile-active,
+		#tribe-events-content .tribe-events-calendar .mobile-active:hover,
+		.tribe-events-calendar .mobile-active div[id*=tribe-events-daynum-] {
+			background-color: $mtf-red;
+		}
+		
+		#tribe-events-content .tribe-events-calendar td,
+		#tribe-events-content .tribe-events-tooltip h4,
+		a {
+			color: $mtf-red;
+// 			background-color: white;
+		}
+		
+		.tribe-events-calendar td.tribe-events-present div[id*=tribe-events-daynum-],
+		.tribe-events-calendar .mobile-active div[id*=tribe-events-daynum-] a {
+			color: white;
+		}
+
+		.tribe-events-calendar .mobile-active div[id*=tribe-events-daynum-] a {
+			background-color: transparent;
+		}
+
+		.tribe-events-single {
+			
+			.tribe-events-single-event-left-content{
+				@include breakpoint(medium){
+					@include grid-column(6);
+				}
+				
+				.tribe-events-event-image {
+				}
+			}
+			
+			.tribe-events-single-event-left-content{
+				@include breakpoint(medium){
+					@include grid-column(6);
+				}
+
+				.tribe-events-single-event-description {
+				}
+			}
 		}
 	}
 }

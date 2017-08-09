@@ -9,7 +9,8 @@ $groups = array(
 	'administration',
 	'mtfstaff',
 	'board-of-directors',
-	'advisory-board'
+	'advisory-board',
+	'professional-consultants'
 );
 
 foreach ($groups as $group ){

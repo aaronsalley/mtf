@@ -1,48 +1,38 @@
 <?php get_header(); ?>
 <section id="mission">
-	<?php 
-		$mission = new WP_Query( array(
-			'post_type'		=> 'page',
-			'post_parent'	=> get_page_by_path('about')->ID
-		)); 
-
-	if ( $mission->have_posts() ) : $i = 1 ; while( $mission->have_posts() ) : $mission->the_post(); ?>
-	<article <?php post_class( $i == 1 ? '' : '' ); ?>>
-		<div class="background" style="background-image:url(<?php the_post_thumbnail_url(); ?>)"></div>
-		<a class="lead" href="<?php the_permalink(); ?>"><h3><?php the_title(); ?></h3></a>
-		<content class="excerpt"><?php the_excerpt(); ?></content>
-	</article>
-	<?php 
-		$i++; endwhile; endif; wp_reset_postdata();
-	?>
+	<?php echo do_shortcode( '[accordion_slider id="1"]' ); ?>
 </section>
 
 <section id="events">
-	<h2 class="section-title"><?php echo _e('Hot at the Factory', 'mtf'); ?></h2>
+	<h2 class="section-title"><?php echo _e('Next at the Factory', 'mtf'); ?></h2>
 	<div class="carousel">
-		<?php 
-			$events = new WP_Query( array(
-				'post_type'		=> 'tribe_events',
-				'eventDisplay'	=> 'custom'
+		<?php
+			$events = tribe_get_events( array(
+				'eventDisplay' => 'upcoming',
+//				'start_date' => current_time( 'timestamp', 0 )
 			));
 	
-		if( $events->have_posts() ) : while( $events->have_posts() ) : $events->the_post();
-			$class = implode(' ', str_replace( 'tribe_events', 'event', get_post_class() ));
-			$date = strtotime($post->EventStartDate);
+		foreach( $events as $event ) {			
+			$class = implode(' ', str_replace( 'tribe_events', 'event', get_post_class( '', $event ) ));
+			$date = strtotime($event->EventStartDate);
 			$this_date = date('D, M j', $date);
 			$this_time = date('h:iA', $date);
 		?>
 		<article class="<?php echo $class; ?>">
-			<a href="<?php the_permalink(); ?>">
-				<div class="image"><img alt="<?php the_title(); ?>" src="<?php the_post_thumbnail_url( 'full' ); ?>"/></div>
+			<a href="<?php echo get_the_permalink($event); ?>">
+				<div class="image"><img alt="<?php echo get_the_title($event); ?>" src="<?php echo get_the_post_thumbnail_url( $event, array(300,300) ); ?>"/></div>
 				<h3 class="time"><?php echo $this_date; ?></h3>
-				<h4 class="title"><?php the_title(); ?></h4>
+				<h4 class="title"><?php echo get_the_title($event); ?></h4>
 			</a>
 		</article>
 		<?php 
-			endwhile; endif; wp_reset_postdata();
+		}
 		?>
 	</div>
+</section>
+
+<section>
+	<?php the_content(); ?>
 </section>
 
 <section id="blog">

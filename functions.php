@@ -119,31 +119,6 @@ function mtf_setup() {
      */
     add_theme_support( 'ctc-people' );
 
-	// Create Podcasts post type
-	new custom_post_type( 'podcast', null, null, array(
-		'menu_icon'	=> 'dashicons-star-filled',
-        'public' => false,
-        'publicly_queryable' => true,
-        'show_ui' => true,
-        'supports' => array( 'title', 'editor', 'custom-fields' )
-	) );
-	
-	new custom_taxonomy( 'podcast_channel', 'podcast', 'channels', 'channel', array(
-		'labels'=> array(
-			'name' => 'Podcast Channels',
-			'menu_name' => 'Channels'
-		),
-		'hierarchical' => true,
-        'show_admin_column'  => true
-	) );
-	new custom_taxonomy( 'podcast_tag', 'podcast', 'tags', 'tag', array(
-		'labels'=> array(
-			'name' => 'Podcast Tags',
-			'menu_name' => 'Tags'
-		),
-        'show_admin_column'  => true
-	) );
-
 	// Create Projects post type
 	new custom_post_type( 'project', null, null, array(
 		'menu_icon'	=> 'dashicons-image-filter',
@@ -190,6 +165,53 @@ function mtf_setup() {
 }
 endif; // mtf_setup
 add_action( 'after_setup_theme', 'mtf_setup' );
+
+// To give Editors access to the ALL Forms menu
+function my_custom_change_ninja_forms_all_forms_capabilities_filter( $capabilities ) {
+    $capabilities = "edit_pages";
+    return $capabilities;
+}
+add_filter( 'ninja_forms_admin_parent_menu_capabilities', 'my_custom_change_ninja_forms_all_forms_capabilities_filter' );
+add_filter( 'ninja_forms_admin_all_forms_capabilities', 'my_custom_change_ninja_forms_all_forms_capabilities_filter' );
+
+// To give Editors access to ADD New Forms
+function my_custom_change_ninja_forms_add_new_capabilities_filter( $capabilities ) {
+    $capabilities = "edit_pages";
+    return $capabilities;
+}
+add_filter( 'ninja_forms_admin_parent_menu_capabilities', 'my_custom_change_ninja_forms_add_new_capabilities_filter' );
+add_filter( 'ninja_forms_admin_add_new_capabilities', 'my_custom_change_ninja_forms_add_new_capabilities_filter' );
+
+/* To give Editors access to the Submissions - Simply replace ‘edit_posts’ in the code snippet below with the capability
+that you would like to attach the ability to view/edit submissions to.Please note that all three filters are needed to
+provide proper submission viewing/editing on the backend!
+*/
+function nf_subs_capabilities( $cap ) {
+    return 'edit_posts';
+}
+add_filter( 'ninja_forms_admin_submissions_capabilities', 'nf_subs_capabilities' );
+add_filter( 'ninja_forms_admin_parent_menu_capabilities', 'nf_subs_capabilities' );
+add_filter( 'ninja_forms_admin_menu_capabilities', 'nf_subs_capabilities' );
+
+/*
+// To give Editors access to the Import/Export Options
+function my_custom_change_ninja_forms_import_export_capabilities_filter( $capabilities ) {
+    $capabilities = "edit_pages";
+    return $capabilities;
+}
+add_filter( 'ninja_forms_admin_parent_menu_capabilities', 'my_custom_change_ninja_forms_import_export_capabilities_filter' );
+add_filter( 'ninja_forms_admin_import_export_capabilities', 'my_custom_change_ninja_forms_import_export_capabilities_filter' );
+*/
+
+/*
+// To give Editors access to the the Settings page
+function my_custom_change_ninja_forms_settings_capabilities_filter( $capabilities ) {
+    $capabilities = "edit_pages";
+    return $capabilities;
+}
+add_filter( 'ninja_forms_admin_parent_menu_capabilities', 'my_custom_change_ninja_forms_settings_capabilities_filter' );
+add_filter( 'ninja_forms_admin_settings_capabilities', 'my_custom_change_ninja_forms_settings_capabilities_filter' );
+*/
 
 function return_false() {
 	return false;
@@ -330,6 +352,46 @@ function mtf_javascript_detection() {
 	echo "<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>\n";
 }
 add_action( 'wp_head', 'mtf_javascript_detection', 0 );
+
+// fix some badly enqueued scripts with no sense of HTTPS
+add_action('wp_print_scripts', 'enqueueScriptsFix', 100);
+add_action('wp_print_styles', 'enqueueStylesFix', 100);
+ 
+/**
+* force plugins to load scripts with SSL if page is SSL
+*/
+function enqueueScriptsFix() {
+    if (!is_admin()) {
+        if (!empty($_SERVER['HTTPS'])) {
+            global $wp_scripts;
+            foreach ((array) $wp_scripts->registered as $script) {
+                if (stripos($script->src, 'http://', 0) !== FALSE)
+                    $script->src = str_replace('http://', 'https://', $script->src);
+            }
+        }
+    }
+}
+ 
+/**
+* force plugins to load styles with SSL if page is SSL
+*/
+function enqueueStylesFix() {
+    if (!is_admin()) {
+        if (!empty($_SERVER['HTTPS'])) {
+            global $wp_styles;
+            foreach ((array) $wp_styles->registered as $script) {
+                if (stripos($script->src, 'http://', 0) !== FALSE)
+                    $script->src = str_replace('http://', 'https://', $script->src);
+            }
+        }
+    }
+// force links-shortcode to load CSS with SSL if page is SSL
+if (function_exists('linkssc_css')) {
+    remove_action('wp_head', 'linkssc_css');
+    $url = plugins_url('links-shortcode.css', WP_PLUGIN_DIR . '/links-shortcode/');
+    wp_enqueue_style('links-shortcode', $url);
+}
+}
 
 /**
  * Enqueues scripts and styles.

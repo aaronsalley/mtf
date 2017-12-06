@@ -22,7 +22,8 @@
 			
 			// Get attached projects from user
 			$projects = get_user_meta( $user->ID, 'projects' );
-			foreach ( $projects[0] as $project ) {
+			$projects = $projects[0];
+			foreach ( $projects as $project ) {
 				if ( $project == $post->ID ) {
 					$customer = $wpdb->get_row("SELECT c_id FROM " . $wpdb->prefix . "wc_crm_customer_list WHERE user_id = '{$user->ID}'");
 					$this_user = new WC_CRM_Customer($customer->c_id);

@@ -9,7 +9,6 @@ $groups = array(
 	'administration',
 	'mtfstaff',
 	'board-of-directors',
-	'advisory-board',
 	'professional-consultants'
 );
 

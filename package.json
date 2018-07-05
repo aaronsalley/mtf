@@ -1,37 +1,47 @@
 {
-  "name": "musical-theatre-factory",
-  "version": "1.0.0",
-  "description": "Basic template for the MTF project.",
-  "main": "gulpfile.js",
+  "name": "mtf_web",
+  "version": "5.0.0",
+  "description": "Musical Theatre Factory",
+  "main": "app.js",
+  "dependencies": {},
   "devDependencies": {
-    "babel-preset-es2015": "^6.18.0",
-    "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^3.1.0",
-    "gulp-babel": "^6.1.2",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/register": "^7.0.0-beta.44",
+    "autoprefixer": "^8.6.2",
+    "browser-sync": "^2.24.4",
+    "del": "^3.0.0",
+    "foundation-sites": "^6.4.4-rc1",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-babel": "^8.0.0-beta.2",
     "gulp-concat": "^2.6.1",
-    "gulp-load-plugins": "^1.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.1.0",
-    "gulp-uglify": "^2.0.0"
+    "gulp-if": "^2.0.2",
+    "gulp-inject": "^4.3.2",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-open": "^3.0.1",
+    "gulp-postcss": "^7.0.1",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "require-dir": "^1.0.0",
+    "ts-loader": "^4.2.0",
+    "vinyl-named": "^1.1.0",
+    "webpack": "^4.12.0",
+    "webpack-stream": "^4.0.3"
   },
   "scripts": {
-    "start": "gulp",
-    "build": "gulp sass scripts",
-    "scripts": "gulp scripts",
-    "scripts-watch": "gulp scripts-watch"
+    "test": "npm test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zurb/foundation-sites-template.git"
+    "url": "git+https://aaronsalley@bitbucket.org/aaronsalleydesign/mtf_web.git"
   },
-  "bugs": {
-    "url": "https://github.com/zurb/foundation-sites/issues",
-    "email": "foundation@zurb.com"
-  },
-  "author": "ZURB <foundation@zurb.com>",
+  "author": "Disruptv.io",
   "license": "MIT",
-  "private": true,
-  "dependencies": {
-    "gulp-autoprefixer": "^3.1.0"
+  "homepage": "https://bitbucket.org/aaronsalleydesign/mtf_web#readme",
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   }
 }

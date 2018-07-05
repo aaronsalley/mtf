@@ -1,0 +1,6 @@
+# To start local dev
+docker-compose up -d
+
+then run 
+
+gulp

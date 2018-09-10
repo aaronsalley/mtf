@@ -1,0 +1,14 @@
+# dependencies
+node_modules
+
+# System Files
+.DS_Store
+
+# compiled output
+.build
+dist
+docs
+
+# env files
+env/*
+!env/config.js

@@ -28,14 +28,27 @@ const modules = {
       test: /\.(s)?css$/,
       use: [
         process.env.NODE_ENV !== 'production' ? 'style-loader' : 'MiniCssExtractPlugin.loader',
-        'css-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1,
+          },
+        },
         {
           loader: 'postcss-loader',
           'options': {
-            plugins: require('autoprefixer')
+            plugins: [require('autoprefixer')({
+              browsers: ['last 2 versions', 'ie >= 9', 'android >= 4.4', 'ios >= 7'],
+            })],
+            sourceMap: true,
           }
         },
-        'sass-loader',
+        {
+          loader: 'sass-loader',
+          options: {
+            includePaths: [path.resolve(__dirname, '../node_modules/foundation-sites/scss')],
+          },
+        },
       ],
     },
     {
@@ -69,7 +82,8 @@ const plugins = [
   new HtmlWebpackPlugin(),
   // new NpmInstallPlugin(),
   new MiniCssExtractPlugin({
-    filename: process.env.NODE_ENV !== 'production' ? '[name].css' : '[name].[hash].css'
+    filename: '[name].css',
+    chunkFilename: '[name].[hash].css',
   }),
 ]
 const optimization = {

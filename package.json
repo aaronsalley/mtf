@@ -1,47 +1,58 @@
 {
-  "name": "mtf_web",
-  "version": "5.0.0",
+  "name": "mtf",
+  "version": "3.0.0",
   "description": "Musical Theatre Factory",
-  "main": "app.js",
-  "dependencies": {},
-  "devDependencies": {
-    "@babel/core": "^7.0.0-beta.51",
-    "@babel/preset-env": "^7.0.0-beta.51",
-    "@babel/register": "^7.0.0-beta.44",
-    "autoprefixer": "^8.6.2",
-    "browser-sync": "^2.24.4",
-    "del": "^3.0.0",
-    "foundation-sites": "^6.4.4-rc1",
-    "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-babel": "^8.0.0-beta.2",
-    "gulp-concat": "^2.6.1",
-    "gulp-if": "^2.0.2",
-    "gulp-inject": "^4.3.2",
-    "gulp-load-plugins": "^1.5.0",
-    "gulp-open": "^3.0.1",
-    "gulp-postcss": "^7.0.1",
-    "gulp-sass": "^4.0.1",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-uglify": "^3.0.0",
-    "require-dir": "^1.0.0",
-    "ts-loader": "^4.2.0",
-    "vinyl-named": "^1.1.0",
-    "webpack": "^4.12.0",
-    "webpack-stream": "^4.0.3"
-  },
+  "main": "index.js",
   "scripts": {
+    "start": "gulp",
     "test": "npm test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://aaronsalley@bitbucket.org/aaronsalleydesign/mtf_web.git"
+    "url": "git+https://aaronsalley@bitbucket.org/aaronsalleydesign/mtf.git"
   },
+  "keywords": [
+    "mtf"
+  ],
   "author": "Disruptv.io",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/aaronsalleydesign/mtf_web#readme",
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ]
+  "homepage": "https://bitbucket.org/aaronsalleydesign/mtf#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "foundation-sites": "^6.5.0-rc.2",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-router-dom": "^4.3.1",
+    "typescript": "^3.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "autoprefixer": "^9.1.5",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.2",
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^1.0.0",
+    "gulp": "^4.0.0",
+    "gulp-env": "^0.4.0",
+    "gulp-load-plugins": "^1.5.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jshint": "^2.9.6",
+    "jshint-loader": "^0.8.4",
+    "mini-css-extract-plugin": "^0.4.2",
+    "node-sass": "^4.9.3",
+    "npm-install-webpack-plugin": "^4.0.5",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.0",
+    "vinyl-named": "^1.1.0",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-middleware": "^3.2.0",
+    "webpack-dev-server": "^3.1.8",
+    "webpack-stream": "^5.1.1"
   }
 }

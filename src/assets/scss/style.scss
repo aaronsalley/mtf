@@ -1,3 +1,14 @@
+/**!
+  * Theme Name: Musical Theatre Factory
+  * Author: Disruptv.io
+  * Author URI: https://disruptv.io
+  * Description: The 2019 theme for WordPress.
+  * Version: 3.0.0
+  * License: MIT
+  * License URI: https://opensource.org/licenses/MIT
+  * Text Domain: mtf
+  */
+
 @import '_settings';
 @import 'foundation';
 
@@ -55,3 +66,70 @@
 // @include foundation-flex-classes;
 @include foundation-visibility-classes;
 // @include foundation-prototype-classes;
+
+main {
+  overflow: hidden;
+  position: relative;
+
+  .events {
+    z-index: 5;
+
+    &.list {
+      width: 30%;
+
+      .event {
+        background-color: rgba(white, 1);
+
+        .image {
+          overflow: hidden;
+          position: relative;
+          float: left;
+          width: rem-calc(120);
+
+          img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%);
+          }
+
+          &:before {
+            content: '';
+            display: block;
+            width: 100%;
+            padding-bottom: 100%;
+          }
+        }
+
+        p:last-child() {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .instagram {
+    position: absolute;
+    top: 0;
+    left: 25%;
+    z-index: -1;
+
+    &.feed {
+      width: 100vw;
+      display: flex;
+      flex-wrap: wrap;
+
+      .post {
+        width: rem-calc(120);
+
+        &:before {
+          content: '';
+          display: block;
+          width: 100%;
+          padding-bottom: 100%;
+          background-color: rgba(black, .87);
+        }
+      }
+    }
+  }
+}

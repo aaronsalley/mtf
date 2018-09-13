@@ -1,10 +1,16 @@
 'use strict';
 
 import CleanWebpackPlugin from 'clean-webpack-plugin';
+import dotenv from 'dotenv';
+import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import path from 'path';
+
+dotenv.config({
+  path: path.resolve(__dirname, '../env/.env'),
+});
 
 const config = {}
 
@@ -19,15 +25,38 @@ const entry = {
   vendors: config.paths.SOURCE + '/assets/js/vendors.js',
 }
 const output = {
-  filename: '[name].js',
-  chunkFilename: '[name].js',
+  filename: 'assets/js/[name].js',
+  chunkFilename: 'assets/js/[name].js',
+  publicPath: '/',
 }
 const modules = {
   rules: [
     {
+      test: /\.ts(x)?$/,
+      exclude: /node_modules/,
+      use: [
+        {
+          loader: 'awesome-typescript-loader',
+          options: {
+            'useBabel': true,
+            'babelCore': '@babel/core',
+          },
+        },
+      ],
+    },
+    {
+      test: /\.js(x)?$/,
+      enforce: 'pre',
+      exclude: /node_modules/,
+      use: [
+        'babel-loader',
+        // 'jshint-loader',
+      ],
+    },
+    {
       test: /\.(s)?css$/,
       use: [
-        process.env.NODE_ENV !== 'production' ? 'style-loader' : 'MiniCssExtractPlugin.loader',
+        /* process.env.NODE_ENV !== 'production' ? 'style-loader' :*/ MiniCssExtractPlugin.loader,
         {
           loader: 'css-loader',
           options: {
@@ -51,25 +80,17 @@ const modules = {
         },
       ],
     },
-    {
-      test: /\.ts$/,
-      use: 'ts-loader',
-    },
-    {
-      test: /\.js?(x)$/,
-      enforce: 'pre',
-      exclude: /node_modules/,
-      use: [
-        {
-          loader: 'babel-loader',
-        },
-        // {
-        //   loader: 'jshint-loader',
-        // },
-      ],
-    },
   ]
 }
+const resolve = {
+  alias: {
+    config: path.resolve(__dirname, '../environments/config.js'),
+    logger: path.resolve(__dirname, '../src/logger/logger.js'),
+  },
+  extensions: [
+    '*', '.js', '.jsx', '.ts', '.tsx',
+  ],
+};
 const plugins = [
   new CleanWebpackPlugin(
     [
@@ -79,11 +100,17 @@ const plugins = [
       root: path.resolve(__dirname, '../'),
     }
   ),
-  new HtmlWebpackPlugin(),
+  new HtmlWebpackPlugin({
+    filename: 'index.html',
+    template: config.paths.SOURCE + '/index.html',
+  }),
   // new NpmInstallPlugin(),
   new MiniCssExtractPlugin({
-    filename: '[name].css',
-    chunkFilename: '[name].[hash].css',
+    filename: 'style.css',
+    chunkFilename: 'assets/css/[name].[hash].css',
+  }),
+  new Dotenv({
+    path: path.resolve(__dirname, '../env/.env'),
   }),
 ]
 const optimization = {
@@ -114,19 +141,21 @@ const watchOptions = {
 }
 const devServer = {
   contentBase: config.paths.BUILD,
-  // compress: true,
-  // port: 9000,
+  compress: true,
+  port: process.env.PORT,
   historyApiFallback: true,
+  open: true,
 }
 
 config.webpack = {
-  mode: process.env.NODE_ENV || 'development',
+  mode: process.env.NODE_ENV,
   entry: entry,
   output: output,
   module: modules,
+  resolve: resolve,
   plugins: plugins,
   optimization: optimization,
-  devServer: devServer,
+  // devServer: devServer,
   watch: process.env.NODE_ENV !== 'production' ? true : false,
   watchOptions: watchOptions,
   devtool: 'eval-source-map',

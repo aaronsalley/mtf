@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 9234:80
+    environment:
+      WORDPRESS_DB_PASSWORD: password
+      WORDPRESS_TABLE_PREFIX: mtf_
+    volumes:
+      - .:/var/www/html/wp-content/themes/mtf
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password

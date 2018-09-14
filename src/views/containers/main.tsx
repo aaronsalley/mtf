@@ -1,15 +1,15 @@
 'use strict';
 
 import React, {Component} from 'react';
-import Events from '../components/events';
-import GramFeed from '../components/gramfeed';
+import {Switch, Route} from 'react-router-dom';
+
+import Home from './home';
 
 const Main = () => {
   return(
-    <main>A
-      <Events maxItems='4' />
-      <GramFeed maxItems='100' />
-    </main>
+    <Switch>
+      <Route path="/" component={Home} />
+    </Switch>
   )
 }
 

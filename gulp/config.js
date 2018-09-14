@@ -12,23 +12,33 @@ dotenv.config({
   path: path.resolve(__dirname, '../env/.env'),
 });
 
-const config = {}
+const config = {};
 
 config.paths = {
   SOURCE: path.resolve(__dirname, '../src'),
   BUILD: path.resolve(__dirname, '../dist'),
   DOCS: path.resolve(__dirname, '../docs'),
-}
+};
+
+config.server = {
+  server: {
+    baseDir: config.paths.BUILD,
+  },
+  port: process.env.PORT,
+  https: false,
+  open: false,
+  cors: true,
+};
 
 const entry = {
   react: config.paths.SOURCE + '/index.js',
   vendors: config.paths.SOURCE + '/assets/js/vendors.js',
-}
+};
 const output = {
   filename: 'assets/js/[name].js',
   chunkFilename: 'assets/js/[name].js',
   publicPath: '/',
-}
+};
 const modules = {
   rules: [
     {
@@ -64,13 +74,13 @@ const modules = {
           },
         },
         {
-          loader: 'postcss-loader',
+          'loader': 'postcss-loader',
           'options': {
             plugins: [require('autoprefixer')({
               browsers: ['last 2 versions', 'ie >= 9', 'android >= 4.4', 'ios >= 7'],
             })],
             sourceMap: true,
-          }
+          },
         },
         {
           loader: 'sass-loader',
@@ -80,8 +90,8 @@ const modules = {
         },
       ],
     },
-  ]
-}
+  ],
+};
 const resolve = {
   alias: {
     config: path.resolve(__dirname, '../environments/config.js'),
@@ -93,16 +103,16 @@ const resolve = {
 };
 const plugins = [
   new CleanWebpackPlugin(
-    [
-      config.paths.BUILD,
-      config.paths.DOCS,
-    ], {
-      root: path.resolve(__dirname, '../'),
-    }
+      [
+        config.paths.BUILD,
+        config.paths.DOCS,
+      ], {
+        root: path.resolve(__dirname, '../'),
+      }
   ),
   new HtmlWebpackPlugin({
     filename: 'index.html',
-    template: config.paths.SOURCE + '/index.html',
+    template: config.paths.SOURCE + '/views/index.html',
   }),
   // new NpmInstallPlugin(),
   new MiniCssExtractPlugin({
@@ -112,7 +122,7 @@ const plugins = [
   new Dotenv({
     path: path.resolve(__dirname, '../env/.env'),
   }),
-]
+];
 const optimization = {
   splitChunks: {
     chunks: 'async',
@@ -135,17 +145,19 @@ const optimization = {
       },
     },
   },
-}
+};
 const watchOptions = {
-  ignored: ['node_modules'],
-}
+  ignored: [
+    'node_modules',
+  ],
+};
 const devServer = {
   contentBase: config.paths.BUILD,
   compress: true,
   port: process.env.PORT,
   historyApiFallback: true,
   open: true,
-}
+};
 
 config.webpack = {
   mode: process.env.NODE_ENV,
@@ -159,6 +171,6 @@ config.webpack = {
   watch: process.env.NODE_ENV !== 'production' ? true : false,
   watchOptions: watchOptions,
   devtool: 'eval-source-map',
-}
+};
 
 export default config;

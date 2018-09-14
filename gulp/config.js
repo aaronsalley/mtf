@@ -9,7 +9,7 @@ import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import path from 'path';
 
 dotenv.config({
-  path: path.resolve(__dirname, '../env/.env'),
+  path: path.resolve(__dirname, '../.env'),
 });
 
 const config = {};
@@ -120,7 +120,7 @@ const plugins = [
     chunkFilename: 'assets/css/[name].[hash].css',
   }),
   new Dotenv({
-    path: path.resolve(__dirname, '../env/.env'),
+    path: path.resolve(__dirname, '../.env'),
   }),
 ];
 const optimization = {

@@ -11,4 +11,5 @@ docs
 
 # env files
 env
+.env
 !env/config.js

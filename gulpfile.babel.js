@@ -17,29 +17,24 @@ import config from './gulp/config';
 
 const serve = (done) => {
   browserSync.create();
-  browserSync.init({
-    server: {
-      baseDir: config.paths.BUILD,
-    },
-    port: process.env.PORT,
-    https: true,
-    open: false,
-    cors: true,
-});
+  browserSync.init(config.server);
 
-  gulp.watch(config.paths.BUILD + '**/*').on('change', browserSync.reload);
-  gulp.watch(config.paths.SOURCE + '**/*.php').on('change', browserSync.reload);
-}
+  gulp.watch(config.paths.BUILD + '/**/*').on('change', browserSync.reload);
+  gulp.watch(config.paths.SOURCE + '/**/*.php', gulp.series(copy));
+};
 
 const bundle = (done) => {
-  gulp.src(config.paths.SOURCE + '/index.js')
-    // .pipe($.env({
-    //   file: '../env/env',
-    // }))
-    .pipe(named())
-    .pipe(webpack(config.webpack, compiler))
-    .pipe(gulp.dest(config.paths.BUILD));
+  gulp.src(config.paths.SOURCE + '/**/*.php')
+      .pipe(named())
+      .pipe(webpack(config.webpack, compiler))
+      .pipe(gulp.dest(config.paths.BUILD));
   done();
-}
+};
 
-gulp.task('default', gulp.series(bundle, serve));
+const copy = (done) => {
+  gulp.src([config.paths.SOURCE + '/**/*.php'], {base: config.paths.SOURCE})
+      .pipe(gulp.dest(config.paths.BUILD));
+  done();
+};
+
+gulp.task('default', gulp.series(bundle, copy, serve));

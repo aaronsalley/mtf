@@ -2,5 +2,6 @@
   'menu' => '',
   'menu_id' => 'top-nav',
   'container' => 'nav',
-  'theme_location' => '',
+  'container_class' => 'main menu',
+  'theme_location' => 'primary',
 )); ?>

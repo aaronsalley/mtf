@@ -6,21 +6,24 @@
     <link rel="profile" href="http://gmpg.org/xfn/11">
     <?php wp_head(); ?>
   </head>
-  <body>
+  <body <?php body_class(); ?>>
     <header>
       <h1 class="branding">
-        <?php bloginfo('name'); ?>
-        <?php bloginfo('description'); ?>
-        <?php the_custom_logo(); ?>
+        <a href=<?php echo home_url(); ?>>
+          <?php bloginfo('name'); ?>
+          <?php bloginfo('description'); ?>
+          <?php the_custom_logo(); ?>
+        </a>
       </h1>
-      <menu class="social-menu">
+      <menu class="social menu">
         <?php wp_nav_menu(array(
           'menu' => '',
           'menu_id' => 'social',
           'container' => null,
-          'theme_location' => '',
+          'theme_location' => 'social',
           'items_wrap' => '%3$s',
         )); ?>
+        <button class="donate button"><?php esc_html_e('Donate'); ?></button>
       </menu>
       <?php get_template_part('templates/nav', 'logged_in'); ?>
     </header>

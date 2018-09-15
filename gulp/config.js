@@ -7,6 +7,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import path from 'path';
+import webpack from 'webpack';
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env'),
@@ -60,7 +61,6 @@ const modules = {
       exclude: /node_modules/,
       use: [
         'babel-loader',
-        // 'jshint-loader',
       ],
     },
     {
@@ -90,6 +90,20 @@ const modules = {
         },
       ],
     },
+    {
+      test: /\.(png|svg|jpg|gif)$/,
+      use: [
+        {
+          'loader': 'file-loader',
+          'options': {
+            useRelativePath: true,
+            name: '[name].[ext]',
+            context: 'src/',
+            publicPath: 'assets/img/',
+          },
+        },
+      ],
+    },
   ],
 };
 const resolve = {
@@ -114,6 +128,7 @@ const plugins = [
     filename: 'index.html',
     template: config.paths.SOURCE + '/views/index.html',
   }),
+  new webpack.NoEmitOnErrorsPlugin(),
   // new NpmInstallPlugin(),
   new MiniCssExtractPlugin({
     filename: 'style.css',

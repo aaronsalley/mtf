@@ -67,7 +67,98 @@
 @include foundation-visibility-classes;
 // @include foundation-prototype-classes;
 
+$surface: #FAFAFA;
+
+%h5 {
+  font-family: 'Strongbox JNL';
+  font-size: rem-calc(16);
+  text-transform: uppercase;
+};
+
+%body2 {
+  font-family: 'Roboto Condensed';
+  font-size: rem-calc(16);
+  letter-spacing: rem-calc(.25);
+  line-height: rem-calc(20);
+}
+
+%button {
+  font-family: 'Strongbox JNL';
+  font-size: rem-calc(8);
+  letter-spacing: rem-calc(1.25);
+  text-transform: uppercase;
+}
+
+html {
+  background-color: rgba(black, 1);
+}
+
+header {
+  @include xy-grid-container();
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  height: rem-calc(104);
+
+  .branding {
+    position: relative;
+    align-self: flex-end;
+    overflow-y: hidden;
+    width: rem-calc(272);
+    height: rem-calc(80);
+    font-size: 0;
+
+    img {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  .main.menu {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: rem-calc(24);
+
+    .menu-item {
+      @extend %h5;
+
+      a {
+        padding-right: rem-calc(0);
+        padding-left: rem-calc(40);
+        color: $black;
+      }
+    }
+  }
+
+  .social.menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    height: rem-calc(32);
+
+    .menu-item {
+      overflow: hidden;
+      align-self: center;
+      height: rem-calc(24);
+      width: rem-calc(24);
+      font-size: 0;
+      &:not(:last-of-type){
+        margin-right: rem-calc(24);
+      }
+    }
+
+    .donate.button {
+      min-width: rem-calc(96);
+      margin-left: rem-calc(40);
+      @extend %button;
+    }
+  }
+}
+
 main {
+  @include xy-grid-container();
   overflow: hidden;
   position: relative;
 
@@ -78,13 +169,17 @@ main {
       width: 30%;
 
       .event {
-        background-color: rgba(white, 1);
+        position: relative;
+        overflow: hidden;
+        background-color: rgba($surface, 1);
 
         .image {
           overflow: hidden;
           position: relative;
           float: left;
           width: rem-calc(120);
+          margin-right: rem-calc(16);
+          background-color: $black;
 
           img {
             position: absolute;
@@ -101,8 +196,20 @@ main {
           }
         }
 
-        p:last-child() {
-          margin-bottom: 0;
+        .title {
+          margin-top: rem-calc(24);
+          margin-bottom: rem-calc(16);
+          @extend %h5;
+        }
+
+        .date {
+          margin-bottom: rem-calc(0);
+          @extend %body2;
+        }
+
+        .location {
+          margin-bottom: rem-calc(16);
+          @extend %body2;
         }
       }
     }
@@ -131,5 +238,16 @@ main {
         }
       }
     }
+  }
+}
+
+footer {
+  height: rem-calc(136);
+  background-color: rgba(black, 1);
+  background-image: url('../img/mtf_brushstroke.jpg');
+
+  .wrap {
+    @include xy-grid-container();
+    padding: rem-calc(32, 24);
   }
 }

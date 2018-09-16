@@ -6,9 +6,7 @@
    * instead attached to a filter or action hook.
    */
 
-  include('admin/eventbrite.php');
   include('admin/helpers.php');
-  include('admin/instagram.php');
   include('admin/permissions.php');
   include('admin/projects.php');
 

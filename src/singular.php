@@ -5,11 +5,12 @@
       <h2 class="title"><?php the_title(); ?></h2>
       <button class="button"><?php esc_html_e('Support us'); ?></button>
     </div>
-    <div class="instagram feed">
-      <div class="wrap">
-        <?php echo $instagram->instagram_posts(10); ?>
-      </div>
-    </div>
+    <?php for($i = 0; $i < 10; $i++){
+      $instagram[] = '<div class="post">
+        <img class="image" src="#" />
+      </div>';
+    }
+    echo $instagram = '<div class="instagram feed"><div class="wrap">' . implode($instagram) . '</div></div>'; ?>
   </header>
   <section class="content">
     <?php the_content(); ?>

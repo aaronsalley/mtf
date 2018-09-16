@@ -102,11 +102,6 @@ $surface: #FAFAFA;
 html {
   background-color: rgba(black, 1);
 
-  // body {
-  //   @include xy-grid-frame();
-  //   @include xy-cell-block('true');
-  // }
-
   #topbar {
     @include xy-grid-container();
     @include xy-grid('horizontal');

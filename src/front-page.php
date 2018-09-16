@@ -19,9 +19,12 @@
     </article>';
   }
   echo $events = '<div class="events list">' . implode($events) . '</div>'; ?>
-  <div class="instagram wall">
-    <?php echo $instagram->instagram_posts(); ?>
-  </div>
+  <?php for($i = 0; $i < 40; $i++){
+    $instagram[] = '<div class="post">
+      <img class="image" src="#" />
+    </div>';
+  }
+  echo $instagram = '<div class="instagram wall">' . implode($instagram) . '</div>'; ?>
 <?php endwhile; else : ?>
 	<p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
 <?php endif; ?>

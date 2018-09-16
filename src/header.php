@@ -25,6 +25,12 @@
         )); ?>
         <button class="donate button"><?php esc_html_e('Donate'); ?></button>
       </menu>
-      <?php get_template_part('parts/nav', 'logged_in'); ?>
+      <?php wp_nav_menu(array(
+        'menu' => '',
+        'menu_id' => 'main-nav',
+        'container' => 'nav',
+        'container_class' => 'main menu',
+        'theme_location' => 'primary',
+      )); ?>
     </header>
     <main id="app">

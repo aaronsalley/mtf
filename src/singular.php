@@ -1,10 +1,15 @@
 <?php get_header(); ?>
-<main id="app">
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-  <header class="instagram feed">
-    <?php the_title(); ?>
-    <button class="button"><?php esc_html_e('Support us'); ?></button>
-    <?php echo $instagram->instagram_posts(); ?>
+  <header class="header">
+    <div class="masthead">
+      <h2 class="title"><?php the_title(); ?></h2>
+      <button class="button"><?php esc_html_e('Support us'); ?></button>
+    </div>
+    <div class="instagram feed">
+      <div class="wrap">
+        <?php echo $instagram->instagram_posts(10); ?>
+      </div>
+    </div>
   </header>
   <section class="content">
     <?php the_content(); ?>
@@ -12,5 +17,4 @@
 <?php endwhile; else : ?>
 	<p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
 <?php endif; ?>
-</main>
 <?php get_footer(); ?>

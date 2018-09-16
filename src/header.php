@@ -7,7 +7,7 @@
     <?php wp_head(); ?>
   </head>
   <body <?php body_class(); ?>>
-    <header>
+    <header id="topbar">
       <h1 class="branding">
         <a href=<?php echo home_url(); ?>>
           <?php bloginfo('name'); ?>
@@ -25,5 +25,6 @@
         )); ?>
         <button class="donate button"><?php esc_html_e('Donate'); ?></button>
       </menu>
-      <?php get_template_part('templates/nav', 'logged_in'); ?>
+      <?php get_template_part('parts/nav', 'logged_in'); ?>
     </header>
+    <main id="app">

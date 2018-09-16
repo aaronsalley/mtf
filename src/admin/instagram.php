@@ -21,15 +21,15 @@ class Instagram {
       return curl_exec($this->curl);
   }
 
-  public function get_instagram_posts($n = 40) {
+  public function get_instagram_posts($n = 35) {
     $opts[CURLOPT_URL] = $this->baseURL . '/venues/' . $venue_id;
     $response = json_decode($this->curl_exec($opts), true);
 
     $posts = [];
 
     for($i = 0; $i < $n; $i++){
-      $posts[] = '<div class"post">
-        <img class="image" src="" />
+      $posts[] = '<div class="post">
+        <img class="image" src="#" />
       </div>';
     }
     $posts = implode($posts);

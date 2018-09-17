@@ -19,29 +19,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+global $post;
+
 $posts = tribe_get_related_posts();
 
 if ( is_array( $posts ) && ! empty( $posts ) ) : ?>
 
-<h3 class="tribe-events-related-events-title"><?php printf( __( 'Related %s', 'tribe-events-calendar-pro' ), tribe_get_event_label_plural() ); ?></h3>
+<h3 class="related-events-title"><?php printf( __( 'Related %s', 'tribe-events-calendar-pro' ), tribe_get_event_label_plural() ); ?></h3>
 
-<ul class="tribe-related-events tribe-clearfix">
-	<?php foreach ( $posts as $post ) : ?>
-	<li>
-		<?php $thumb = ( has_post_thumbnail( $post->ID ) ) ? get_the_post_thumbnail( $post->ID, 'large' ) : '<img src="' . esc_url( trailingslashit( Tribe__Events__Pro__Main::instance()->pluginUrl ) . 'src/resources/images/tribe-related-events-placeholder.png' ) . '" alt="' . esc_attr( get_the_title( $post->ID ) ) . '" />'; ?>
-		<div class="tribe-related-events-thumbnail">
-			<a href="<?php echo esc_url( tribe_get_event_link( $post ) ); ?>" class="url" rel="bookmark"><?php echo $thumb ?></a>
-		</div>
-		<div class="tribe-related-event-info">
-			<h3 class="tribe-related-events-title"><a href="<?php echo tribe_get_event_link( $post ); ?>" class="tribe-event-url" rel="bookmark"><?php echo get_the_title( $post->ID ); ?></a></h3>
+<div class="related-events tribe-clearfix">
+	<?php foreach ( $posts as $post ) : setup_postdata($post);
+	
+		$post_parent = '';
+		if ( $post->post_parent ) {
+			$post_parent = ' data-parent-post-id="' . absint( $post->post_parent ) . '"';
+		}
+
+		$classes = array('event');
+		if ( has_tag() === true ) $classes[] = 'has-tags';
+		$classes = implode( ' ', $classes );
+		?>
+		<div id="post-<?php the_ID(); ?>" class="<?php tribe_events_event_classes($classes); ?>" <?php echo $post_parent; ?>>
 			<?php
-				if ( $post->post_type == Tribe__Events__Main::POSTTYPE ) {
-					echo tribe_events_event_schedule_details( $post );
-				}
+			$event_type = tribe( 'tec.featured_events' )->is_featured( $post->ID ) ? 'featured' : 'event';
+
+			/**
+			 * Filters the event type used when selecting a template to render
+			 *
+			 * @param $event_type
+			 */
+			$event_type = apply_filters( 'tribe_events_list_view_event_type', $event_type );
+
+			tribe_get_template_part( 'list/single', $event_type );
 			?>
-		</div>
-	</li>
-	<?php endforeach; ?>
-</ul>
+	</div>
+	<?php endforeach; wp_reset_postdata(); ?>
+</div>
 <?php
 endif;

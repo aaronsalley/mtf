@@ -2,12 +2,12 @@
 
 import browserSync from 'browser-sync';
 import compiler from 'webpack';
+import decomment from 'gulp-decomment';
 import dotenv from 'dotenv';
 import gulp from 'gulp';
 import named from 'vinyl-named';
 import path from 'path';
 import webpack from 'webpack-stream';
-import $ from 'gulp-load-plugins';
 
 dotenv.config({
   path: path.resolve(__dirname, 'env/.env'),
@@ -33,6 +33,7 @@ const bundle = (done) => {
 
 const copy = (done) => {
   gulp.src([config.paths.SOURCE + '/**/*.php'], {base: config.paths.SOURCE})
+      .pipe(decomment.html())
       .pipe(gulp.dest(config.paths.BUILD));
   done();
 };

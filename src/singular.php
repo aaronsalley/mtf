@@ -14,7 +14,7 @@
   </header>
   <section class="content">
     <?php the_content(); ?>
-  </sectin>
+  </section>
 <?php endwhile; else : ?>
 	<p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
 <?php endif; ?>

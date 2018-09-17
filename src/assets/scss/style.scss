@@ -9,7 +9,7 @@
   * Text Domain: mtf
   */
 
-@import '_settings';
+@import 'settings';
 @import 'foundation';
 
 // Global styles
@@ -67,32 +67,36 @@
 // @include foundation-visibility-classes;
 // @include foundation-prototype-classes;
 
-$surface: #FAFAFA;
+$surface: #fafafa;
 
-%h4 {
+@mixin h4 {
   font-family: 'Strongbox JNL';
   font-size: rem-calc(24);
   letter-spacing: rem-calc(.25);
   text-transform: uppercase;
 };
-%h5 {
+
+@mixin h5 {
   font-family: 'Strongbox JNL';
   font-size: rem-calc(16);
   text-transform: uppercase;
 };
-%body2 {
+
+@mixin body2 {
   font-family: 'Roboto Condensed';
   font-size: rem-calc(16);
   letter-spacing: rem-calc(.25);
   line-height: rem-calc(20);
 }
-%caption {
+
+@mixin caption {
   font-family: 'Roboto Condensed';
   font-size: rem-calc(12);
   letter-spacing: rem-calc(.4);
   line-height: rem-calc(16);
 }
-%button {
+
+@mixin button {
   font-family: 'Strongbox JNL';
   font-size: rem-calc(10);
   letter-spacing: rem-calc(1.25);
@@ -106,17 +110,17 @@ html {
     @include xy-grid-container();
     @include xy-grid('horizontal');
     position: relative;
-    height: rem-calc(104);
     justify-content: space-between;
+    height: rem-calc(104);
     margin-bottom: rem-calc(24);
 
     .branding {
       position: relative;
       align-self: flex-end;
-      overflow-y: hidden;
       width: rem-calc(272);
       height: rem-calc(80);
       font-size: 0;
+      overflow-y: hidden;
 
       img {
         position: absolute;
@@ -131,7 +135,7 @@ html {
       padding-bottom: rem-calc(24);
 
       .menu-item {
-        @extend %h5;
+        @include h5;
 
         a {
           padding-right: rem-calc(0);
@@ -145,15 +149,15 @@ html {
       position: absolute;
       top: 0;
       right: 0;
-      z-index: 5;
       height: rem-calc(32);
+      z-index: 5;
 
       .menu-item {
-        overflow: hidden;
         align-self: center;
-        height: rem-calc(24);
         width: rem-calc(24);
+        height: rem-calc(24);
         font-size: 0;
+        overflow: hidden;
         &:not(:last-of-type){
           margin-right: rem-calc(24);
         }
@@ -162,7 +166,7 @@ html {
       .donate.button {
         min-width: rem-calc(96);
         margin-left: rem-calc(40);
-        @extend %button;
+        @include button;
       }
     }
   }
@@ -177,20 +181,20 @@ html {
       @include xy-grid-container();
       @include xy-grid('horizontal');
       justify-content: space-between;
-      padding: rem-calc(32, 24);
+      padding: rem-calc(32 24);
     }
 
     #mailchimp {
       width: rem-calc(348);
-      margin: rem-calc(32, 24);
+      margin: rem-calc(32 24);
 
       .input-group {
         margin-bottom: rem-calc(4);
 
-        input[name="email"] {
+        input[name='email'] {
           padding: rem-calc(16);
+          border: 0;
           background-color: rgba($white, .08);
-          border: none;
           color: rgba($white, 1);
         }
       }
@@ -199,59 +203,22 @@ html {
         min-width: rem-calc(96);
         background-color: rgba($white, .08);
         color: rgba($primary-color, 1);
-        @extend %button;
+        @include button;
       }
 
       .gdpr {
         padding: rem-calc(16);
         color: rgba($white, 1);
-        @extend %caption;
+        @include caption;
       }
 
       .address {
-        text-align: right;
-        font-size: rem-calc(12 * .68);
         color: rgba($white, .38);
-        @extend %caption;
+        font-size: rem-calc(12 * .68);
+        text-align: right;
+        @include caption;
       }
     }
-  }
-}
-
-.page {
-  .header {
-    display: flex;
-    position: relative;
-    height: rem-calc(120);
-    width: 100%;
-
-    .masthead {
-      z-index: 5;
-      min-width: rem-calc(300);
-      align-self: center;
-      margin-right: rem-calc(48);
-      margin-left: auto;
-
-      .title {
-        text-align: center;
-        color: $white;
-        @extend %h4;
-      }
-
-      .button {
-        @include button-expand();
-        margin-bottom: 0;
-        @extend %button;
-      }
-    }
-
-  }
-
-  .content {
-    @include xy-cell(8);
-    @include xy-cell-offset(4);
-    margin-top: rem-calc(16);
-    margin-bottom: rem-calc(16);
   }
 }
 
@@ -259,6 +226,55 @@ html {
   @include xy-grid-container($padding: 0);
   @include xy-grid('horizontal');
   position: relative;
+
+  .header {
+    .archive &,
+    .page &,
+    .single & {
+      display: flex;
+      position: relative;
+      width: 100%;
+      height: rem-calc(120);
+
+      .masthead {
+        align-self: center;
+        min-width: rem-calc(300);
+        margin-right: rem-calc(48);
+        margin-left: auto;
+        z-index: 5;
+
+        .title {
+          color: $white;
+          text-align: center;
+          @include h4;
+        }
+
+        .button {
+          @include button-expand();
+          margin-bottom: 0;
+          @include button;
+        }
+      }
+    }
+  }
+
+  .content {
+    .page & {
+      @include xy-cell(8);
+      @include xy-cell-offset(4);
+      margin-top: rem-calc(16);
+      margin-bottom: rem-calc(16);
+    }
+
+    body[class*='tribe-events-'] & {
+      @include xy-cell(9);
+      margin: rem-calc(32 auto);
+      // margin-right: auto;
+      // margin-left: auto;
+      // padding-top: rem-calc(32);
+      // padding-bottom: rem-calc(64);
+    }
+  }
 
   .events {
     &.list {
@@ -269,16 +285,16 @@ html {
 
     .event {
       position: relative;
-      overflow: hidden;
       background-color: rgba($surface, 1);
+      overflow: hidden;
 
       .image {
-        overflow: hidden;
         position: relative;
-        float: left;
         width: rem-calc(120);
         margin-right: rem-calc(16);
+        float: left;
         background-color: $black;
+        overflow: hidden;
 
         img {
           position: absolute;
@@ -288,36 +304,36 @@ html {
         }
 
         &:before {
-          content: '';
           display: block;
           width: 100%;
           padding-bottom: 100%;
+          content: '';
         }
       }
 
       .title {
         margin-top: rem-calc(24);
         margin-bottom: rem-calc(16);
-        @extend %h5;
+        @include h5;
       }
 
       .date {
         margin-bottom: rem-calc(0);
-        @extend %body2;
+        @include body2;
       }
 
       .location {
         margin-bottom: rem-calc(16);
-        @extend %body2;
+        @include body2;
       }
     }
   }
 
   .mission {
     position: absolute;
-    width: rem-calc(360);
     right: rem-calc(24);
     bottom: rem-calc(24);
+    width: rem-calc(360);
   }
 
   .instagram {
@@ -327,24 +343,24 @@ html {
 
     &.wall {
       @include xy-cell(10, false);
-      overflow: hidden;
       position: absolute;
       right: 0;
-      justify-content: flex-end;
       flex-wrap: wrap;
+      justify-content: flex-end;
+      overflow: hidden;
     }
 
     &.feed {
       // @include xy-cell(12, false);
+      position: absolute;
       width: 100%;
       overflow: hidden;
-      position: absolute;
 
       .wrap {
         @include xy-cell-block-container;
-        width: auto;
-        justify-content: flex-start;
         flex-wrap: wrap;
+        justify-content: flex-start;
+        width: auto;
       }
     }
 
@@ -359,14 +375,129 @@ html {
       }
 
       &:before {
-        content: '';
-        position: relative;
-        z-index: 1;
         display: block;
+        position: relative;
         width: 100%;
         padding-bottom: 100%;
         background-color: rgba($black, .87);
+        content: '';
+        z-index: 1;
       }
+    }
+  }
+
+  body[class*='tribe-events-'] & {
+    @include xy-grid('vertical');
+  }
+}
+
+#tribe-events {
+  #events-bar {
+    @include xy-cell(9);
+    margin: auto;
+  }
+
+  .tribe-events-ical {
+    // display: block;
+    // margin-bottom: rem-calc(64);
+    // float: none;
+  }
+
+  .events-loop {
+    @include xy-grid('horizontal');
+    justify-content: space-between;
+
+    @include breakpoint('medium'){
+      @include xy-grid-layout(
+        $n: 2,
+        $selector: '.post-event',
+        $gutter-output: false
+      )
+    };
+    @include breakpoint('large'){
+      @include xy-grid-layout(
+        $n: 3,
+        $selector: '.post-event',
+        $gutter-output: false
+      )
+    };
+  }
+
+  .post-event {
+    position: relative;
+    margin-top: rem-calc(32);
+    margin-bottom: rem-calc(32);
+    background-color: $white;
+    box-shadow: 0 1px 0 0 rgba($black, .1);
+
+    &.tribe-event-featured {
+      // @include xy-cell(12, false);
+    }
+
+    &:not(.has-tags) {
+      padding-bottom: rem-calc(40);
+    }
+
+    .tribe-events-event-image {
+      position: relative;
+      width: 100%;
+
+      &:before {
+        display: block;
+        width: 100%;
+        padding-bottom: 50%;
+        background-color: $black;
+        content: '';
+      }
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+
+    .cost {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: rem-calc(8);
+      padding: rem-calc(4 16);
+      background-color: rgba($white, .83);
+      z-index: 5;
+
+      & > *:not(.ticket-cost) {
+        display: none;
+      }
+    }
+
+    .tags {
+      height: rem-calc(40);
+      margin-top: rem-calc(8);
+      padding-top: rem-calc(8);
+      padding-bottom: rem-calc(8);
+      border-top: 1px solid rgba($black, .1);
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      .tag {
+        margin-right: rem-calc(8);
+      }
+    }
+  }
+
+  .single-event {
+    #header {
+      @include xy-grid('horizontal', false);
+
+      .wrap {
+        padding: rem-calc(0 24);
+      }
+    }
+
+    .description {
+      margin-top: rem-calc(24);
+      margin-bottom: rem-calc(24);
     }
   }
 }

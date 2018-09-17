@@ -15,8 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 } ?>
 
-<div id="tribe-events-content" class="tribe-events-list">
-
+<div class="content">
 
 	<?php
 	/**
@@ -30,15 +29,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<!-- List Header -->
 	<?php do_action( 'tribe_events_before_header' ); ?>
-	<div id="tribe-events-header" <?php tribe_events_the_header_attributes() ?>>
-
-		<!-- Header Navigation -->
-		<?php do_action( 'tribe_events_before_header_nav' ); ?>
-		<?php tribe_get_template_part( 'list/nav', 'header' ); ?>
-		<?php do_action( 'tribe_events_after_header_nav' ); ?>
-
-	</div>
-	<!-- #tribe-events-header -->
 	<?php do_action( 'tribe_events_after_header' ); ?>
 
 
@@ -51,15 +41,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<!-- List Footer -->
 	<?php do_action( 'tribe_events_before_footer' ); ?>
-	<div id="tribe-events-footer">
-
-		<!-- Footer Navigation -->
-		<?php do_action( 'tribe_events_before_footer_nav' ); ?>
-		<?php tribe_get_template_part( 'list/nav', 'footer' ); ?>
-		<?php do_action( 'tribe_events_after_footer_nav' ); ?>
-
-	</div>
-	<!-- #tribe-events-footer -->
 	<?php do_action( 'tribe_events_after_footer' ) ?>
 
-</div><!-- #tribe-events-content -->
+</div><!-- #events-content -->

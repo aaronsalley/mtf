@@ -9,6 +9,8 @@ services:
     environment:
       WORDPRESS_DB_PASSWORD: password
       WORDPRESS_TABLE_PREFIX: mtf_
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_MEMORY_LIMIT', '128M');
     volumes:
       - .:/var/www/html/wp-content/themes/mtf
 
@@ -17,3 +19,5 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./wp-data:/var/lib/mysql

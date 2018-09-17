@@ -31,6 +31,7 @@
 // @include foundation-slider;
 // @include foundation-switch;
 // @include foundation-table;
+
 // Basic components
 // @include foundation-badge;
 // @include foundation-breadcrumbs;
@@ -47,6 +48,7 @@
 // @include foundation-responsive-embed;
 // @include foundation-tabs;
 // @include foundation-thumbnail;
+
 // Menu-based containers
 @include foundation-menu;
 // @include foundation-menu-icon;
@@ -66,8 +68,6 @@
 // @include foundation-flex-classes;
 // @include foundation-visibility-classes;
 // @include foundation-prototype-classes;
-
-$surface: #fafafa;
 
 @mixin h4 {
   font-family: 'Strongbox JNL';
@@ -99,6 +99,7 @@ $surface: #fafafa;
 @mixin button {
   font-family: 'Strongbox JNL';
   font-size: rem-calc(10);
+  font-weight: 600;
   letter-spacing: rem-calc(1.25);
   text-transform: uppercase;
 }
@@ -267,65 +268,14 @@ html {
     }
 
     body[class*='tribe-events-'] & {
-      @include xy-cell(9);
+      @include xy-cell(10);
+      position: relative;
       margin: rem-calc(32 auto);
+      z-index: 5;
       // margin-right: auto;
       // margin-left: auto;
       // padding-top: rem-calc(32);
       // padding-bottom: rem-calc(64);
-    }
-  }
-
-  .events {
-    &.list {
-      @include xy-cell(4, false);
-      position: relative;
-      z-index: 5;
-    }
-
-    .event {
-      position: relative;
-      background-color: rgba($surface, 1);
-      overflow: hidden;
-
-      .image {
-        position: relative;
-        width: rem-calc(120);
-        margin-right: rem-calc(16);
-        float: left;
-        background-color: $black;
-        overflow: hidden;
-
-        img {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%);
-        }
-
-        &:before {
-          display: block;
-          width: 100%;
-          padding-bottom: 100%;
-          content: '';
-        }
-      }
-
-      .title {
-        margin-top: rem-calc(24);
-        margin-bottom: rem-calc(16);
-        @include h5;
-      }
-
-      .date {
-        margin-bottom: rem-calc(0);
-        @include body2;
-      }
-
-      .location {
-        margin-bottom: rem-calc(16);
-        @include body2;
-      }
     }
   }
 
@@ -392,18 +342,40 @@ html {
 }
 
 #tribe-events {
+  position: relative;
+
+  [class*=button] {
+    @extend .button;
+    @include button;
+  }
+
+  .blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+
+    img {
+      width: 100%;
+      opacity: .28;
+      filter: blur(20px);
+    }
+  }
+
   #events-bar {
     @include xy-cell(9);
     margin: auto;
   }
 
-  .tribe-events-ical {
-    // display: block;
-    // margin-bottom: rem-calc(64);
-    // float: none;
+  &.events {
+    @include xy-cell(4, false);
+    position: relative;
+    z-index: 5;
   }
 
-  .events-loop {
+  .events-loop,
+  .related-events {
     @include xy-grid('horizontal');
     justify-content: space-between;
 
@@ -414,28 +386,87 @@ html {
         $gutter-output: false
       )
     };
+
     @include breakpoint('large'){
       @include xy-grid-layout(
         $n: 3,
         $selector: '.post-event',
-        $gutter-output: false
+        $gutter-output: false,
       )
     };
   }
 
   .post-event {
     position: relative;
-    margin-top: rem-calc(32);
-    margin-bottom: rem-calc(32);
+    margin: rem-calc(32 0);
     background-color: $white;
     box-shadow: 0 1px 0 0 rgba($black, .1);
 
     &.tribe-event-featured {
-      // @include xy-cell(12, false);
     }
 
     &:not(.has-tags) {
       padding-bottom: rem-calc(40);
+    }
+
+    .home & {
+      margin: 0;
+      overflow: hidden;
+
+      .tribe-events-event-image {
+        position: relative;
+        width: rem-calc(120);
+        margin-right: rem-calc(16);
+        float: left;
+        background-color: $black;
+        overflow: hidden;
+
+        img {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%);
+        }
+
+        &:before {
+          display: block;
+          width: 100%;
+          padding-bottom: 100%;
+          content: '';
+        }
+      }
+
+      .cost {
+        zoom: .75;
+      }
+
+      .title {
+        margin-top: rem-calc(24);
+        margin-bottom: rem-calc(16);
+        @include h5;
+      }
+
+      .schedule {
+        margin-bottom: rem-calc(0);
+        @include body2;
+      }
+
+      .venue {
+        margin-bottom: rem-calc(16);
+        @include body2;
+      }
+
+      .tags {
+        display: none;
+      }
+
+      &:not(.has-tags) {
+        padding-bottom: 0;
+      }
+    }
+
+    a {
+      color: $body-font-color;
     }
 
     .tribe-events-event-image {
@@ -455,6 +486,12 @@ html {
         top: 0;
         left: 0;
       }
+    }
+
+    .title,
+    .meta,
+    .tags {
+      margin: rem-calc(0 16);
     }
 
     .cost {
@@ -490,14 +527,58 @@ html {
     #header {
       @include xy-grid('horizontal', false);
 
+      .tribe-events-event-image {
+        @include xy-cell(auto, false);
+        margin-bottom: rem-calc(0);
+      }
+
       .wrap {
-        padding: rem-calc(0 24);
+        @include xy-cell(4, false);
+        position: relative;
+        margin-right: rem-calc(0);
+        margin-bottom: rem-calc(0);
+        margin-left: rem-calc(24);
+      }
+
+      .button {
+        @extend .button.large;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin-bottom: 0;
+      }
+    }
+
+    .links {
+      @include xy-grid('horizontal', false);
+      padding: 0;
+
+      [class*=button] {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      .tribe-events-cal-links {
+        @include xy-grid('horizontal', false);
+        @include xy-cell(4, false);
+        justify-content: space-between;
+        margin-bottom: 0;
+        margin-left: auto;
       }
     }
 
     .description {
       margin-top: rem-calc(24);
       margin-bottom: rem-calc(24);
+    }
+
+    .related-events-title {
+      @include h4;
+    }
+
+    .related-events {
+      @include xy-cell(12, false);
     }
   }
 }

@@ -12,11 +12,17 @@
  */
 ?>
 
-<div class="tribe-events-title-bar">
-
-	<!-- List Title -->
-	<?php do_action( 'tribe_events_before_the_title' ); ?>
-	<h1 class="tribe-events-page-title"><?php echo tribe_get_events_title() ?></h1>
-	<?php do_action( 'tribe_events_after_the_title' ); ?>
-
-</div>
+<header class="header">
+  <div class="masthead">
+		<?php do_action( 'tribe_events_before_the_title' ); ?>
+		<h1 class="title"><?php echo tribe_get_events_title() ?></h1>
+		<?php do_action( 'tribe_events_after_the_title' ); ?>
+    <button class="button"><?php esc_html_e('Support us'); ?></button>
+  </div>
+  <?php for($i = 0; $i < 10; $i++){
+    $instagram[] = '<div class="post">
+      <img class="image" src="#" />
+    </div>';
+  }
+  echo $instagram = '<div class="instagram feed"><div class="wrap">' . implode($instagram) . '</div></div>'; ?>
+</header>

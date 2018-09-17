@@ -42,11 +42,11 @@ $has_tags = has_tag();
 	<?php do_action( 'tribe_events_after_the_event_title' ) ?>
 
 	<!-- Event Meta -->
-	<?php do_action( 'tribe_events_before_the_meta' ) ?>
+	<!-- <?php do_action( 'tribe_events_before_the_meta' ) ?> -->
 	<div class="meta">
 		<!-- Schedule & Recurrence Details -->
 		<div class="schedule">
-			<?php echo tribe_events_event_schedule_details() ?>
+			<?php echo tribe_events_get_event_schedule_details( $post->ID, '', '', true ); ?>
 		</div>
 
 		<?php if ( $venue_details ) : ?>

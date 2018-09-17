@@ -45,7 +45,7 @@ $event_id = get_the_ID();
 			<header id="header" <?php tribe_events_the_header_attributes() ?>>
 				<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
 				<div class="wrap">
-					<?php the_title( '<h2 class="single-event-title">', '</h2>' ); ?>
+					<?php the_title( '<h2 class="event-title">', '</h2>' ); ?>
 
 					<div class="schedule tribe-clearfix">
 						<?php echo tribe_events_event_schedule_details( $event_id, '<h3>', '</h3>' ); ?>
@@ -72,18 +72,4 @@ $event_id = get_the_ID();
 		</div> <!-- #post-x -->
 		<?php if ( get_post_type() == Tribe__Events__Main::POSTTYPE && tribe_get_option( 'showComments', false ) ) comments_template() ?>
 	<?php endwhile; ?>
-
-	<!-- Event footer -->
-	<div id="tribe-events-footer">
-		<!-- Navigation -->
-		<nav class="nav-pagination" aria-label="<?php printf( esc_html__( '%s Navigation', 'the-events-calendar' ), $events_label_singular ); ?>">
-			<ul class="tribe-events-sub-nav">
-				<li class="nav-previous"><?php tribe_the_prev_event_link( '<span>&laquo;</span> %title%' ) ?></li>
-				<li class="nav-next"><?php tribe_the_next_event_link( '%title% <span>&raquo;</span>' ) ?></li>
-			</ul>
-			<!-- .sub-nav -->
-		</nav>
-	</div>
-	<!-- #footer -->
-
 </div><!-- #content -->

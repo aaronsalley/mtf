@@ -69,6 +69,8 @@
 // @include foundation-visibility-classes;
 // @include foundation-prototype-classes;
 
+$disabled: .38;
+
 @mixin h4 {
   font-family: 'Strongbox JNL';
   font-size: rem-calc(24);
@@ -120,6 +122,7 @@ html {
       align-self: flex-end;
       width: rem-calc(272);
       height: rem-calc(80);
+      margin-left: -1 * $global-padding;
       font-size: 0;
       overflow-y: hidden;
 
@@ -185,6 +188,30 @@ html {
       padding: rem-calc(32 24);
     }
 
+    div[class*='widget'] {
+      @include xy-cell(6, false);
+
+      .menu {
+        @include xy-grid-container($padding: 0);
+        @include xy-grid('horizontal', false);
+        @include menu-base;
+
+        & > .menu-item {
+          @include xy-cell(auto);
+
+          .sub-menu {
+            @include menu-base;
+            @include menu-direction('vertical');
+          }
+
+          a {
+            color: rgba($white, .68);
+            @include caption;
+          }
+        }
+      }
+    }
+
     #mailchimp {
       width: rem-calc(348);
       margin: rem-calc(32 24);
@@ -214,7 +241,7 @@ html {
       }
 
       .address {
-        color: rgba($white, .38);
+        color: rgba($white, $disabled);
         font-size: rem-calc(12 * .68);
         text-align: right;
         @include caption;
@@ -284,20 +311,29 @@ html {
     right: rem-calc(24);
     bottom: rem-calc(24);
     width: rem-calc(360);
+    color: $white;
+    text-align: center;
+    z-index: 100;
+    @include h4;
   }
 
-  .instagram {
+  #instagram {
     @include xy-cell-block-container;
     @include xy-cell-base();
     flex-direction: row;
 
     &.wall {
-      @include xy-cell(10, false);
+      @include xy-cell(9, false);
       position: absolute;
       right: 0;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+      min-height: rem-calc(480);
       overflow: hidden;
+
+      .wrap {
+        @include xy-cell-block-container;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
     }
 
     &.feed {
@@ -406,7 +442,7 @@ html {
     }
 
     &:not(.has-tags) {
-      padding-bottom: rem-calc(40);
+      padding-bottom: rem-calc(42);
     }
 
     .home & {
@@ -425,7 +461,7 @@ html {
           position: absolute;
           top: 50%;
           left: 50%;
-          transform: translate(-50%);
+          transform: translate(-50%, -50%);
         }
 
         &:before {
@@ -447,13 +483,9 @@ html {
       }
 
       .schedule {
-        margin-bottom: rem-calc(0);
-        @include body2;
       }
 
       .venue {
-        margin-bottom: rem-calc(16);
-        @include body2;
       }
 
       .tags {
@@ -494,6 +526,22 @@ html {
       margin: rem-calc(0 16);
     }
 
+    .venue {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      @include body2;
+    }
+
+    .schedule {
+      max-height: 1.25rem;
+      margin: rem-calc(4 0);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      @include body2;
+    }
+
     .cost {
       position: absolute;
       top: 0;
@@ -509,16 +557,18 @@ html {
     }
 
     .tags {
-      height: rem-calc(40);
+      height: rem-calc(42);
       margin-top: rem-calc(8);
       padding-top: rem-calc(8);
       padding-bottom: rem-calc(8);
       border-top: 1px solid rgba($black, .1);
       text-overflow: ellipsis;
+      white-space: nowrap;
       overflow: hidden;
 
       .tag {
         margin-right: rem-calc(8);
+        @include caption;
       }
     }
   }

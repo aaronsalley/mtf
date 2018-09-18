@@ -4,11 +4,14 @@ global $post;
 get_header();
 
 if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-  <div class="mission">
+  <h2 class="mission">
     <?php the_content(); ?>
-  </div>
+  </h2>
   <?php $events = tribe_get_events( array(
     'posts_per_page' => 4,
+    'orderby' => 'event_date',
+    // 'order' => 'DESC',
+    'start_date' => date("Y-m-d H:i:s")
   ));
   ?>
   <div id="tribe-events" class="events list">
@@ -44,7 +47,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
       <img class="image" src="#" />
     </div>';
   }
-  echo $instagram = '<div class="instagram wall">' . implode($instagram) . '</div>'; ?>
+  echo $instagram = '<div id="instagram" class="wall">' . implode($instagram) . '</div>'; ?>
 <?php endwhile; else : ?>
 	<p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
 <?php endif; ?>

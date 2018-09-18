@@ -12,12 +12,12 @@ import App from './views/app';
 // const store = configureStore();
 
 const renderApp = () => render(
-  // <Provider store={store}>
+    // <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  // </Provider>
-  , document.getElementById('app')
+    // </Provider>
+    , document.getElementById('app')
 );
 
 if (process.env.NODE_ENV !== 'production' && module.hot) {

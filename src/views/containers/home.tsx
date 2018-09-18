@@ -7,9 +7,9 @@ const Home = () => {
   return(
     <main>
       <Events maxItems='4' />
-      <GramFeed maxItems='100' />
+      <GramFeed maxItems='10' />
     </main>
-  )
-}
+  );
+};
 
 export default Home;

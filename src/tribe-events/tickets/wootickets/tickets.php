@@ -31,6 +31,8 @@ ob_start();
  * @param array $cart_classes
  */
 $cart_classes = (array) apply_filters( 'tribe_events_tickets_woo_cart_class', array( 'cart' ) );
+
+echo '<span id="get-tickets"> </span>';
 ?>
 <form
 	id="buy-tickets"

@@ -24,5 +24,5 @@
       <img class="image" src="#" />
     </div>';
   }
-  echo $instagram = '<div class="instagram feed"><div class="wrap">' . implode($instagram) . '</div></div>'; ?>
+  echo $instagram = '<div id="instagram" class="feed"><div class="wrap">' . implode($instagram) . '</div></div>'; ?>
 </header>

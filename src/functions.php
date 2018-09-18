@@ -17,6 +17,8 @@
 
       add_post_type_support( 'page', 'excerpt' );
 
+      add_image_size( 'event', 1200, 600, true );
+
       // Ready for WooCommerce
       add_theme_support( 'woocommerce' );
       // add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );

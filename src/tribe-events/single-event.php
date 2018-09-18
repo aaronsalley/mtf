@@ -20,29 +20,19 @@ $events_label_plural   = tribe_get_event_label_plural();
 
 $event_id = get_the_ID();
 
-
-if ( tribe_get_event_website_url() ) {
+$website = tribe_get_event_website_url();
+if ( $website && !strpos($website, 'eventbrite.com') ) {
 	$website = tribe_get_event_website_url();
 } else {
-	$website = '#';
+	$website = '#get-tickets';
 }
 ?>
 
 <div class="blur">
-	<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
+	<?php echo tribe_event_featured_image( $event_id, 'event', false ); ?>
 </div>
-<header class="header">
-	<div class="masthead">
-		<h2 class="title"><?php the_title(); ?></h2>
-		<button class="button"><?php esc_html_e('Support us'); ?></button>
-	</div>
-	<?php for($i = 0; $i < 10; $i++){
-		$instagram[] = '<div class="post">
-			<img class="image" src="#" />
-		</div>';
-	}
-	echo $instagram = '<div class="instagram feed"><div class="wrap">' . implode($instagram) . '</div></div>'; ?>
-</header>
+
+<?php tribe_get_template_part('list/title', 'bar'); ?>
 
 <div class="content">
 	<!-- Notices -->
@@ -52,7 +42,7 @@ if ( tribe_get_event_website_url() ) {
 		<div id="post-<?php the_ID(); ?>" <?php post_class('single-event'); ?>>
 			<!-- Event header -->
 			<header id="header" <?php tribe_events_the_header_attributes() ?>>
-				<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
+				<?php echo tribe_event_featured_image( $event_id, 'event', false ); ?>
 				<div class="wrap">
 					<?php echo tribe_events_event_schedule_details( $event_id, '<h5 class="schedule">', '</h5>' ); ?>
 					<?php the_title( '<h2 class="title">', '</h2>' ); ?>

@@ -22,6 +22,8 @@ $messages       = $commerce->get_messages();
 $messages_class = $messages ? 'tribe-tpp-message-display' : '';
 $now            = current_time( 'timestamp' );
 $cart_url       = '';
+
+echo '<span id="get-tickets"> </span>';
 ?>
 <form
 	id="tpp-buy-tickets"

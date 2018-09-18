@@ -22,6 +22,8 @@ if ( ! empty( $tickets ) ) {
 }
 
 ob_start();
+
+echo '<span id="get-tickets"> </span>';
 ?>
 <form
 	id="buy-tickets"

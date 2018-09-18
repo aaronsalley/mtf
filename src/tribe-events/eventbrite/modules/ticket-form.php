@@ -26,7 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Start ticket form template
 echo apply_filters( 'tribe_events_eventbrite_before_the_tickets', '', get_the_ID() );
 
-echo apply_filters( 'tribe_events_eventbrite_the_tickets', '', get_the_ID() );
+echo '<span id="get-tickets"> </span>';
 
+echo apply_filters( 'tribe_events_eventbrite_the_tickets', '', get_the_ID() );
 // End ticket form template
 echo apply_filters( 'tribe_events_eventbrite_after_the_tickets', '', get_the_ID() );

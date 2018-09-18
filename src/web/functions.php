@@ -6,9 +6,9 @@
    * instead attached to a filter or action hook.
    */
 
-  include('admin/helpers.php');
-  include('admin/permissions.php');
-  include('admin/projects.php');
+  include('inc/helpers.php');
+  include('inc/permissions.php');
+  include('inc/projects.php');
 
   add_action( 'after_setup_theme', 'mtf_setup' );
   if ( ! function_exists( 'mtf_setup' ) ) :

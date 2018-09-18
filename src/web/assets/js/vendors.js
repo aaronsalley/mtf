@@ -21,6 +21,6 @@ if (process.NODE_ENV == 'production') {
 }
 
 render(
-    <Instagram maxItems='100' />
+    <Instagram maxItems='50' />
     , document.getElementById('instagram')
 );

@@ -9,11 +9,18 @@ import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import path from 'path';
 import webpack from 'webpack';
 
-dotenv.config({
-  path: path.resolve(__dirname, '../.env'),
-});
+const config = {
+  webpack: {
+    web: {},
+    backend: {},
+  },
+};
 
-const config = {};
+config.envfile = path.resolve(__dirname, '../.env');
+
+dotenv.config({
+  path: config.envfile,
+});
 
 config.paths = {
   SOURCE: path.resolve(__dirname, '../src'),
@@ -31,15 +38,33 @@ config.server = {
   cors: true,
 };
 
-const entry = {
-  react: config.paths.SOURCE + '/index.js',
-  vendors: config.paths.SOURCE + '/assets/js/vendors.js',
+let web = {};
+web.entry = {
+  react: config.paths.SOURCE + '/web/index.js',
+  vendors: config.paths.SOURCE + '/web/assets/js/vendors.js',
 };
-const output = {
-  filename: 'assets/js/[name].js',
-  chunkFilename: 'assets/js/[name].js',
+web.output = {
+  filename: 'web/assets/js/[name].js',
+  chunkFilename: 'web/assets/js/[name].js',
   publicPath: '/',
 };
+web.plugins = [
+  new HtmlWebpackPlugin({
+    filename: 'web/index.html',
+    template: config.paths.SOURCE + '/web/views/index.html',
+  }),
+];
+
+let api = {};
+api.entry = {
+  api: config.paths.SOURCE + '/api/index.js',
+};
+api.output = {
+  filename: 'api/[name].js',
+  chunkFilename: 'api/[name].js',
+  publicPath: '/',
+};
+
 const modules = {
   rules: [
     {
@@ -107,35 +132,27 @@ const modules = {
   ],
 };
 const resolve = {
-  alias: {
-    config: path.resolve(__dirname, '../environments/config.js'),
-    logger: path.resolve(__dirname, '../src/logger/logger.js'),
-  },
   extensions: [
     '*', '.js', '.jsx', '.ts', '.tsx',
   ],
 };
 const plugins = [
+  new webpack.NoEmitOnErrorsPlugin(),
   new CleanWebpackPlugin(
       [
-        config.paths.BUILD,
+        config.paths.BUILD + '**/*',
         config.paths.DOCS,
       ], {
         root: path.resolve(__dirname, '../'),
       }
   ),
-  new HtmlWebpackPlugin({
-    filename: 'index.html',
-    template: config.paths.SOURCE + '/views/index.html',
-  }),
-  new webpack.NoEmitOnErrorsPlugin(),
   // new NpmInstallPlugin(),
   new MiniCssExtractPlugin({
-    filename: 'style.css',
+    filename: 'web/style.css',
     chunkFilename: 'assets/css/[name].[hash].css',
   }),
   new Dotenv({
-    path: path.resolve(__dirname, '../.env'),
+    path: config.envfile,
   }),
 ];
 const optimization = {
@@ -167,17 +184,15 @@ const watchOptions = {
   ],
 };
 const devServer = {
-  contentBase: config.paths.BUILD,
+  contentBase: config.paths.BUILD + '/web',
   compress: true,
   port: process.env.PORT,
   historyApiFallback: true,
   open: true,
 };
 
-config.webpack = {
+const webpackBase = {
   mode: process.env.NODE_ENV,
-  entry: entry,
-  output: output,
   module: modules,
   resolve: resolve,
   plugins: plugins,
@@ -187,5 +202,8 @@ config.webpack = {
   watchOptions: watchOptions,
   devtool: 'eval-source-map',
 };
+
+config.webpack.web = {...web, ...webpackBase};
+config.webpack.api = {...api, ...webpackBase};
 
 export default config;

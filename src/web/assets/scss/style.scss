@@ -331,15 +331,17 @@ html {
 
       .wrap {
         @include xy-cell-block-container;
+        flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-end;
+        width: auto;
       }
     }
 
     &.feed {
-      // @include xy-cell(12, false);
       position: absolute;
       width: 100%;
+      min-height: rem-calc(150);
       overflow: hidden;
 
       .wrap {
@@ -408,6 +410,11 @@ html {
     @include xy-cell(4, false);
     position: relative;
     z-index: 5;
+
+    .home & {
+      min-height: rem-calc(480);
+      background-color: $body-background;
+    }
   }
 
   .events-loop,

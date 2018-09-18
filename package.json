@@ -20,7 +20,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "dotenv": "^6.0.0",
+    "express": "^4.16.3",
     "foundation-sites": "^6.5.0-rc.2",
+    "mongoose": "^5.2.15",
     "raven-js": "^3.27.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",

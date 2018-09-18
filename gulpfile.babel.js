@@ -9,10 +9,6 @@ import named from 'vinyl-named';
 import path from 'path';
 import webpack from 'webpack-stream';
 
-dotenv.config({
-  path: path.resolve(__dirname, 'env/.env'),
-});
-
 import config from './gulp/config';
 
 const serve = (done) => {
@@ -20,22 +16,40 @@ const serve = (done) => {
   browserSync.init(config.server);
 
   gulp.watch(config.paths.BUILD + '/**/*').on('change', browserSync.reload);
-  gulp.watch(config.paths.SOURCE + '/**/*.php', gulp.series(copy));
+  gulp.watch(config.paths.SOURCE + '/**/*.php', gulp.series(copyPhp));
 };
 
-const bundle = (done) => {
+const bundleWeb = (done) => {
   gulp.src(config.paths.SOURCE + '/**/*.php')
       .pipe(named())
-      .pipe(webpack(config.webpack, compiler))
+      .pipe(webpack(config.webpack.web, compiler))
       .pipe(gulp.dest(config.paths.BUILD));
   done();
 };
+const bundleApi = (done) => {
+  gulp.src(config.paths.SOURCE + '/api/index.js')
+      .pipe(named())
+      .pipe(webpack(config.webpack.api, compiler))
+      .pipe(gulp.dest(config.paths.BUILD));
+  done();
+};
+const bundleAll = [bundleWeb, bundleApi];
 
-const copy = (done) => {
-  gulp.src([config.paths.SOURCE + '/**/*.php'], {base: config.paths.SOURCE})
+const copyPhp = (done) => {
+  gulp.src([
+    config.paths.SOURCE + '/**/*.php',
+  ], {base: config.paths.SOURCE})
       .pipe(decomment.html())
       .pipe(gulp.dest(config.paths.BUILD));
   done();
 };
+const copyFiles = (done) => {
+  gulp.src([
+    config.paths.SOURCE + '/**/screenshot.jpg',
+  ], {base: config.paths.SOURCE})
+      .pipe(gulp.dest(config.paths.BUILD));
+  done();
+};
+const copyAll = [copyPhp, copyFiles];
 
-gulp.task('default', gulp.series(bundle, copy, serve));
+gulp.task('default', gulp.series(bundleAll, copyAll, serve));

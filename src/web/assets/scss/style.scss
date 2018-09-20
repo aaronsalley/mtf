@@ -25,7 +25,7 @@
 // Generic components
 @include foundation-button;
 // @include foundation-button-group;
-// @include foundation-close-button;
+@include foundation-close-button;
 // @include foundation-label;
 // @include foundation-progress-bar;
 // @include foundation-slider;
@@ -51,7 +51,7 @@
 
 // Menu-based containers
 @include foundation-menu;
-// @include foundation-menu-icon;
+@include foundation-menu-icon;
 // @include foundation-accordion-menu;
 // @include foundation-drilldown-menu;
 // @include foundation-dropdown-menu;
@@ -59,9 +59,9 @@
 // Layout components
 // @include foundation-off-canvas;
 // @include foundation-reveal;
-// @include foundation-sticky;
-// @include foundation-title-bar;
-// @include foundation-top-bar;
+@include foundation-sticky;
+@include foundation-title-bar;
+@include foundation-top-bar;
 
 // Helpers
 // @include foundation-float-classes;
@@ -70,6 +70,13 @@
 // @include foundation-prototype-classes;
 
 $disabled: .38;
+
+@mixin h3 {
+  font-family: 'Strongbox JNL';
+  font-size: rem-calc(32);
+  letter-spacing: rem-calc(.25);
+  text-transform: uppercase;
+};
 
 @mixin h4 {
   font-family: 'Strongbox JNL';
@@ -83,6 +90,12 @@ $disabled: .38;
   font-size: rem-calc(16);
   text-transform: uppercase;
 };
+
+@mixin body {
+  font-family: $body-font-family;
+  font-size: $global-font-size;
+  line-height: $global-lineheight;
+}
 
 @mixin body2 {
   font-family: 'Roboto Condensed';
@@ -109,72 +122,107 @@ $disabled: .38;
 html {
   background-color: rgba(black, 1);
 
-  #topbar {
-    @include xy-grid-container();
-    @include xy-grid('horizontal');
-    position: relative;
-    justify-content: space-between;
-    height: rem-calc(104);
-    margin-bottom: rem-calc(24);
+  #header-bar{
+    z-index: 10000;
 
-    .branding {
-      position: relative;
-      align-self: flex-end;
-      width: rem-calc(272);
-      height: rem-calc(80);
-      margin-left: -1 * $global-padding;
-      font-size: 0;
-      overflow-y: hidden;
+    .title-bar {
+      justify-content: space-between;
+      background: inherit;
+      @include breakpoint(medium) {
+        display: none;
+      }
 
-      img {
+      &:before {
+        display: block;
         position: absolute;
+        top: 0;
+        right: 0;
         bottom: 0;
         left: 0;
+        transform: rotate(180deg);
+        background-color: rgba(black, 1);
+        background-image: url('../img/mtf_brushstroke.jpg');
+        content: '';
+        z-index: -1;
+      }
+
+      .mtf-logo {
+        max-width: rem-calc(250);
       }
     }
 
-    .main.menu {
-      display: flex;
-      align-items: flex-end;
-      padding-bottom: rem-calc(24);
+    #topbar {
+      @include xy-grid-container();
+      // @include xy-grid('horizontal');
+      @include top-bar-container;
+      position: relative;
+      justify-content: space-between;
+      height: rem-calc(104);
+      margin-bottom: rem-calc(24);
 
-      .menu-item {
-        @include h5;
-
-        a {
-          padding-right: rem-calc(0);
-          padding-left: rem-calc(40);
-          color: $black;
-        }
-      }
-    }
-
-    .social.menu {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: rem-calc(32);
-      z-index: 5;
-
-      .menu-item {
-        align-self: center;
-        width: rem-calc(24);
-        height: rem-calc(24);
+      .branding {
+        display: none;
+        position: relative;
+        align-self: flex-end;
+        width: rem-calc(272);
+        height: rem-calc(80);
+        margin-bottom: 0;
+        margin-left: -1 * $global-padding;
         font-size: 0;
-        overflow: hidden;
-        &:not(:last-of-type){
-          margin-right: rem-calc(24);
+        overflow-y: hidden;
+        @include breakpoint(medium) {
+          display: flex;
+        }
+
+        img {
+          position: absolute;
+          bottom: 0;
+          left: 0;
         }
       }
 
-      .donate.button {
-        min-width: rem-calc(96);
-        margin-left: rem-calc(40);
-        @include button;
+      .main.menu {
+        display: flex;
+        align-items: flex-end;
+
+        .menu-item {
+          @include h5;
+
+          a {
+            padding-right: rem-calc(0);
+            padding-bottom: rem-calc(0);
+            padding-left: rem-calc(40);
+            color: $black;
+          }
+        }
+      }
+
+      .social.menu {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: rem-calc(32);
+        z-index: 5;
+
+        .menu-item {
+          align-self: center;
+          width: rem-calc(24);
+          height: rem-calc(24);
+          font-size: 0;
+          overflow: hidden;
+          &:not(:last-of-type){
+            margin-right: rem-calc(24);
+          }
+        }
+
+        .donate.button {
+          min-width: rem-calc(96);
+          margin-left: rem-calc(40);
+          @include button;
+        }
       }
     }
   }
-
   #bottombar {
     height: rem-calc(136);
     margin-top: rem-calc(24);
@@ -184,12 +232,28 @@ html {
     .wrap {
       @include xy-grid-container();
       @include xy-grid('horizontal');
+      @include xy-grid-layout(
+        $n: 2,
+        $selector: '.post-event',
+        $gutter-output: false,
+      )
       justify-content: space-between;
       padding: rem-calc(32 24);
+
+      &:before {
+        display: block;
+        width: auto;
+        content: '';
+      }
     }
 
-    div[class*='widget'] {
-      @include xy-cell(6, false);
+    .widgets {
+      display: none;
+      @include breakpoint(large) {
+        @include xy-grid-container();
+        @include xy-grid('horizontal');
+        display: flex;
+      }
 
       .menu {
         @include xy-grid-container($padding: 0);
@@ -213,8 +277,8 @@ html {
     }
 
     #mailchimp {
-      width: rem-calc(348);
-      margin: rem-calc(32 24);
+      max-width: rem-calc(348);
+      margin: rem-calc(32 0);
 
       .input-group {
         margin-bottom: rem-calc(4);
@@ -288,25 +352,36 @@ html {
 
   .content {
     .page & {
-      @include xy-cell(8);
-      @include xy-cell-offset(4);
+      @include xy-cell(12);
       margin-top: rem-calc(16);
       margin-bottom: rem-calc(16);
+      @include breakpoint(medium) {
+        @include xy-cell(10);
+        @include xy-cell-offset(2);
+      }
+      @include breakpoint(large) {
+        @include xy-cell(8);
+        @include xy-cell-offset(4);
+      }
     }
 
     body[class*='tribe-events-'] & {
-      @include xy-cell(10);
       position: relative;
-      margin: rem-calc(32 auto);
+      margin-top: rem-calc(32);
+      margin-bottom: rem-calc(32);
       z-index: 5;
-      // margin-right: auto;
-      // margin-left: auto;
       // padding-top: rem-calc(32);
       // padding-bottom: rem-calc(64);
+      @include breakpoint(medium){
+        @include xy-cell(10);
+        margin-right: auto;
+        margin-left: auto;
+      }
     }
   }
 
   .mission {
+    display: none;
     position: absolute;
     right: rem-calc(24);
     bottom: rem-calc(24);
@@ -315,6 +390,9 @@ html {
     text-align: center;
     z-index: 100;
     @include h4;
+    @include breakpoint(medium) {
+      display: block;
+    }
   }
 
   #instagram {
@@ -324,10 +402,14 @@ html {
 
     &.wall {
       @include xy-cell(9, false);
+      display: none;
       position: absolute;
       right: 0;
       min-height: rem-calc(480);
       overflow: hidden;
+      @include breakpoint(medium) {
+        display: inherit;
+      }
 
       .wrap {
         @include xy-cell-block-container;
@@ -389,10 +471,13 @@ html {
 
   .blur {
     position: absolute;
-    top: 0;
+    top: rem-calc(150);
     left: 0;
     width: 100%;
     z-index: 1;
+    @include breakpoint(medium){
+      top: 0;
+    }
 
     img {
       width: 100%;
@@ -407,13 +492,21 @@ html {
   }
 
   &.events {
-    @include xy-cell(4, false);
     position: relative;
+    width: 100%;
     z-index: 5;
+    @include breakpoint(medium) {
+      @include xy-cell(6, false);
+    }
+    @include breakpoint(large) {
+      @include xy-cell(4, false);
+    }
 
     .home & {
-      min-height: rem-calc(480);
-      background-color: $body-background;
+      @include breakpoint(medium) {
+        min-height: rem-calc(480);
+        background-color: $body-background;
+      }
     }
   }
 
@@ -421,29 +514,51 @@ html {
   .related-events {
     @include xy-grid('horizontal');
     justify-content: space-between;
-
-    @include breakpoint('medium'){
+    @include xy-grid-layout(
+      $n: 1,
+      $selector: '.post-event',
+      $gutter-output: false
+    )
+    @include breakpoint(medium){
       @include xy-grid-layout(
         $n: 2,
         $selector: '.post-event',
         $gutter-output: false
       )
-    };
 
-    @include breakpoint('large'){
+      &:after {
+        @include xy-cell(6, false);
+        display: block;
+        content: '';
+      }
+    };
+    @include breakpoint(large){
       @include xy-grid-layout(
         $n: 3,
         $selector: '.post-event',
         $gutter-output: false,
       )
+
+      &:after {
+        @include xy-cell(4, false);
+        display: block;
+        content: '';
+      }
     };
   }
 
   .post-event {
     position: relative;
-    margin: rem-calc(32 0);
+    margin-top: rem-calc(32);
+    margin-right: auto;
+    margin-bottom: rem-calc(32);
+    margin-left: auto;
     background-color: $white;
     box-shadow: 0 1px 0 0 rgba($black, .1);
+    @include breakpoint(medium) {
+      margin-right: 0;
+      margin-left: 0;
+    }
 
     &.tribe-event-featured {
     }
@@ -581,29 +696,44 @@ html {
   }
 
   .single-event {
+    @include xy-cell(12);
+
     #header {
-      @include xy-grid('horizontal', false);
+      @include xy-grid('horizontal');
+      @include breakpoint(medium) {
+        @include xy-grid('horizontal', false);
+      }
 
       .tribe-events-event-image {
-        @include xy-cell(auto, false);
+        width: 100%;
         margin-bottom: rem-calc(0);
+        @include breakpoint(medium) {
+          @include xy-cell(auto, false);
+        }
       }
 
       .wrap {
-        @include xy-cell(4, false);
+        @include xy-cell(12, false);
         position: relative;
-        margin-right: rem-calc(0);
         margin-bottom: rem-calc(0);
-        margin-left: rem-calc(24);
+        @include breakpoint(medium){
+          @include xy-cell(4, false);
+          margin-right: rem-calc(0);
+          margin-left: rem-calc(24);
+        }
       }
 
       .button {
-        @extend .button.large;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        @include button-style();
+        @include button-expand(true);
         margin-bottom: 0;
+        @include breakpoint(medium) {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          font-size: map-get($button-sizes, 'large');
+        }
       }
     }
 
@@ -614,15 +744,35 @@ html {
       [class*=button] {
         margin-top: 0;
         margin-bottom: 0;
+        font-size: rem-calc(8);
+        @include breakpoint(medium) {
+          font-size: map-get($button-sizes, 'tiny');
+        }
+        @include breakpoint(large) {
+          font-size: map-get($button-sizes, 'small');
+        }
       }
 
       .tribe-events-cal-links {
         @include xy-grid('horizontal', false);
-        @include xy-cell(4, false);
+        @include xy-cell(7, false);
         justify-content: space-between;
+        margin-right: auto;
         margin-bottom: 0;
         margin-left: auto;
+        @include breakpoint(medium){
+          @include xy-cell(4, false);
+          margin-right: inherit;
+        }
       }
+    }
+
+    .title {
+      @include h3;
+    }
+
+    .schedule {
+      @include body;
     }
 
     .description {
@@ -630,12 +780,12 @@ html {
       margin-bottom: rem-calc(24);
     }
 
-    .related-events-title {
-      @include h4;
-    }
-
     .related-events {
       @include xy-cell(12, false);
+
+      .related-events-title {
+        @include h4;
+      }
     }
   }
 }

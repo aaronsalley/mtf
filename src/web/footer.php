@@ -1,17 +1,18 @@
     </main>
     <footer id="bottombar">
       <div class="wrap">
-        <?php dynamic_sidebar( 'footer-widgets' ); ?>
-        <?php
-        // wp_nav_menu(array(
-        //   'menu' => '',
-        //   'container' => 'nav',
-        //   'container_id' => 'site-map',
-        //   'theme_location' => '',
-        // ));
-        ?>
-        <aside class="widgets">
-          <form id="mailchimp">
+        <div class="widgets">
+          <?php dynamic_sidebar( 'footer-widgets' ); ?>
+          <?php
+          // wp_nav_menu(array(
+          //   'menu' => '',
+          //   'container' => 'nav',
+          //   'container_id' => 'site-map',
+          //   'theme_location' => '',
+          // ));
+          ?>
+        </div>
+        <form id="mailchimp">
             <div class="input-group">
               <input class="input-group-field"
                 type="email"
@@ -26,7 +27,6 @@
               <p id="copyright">© <?php echo date('Y'); ?> Musical Theatre Factory. 440 Lafayette St, 4th Floor, New York, NY 10003.</p>
             </address>
           </form>
-  			</aside>
       </div>
     </footer>
     <?php wp_footer(); ?>

@@ -52,4 +52,5 @@ const copyFiles = (done) => {
 };
 const copyAll = [copyPhp, copyFiles];
 
+gulp.task('build', gulp.series(bundleAll, copyAll));
 gulp.task('default', gulp.series(bundleAll, copyAll, serve));

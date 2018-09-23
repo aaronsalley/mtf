@@ -44,13 +44,13 @@ web.entry = {
   vendors: config.paths.SOURCE + '/web/assets/js/vendors.js',
 };
 web.output = {
-  filename: 'web/assets/js/[name].js',
-  chunkFilename: 'web/assets/js/[name].js',
+  filename: 'assets/js/[name].js',
+  chunkFilename: 'assets/js/[name].js',
   publicPath: '/',
 };
 web.plugins = [
   new HtmlWebpackPlugin({
-    filename: 'web/index.html',
+    filename: 'index.html',
     template: config.paths.SOURCE + '/web/views/index.html',
   }),
 ];
@@ -60,8 +60,8 @@ api.entry = {
   api: config.paths.SOURCE + '/api/index.js',
 };
 api.output = {
-  filename: 'api/[name].js',
-  chunkFilename: 'api/[name].js',
+  filename: '[name].js',
+  chunkFilename: '[name].js',
   publicPath: '/',
 };
 
@@ -123,7 +123,7 @@ const modules = {
           'options': {
             useRelativePath: true,
             name: '[name].[ext]',
-            context: 'src/',
+            context: 'src/web/',
             publicPath: 'assets/img/',
           },
         },
@@ -148,7 +148,7 @@ const plugins = [
   ),
   // new NpmInstallPlugin(),
   new MiniCssExtractPlugin({
-    filename: 'web/style.css',
+    filename: 'style.css',
     chunkFilename: 'assets/css/[name].[hash].css',
   }),
   new Dotenv({

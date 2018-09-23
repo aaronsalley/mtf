@@ -38,7 +38,7 @@ const bundleAll = [bundleWeb, bundleApi];
 const copyPhp = (done) => {
   gulp.src([
     config.paths.SOURCE + '/**/*.php',
-  ], {base: config.paths.SOURCE})
+  ], {base: config.paths.SOURCE + '/web'})
       .pipe(decomment.html())
       .pipe(gulp.dest(config.paths.BUILD));
   done();
@@ -46,7 +46,7 @@ const copyPhp = (done) => {
 const copyFiles = (done) => {
   gulp.src([
     config.paths.SOURCE + '/**/screenshot.jpg',
-  ], {base: config.paths.SOURCE})
+  ], {base: config.paths.SOURCE + '/web'})
       .pipe(gulp.dest(config.paths.BUILD));
   done();
 };

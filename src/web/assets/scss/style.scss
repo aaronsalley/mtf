@@ -121,195 +121,200 @@ $disabled: .38;
 
 html {
   background-color: rgba(black, 1);
+}
 
-  #header-bar{
-    z-index: 10000;
+#header-bar{
+  z-index: 10000;
 
-    .title-bar {
-      justify-content: space-between;
-      background: inherit;
-      @include breakpoint(medium) {
-        display: none;
+  .title-bar {
+    justify-content: space-between;
+    background: inherit;
+    @include breakpoint(medium) {
+      display: none;
+    }
+
+    &:before {
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transform: rotate(180deg);
+      background-color: rgba(black, 1);
+      background-image: url('../img/mtf_brushstroke.jpg');
+      content: '';
+      z-index: -1;
+    }
+
+    .mtf-logo {
+      max-width: rem-calc(250);
+    }
+  }
+}
+
+#topbar {
+  @include xy-grid-container();
+  // @include xy-grid('horizontal');
+  @include top-bar-container;
+  position: relative;
+  justify-content: space-between;
+  height: rem-calc(104);
+  margin-bottom: rem-calc(24);
+
+  .is-at-top & {
+    background: inherit;
+  }
+
+  .branding {
+    display: none;
+    position: relative;
+    align-self: flex-end;
+    width: rem-calc(272);
+    height: rem-calc(80);
+    margin-bottom: 0;
+    margin-left: -1 * $global-padding;
+    font-size: 0;
+    overflow-y: hidden;
+    @include breakpoint(medium) {
+      display: flex;
+    }
+
+    img {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  .main.menu {
+    display: flex;
+    align-items: flex-end;
+
+    .menu-item {
+      @include h5;
+
+      a {
+        padding-right: rem-calc(0);
+        padding-bottom: rem-calc(0);
+        padding-left: rem-calc(40);
+        color: $black;
       }
+    }
+  }
 
-      &:before {
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        transform: rotate(180deg);
-        background-color: rgba(black, 1);
-        background-image: url('../img/mtf_brushstroke.jpg');
-        content: '';
-        z-index: -1;
-      }
+  .social.menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: rem-calc(32);
+    z-index: 5;
 
-      .mtf-logo {
-        max-width: rem-calc(250);
+    .menu-item {
+      align-self: center;
+      width: rem-calc(24);
+      height: rem-calc(24);
+      font-size: 0;
+      overflow: hidden;
+      &:not(:last-of-type){
+        margin-right: rem-calc(24);
       }
     }
 
-    #topbar {
+    .donate.button {
+      min-width: rem-calc(96);
+      margin-left: rem-calc(40);
+      @include button;
+    }
+  }
+}
+
+#bottombar {
+  height: rem-calc(136);
+  margin-top: rem-calc(24);
+  background-color: rgba(black, 1);
+  background-image: url('../img/mtf_brushstroke.jpg');
+
+  .wrap {
+    @include xy-grid-container();
+    @include xy-grid('horizontal');
+    @include xy-grid-layout(
+      $n: 2,
+      $selector: '.post-event',
+      $gutter-output: false,
+    )
+    justify-content: space-between;
+    padding: rem-calc(32 24);
+
+    &:before {
+      display: block;
+      width: auto;
+      content: '';
+    }
+  }
+
+  .widgets {
+    display: none;
+    @include breakpoint(large) {
       @include xy-grid-container();
-      // @include xy-grid('horizontal');
-      @include top-bar-container;
-      position: relative;
-      justify-content: space-between;
-      height: rem-calc(104);
-      margin-bottom: rem-calc(24);
+      @include xy-grid('horizontal');
+      display: flex;
+    }
 
-      .branding {
-        display: none;
-        position: relative;
-        align-self: flex-end;
-        width: rem-calc(272);
-        height: rem-calc(80);
-        margin-bottom: 0;
-        margin-left: -1 * $global-padding;
-        font-size: 0;
-        overflow-y: hidden;
-        @include breakpoint(medium) {
-          display: flex;
+    .menu {
+      @include xy-grid-container($padding: 0);
+      @include xy-grid('horizontal', false);
+      @include menu-base;
+
+      & > .menu-item {
+        @include xy-cell(auto);
+
+        .sub-menu {
+          @include menu-base;
+          @include menu-direction('vertical');
         }
 
-        img {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-        }
-      }
-
-      .main.menu {
-        display: flex;
-        align-items: flex-end;
-
-        .menu-item {
-          @include h5;
-
-          a {
-            padding-right: rem-calc(0);
-            padding-bottom: rem-calc(0);
-            padding-left: rem-calc(40);
-            color: $black;
-          }
-        }
-      }
-
-      .social.menu {
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: rem-calc(32);
-        z-index: 5;
-
-        .menu-item {
-          align-self: center;
-          width: rem-calc(24);
-          height: rem-calc(24);
-          font-size: 0;
-          overflow: hidden;
-          &:not(:last-of-type){
-            margin-right: rem-calc(24);
-          }
-        }
-
-        .donate.button {
-          min-width: rem-calc(96);
-          margin-left: rem-calc(40);
-          @include button;
+        a {
+          color: rgba($white, .68);
+          @include caption;
         }
       }
     }
   }
-  #bottombar {
-    height: rem-calc(136);
-    margin-top: rem-calc(24);
-    background-color: rgba(black, 1);
-    background-image: url('../img/mtf_brushstroke.jpg');
 
-    .wrap {
-      @include xy-grid-container();
-      @include xy-grid('horizontal');
-      @include xy-grid-layout(
-        $n: 2,
-        $selector: '.post-event',
-        $gutter-output: false,
-      )
-      justify-content: space-between;
-      padding: rem-calc(32 24);
+  #mailchimp {
+    max-width: rem-calc(348);
+    margin: rem-calc(32 0);
 
-      &:before {
-        display: block;
-        width: auto;
-        content: '';
-      }
-    }
+    .input-group {
+      margin-bottom: rem-calc(4);
 
-    .widgets {
-      display: none;
-      @include breakpoint(large) {
-        @include xy-grid-container();
-        @include xy-grid('horizontal');
-        display: flex;
-      }
-
-      .menu {
-        @include xy-grid-container($padding: 0);
-        @include xy-grid('horizontal', false);
-        @include menu-base;
-
-        & > .menu-item {
-          @include xy-cell(auto);
-
-          .sub-menu {
-            @include menu-base;
-            @include menu-direction('vertical');
-          }
-
-          a {
-            color: rgba($white, .68);
-            @include caption;
-          }
-        }
-      }
-    }
-
-    #mailchimp {
-      max-width: rem-calc(348);
-      margin: rem-calc(32 0);
-
-      .input-group {
-        margin-bottom: rem-calc(4);
-
-        input[name='email'] {
-          padding: rem-calc(16);
-          border: 0;
-          background-color: rgba($white, .08);
-          color: rgba($white, 1);
-        }
-      }
-
-      .button {
-        min-width: rem-calc(96);
-        background-color: rgba($white, .08);
-        color: rgba($primary-color, 1);
-        @include button;
-      }
-
-      .gdpr {
+      input[name='email'] {
         padding: rem-calc(16);
+        border: 0;
+        background-color: rgba($white, .08);
         color: rgba($white, 1);
-        @include caption;
       }
+    }
 
-      .address {
-        color: rgba($white, $disabled);
-        font-size: rem-calc(12 * .68);
-        text-align: right;
-        @include caption;
-      }
+    .button {
+      min-width: rem-calc(96);
+      background-color: rgba($white, .08);
+      color: rgba($primary-color, 1);
+      @include button;
+    }
+
+    .gdpr {
+      padding: rem-calc(16);
+      color: rgba($white, 1);
+      @include caption;
+    }
+
+    .address {
+      color: rgba($white, $disabled);
+      font-size: rem-calc(12 * .68);
+      text-align: right;
+      @include caption;
     }
   }
 }
@@ -786,6 +791,12 @@ html {
       .related-events-title {
         @include h4;
       }
+    }
+  }
+
+  .eventbrite-ticket-embed {
+    & > iframe {
+      min-height: rem-calc(300);
     }
   }
 }

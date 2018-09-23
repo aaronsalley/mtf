@@ -33,7 +33,6 @@ class GramFeed extends Component<Props, {feed: any[]}> {
       let feed: { data: any; } = { data: {} };
 
       if ( !cache ) {
-        console.log('in !feed');
         feed = await this.instagram.get('/media', {
           params: {
             fields: 'media_url',
@@ -52,7 +51,9 @@ class GramFeed extends Component<Props, {feed: any[]}> {
         };
       });
     } catch (err) {
-      console.log(err);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(err);
+      }
     }
   }
 
@@ -71,7 +72,9 @@ class GramFeed extends Component<Props, {feed: any[]}> {
         );
       }
     } catch (err) {
-      console.log(err.message);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(err);
+      }
     }
 
     return list;

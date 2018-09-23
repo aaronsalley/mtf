@@ -40,7 +40,9 @@ class Events extends Component<Props, {events: any[]}> {
         };
       });
     } catch (err) {
-      console.log(err);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(err);
+      }
     }
   }
 
@@ -65,7 +67,9 @@ class Events extends Component<Props, {events: any[]}> {
         );
       }
     } catch (err) {
-      console.log(err);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(err);
+      }
     }
 
     return list;

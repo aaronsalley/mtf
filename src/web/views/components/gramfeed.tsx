@@ -1,6 +1,7 @@
 'use strict';
 
 import axios from 'axios';
+import Instafeed from 'instafeed.js';
 import React, {Component} from 'react';
 
 interface Props {
@@ -8,12 +9,10 @@ interface Props {
 }
 
 class GramFeed extends Component<Props, {feed: any[]}> {
-  private instagram = axios.create({
-    baseURL: `https://graph.facebook.com/v3.1/${process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID}`,
-    headers: {
-      'Authorization': `Bearer ${process.env.GRAPH_ACCESS_TOKEN}`,
-      'Cache-Control': 'private, max-age=600',
-    },
+  private instagram = new Instafeed({
+    get: 'user',
+    userId: 923463889,
+    clientId: process.env.INSTAGRAM_CLIENT_ID,
   });
   /**
    * Constructs the Form input props.

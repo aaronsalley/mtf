@@ -6,14 +6,17 @@ services:
     restart: always
     ports:
       - 9234:80
+      - 9234:443
     environment:
       WORDPRESS_DB_PASSWORD: password
       WORDPRESS_TABLE_PREFIX: mtf_
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_MEMORY_LIMIT', '128M');
-        define( 'WP_DEFAULT_THEME', 'mtf' );
+        define('WP_DEFAULT_THEME', 'mtf');
+        define('MEDIA_TRASH', true);
     volumes:
       - ./dist:/var/www/html/wp-content/themes/mtf
+      - ./wp-plugins:/var/www/html/wp-content/plugins
 
   mysql:
     image: mysql:5.7

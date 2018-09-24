@@ -16,7 +16,7 @@ const serve = (done) => {
   browserSync.init(config.server);
 
   gulp.watch(config.paths.BUILD + '/**/*').on('change', browserSync.reload);
-  gulp.watch(config.paths.SOURCE + '/**/*.php', gulp.series(copyPhp));
+  gulp.watch(config.paths.SOURCE + '/**/*.php', gulp.series(copyHtml));
 };
 
 const bundleWeb = (done) => {
@@ -35,9 +35,10 @@ const bundleApi = (done) => {
 };
 const bundleAll = [bundleWeb, bundleApi];
 
-const copyPhp = (done) => {
+const copyHtml = (done) => {
   gulp.src([
     config.paths.SOURCE + '/**/*.php',
+    config.paths.SOURCE + '/**/templates/*',
   ], {base: config.paths.SOURCE + '/web'})
       .pipe(decomment.html())
       .pipe(gulp.dest(config.paths.BUILD));
@@ -50,7 +51,7 @@ const copyFiles = (done) => {
       .pipe(gulp.dest(config.paths.BUILD));
   done();
 };
-const copyAll = [copyPhp, copyFiles];
+const copyAll = [copyHtml, copyFiles];
 
 gulp.task('build', gulp.series(bundleAll, copyAll));
 gulp.task('default', gulp.series(bundleAll, copyAll, serve));

@@ -127,7 +127,9 @@ html {
   z-index: 10000;
 
   &.is-stuck {
-    background-color: $topbar-background;
+    @include breakpoint(medium) {
+      background-color: $topbar-background;
+    }
   }
 
   .title-bar {
@@ -193,10 +195,32 @@ html {
 
   .main.menu {
     display: flex;
+    flex-grow: 1;
     align-items: flex-end;
+    align-self: flex-start;
+    box-shadow: rem-calc(0 16 16 16) black;
+    @include breakpoint(medium) {
+      align-self: center;
+      box-shadow: none;
+    }
+
+    .menu {
+      @include menu-direction(vertical);
+      flex-grow: 1;
+      @include breakpoint(medium){
+        @include menu-direction(horizontal);
+        justify-content: flex-end;
+      }
+    }
 
     .menu-item {
       @include h5;
+      padding-top: rem-calc(16);
+      padding-bottom: rem-calc(16);
+      @include breakpoint(medium) {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
 
       a {
         padding-right: rem-calc(0);
@@ -208,21 +232,44 @@ html {
   }
 
   .social.menu {
+    display: none;
     position: absolute;
     top: 0;
     right: 0;
     height: rem-calc(32);
     z-index: 5;
+    @include breakpoint(medium){
+      display: flex;
+    }
 
     .menu-item {
       align-self: center;
       width: rem-calc(24);
       height: rem-calc(24);
+      background-repeat: no-repeat;
+      background-position: center;
       font-size: 0;
       overflow: hidden;
       &:not(:last-of-type){
         margin-right: rem-calc(24);
       }
+    }
+
+    .facebook {
+      background-image: url('../img/Facebook.svg');
+    }
+
+    .twitter,
+    .twitter-bird {
+      background-image: url('../img/Twitter.svg');
+    }
+
+    .instagram {
+      background-image: url('../img/Instagram.svg');
+    }
+
+    .youtube {
+      background-image: url('../img/YouTube.svg');
     }
 
     .donate.button {
@@ -349,9 +396,12 @@ html {
       .masthead {
         align-self: center;
         min-width: rem-calc(300);
-        margin-right: rem-calc(48);
+        margin-right: auto;
         margin-left: auto;
         z-index: 5;
+        @include breakpoint(medium){
+          margin-right: rem-calc(48);
+        }
 
         .title {
           color: $white;
@@ -626,8 +676,12 @@ html {
       }
 
       .title {
+        max-height: rem-calc(44);
         margin-top: rem-calc(24);
         margin-bottom: rem-calc(16);
+        text-overflow: ellipsis;
+        white-space: normal;
+        overflow: hidden;
         @include h5;
       }
 
@@ -740,8 +794,8 @@ html {
       }
 
       .wrap {
-        @include xy-cell(12, false);
         position: relative;
+        width: 100%;
         margin-bottom: rem-calc(0);
         @include breakpoint(medium){
           @include xy-cell(4, false);

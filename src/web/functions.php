@@ -78,7 +78,7 @@
 
   add_action( 'wp_enqueue_scripts', 'mtf_scripts' );
   function mtf_scripts() {
-  	// wp_enqueue_style( 'mtf-fonts', get_theme_file_uri( 'assets/fonts/fonts.css' ), array( 'mtf-style' ) );
+  	wp_enqueue_style( 'mtf-fonts', get_theme_file_uri( 'assets/fonts/fonts.css' ), array( 'mtf-style' ) );
 
   	wp_enqueue_style( 'mtf-style', get_stylesheet_uri() );
 

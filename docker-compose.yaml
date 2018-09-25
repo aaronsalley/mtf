@@ -6,7 +6,6 @@ services:
     restart: always
     ports:
       - 9234:80
-      - 9234:443
     environment:
       WORDPRESS_DB_PASSWORD: password
       WORDPRESS_TABLE_PREFIX: mtf_

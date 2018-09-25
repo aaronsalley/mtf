@@ -16,7 +16,8 @@ const serve = (done) => {
   browserSync.init(config.server);
 
   gulp.watch(config.paths.BUILD + '/**/*').on('change', browserSync.reload);
-  gulp.watch(config.paths.SOURCE + '/**/*.php', gulp.series(copyHtml));
+  gulp.watch(config.paths.SOURCE + '/**/*.(php|html)', gulp.series(copyHtml));
+  gulp.watch(config.paths.SOURCE + '/**/assets/*', gulp.series(copyFiles));
 };
 
 const bundleWeb = (done) => {
@@ -47,6 +48,7 @@ const copyHtml = (done) => {
 const copyFiles = (done) => {
   gulp.src([
     config.paths.SOURCE + '/**/screenshot.jpg',
+    config.paths.SOURCE + '/**/fonts/**/*',
   ], {base: config.paths.SOURCE + '/web'})
       .pipe(gulp.dest(config.paths.BUILD));
   done();

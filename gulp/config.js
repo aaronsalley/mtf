@@ -201,6 +201,9 @@ const webpackBase = {
   watch: process.env.NODE_ENV !== 'production' ? true : false,
   watchOptions: watchOptions,
   devtool: 'eval-source-map',
+  stats: {
+    warnings: false,
+  },
 };
 
 config.webpack.web = {...web, ...webpackBase};

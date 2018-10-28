@@ -21,8 +21,15 @@ $events_label_plural   = tribe_get_event_label_plural();
 $event_id = get_the_ID();
 
 $website = tribe_get_event_website_url();
+$button_text = 'Get tickets';
 if ( $website && !strpos($website, 'eventbrite.com') ) {
 	$website = tribe_get_event_website_url();
+	if(strpos($website, 'google.com')) {
+		$button_text = 'Get Started';
+	}
+	if(strpos($website, 'goo.gl/forms')) {
+		$button_text = 'Sign Up';
+	}
 } else {
 	$website = '#get-tickets';
 }
@@ -52,7 +59,7 @@ if ( $website && !strpos($website, 'eventbrite.com') ) {
 							<span class="cost"><?php echo tribe_get_cost( null, true ) ?></span>
 						<?php endif; ?>
 					</div>
-					<a class="button" href="<?php echo $website; ?>"><?php esc_html_e('Get tickets'); ?></a>
+					<a class="button" href="<?php echo $website; ?>"><?php esc_html_e($button_text); ?></a>
 				</div>
 			</header>
 			<menu class="links">

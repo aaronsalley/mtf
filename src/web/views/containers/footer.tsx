@@ -32,10 +32,10 @@ const Footer = () => {
           href=''>How do we use this information?</a>
       </form>
       <address className='copyright'>
-        © 2018 Copyright Musical Theatre Factory, 440 Lafayete St., 4th Floor, New York, NY 10003.
+        © 2018 Copyright Musical Theatre Factory, 440 Lafayete St, 4th Fl, NYC 10003.
       </address>
     </footer>
-  )
-}
+  );
+};
 
 export default Footer;

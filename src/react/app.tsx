@@ -5,9 +5,10 @@ import {
 } from 'react-router-dom';
 
 import '../assets/scss/style.scss';
-import Header from './containers/header';
+
+import Footer from './components/footer';
+import Header from './components/header';
 import Main from './containers/main';
-import Footer from './containers/footer';
 
 const App = () => {
   return (

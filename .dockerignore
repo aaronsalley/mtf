@@ -1,0 +1,15 @@
+# See https://docs.docker.com/engine/reference/builder/#dockerignore-file/ for more about ignoring files.
+
+**/*
+!e2e/
+!environments/
+!gulp/
+!src/
+!.babelrc
+!.env
+!.eslintrc
+!.jsdocconfig
+!gulpfile.babel.js
+!package.json
+!tsconfig.json
+!tslint.json

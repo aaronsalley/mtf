@@ -28,7 +28,7 @@ const bundleWeb = (done) => {
   done();
 };
 const bundleApi = (done) => {
-  gulp.src(config.paths.SOURCE + '/api/index.js')
+  gulp.src(config.paths.SOURCE + '/react/config/server.ts')
       .pipe(named())
       .pipe(webpack(config.webpack.api, compiler))
       .pipe(gulp.dest(config.paths.BUILD));
@@ -40,7 +40,7 @@ const copyHtml = (done) => {
   gulp.src([
     config.paths.SOURCE + '/**/*.php',
     config.paths.SOURCE + '/**/templates/*',
-  ], {base: config.paths.SOURCE + '/web'})
+  ])
       .pipe(decomment.html())
       .pipe(gulp.dest(config.paths.BUILD));
   done();
@@ -49,7 +49,7 @@ const copyFiles = (done) => {
   gulp.src([
     config.paths.SOURCE + '/**/screenshot.jpg',
     config.paths.SOURCE + '/**/fonts/**/*',
-  ], {base: config.paths.SOURCE + '/web'})
+  ])
       .pipe(gulp.dest(config.paths.BUILD));
   done();
 };

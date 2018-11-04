@@ -6,9 +6,10 @@ import {Provider} from 'react-redux';
 import {
   BrowserRouter,
 } from 'react-router-dom';
-import {configureStore} from './assets/js/store';
-import App from './views/app';
 
+import App from './react/app';
+
+// import {configureStore} from './assets/js/store';
 // const store = configureStore();
 
 const renderApp = () => render(
@@ -17,13 +18,13 @@ const renderApp = () => render(
       <App />
     </BrowserRouter>
     // </Provider>
-    , document.getElementById('app')
+    , document.getElementById('app'),
 );
 
-if (process.env.NODE_ENV !== 'production' && module.hot) {
-  module.hot.accept('./views', () => {
-    renderApp();
-  });
-}
+// if (process.env.NODE_ENV !== 'production' && module.hot) {
+//   module.hot.accept('./views', () => {
+//     renderApp();
+//   });
+// }
 
 renderApp();

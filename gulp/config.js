@@ -3,11 +3,48 @@
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import dotenv from 'dotenv';
 import Dotenv from 'dotenv-webpack';
+import historyApiFallback from 'connect-history-api-fallback';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import incstr from 'incstr';
+import JsDocPlugin from 'jsdoc-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import path from 'path';
 import webpack from 'webpack';
+
+const createUniqueIdGenerator = () => {
+  const index = {};
+  const generateNextId = incstr.idGenerator({
+    alphabet: 'abcefghijklmnopqrstuvwxyz0123456789',
+  });
+
+  return (name) => {
+    if (index[name]) {
+      return index[name];
+    }
+
+    let nextId;
+    do {
+      nextId = generateNextId();
+    } while (/^[0-9]/.test(nextId));
+
+    index[name] = generateNextId();
+
+    return index[name];
+  };
+};
+
+const uniqueIdGenerator = createUniqueIdGenerator();
+
+const generateScopedName = (localName, resourcePath) => {
+  const componentFile = resourcePath.split('/').slice(-1);
+  const componentName = componentFile.toString().split('.').slice(0, 1);
+
+  if (process.env.NODE_ENV !== 'production') {
+    return componentName + '_' + localName;
+  } else {
+    return uniqueIdGenerator(componentName) + '_' + uniqueIdGenerator(localName);
+  }
+};
 
 const config = {
   webpack: {
@@ -31,42 +68,22 @@ config.paths = {
 config.server = {
   server: {
     baseDir: config.paths.BUILD,
+    middleware: [historyApiFallback()],
   },
-  port: process.env.PORT,
-  https: false,
+  port: process.env.WEB_PORT,
+  browser: 'Google Chrome',
   open: false,
   cors: true,
-};
-
-let web = {};
-web.entry = {
-  react: config.paths.SOURCE + '/web/index.js',
-  vendors: config.paths.SOURCE + '/web/assets/js/vendors.js',
-};
-web.output = {
-  filename: 'assets/js/[name].js',
-  chunkFilename: 'assets/js/[name].js',
-  publicPath: '/',
-};
-web.plugins = [
-  new HtmlWebpackPlugin({
-    filename: 'index.html',
-    template: config.paths.SOURCE + '/web/views/index.html',
-  }),
-];
-
-let api = {};
-api.entry = {
-  api: config.paths.SOURCE + '/api/index.js',
-};
-api.output = {
-  filename: '[name].js',
-  chunkFilename: '[name].js',
-  publicPath: '/',
+  ui: false,
 };
 
 const modules = {
   rules: [
+    // {
+    //   enforce: 'pre',
+    //   test: /\.js$/,
+    //   use: 'eslint-loader',
+    // },
     {
       test: /\.ts(x)?$/,
       exclude: /node_modules/,
@@ -85,32 +102,25 @@ const modules = {
       enforce: 'pre',
       exclude: /node_modules/,
       use: [
-        'babel-loader',
-      ],
-    },
-    {
-      test: /\.(s)?css$/,
-      use: [
-        /* process.env.NODE_ENV !== 'production' ? 'style-loader' :*/ MiniCssExtractPlugin.loader,
         {
-          loader: 'css-loader',
+          loader: 'babel-loader',
           options: {
-            importLoaders: 1,
-          },
-        },
-        {
-          'loader': 'postcss-loader',
-          'options': {
-            plugins: [require('autoprefixer')({
-              browsers: ['last 2 versions', 'ie >= 9', 'android >= 4.4', 'ios >= 7'],
-            })],
-            sourceMap: true,
-          },
-        },
-        {
-          loader: 'sass-loader',
-          options: {
-            includePaths: [path.resolve(__dirname, '../node_modules/foundation-sites/scss')],
+            babelrc: false,
+            extends: path.resolve(__dirname, '../.babelrc'),
+            plugins: [
+              [
+                'react-css-modules',
+                {
+                  'filetypes': {
+                    '.scss': {
+                      'syntax': 'postcss-scss',
+                    },
+                  },
+                  generateScopedName,
+                  'handleMissingStyleName': 'throw',
+                },
+              ],
+            ],
           },
         },
       ],
@@ -123,7 +133,7 @@ const modules = {
           'options': {
             useRelativePath: true,
             name: '[name].[ext]',
-            context: 'src/web/',
+            context: 'src/**',
             publicPath: 'assets/img/',
           },
         },
@@ -146,11 +156,6 @@ const plugins = [
         root: path.resolve(__dirname, '../'),
       }
   ),
-  // new NpmInstallPlugin(),
-  new MiniCssExtractPlugin({
-    filename: 'style.css',
-    chunkFilename: 'assets/css/[name].[hash].css',
-  }),
   new Dotenv({
     path: config.envfile,
   }),
@@ -184,9 +189,9 @@ const watchOptions = {
   ],
 };
 const devServer = {
-  contentBase: config.paths.BUILD + '/web',
+  contentBase: config.paths.BUILD,
   compress: true,
-  port: process.env.PORT,
+  port: process.env.WEB_PORT,
   historyApiFallback: true,
   open: true,
 };
@@ -201,9 +206,95 @@ const webpackBase = {
   watch: process.env.NODE_ENV !== 'production' ? true : false,
   watchOptions: watchOptions,
   devtool: 'eval-source-map',
+  target: 'node',
+  stats: {
+    warnings: false,
+  },
+  cache: true,
+};
+let web = {};
+web.entry = {
+  react: config.paths.SOURCE + '/index.tsx',
+  vendors: config.paths.SOURCE + '/assets/js/vendors.js',
+};
+web.output = {
+  filename: 'assets/js/[name].js',
+  chunkFilename: 'assets/js/[name].js',
+  publicPath: '/',
+};
+web.module = {
+  rules: [
+    {
+      test: /\.(s)?css$/,
+      use: [
+        process.env.NODE_ENV !== 'production' ?
+          'style-loader' :
+        MiniCssExtractPlugin.loader,
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true,
+            camelCase: true,
+            getLocalIdent: (context, localIdentName, localName) => {
+              return generateScopedName(localName, context.resourcePath);
+            },
+            localIdentName: '[name]_[local]_[hash:base64:5]',
+            sourceMap: true,
+            importLoaders: 2,
+          },
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: [require('autoprefixer')({
+              browsers: [
+                'last 2 versions',
+                'ie >= 9',
+                'android >= 4.4',
+                'ios >= 7',
+              ],
+            })],
+            sourceMap: true,
+          },
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            includePaths: [
+              path.resolve(__dirname, '../node_modules'),
+            ],
+            sourceMap: true,
+          },
+        },
+      ],
+    },
+    ...modules.rules,
+  ],
+};
+web.plugins = [
+  new HtmlWebpackPlugin({
+    filename: 'index.html',
+    template: config.paths.SOURCE + '/index.html',
+  }),
+  new MiniCssExtractPlugin({
+    filename: 'style.css',
+    chunkFilename: process.env.NODE_ENV !== 'production' ?
+      'assets/css/[id].css' : 'assets/css/[id].[hash].css',
+  }),
+  ...plugins,
+];
+
+let api = {};
+api.entry = {
+  api: config.paths.SOURCE + '/react/config/server.ts',
+};
+api.output = {
+  filename: '[name].js',
+  chunkFilename: '[name].js',
+  publicPath: '/',
 };
 
-config.webpack.web = {...web, ...webpackBase};
-config.webpack.api = {...api, ...webpackBase};
+config.webpack.web = {...webpackBase, ...web};
+config.webpack.api = {...webpackBase, ...api};
 
 export default config;

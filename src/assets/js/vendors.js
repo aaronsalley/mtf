@@ -12,7 +12,7 @@ import {render} from 'react-dom';
 // import Stripe from 'stripe';
 import $ from 'jquery';
 
-import Instagram from '../../views/components/gramfeed';
+import Instagram from '../../react/components/gramfeed';
 
 Raven.config(process.env.SENTRY_DSN).install();
 

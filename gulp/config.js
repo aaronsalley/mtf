@@ -40,7 +40,7 @@ const generateScopedName = (localName, resourcePath) => {
   const componentName = componentFile.toString().split('.').slice(0, 1);
 
   if (process.env.NODE_ENV !== 'production') {
-    return componentName + '_' + localName;
+    return localName;
   } else {
     return uniqueIdGenerator(componentName) + '_' + uniqueIdGenerator(localName);
   }
@@ -50,6 +50,10 @@ const config = {
   webpack: {
     web: {},
     backend: {},
+  },
+  server: {
+    react: {},
+    wordpress: {},
   },
 };
 
@@ -65,15 +69,23 @@ config.paths = {
   DOCS: path.resolve(__dirname, '../docs'),
 };
 
-config.server = {
+config.server.react = {
   server: {
     baseDir: config.paths.BUILD,
     middleware: [historyApiFallback()],
+    index: 'index.html',
   },
   port: process.env.WEB_PORT,
   browser: 'Google Chrome',
   open: false,
   cors: true,
+  ui: false,
+};
+config.server.wordpress = {
+  proxy: process.env.WP_SERVER,
+  browser: 'Google Chrome',
+  open: true,
+  https: true,
   ui: false,
 };
 
@@ -227,8 +239,8 @@ web.module = {
     {
       test: /\.(s)?css$/,
       use: [
-        process.env.NODE_ENV !== 'production' ?
-          'style-loader' :
+        // process.env.NODE_ENV !== 'production' ?
+        //   'style-loader' :
         MiniCssExtractPlugin.loader,
         {
           loader: 'css-loader',
@@ -262,6 +274,7 @@ web.module = {
           options: {
             includePaths: [
               path.resolve(__dirname, '../node_modules'),
+              path.resolve(__dirname, '../node_modules/foundation-sites/scss'),
             ],
             sourceMap: true,
           },
@@ -289,8 +302,8 @@ api.entry = {
   api: config.paths.SOURCE + '/react/config/server.ts',
 };
 api.output = {
-  filename: '[name].js',
-  chunkFilename: '[name].js',
+  filename: 'assets/js/[name].js',
+  chunkFilename: 'assets/js/[name].js',
   publicPath: '/',
 };
 

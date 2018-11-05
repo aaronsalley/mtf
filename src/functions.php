@@ -100,6 +100,7 @@
   	wp_dequeue_style( 'hm-wcdon-frontend-styles' );
 
   	wp_enqueue_script( 'mtf-script', get_theme_file_uri( 'assets/js/vendors.js' ), null, null, true );
+    // wp_enqueue_script( 'mtf-react', get_theme_file_uri( 'assets/js/react.js' ), null, null, true );
 
   	wp_localize_script( 'mtf-script', 'screenReaderText', array(
   		'expand'   => __( 'expand child menu', 'mtf' ),

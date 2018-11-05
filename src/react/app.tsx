@@ -13,9 +13,7 @@ import Main from './containers/main';
 const App = () => {
   return (
     <div>
-      <Header />
-      <Main />
-      <Footer />
+    Hello react.
     </div>
   );
 };

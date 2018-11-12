@@ -1,13 +1,14 @@
 'use strict';
 
+import BrowserSyncPlugin from 'browser-sync-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import dotenv from 'dotenv';
 import Dotenv from 'dotenv-webpack';
-import historyApiFallback from 'connect-history-api-fallback';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import incstr from 'incstr';
-import JsDocPlugin from 'jsdoc-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import NodemonPlugin from 'nodemon-webpack-plugin';
+import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import path from 'path';
 import webpack from 'webpack';
 
@@ -32,85 +33,43 @@ const createUniqueIdGenerator = () => {
     return index[name];
   };
 };
-
-const uniqueIdGenerator = createUniqueIdGenerator();
-
+const uniqueId = createUniqueIdGenerator();
 const generateScopedName = (localName, resourcePath) => {
   const componentFile = resourcePath.split('/').slice(-1);
   const componentName = componentFile.toString().split('.').slice(0, 1);
 
   if (process.env.NODE_ENV !== 'production') {
-    return localName;
+    return componentName + '_' + localName;
   } else {
-    return uniqueIdGenerator(componentName) + '_' + uniqueIdGenerator(localName);
+    return uniqueId(componentName) + '_' + uniqueId(localName);
   }
 };
 
 const config = {
   webpack: {
+    api: {},
     web: {},
-    backend: {},
-  },
-  server: {
-    react: {},
-    wordpress: {},
   },
 };
 
-config.envfile = path.resolve(__dirname, '../.env');
-
+config.envfile = path.resolve(__dirname, './.env');
 dotenv.config({
   path: config.envfile,
 });
 
 config.paths = {
-  SOURCE: path.resolve(__dirname, '../src'),
-  BUILD: path.resolve(__dirname, '../dist'),
-  DOCS: path.resolve(__dirname, '../docs'),
+  SOURCE: path.resolve(__dirname, './src'),
+  BUILD: path.resolve(__dirname, './dist'),
+  DOCS: path.resolve(__dirname, './docs'),
 };
 
-config.server.react = {
-  server: {
-    baseDir: config.paths.BUILD,
-    middleware: [historyApiFallback()],
-    index: 'index.html',
-  },
-  port: process.env.WEB_PORT,
-  browser: 'Google Chrome',
-  open: false,
-  cors: true,
-  ui: false,
+const output = {
+  path: config.paths.BUILD,
 };
-config.server.wordpress = {
-  proxy: process.env.WP_SERVER,
-  browser: 'Google Chrome',
-  open: true,
-  https: true,
-  ui: false,
-};
-
 const modules = {
   rules: [
-    // {
-    //   enforce: 'pre',
-    //   test: /\.js$/,
-    //   use: 'eslint-loader',
-    // },
     {
-      test: /\.ts(x)?$/,
-      exclude: /node_modules/,
-      use: [
-        {
-          loader: 'awesome-typescript-loader',
-          options: {
-            'useBabel': true,
-            'babelCore': '@babel/core',
-          },
-        },
-      ],
-    },
-    {
-      test: /\.js(x)?$/,
+      test: /\.(j|t)s(x)?$/,
       enforce: 'pre',
       exclude: /node_modules/,
       use: [
@@ -118,7 +77,7 @@ const modules = {
           loader: 'babel-loader',
           options: {
             babelrc: false,
-            extends: path.resolve(__dirname, '../.babelrc'),
+            extends: path.resolve(__dirname, './.babelrc'),
             plugins: [
               [
                 'react-css-modules',
@@ -134,6 +93,13 @@ const modules = {
               ],
             ],
           },
+        },
+        {
+          loader: 'awesome-typescript-loader',
+          // options: {
+          //   'useBabel': true,
+          //   'babelCore': '@babel/core',
+          // },
         },
       ],
     },
@@ -154,23 +120,25 @@ const modules = {
   ],
 };
 const resolve = {
+  alias: {
+    logger: config.paths.SOURCE + '/react/config/logger.ts',
+  },
   extensions: [
     '*', '.js', '.jsx', '.ts', '.tsx',
   ],
 };
 const plugins = [
-  new webpack.NoEmitOnErrorsPlugin(),
   new CleanWebpackPlugin(
       [
         config.paths.BUILD + '**/*',
         config.paths.DOCS,
-      ], {
-        root: path.resolve(__dirname, '../'),
-      }
+      ]
   ),
   new Dotenv({
     path: config.envfile,
   }),
+  // new NpmInstallPlugin(),
+  new webpack.NoEmitOnErrorsPlugin(),
 ];
 const optimization = {
   splitChunks: {
@@ -206,6 +174,7 @@ const devServer = {
   port: process.env.WEB_PORT,
   historyApiFallback: true,
   open: true,
+  hot: true,
 };
 
 const webpackBase = {
@@ -224,23 +193,38 @@ const webpackBase = {
   },
   cache: true,
 };
+
+let api = {};
+api.entry = {
+  api: config.paths.SOURCE + '/react/config/server.ts',
+};
+api.output = {
+  filename: 'assets/js/[name].js',
+  chunkFilename: 'assets/js/[name].js',
+  publicPath: '/',
+  ...output,
+};
+api.plugins = [
+  new NodemonPlugin(),
+  ...plugins,
+];
+
 let web = {};
 web.entry = {
-  react: config.paths.SOURCE + '/index.tsx',
+  // react: config.paths.SOURCE + '/index.tsx',
   vendors: config.paths.SOURCE + '/assets/js/vendors.js',
 };
 web.output = {
   filename: 'assets/js/[name].js',
   chunkFilename: 'assets/js/[name].js',
   publicPath: '/',
+  ...output,
 };
 web.module = {
   rules: [
     {
       test: /\.(s)?css$/,
       use: [
-        // process.env.NODE_ENV !== 'production' ?
-        //   'style-loader' :
         MiniCssExtractPlugin.loader,
         {
           loader: 'css-loader',
@@ -273,8 +257,8 @@ web.module = {
           loader: 'sass-loader',
           options: {
             includePaths: [
-              path.resolve(__dirname, '../node_modules'),
-              path.resolve(__dirname, '../node_modules/foundation-sites/scss'),
+              path.resolve(__dirname, './node_modules'),
+              path.resolve(__dirname, './node_modules/foundation-sites/scss'),
             ],
             sourceMap: true,
           },
@@ -285,29 +269,34 @@ web.module = {
   ],
 };
 web.plugins = [
+  new BrowserSyncPlugin({
+    // server: {
+    //   baseDir: config.paths.BUILD,
+    //   middleware: [historyApiFallback()],
+    //   index: 'index.html',
+    // },
+    // port: process.env.WEB_PORT,
+    proxy: process.env.WP_SERVER,
+    browser: 'Google Chrome',
+    open: false,
+    cors: true,
+    https: true,
+    ui: false,
+  }),
   new HtmlWebpackPlugin({
     filename: 'index.html',
     template: config.paths.SOURCE + '/index.html',
   }),
   new MiniCssExtractPlugin({
-    filename: 'style.css',
+    filename: process.env.NODE_ENV !== 'production' ?
+      'style.css' : 'style.[hash].css',
     chunkFilename: process.env.NODE_ENV !== 'production' ?
       'assets/css/[id].css' : 'assets/css/[id].[hash].css',
   }),
   ...plugins,
 ];
 
-let api = {};
-api.entry = {
-  api: config.paths.SOURCE + '/react/config/server.ts',
-};
-api.output = {
-  filename: 'assets/js/[name].js',
-  chunkFilename: 'assets/js/[name].js',
-  publicPath: '/',
-};
-
-config.webpack.web = {...webpackBase, ...web};
 config.webpack.api = {...webpackBase, ...api};
+config.webpack.web = {...webpackBase, ...web};
 
 export default config;

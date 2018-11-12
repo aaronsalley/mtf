@@ -9,6 +9,7 @@ import $ from 'jquery';
 $(document).foundation();
 
 import Instagram from '../../react/components/gramfeed';
+import LocalFeed from '../../react/components/localFeed';
 
 if (process.env.NODE_ENV == 'production') {
   Raven.config(process.env.SENTRY_DSN).install();

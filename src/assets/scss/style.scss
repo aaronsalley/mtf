@@ -474,6 +474,8 @@ html {
       display: none;
       position: absolute;
       right: 0;
+      flex-wrap: wrap;
+      justify-content: flex-end;
       min-height: rem-calc(480);
       overflow: hidden;
       @include breakpoint(medium) {

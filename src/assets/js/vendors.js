@@ -9,6 +9,7 @@ import $ from 'jquery';
 $(document).foundation();
 
 import Instagram from '../../react/components/gramfeed';
+import LocalFeed from '../../react/components/localFeed';
 
 if (process.env.NODE_ENV == 'production') {
   Raven.config(process.env.SENTRY_DSN).install();
@@ -21,7 +22,7 @@ if (process.env.NODE_ENV == 'production') {
   })(window, document, 'script', 'dataLayer', process.env.GTM_ID);
 }
 
-render(
-    <Instagram maxItems='50' />
-    , document.getElementById('instagram')
-);
+// render(
+//     <Instagram maxItems='50' />
+//     , document.getElementById('instagram')
+// );

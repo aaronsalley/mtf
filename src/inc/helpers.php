@@ -208,3 +208,8 @@ function enqueueStylesFix() {
       wp_enqueue_style('links-shortcode', $url);
   }
 }
+
+function remove_shortcode_from($content) {
+  $content = strip_shortcodes( $content );
+  return $content;
+}

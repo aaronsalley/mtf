@@ -5,7 +5,11 @@ get_header();
 
 if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
   <h2 class="mission">
-    <?php the_content(); ?>
+    <?php
+    add_filter('the_content', 'remove_shortcode_from');
+    the_content();
+    remove_filter('the_content', 'remove_shortcode_from')
+    ?>
   </h2>
   <?php $events = tribe_get_events( array(
     'posts_per_page' => 4,
@@ -47,6 +51,16 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
       <img class="image" src="#" />
     </div>';
   }
+  if ( get_post_gallery() ) :
+      $gallery = get_post_gallery( get_the_ID(), false );
+      $instagram = array();
+      /* Loop through all the image and output them one by one */
+      foreach( $gallery['src'] as $src ) :
+        $instagram[] = '<div class="post">
+          <img src="' . $src . '" class="image" alt="Gallery image" />
+        </div>';
+      endforeach;
+  endif;
   echo $instagram = '<div id="instagram" class="wall">' . implode($instagram) . '</div>'; ?>
 <?php endwhile; else : ?>
 	<p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>

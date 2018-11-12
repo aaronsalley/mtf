@@ -211,7 +211,7 @@ api.plugins = [
 
 let web = {};
 web.entry = {
-  // react: config.paths.SOURCE + '/index.tsx',
+  react: config.paths.SOURCE + '/index.tsx',
   vendors: config.paths.SOURCE + '/assets/js/vendors.js',
 };
 web.output = {

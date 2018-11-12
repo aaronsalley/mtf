@@ -24,16 +24,9 @@ class LocalFeed extends Component<Props, {images: any[]}> {
   }
 
   public async componentDidMount() {
-<<<<<<< HEAD
     const images: { data: any; } = { data: {} };
     try {
       const post = await this.wordpress.get('/pages/82');
-=======
-    let images: { data: any; } = { data: {} };
-    try {
-      const post = await this.wordpress.get('/pages/82');
-      images = '';
->>>>>>> 2249fac2cf04233f9fda08863ebb6dd662899720
 
       this.setState((props) => {
         return {

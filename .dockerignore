@@ -2,14 +2,12 @@
 
 **/*
 !e2e/
-!environments/
-!gulp/
 !src/
 !.babelrc
 !.env
 !.eslintrc
-!.jsdocconfig
 !gulpfile.babel.js
 !package.json
 !tsconfig.json
 !tslint.json
+!webpack.config.js

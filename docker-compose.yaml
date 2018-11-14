@@ -13,7 +13,7 @@ services:
         define('WP_MEMORY_LIMIT', '128M');
         define('WP_DEFAULT_THEME', 'Musical Theatre Factory');
     volumes:
-      - ./dist:/var/www/html/wp-content/themes/mtf/dist
+      - theme:/var/www/html/wp-content/themes/mtf/dist
       - ./wp-plugins:/var/www/html/wp-content/plugins
     depends_on:
       - mysql
@@ -34,7 +34,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./dist:/var/www/html/wp-content/themes/mtf/dist
+      - theme:/var/www/html/wp-content/themes/mtf/dist
       - ./src:/var/www/html/wp-content/themes/mtf/src
     depends_on:
       - mongo
@@ -60,6 +60,9 @@ services:
   #     - 9006:5601
   #     - 9007:9200
   #     - 9008:5044
+
+volumes:
+  theme:
 
 networks:
   mtf:

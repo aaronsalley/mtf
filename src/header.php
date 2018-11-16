@@ -31,7 +31,7 @@
               'theme_location' => 'social',
               'items_wrap' => '%3$s',
             )); ?>
-            <a class="donate button" href="https://ticketcentral.com/online/default.asp?doWork::WScontent::loadArticle=Load&BOparam::WScontent::loadArticle::article_id=A871863B-5CF9-463D-A054-A89187A9B231" target="_blank"><?php esc_html_e('Donate'); ?></a>
+            <a class="donate button" href="/donate" target="_blank"><?php esc_html_e('Donate'); ?></a>
           </menu>
           <?php wp_nav_menu(array(
             'menu' => '',

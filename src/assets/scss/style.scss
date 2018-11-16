@@ -163,10 +163,14 @@ html {
   @include xy-grid-container();
   // @include xy-grid('horizontal');
   @include top-bar-container;
+  display: none;
   position: relative;
   justify-content: space-between;
   height: rem-calc(104);
   margin-bottom: rem-calc(24);
+  @include breakpoint(medium) {
+    display: flex;
+  }
 
   .is-at-top & {
     background: inherit;
@@ -523,7 +527,7 @@ html {
         position: relative;
         width: 100%;
         padding-bottom: 100%;
-        background-color: rgba($black, .87);
+        background-color: rgba($black, .82);
         content: '';
         z-index: 1;
       }

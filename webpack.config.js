@@ -39,7 +39,8 @@ const generateScopedName = (localName, resourcePath) => {
   const componentName = componentFile.toString().split('.').slice(0, 1);
 
   if (process.env.NODE_ENV !== 'production') {
-    return componentName + '_' + localName;
+    return localName;
+    // return componentName + '_' + localName;
   } else {
     return uniqueId(componentName) + '_' + uniqueId(localName);
   }
@@ -288,8 +289,7 @@ web.plugins = [
     template: config.paths.SOURCE + '/index.html',
   }),
   new MiniCssExtractPlugin({
-    filename: process.env.NODE_ENV !== 'production' ?
-      'style.css' : 'style.[hash].css',
+    filename: 'style.css',
     chunkFilename: process.env.NODE_ENV !== 'production' ?
       'assets/css/[id].css' : 'assets/css/[id].[hash].css',
   }),

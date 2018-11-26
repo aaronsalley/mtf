@@ -43,4 +43,4 @@
         </section>
       </div>
     </header>
-    <main id="app">
+    <main id="wp_main">

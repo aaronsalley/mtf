@@ -213,6 +213,7 @@ api.plugins = [
 let web = {};
 web.entry = {
   react: config.paths.SOURCE + '/index.tsx',
+  style: config.paths.SOURCE + '/assets/scss/style.scss',
   vendors: config.paths.SOURCE + '/assets/js/vendors.js',
 };
 web.output = {
@@ -271,13 +272,13 @@ web.module = {
 };
 web.plugins = [
   new BrowserSyncPlugin({
-    // server: {
-    //   baseDir: config.paths.BUILD,
-    //   middleware: [historyApiFallback()],
-    //   index: 'index.html',
-    // },
-    // port: process.env.WEB_PORT,
-    proxy: process.env.WP_SERVER,
+    server: {
+      baseDir: config.paths.BUILD,
+      // middleware: [historyApiFallback()],
+      index: 'index.html',
+    },
+    port: process.env.WEB_PORT,
+    // proxy: process.env.WP_SERVER,
     browser: 'Google Chrome',
     open: false,
     cors: true,
@@ -285,8 +286,11 @@ web.plugins = [
     ui: false,
   }),
   new HtmlWebpackPlugin({
-    filename: 'index.html',
+    title: 'Musical Theatre Factory',
     template: config.paths.SOURCE + '/index.html',
+    excludeChunks: [
+      'style',
+    ],
   }),
   new MiniCssExtractPlugin({
     filename: 'style.css',

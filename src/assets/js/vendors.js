@@ -1,12 +1,11 @@
 'use strict';
 
+import $ from 'jquery';
+
 import Foundation from 'foundation-sites';
 import Raven from 'raven-js';
 import React from 'react';
 import {render} from 'react-dom';
-import $ from 'jquery';
-
-$(document).foundation();
 
 import Instagram from '../../react/components/gramfeed';
 import LocalFeed from '../../react/components/localFeed';

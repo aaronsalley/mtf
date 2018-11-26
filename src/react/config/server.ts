@@ -10,9 +10,9 @@ import logger from 'logger';
 import passport from 'passport';
 import Raven from 'raven';
 
+import protectedRoutes from '../routes/protectedRoutes';
+import publicRoutes from '../routes/publicRoutes';
 import connectToDb from './db';
-// import publicRoutes from '../routes/publicRoutes';
-// import protectedRoutes from '../routes/protectedRoutes';
 
 const app = express();
 app.use(cors());
@@ -45,10 +45,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // App routes
-// app.use(publicRoutes);
-// app.use(protectedRoutes);
+app.use(publicRoutes);
+app.use(protectedRoutes);
 
 // Start Listening
-app.listen(process.env.PORT_API, () => logger.info(
-    `Listening for requests on port ${process.env.PORT_API}!`,
+app.listen(process.env.API_PORT, () => logger.info(
+    `Listening for requests on port ${process.env.API_PORT}!`,
 ));

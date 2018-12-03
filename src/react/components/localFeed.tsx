@@ -33,9 +33,9 @@ class LocalFeed extends Component<Props, {images: any[]}> {
           images: images.data.content.rendered,
         };
       });
-    } catch (error) {
+    } catch (err) {
       if (process.env.NODE_ENV !== 'production') {
-        console.log(error);
+        console.log(err);
       }
     }
   }

@@ -10,6 +10,9 @@ import {render} from 'react-dom';
 import Instagram from '../../react/components/gramfeed';
 import LocalFeed from '../../react/components/localFeed';
 
+let toggleMenu = new Foundation.ResponsiveToggle($('#toggler'));
+let mainMenu = new Foundation.ResponsiveMenu($('#topbar'));
+
 if (process.env.NODE_ENV == 'production') {
   Raven.config(process.env.SENTRY_DSN).install();
 

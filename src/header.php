@@ -13,7 +13,7 @@
           <div class="title-bar-title">
             <?php the_custom_logo(); ?>
           </div>
-          <button class="menu-icon" type="button" data-toggle="topbar"></button>
+          <button id="toggler" class="menu-icon" type="button" data-toggle="topbar"></button>
         </section>
         <section id="topbar">
           <h1 class="branding">

@@ -278,9 +278,13 @@ html {
     }
 
     .donate.button {
+      @include button;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       min-width: rem-calc(96);
       margin-left: rem-calc(40);
-      @include button;
+      font-size: 1rem;
     }
   }
 }

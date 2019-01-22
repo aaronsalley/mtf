@@ -1,9 +1,12 @@
-FROM 'node:alpine'
+FROM node
 
-WORKDIR /home/mtf
+WORKDIR /var/www/html/wp-content/themes/mtf
 
-COPY . /home/mtf
+COPY ./package.json /var/www/html/wp-content/themes/mtf/package.json
+RUN npm install --silent
 
-RUN npm i
+COPY . /var/www/html/wp-content/themes/mtf
 
-CMD ['gulp']
+CMD ["npx", "gulp"]
+
+EXPOSE 4001

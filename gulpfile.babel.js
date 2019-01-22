@@ -1,6 +1,5 @@
 'use strict';
 
-import browserSync from 'browser-sync';
 import compiler from 'webpack';
 import decomment from 'gulp-decomment';
 import dotenv from 'dotenv';
@@ -9,15 +8,7 @@ import named from 'vinyl-named';
 import path from 'path';
 import webpack from 'webpack-stream';
 
-import config from './gulp/config';
-
-const serve = (done) => {
-  browserSync.create();
-  browserSync.init(config.server);
-
-  gulp.watch(config.paths.BUILD + '/**/*').on('change', browserSync.reload);
-  gulp.watch(config.paths.SOURCE + '/**/*.php', gulp.series(copyHtml));
-};
+import config from './webpack.config.js';
 
 const bundleWeb = (done) => {
   gulp.src(config.paths.SOURCE + '/**/*.php')
@@ -27,7 +18,7 @@ const bundleWeb = (done) => {
   done();
 };
 const bundleApi = (done) => {
-  gulp.src(config.paths.SOURCE + '/api/index.js')
+  gulp.src(config.paths.SOURCE + '/react/config/server.ts')
       .pipe(named())
       .pipe(webpack(config.webpack.api, compiler))
       .pipe(gulp.dest(config.paths.BUILD));
@@ -39,7 +30,7 @@ const copyHtml = (done) => {
   gulp.src([
     config.paths.SOURCE + '/**/*.php',
     config.paths.SOURCE + '/**/templates/*',
-  ], {base: config.paths.SOURCE + '/web'})
+  ])
       .pipe(decomment.html())
       .pipe(gulp.dest(config.paths.BUILD));
   done();
@@ -47,11 +38,12 @@ const copyHtml = (done) => {
 const copyFiles = (done) => {
   gulp.src([
     config.paths.SOURCE + '/**/screenshot.jpg',
-  ], {base: config.paths.SOURCE + '/web'})
+    config.paths.SOURCE + '/**/fonts/**/*',
+  ])
       .pipe(gulp.dest(config.paths.BUILD));
   done();
 };
 const copyAll = [copyHtml, copyFiles];
 
-gulp.task('build', gulp.series(bundleAll, copyAll));
-gulp.task('default', gulp.series(bundleAll, copyAll, serve));
+gulp.task('dev:web', gulp.series(bundleWeb, copyAll));
+gulp.task('default', gulp.series(bundleAll, copyAll));

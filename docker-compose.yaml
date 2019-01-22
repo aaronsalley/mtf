@@ -1,23 +1,22 @@
-version: '3.1'
+version: '3.7'
 
 services:
   wordpress:
     image: wordpress
     restart: always
     ports:
-      - 9234:80
-      - 9234:443
+      - 9000:80
     environment:
       WORDPRESS_DB_PASSWORD: password
       WORDPRESS_TABLE_PREFIX: mtf_
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_MEMORY_LIMIT', '128M');
-        define('WP_DEFAULT_THEME', 'mtf');
-        define('MEDIA_TRASH', true);
+        define('WP_DEFAULT_THEME', 'Musical Theatre Factory');
     volumes:
-      - ./dist:/var/www/html/wp-content/themes/mtf
+      - theme:/var/www/html/wp-content/themes/mtf/dist
       - ./wp-plugins:/var/www/html/wp-content/plugins
-
+    depends_on:
+      - mysql
   mysql:
     image: mysql:5.7
     restart: always
@@ -25,3 +24,47 @@ services:
       MYSQL_ROOT_PASSWORD: password
     volumes:
       - ./wp-data:/var/lib/mysql
+
+  app:
+    build: .
+    restart: always
+    ports:
+      - 9001:9001
+      - 9999:9999
+    env_file:
+      - .env
+    volumes:
+      - theme:/var/www/html/wp-content/themes/mtf/dist
+      - ./src:/var/www/html/wp-content/themes/mtf/src
+    depends_on:
+      - mongo
+    networks:
+      - mtf
+  mongo:
+    image: mongo
+    restart: always
+    networks:
+      - mtf
+    ports:
+      - 9003:27017
+
+  # sonarqube:
+  #   image: sonarqube
+  #   restart: always
+  #   ports:
+  #     - 9004:9000
+  #     - 9005:9092
+  # elk:
+  #   image: sebp/elk
+  #   ports:
+  #     - 9006:5601
+  #     - 9007:9200
+  #     - 9008:5044
+
+volumes:
+  theme:
+
+networks:
+  mtf:
+  sonarnet:
+    driver: bridge

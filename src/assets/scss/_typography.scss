@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import 'settings';
+@import 'foundation';
+
+.branding {
+  font-size: 0;
+}
+
+.button,
+.button a {
+  font-family: "Strongbox JNL";
+  font-size: rem-calc(16);
+  color: $white;
+}

@@ -7,6 +7,6 @@ RUN npm install --silent
 
 COPY . /var/www/html/wp-content/themes/mtf
 
-CMD ["npx", "gulp"]
+CMD ["npm", "start"]
 
 EXPOSE 4001

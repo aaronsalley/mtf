@@ -4,14 +4,13 @@ import $ from 'jquery';
 
 import Foundation from 'foundation-sites';
 import Raven from 'raven-js';
-import React from 'react';
-import {render} from 'react-dom';
 
-import Instagram from '../../react/components/gramfeed';
-import LocalFeed from '../../react/components/localFeed';
+Foundation.addToJquery($);
+$(document).foundation();
 
-let toggleMenu = new Foundation.ResponsiveToggle($('#toggler'));
-let mainMenu = new Foundation.ResponsiveMenu($('#topbar'));
+const navDrawer = new Foundation.OffCanvas($('#navDrawer'), {
+  transition: 'slide',
+});
 
 if (process.env.NODE_ENV == 'production') {
   Raven.config(process.env.SENTRY_DSN).install();
@@ -23,8 +22,3 @@ if (process.env.NODE_ENV == 'production') {
     'https://www.googletagmanager.com/gtm.js?id='+i+dl; f.parentNode.insertBefore(j, f);
   })(window, document, 'script', 'dataLayer', process.env.GTM_ID);
 }
-
-// render(
-//     <Instagram maxItems='50' />
-//     , document.getElementById('instagram')
-// );

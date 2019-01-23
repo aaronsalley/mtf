@@ -114,10 +114,39 @@
 
   #main {
     @include xy-grid();
+    @include xy-cell(
+      $size: full,
+    );
+
+    @include breakpoint(large) {
+      @include xy-cell(
+        $size: full,
+        $vertical: true,
+      );
+    }
 
     .off-canvas {
       @include breakpoint(large) {
         width: rem-calc(256);
+      }
+      position: relative;
+
+      .menu {
+        @include menu-base;
+
+        &#main-nav {
+          @include menu-direction(
+            $dir: vertical,
+          )
+        }
+
+        &#social {
+          @include menu-expand;
+          @include menu-icons;
+          @include menu-icon-position;
+          position: absolute;
+          bottom: 0;
+        }
       }
     }
 
@@ -125,8 +154,7 @@
       @include xy-grid-frame(
         $nested: true,
       );
-      position: relative;
-      height: 30vh;
+      @include xy-cell-base(auto);
 
       .wrap {
         @include xy-grid();
@@ -163,11 +191,22 @@
     }
 
     #content {
+      @include xy-cell-block(
+        $vertical: true,
+      );
+      @include xy-grid();
       @include xy-cell(
-        $size: auto,
-        $gutter-output: false,
+        $size: full,
         $gutters: 0,
       );
+
+      @include breakpoint(large) {
+        @include xy-cell(
+          $size: auto,
+          $gutters: 0,
+        );
+      };
+
       position: relative;
     }
 
@@ -178,7 +217,85 @@
 }
 
 .home {
-  .mission {
+  .events {
+    @include xy-grid-frame(
+      $nested: true,
+    );
+    @include xy-cell(12);
+    @include breakpoint(medium){
+      width: rem-calc(360);
+    }
 
+    .event {
+      @include xy-cell(12);
+    }
+  }
+
+  .gallery {
+    height: 30vh;
+  }
+
+  .mission {
+    @include xy-cell(12);
+
+    @include breakpoint(medium){
+      @include xy-cell(6);
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .blog-posts {
+    @include xy-cell(
+      $size: 12,
+      $gutters: 0,
+    );
+    margin-top: $global-margin;
+
+    .grid-sizer,
+    .post {
+      @include xy-cell(
+        $size: 4,
+        $gutter-position: top right bottom left,
+      );
+      position: relative;
+
+      &::after {
+        content: "";
+        display: block;
+        padding-bottom: 50%;
+        background-color: $black;
+        border-radius: 1rem;
+        box-shadow: rem-calc(0 0 20) rgba($black, .23);
+      }
+
+      .image {
+        position: absolute;
+
+      }
+
+      .header {
+        position: absolute;
+
+        .lead {
+        }
+
+        .meta {
+
+        }
+
+        .teaser {
+
+        }
+      }
+    }
+
+    .sticky {
+      @include xy-cell(
+        $size: 8,
+        $gutter-position: top right bottom left,
+      );
+    }
   }
 }

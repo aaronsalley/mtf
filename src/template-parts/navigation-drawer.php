@@ -3,14 +3,14 @@
     'menu' => '',
     'menu_id' => 'main-nav',
     'container' => 'nav',
-    'container_class' => 'main menu',
+    'container_class' => 'menu',
     'theme_location' => 'primary',
   )); ?>
   <?php wp_nav_menu(array(
     'menu' => '',
     'menu_id' => 'social',
     'container' => null,
+    'container_class' => 'menu',
     'theme_location' => 'social',
-    'items_wrap' => '%3$s',
   )); ?>
 </aside>

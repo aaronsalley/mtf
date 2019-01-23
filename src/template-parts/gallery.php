@@ -5,8 +5,10 @@ for($i = 0; $i < 100; $i++) {
   </figure>';
 }
 
-if ( get_post_gallery() ) :
-  $_gallery = get_post_gallery( get_the_ID(), false );
+$frontpage_id = get_option( 'page_on_front' );
+
+if ( get_post_gallery($frontpage_id) ) :
+  $_gallery = get_post_gallery( $frontpage_id, false );
   $gallery = array();
   /* Loop through all the image and output them one by one */
   foreach( $_gallery['src'] as $src ) :
@@ -16,4 +18,4 @@ if ( get_post_gallery() ) :
   endforeach;
 endif;
 
-echo $gallery = '<div class="gallery wall"><div class="wrap">' . implode($gallery) . '</div></div>'; ?>
+echo $gallery = '<div class="gallery"><div class="wrap">' . implode($gallery) . '</div></div>'; ?>

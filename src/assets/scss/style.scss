@@ -114,10 +114,6 @@
 
   #main {
     @include xy-grid();
-    // @include xy-grid-frame(
-    //   $vertical: true,
-    //   $nested: true,
-    // );
 
     .off-canvas {
       @include breakpoint(large) {
@@ -125,12 +121,64 @@
       }
     }
 
+    .gallery {
+      @include xy-grid-frame(
+        $nested: true,
+      );
+      position: relative;
+      height: 30vh;
+
+      .wrap {
+        @include xy-grid();
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 120vw;
+      }
+
+      .post {
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        width: rem-calc(120);
+
+        &::after {
+          content: "";
+          display: block;
+          padding-bottom: 100%;
+          background-color: rgba($black, .83);
+        }
+
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -1;
+          height: auto;
+          width: auto;
+          min-height: 100%;
+          min-width: 100%
+        }
+      }
+    }
+
     #content {
-      @include xy-cell(auto);
+      @include xy-cell(
+        $size: auto,
+        $gutter-output: false,
+        $gutters: 0,
+      );
+      position: relative;
     }
 
     #bottombar {
       @include xy-cell(full);
     }
+  }
+}
+
+.home {
+  .mission {
+
   }
 }

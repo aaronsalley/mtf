@@ -46,22 +46,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
   	</div>
   	<?php endforeach; wp_reset_postdata(); ?>
   </div>
-  <?php for($i = 0; $i < 40; $i++){
-    $instagram[] = '<div class="post">
-      <img class="image" src="#" />
-    </div>';
-  }
-  if ( get_post_gallery() ) :
-      $gallery = get_post_gallery( get_the_ID(), false );
-      $instagram = array();
-      /* Loop through all the image and output them one by one */
-      foreach( $gallery['src'] as $src ) :
-        $instagram[] = '<div class="post">
-          <img src="' . $src . '" class="image" alt="Gallery image" />
-        </div>';
-      endforeach;
-  endif;
-  echo $instagram = '<div id="instagram" class="wall">' . implode($instagram) . '</div>'; ?>
+	<?php get_template_part('template-parts', 'gallery.php'); ?>
 <?php endwhile; else : ?>
 	<p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
 <?php endif; ?>

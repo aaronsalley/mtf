@@ -1,8 +1,9 @@
 'use strict';
 
 import $ from 'jquery';
-
+import FastAverageColor from 'fast-average-color/dist/index.es6';
 import Foundation from 'foundation-sites';
+import Masonry from 'masonry-layout';
 import Raven from 'raven-js';
 
 Foundation.addToJquery($);
@@ -10,6 +11,17 @@ $(document).foundation();
 
 const navDrawer = new Foundation.OffCanvas($('#navDrawer'), {
   transition: 'slide',
+});
+
+const msnry = new Masonry( '.blog-posts', {
+  columnWidth: '.grid-sizer',
+  itemSelector: '.post',
+  percentPosition: true,
+});
+
+const fac = new FastAverageColor();
+fac.getColorAsync(document.querySelector('img'), function(color) {
+    console.log(color);
 });
 
 if (process.env.NODE_ENV == 'production') {

@@ -27,3 +27,4 @@
     <div id="main">
       <?php get_template_part('template-parts/navigation', 'drawer'); ?>
       <div id="content">
+        <div class="content-inner">

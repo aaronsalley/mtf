@@ -2,13 +2,13 @@
 
 import BrowserSyncPlugin from 'browser-sync-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import dotenv from 'dotenv';
 import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import incstr from 'incstr';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import NodemonPlugin from 'nodemon-webpack-plugin';
-import NpmInstallPlugin from 'npm-install-webpack-plugin';
 import path from 'path';
 import webpack from 'webpack';
 
@@ -138,7 +138,6 @@ const plugins = [
   new Dotenv({
     path: config.envfile,
   }),
-  // new NpmInstallPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
 ];
 const optimization = {
@@ -212,7 +211,6 @@ api.plugins = [
 
 let web = {};
 web.entry = {
-  // react: config.paths.SOURCE + '/index.tsx',
   style: config.paths.SOURCE + '/assets/scss/style.scss',
   vendors: config.paths.SOURCE + '/assets/js/vendors.js',
 };
@@ -272,19 +270,27 @@ web.module = {
 };
 web.plugins = [
   new BrowserSyncPlugin({
-    server: {
-      baseDir: config.paths.BUILD,
-      // middleware: [historyApiFallback()],
-      index: 'index.html',
-    },
-    port: process.env.WEB_PORT,
-    // proxy: process.env.WP_SERVER,
+    // server: {
+    //   baseDir: config.paths.BUILD,
+    //   // middleware: [historyApiFallback()],
+    //   index: 'index.html',
+    // },
+    // port: process.env.WEB_PORT,
+    proxy: 'localhost:9000',
     browser: 'Google Chrome',
     open: false,
     cors: true,
     https: true,
     ui: false,
   }),
+  new CopyWebpackPlugin([
+      config.paths.SOURCE + '/**/*.php',
+      config.paths.SOURCE + '/screenshot.*',
+      config.paths.SOURCE + '/assets/fonts/**/*',
+    ], {
+      context: 'src/',
+    }
+  ),
   new HtmlWebpackPlugin({
     title: 'Musical Theatre Factory',
     template: config.paths.SOURCE + '/index.html',
@@ -303,4 +309,4 @@ web.plugins = [
 config.webpack.api = {...webpackBase, ...api};
 config.webpack.web = {...webpackBase, ...web};
 
-export default config;
+export default config.webpack.web;

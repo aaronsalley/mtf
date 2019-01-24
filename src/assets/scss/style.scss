@@ -9,7 +9,6 @@
   * Text Domain: mtf
   */
 
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import 'settings';
 @import 'foundation';
 
@@ -17,8 +16,6 @@
 @include foundation-global-styles;
 @include foundation-forms;
 @include foundation-typography;
-
-@import 'typography';
 
 // Grids (choose one)
 @include foundation-xy-grid-classes;
@@ -72,7 +69,10 @@
 @include foundation-visibility-classes;
 @include foundation-prototype-classes;
 
-.app {
+@import 'typography';
+
+// Global Skeleton Styles
+#app {
   @include xy-grid-frame(
     $vertical: true,
   );
@@ -86,6 +86,72 @@
 
     a {
       padding: 0;
+    }
+  }
+
+  .off-canvas {
+    @include breakpoint(large) {
+      position: relative;
+      width: rem-calc(320);
+    }
+
+    .menu {
+      @include menu-base;
+
+      &#main-nav {
+        @include menu-direction(
+          $dir: vertical,
+        )
+      }
+
+      &#social {
+        @include menu-expand;
+        @include menu-icons;
+        @include menu-icon-position;
+        position: absolute;
+        bottom: 0;
+      }
+    }
+  }
+
+  .gallery {
+    @include xy-grid-frame(
+      $nested: true,
+    );
+    @include xy-cell-base(auto);
+    height: rem-calc(120);
+
+    .wrap {
+      @include xy-grid();
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 120%;
+    }
+
+    .post {
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      width: rem-calc(120);
+
+      &::after {
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+        background-color: rgba($black, .83);
+      }
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        height: auto;
+        width: auto;
+        min-height: 100%;
+        min-width: 100%
+      }
     }
   }
 
@@ -105,8 +171,12 @@
     }
 
     .mtf-logo {
-      max-height: rem-calc(48);
       width: auto;
+      max-height: rem-calc(36);
+
+      @include breakpoint(large) {
+        max-height: rem-calc(48);
+      }
     }
 
     .menu {
@@ -121,71 +191,7 @@
       $direction: horizontal,
       $wrap: false,
     );
-
-    .off-canvas {
-      @include breakpoint(large) {
-        position: relative;
-        width: rem-calc(320);
-      }
-
-      .menu {
-        @include menu-base;
-
-        &#main-nav {
-          @include menu-direction(
-            $dir: vertical,
-          )
-        }
-
-        &#social {
-          @include menu-expand;
-          @include menu-icons;
-          @include menu-icon-position;
-          position: absolute;
-          bottom: 0;
-        }
-      }
-    }
-
-    .gallery {
-      @include xy-grid-frame(
-        $nested: true,
-      );
-      @include xy-cell-base(auto);
-
-      .wrap {
-        @include xy-grid();
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 120vw;
-      }
-
-      .post {
-        overflow: hidden;
-        position: relative;
-        z-index: 1;
-        width: rem-calc(120);
-
-        &::after {
-          content: "";
-          display: block;
-          padding-bottom: 100%;
-          background-color: rgba($black, .83);
-        }
-
-        img {
-          position: absolute;
-          top: 0;
-          left: 0;
-          z-index: -1;
-          height: auto;
-          width: auto;
-          min-height: 100%;
-          min-width: 100%
-        }
-      }
-    }
+    flex: 1 100%;
 
     #content {
       @include xy-grid();
@@ -200,6 +206,8 @@
         @include xy-grid-container(
           $padding: 0,
         );
+        position: relative;
+        width: 100%
       }
     }
 
@@ -209,20 +217,63 @@
   }
 }
 
-.home {
+// Home Skeleton Styles
+#app.home {
   .events {
     @include xy-grid-frame(
       $nested: true,
     );
-    @include xy-cell(12);
     @include breakpoint(medium){
-      @include xy-cell(5);
+      @include xy-cell(
+        $size: 5,
+        $gutters: 0,
+      );
       max-width: rem-calc(360);
     }
 
-    .event {
-      @include xy-cell(12);
+    .post-event {
+      @include xy-cell(
+        $size: 12,
+        $gutters: 0,
+        $gutter-position: top right bottom left,
+      );
       height: 20%;
+      overflow: hidden;
+
+      .tribe-events-event-image {
+        width: rem-calc(150);
+        margin-right: rem-calc(16);
+        float: left;
+        background-color: $black;
+
+        img {
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+
+        &:before {
+          padding-bottom: 50%;
+        }
+      }
+
+      .cost {
+        zoom: .75;
+      }
+
+      .title {
+        max-height: rem-calc(44);
+        margin-top: rem-calc(24);
+        margin-bottom: rem-calc(16);
+      }
+
+      .tags {
+        display: none;
+      }
+
+      &:not(.has-tags) {
+        padding-bottom: 0;
+      }
     }
   }
 
@@ -232,6 +283,7 @@
 
   .mission {
     @include xy-cell(12);
+    z-index: 90;
 
     @include breakpoint(medium){
       @include xy-cell(6);
@@ -303,6 +355,286 @@
       .container::after {
         padding-bottom: 56.25%;
       }
+    }
+  }
+}
+
+#app.tribe-events-page-template,
+#app.singular,
+#app.page {
+  .header {
+    @include xy-cell(
+      $size: 12,
+      $gutters: 0,
+    );
+    position: relative;
+    height: rem-calc(120);
+
+    .gallery {
+      height: rem-calc(120);
+    }
+
+    .masthead {
+      position: absolute;
+      right: rem-calc(20);
+      z-index: 10;
+    }
+
+    .button {
+      @include button-expand();
+    }
+  }
+
+  .content {
+    @include xy-cell(
+      $size: 12,
+      $gutters: 0,
+    );
+  }
+}
+
+#tribe-events {
+  @include xy-cell(
+    $size: 12,
+    $gutters: 0,
+  );
+
+  #events-bar {
+    @include xy-cell(9);
+    margin: auto;
+  }
+
+  .events-loop,
+  .related-events {
+    @include xy-grid('horizontal');
+    @include xy-grid-layout(
+      $n: 1,
+      $selector: '.post-event',
+      $gutter-output: false,
+    )
+    justify-content: space-between;
+
+    &::after {
+      display: block;
+      content: '';
+    }
+
+    @include breakpoint(medium){
+      @include xy-grid-layout(
+        $n: 2,
+        $selector: '.post-event',
+        $gutter-output: false,
+      )
+
+      &::after {
+        @include xy-cell(6, false);
+      }
+    }
+    @include breakpoint(large){
+      @include xy-grid-layout(
+        $n: 3,
+        $selector: '.post-event',
+        $gutter-output: false,
+      )
+
+      &::after {
+        @include xy-cell(4, false);
+      }
+    }
+  }
+
+  .post-event {
+    position: relative;
+    margin-top: rem-calc(32);
+    margin-right: auto;
+    margin-bottom: rem-calc(32);
+    margin-left: auto;
+    background-color: $white;
+    box-shadow: 0 1px 0 0 rgba($black, .1);
+
+    @include breakpoint(medium) {
+      margin-right: 0;
+      margin-left: 0;
+    }
+
+    &:not(.has-tags) {
+      padding-bottom: rem-calc(42);
+    }
+
+    .tribe-events-event-image {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+
+      &:before {
+        display: block;
+        width: 100%;
+        padding-bottom: 50%;
+        background-color: white;
+        content: '';
+      }
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+
+    .title,
+    .meta {
+      margin: rem-calc(0 16);
+
+      &,
+      & > * {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .schedule {
+        max-height: 1.25rem;
+        margin: rem-calc(4 0);
+      }
+    }
+
+    .cost {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: rem-calc(8);
+      padding: rem-calc(4 16);
+      background-color: rgba($white, .83);
+      z-index: 5;
+
+      & > *:not(.ticket-cost) {
+        display: none;
+      }
+    }
+
+    .tags {
+      height: rem-calc(42);
+      margin-top: rem-calc(8);
+      margin-right: rem-calc(16);
+      margin-bottom: rem-calc(0);
+      margin-left: rem-calc(16);
+      padding-top: rem-calc(8);
+      padding-bottom: rem-calc(8);
+      border-top: 1px solid rgba($black, .1);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      .tag {
+        margin-right: rem-calc(8);
+      }
+    }
+  }
+
+  .single-event {
+    @include xy-cell(12);
+
+    .header {
+      @include xy-grid('horizontal');
+
+      @include breakpoint(medium) {
+        @include xy-grid('horizontal', false);
+      }
+
+      .tribe-events-event-image {
+        width: 100%;
+        margin-bottom: rem-calc(0);
+
+        @include breakpoint(medium) {
+          @include xy-cell(auto, false);
+        }
+      }
+
+      .wrap {
+        position: relative;
+        width: 100%;
+        margin-bottom: rem-calc(0);
+
+        @include breakpoint(medium){
+          @include xy-cell(4, false);
+          margin-right: rem-calc(0);
+          margin-left: rem-calc(24);
+        }
+      }
+
+      .button {
+        @include button-style();
+        @include button-expand(true);
+        margin-bottom: 0;
+
+        @include breakpoint(medium) {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          left: 0;
+        }
+      }
+    }
+
+    .blur {
+      position: absolute;
+      top: rem-calc(150);
+      left: 0;
+      width: 100%;
+      z-index: 1;
+
+      @include breakpoint(medium){
+        top: 0;
+      }
+
+      img {
+        width: 100%;
+        opacity: .28;
+        filter: blur(20px);
+      }
+    }
+
+    .links {
+      @include xy-grid('horizontal', false);
+      padding: 0;
+
+      [class*=button] {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      .tribe-events-cal-links {
+        @include xy-grid('horizontal', false);
+        @include xy-cell(7, false);
+        justify-content: space-between;
+        margin-right: auto;
+        margin-bottom: 0;
+        margin-left: auto;
+
+        @include breakpoint(medium){
+          @include xy-cell(4, false);
+          margin-right: inherit;
+        }
+      }
+    }
+
+    .description {
+      margin-top: rem-calc(24);
+      margin-bottom: rem-calc(24);
+
+      [class*='tribe-'] {
+        display: none;
+      }
+    }
+
+    .related-events {
+      @include xy-cell(12, false);
+    }
+  }
+
+  .eventbrite-ticket-embed {
+    & > iframe {
+      min-height: rem-calc(300);
     }
   }
 }

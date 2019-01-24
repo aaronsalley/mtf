@@ -17,7 +17,7 @@
 
       add_post_type_support( 'page', 'excerpt' );
 
-      add_image_size( 'event', 1200, 600, true );
+      add_image_size( 'event', 1200, 600, array('center', 'center') );
 
       // Ready for WooCommerce
       add_theme_support( 'woocommerce' );

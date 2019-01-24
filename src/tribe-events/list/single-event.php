@@ -33,12 +33,7 @@ $has_tags = has_tag();
 <a class="url" href="<?php echo esc_url( tribe_get_event_link() ); ?>" title="<?php the_title_attribute() ?>" rel="bookmark">
 
 	<!-- Event Image -->
-	<?php if ( is_front_page() ) {
-		echo tribe_event_featured_image( null, 'thumbnail', false );
-	} else {
-		echo tribe_event_featured_image( null, 'event', false );
-	}
-	?>
+	<?php echo tribe_event_featured_image( null, 'event', false ); ?>
 
 	<!-- Event Title -->
 	<?php do_action( 'tribe_events_before_the_event_title' ) ?>

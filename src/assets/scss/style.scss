@@ -76,6 +76,10 @@
   @include xy-grid-frame(
     $vertical: true,
   );
+  @include xy-grid(
+    $direction: vertical,
+    $wrap: false,
+  );
 
   .button {
     @include button-style;
@@ -88,7 +92,7 @@
   #header {
     @include top-bar-container;
     overflow: hidden;
-    height: rem-calc(72);
+    min-height: rem-calc(72);
 
     .menu-icon {
       height: rem-calc(24);
@@ -113,23 +117,16 @@
   }
 
   #main {
-    @include xy-grid();
-    @include xy-cell(
-      $size: full,
+    @include xy-grid(
+      $direction: horizontal,
+      $wrap: false,
     );
-
-    @include breakpoint(large) {
-      @include xy-cell(
-        $size: full,
-        $vertical: true,
-      );
-    }
 
     .off-canvas {
       @include breakpoint(large) {
+        position: relative;
         width: rem-calc(256);
       }
-      position: relative;
 
       .menu {
         @include menu-base;
@@ -191,23 +188,17 @@
     }
 
     #content {
-      @include xy-cell-block(
-        $vertical: true,
-      );
       @include xy-grid();
-      @include xy-cell(
-        $size: full,
-        $gutters: 0,
-      );
-
-      @include breakpoint(large) {
-        @include xy-cell(
-          $size: auto,
-          $gutters: 0,
-        );
-      };
-
       position: relative;
+      flex-grow: 1;
+
+      .content-inner {
+        @include xy-cell-block(
+          $vertical: true,
+        );
+        @include xy-grid();
+        @include xy-grid-container();
+      }
     }
 
     #bottombar {
@@ -232,7 +223,7 @@
   }
 
   .gallery {
-    height: 30vh;
+    height: 40vh;
   }
 
   .mission {

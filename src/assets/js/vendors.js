@@ -11,6 +11,8 @@ $(document).foundation();
 
 const navDrawer = new Foundation.OffCanvas($('#navDrawer'), {
   transition: 'slide',
+  contentId: 'main',
+  nested: false,
 });
 
 const msnry = new Masonry( '.blog-posts', {

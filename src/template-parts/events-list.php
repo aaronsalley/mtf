@@ -1,6 +1,6 @@
 <div id="tribe-events" class="events list">
   <?php $events = tribe_get_events( array(
-    'posts_per_page' => 4,
+    'posts_per_page' => 5,
     'orderby' => 'event_date',
     // 'order' => 'DESC',
     'start_date' => date("Y-m-d H:i:s")

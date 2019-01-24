@@ -105,7 +105,7 @@
     }
 
     .mtf-logo {
-      max-height: rem-calc(32);
+      max-height: rem-calc(48);
       width: auto;
     }
 
@@ -125,7 +125,7 @@
     .off-canvas {
       @include breakpoint(large) {
         position: relative;
-        width: rem-calc(256);
+        width: rem-calc(320);
       }
 
       .menu {
@@ -197,7 +197,9 @@
           $vertical: true,
         );
         @include xy-grid();
-        @include xy-grid-container();
+        @include xy-grid-container(
+          $padding: 0,
+        );
       }
     }
 
@@ -214,16 +216,18 @@
     );
     @include xy-cell(12);
     @include breakpoint(medium){
-      width: rem-calc(360);
+      @include xy-cell(5);
+      max-width: rem-calc(360);
     }
 
     .event {
       @include xy-cell(12);
+      height: 20%;
     }
   }
 
   .gallery {
-    height: 40vh;
+    height: 50vh;
   }
 
   .mission {
@@ -245,48 +249,60 @@
     margin-top: $global-margin;
 
     .grid-sizer,
-    .post {
+    .post,
+    .sticky ~ .sticky {
+      position: relative;
       @include xy-cell(
-        $size: 4,
+        $size: 6,
         $gutter-position: top right bottom left,
       );
-      position: relative;
 
-      &::after {
-        content: "";
-        display: block;
-        padding-bottom: 50%;
-        background-color: $black;
-        border-radius: 1rem;
-        box-shadow: rem-calc(0 0 20) rgba($black, .23);
+      @include breakpoint(medium) {
+        @include xy-cell(
+          $size: 4,
+          $gutter-position: top right bottom left,
+        );
+      }
+
+      .container {
+        position: relative;
+
+        &::after {
+          content: "";
+          display: block;
+          padding-bottom: 75%;
+          background-color: $black;
+          border-radius: 1rem;
+          box-shadow: rem-calc(0 0 20) rgba($black, .23);
+        }
       }
 
       .image {
         position: absolute;
-
       }
 
       .header {
         position: absolute;
-
-        .lead {
-        }
-
-        .meta {
-
-        }
-
-        .teaser {
-
-        }
+        bottom: 0;
       }
     }
 
     .sticky {
       @include xy-cell(
-        $size: 8,
+        $size: 12,
         $gutter-position: top right bottom left,
       );
+
+      @include breakpoint(medium) {
+        @include xy-cell(
+          $size: 8,
+          $gutter-position: top right bottom left,
+        );
+      }
+
+      .container::after {
+        padding-bottom: 56.25%;
+      }
     }
   }
 }

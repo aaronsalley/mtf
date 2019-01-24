@@ -385,6 +385,13 @@ html {
   @include xy-grid('horizontal');
   position: relative;
 
+  input[type='button'] {
+    @include button-style();
+    min-width: rem-calc(200);
+    min-height: rem-calc(40);
+    @include button;
+  }
+
   .header {
     .archive &,
     .page &,

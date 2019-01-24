@@ -4,3 +4,4 @@
 		<a class="button" href="/donate" target="_blank"><?php esc_html_e('Support us'); ?></a>
 	</div>
 	<?php get_template_part('template-parts/gallery'); ?>
+</header>

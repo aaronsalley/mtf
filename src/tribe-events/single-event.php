@@ -19,6 +19,7 @@ $events_label_singular = tribe_get_event_label_singular();
 $events_label_plural   = tribe_get_event_label_plural();
 
 $event_id = get_the_ID();
+var_dump($event_id);
 
 $website = tribe_get_event_website_url();
 $button_text = 'Get tickets';
@@ -43,12 +44,12 @@ if ( $website && !strpos($website, 'eventbrite.com') ) {
 
 <div class="content">
 	<!-- Notices -->
-	<?php tribe_the_notices() ?>
+	<?php tribe_the_notices(); ?>
 
 	<?php while ( have_posts() ) :  the_post(); ?>
 		<div id="post-<?php the_ID(); ?>" <?php post_class('single-event'); ?>>
 			<!-- Event header -->
-			<header id="header" <?php tribe_events_the_header_attributes() ?>>
+			<header class="header" <?php tribe_events_the_header_attributes() ?>>
 				<?php echo tribe_event_featured_image( $event_id, 'event', false ); ?>
 				<div class="wrap">
 					<?php echo tribe_events_event_schedule_details( $event_id, '<h5 class="schedule">', '</h5>' ); ?>

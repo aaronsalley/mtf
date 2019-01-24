@@ -6,7 +6,7 @@
     <link rel="profile" href="http://gmpg.org/xfn/11">
     <?php wp_head(); ?>
   </head>
-  <body <?php body_class('app'); ?>>
+  <body id="app" <?php body_class('app'); ?>>
     <header id="header">
       <h1 class="branding">
         <?php bloginfo('name'); ?>

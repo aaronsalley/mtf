@@ -92,10 +92,14 @@
   .off-canvas {
     @include breakpoint(large) {
       position: relative;
-      width: rem-calc(320);
+      width: rem-calc(256);
     }
 
     .menu {
+      @include xy-cell(
+        $size: full,
+        $gutters: 0,
+      );
       @include menu-base;
 
       &#main-nav {
@@ -211,8 +215,50 @@
       }
     }
 
-    #bottombar {
-      @include xy-cell(full);
+    #footer {
+      @include xy-cell(
+        $size: full,
+        $gutters: 0,
+      );
+
+      .wrap {
+        @include xy-grid(
+          $direction: horizontal,
+          $wrap: true,
+        );
+      }
+
+      .widgets {
+        @include xy-cell(
+          $size: 6,
+          $gutters: 0,
+        );
+        @include xy-grid(
+          $direction: horizontal,
+          $wrap: true,
+        );
+
+        .widget:not(.widget_text) {
+          @include xy-cell(
+            $size: 6,
+            $gutters: 0,
+          );
+        }
+
+        .menu {
+          @include menu-base;
+          @include menu-direction(
+            $dir: vertical,
+          );
+        }
+      }
+
+      .colophon {
+        @include xy-cell(
+          $size: 12,
+          $gutters: 0,
+        );
+      }
     }
   }
 }
@@ -531,11 +577,13 @@
     }
   }
 
-  .single-event {
+  .single-event,
+  .tribe-events-single {
     @include xy-cell(12);
 
     .header {
       @include xy-grid('horizontal');
+      height: auto;
 
       @include breakpoint(medium) {
         @include xy-grid('horizontal', false);
@@ -581,7 +629,7 @@
       top: rem-calc(150);
       left: 0;
       width: 100%;
-      z-index: 1;
+      z-index: -1;
 
       @include breakpoint(medium){
         top: 0;

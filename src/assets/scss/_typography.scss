@@ -72,8 +72,60 @@ $disabled: .38;
   color: $white;
 }
 
-.menu .menu-item a {
-  color: inherit;
+.menu {
+  .off-canvas & .menu-item a {
+    text-align: right;
+    color: inherit;
+  }
+
+  &.icon a {
+    font-size: 0;
+  }
+
+  @mixin social-link($icon: "") {
+    &::before {
+      content: $icon;
+      display: inline-block;
+      font-family: 'Socicon' !important;
+      speak: none;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+
+  a[href*="facebook"] {
+    @include social-link('\e028');
+  }
+
+  a[href*="twitter"] {
+    @include social-link('\e08d');
+  }
+
+  a[href*="instagram"] {
+    @include social-link('\e044');
+  }
+
+  a[href*="youtube"] {
+    @include social-link('\e0a5');
+  }
+
+  a[href*="vimeo"] {
+    @include social-link('\e093');
+  }
+
+  a[href*="snapchat"] {
+    @include social-link('\e076');
+  }
+
+  a[href*="tumblr"] {
+    @include social-link('\e08b');
+  }
 }
 
 .post-event {
@@ -92,8 +144,4 @@ $disabled: .38;
   .tag {
     @include caption;
   }
-}
-
-#bottombar {
-  color: white
 }

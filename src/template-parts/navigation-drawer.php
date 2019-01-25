@@ -1,4 +1,4 @@
-<aside class="off-canvas in-canvas-for-large position-left" id="navDrawer">
+<aside class="off-canvas in-canvas-for-large position-left" id="nav-drawer">
   <?php wp_nav_menu(array(
     'menu' => '',
     'menu_id' => 'main-nav',
@@ -10,7 +10,7 @@
     'menu' => '',
     'menu_id' => 'social',
     'container' => null,
-    'container_class' => 'menu',
+    'container_class' => 'menu icons',
     'theme_location' => 'social',
   )); ?>
 </aside>

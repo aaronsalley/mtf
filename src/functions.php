@@ -56,9 +56,22 @@
     		'social' => __( 'Social Media', 'mtf' )
     	) );
     	register_sidebar( array(
-    		'name' => __( 'Footer widgets', 'mtf' ),
-    		'id' => 'footer-widgets',
-    		'before_widget' => '<div class="widget">',
+    		'name' => __( 'About MTF', 'mtf' ),
+    		'before_widget' => '<div class="widget %2$s">',
+    		'after_widget'  => '</div>',
+    		'before_title' => '<h5 class="title">',
+    		'after_title' => '</h5>'
+    	) );
+      register_sidebar( array(
+    		'name' => __( 'Footer Widgets', 'mtf' ),
+        'before_widget' => '<div class="widget %2$s">',
+    		'after_widget'  => '</div>',
+    		'before_title' => '<h5 class="title">',
+    		'after_title' => '</h5>'
+    	) );
+      register_sidebar( array(
+    		'name' => __( 'Colophon', 'mtf' ),
+        'before_widget' => '<div class="widget %2$s">',
     		'after_widget'  => '</div>',
     		'before_title' => '<h5 class="title">',
     		'after_title' => '</h5>'

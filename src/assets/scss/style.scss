@@ -70,6 +70,12 @@
 @include foundation-prototype-classes;
 
 @import 'typography';
+@mixin mtf-gradient {
+  background-color: #ff3600; // Old browsers
+  filter-gradient: #ff3600, #ffffff, horizontal; // IE6-9
+  background-image: linear-gradient(left, rgba(#ff3600, .8) 0%,rgba(#ff00e4, .8) 50%,rgba(#ffffff, .8) 100%), url('../img/mtf_brushstroke.png');
+  background-position: center;
+}
 
 // Global Skeleton Styles
 #app {
@@ -81,8 +87,13 @@
     $wrap: false,
   );
 
+  &.admin-bar {
+    height: calc(100vh - 32px);
+  }
+
   .button {
     @include button-style;
+    margin-bottom: 0;
 
     a {
       padding: 0;
@@ -90,9 +101,20 @@
   }
 
   .off-canvas {
+    @include mtf-gradient;
+    width: 100%;
+    min-width: calc(100% - 56px);
+    max-width: calc(100% - 56px);
+    padding-top: rem-calc(48);
+    background-image: url('../img/mtf_red_texture.png');
+
+    @include breakpoint(medium) {
+      min-width: rem-calc(256);
+      max-width: rem-calc(256);
+    }
+
     @include breakpoint(large) {
       position: relative;
-      width: rem-calc(256);
     }
 
     .menu {
@@ -106,14 +128,18 @@
         @include menu-direction(
           $dir: vertical,
         )
+
+        a {
+          padding: $global-padding;
+        }
       }
 
       &#social {
-        @include menu-expand;
         @include menu-icons;
         @include menu-icon-position;
         position: absolute;
         bottom: 0;
+        justify-content: flex-end;
       }
     }
   }
@@ -130,7 +156,8 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 120%;
+      width: 120% !important;
+      margin: 0 !important;
     }
 
     .post {
@@ -163,6 +190,8 @@
     @include top-bar-container;
     overflow: hidden;
     min-height: rem-calc(72);
+    // background-image: url('../img/mtf_brushstroke.png');
+    background-position: center;
 
     .menu-icon {
       height: rem-calc(24);
@@ -174,9 +203,14 @@
       }
     }
 
+    .branding {
+      margin-bottom: 0;
+    }
+
     .mtf-logo {
       width: auto;
       max-height: rem-calc(36);
+      margin-left: rem-calc(8);
 
       @include breakpoint(large) {
         max-height: rem-calc(48);
@@ -201,17 +235,27 @@
       @include xy-grid();
       position: relative;
       flex-grow: 1;
+      background-color: $white;
 
       .content-inner {
+        @include xy-cell(
+          $size: full,
+          $gutters: 0,
+        );
         @include xy-cell-block(
           $vertical: true,
         );
         @include xy-grid();
-        @include xy-grid-container(
-          $padding: 0,
-        );
-        position: relative;
-        width: 100%
+
+        & > .wrap {
+          @include xy-cell(
+            $size: full,
+            $gutters: 0,
+          );
+          @include xy-grid-container();
+          @include xy-grid();
+          position: relative;
+        }
       }
     }
 
@@ -220,8 +264,12 @@
         $size: full,
         $gutters: 0,
       );
+      padding-top: rem-calc(124);
+      padding-bottom: rem-calc(124);
+      background-color: $body-background;
 
       .wrap {
+        @include xy-grid-container();
         @include xy-grid(
           $direction: horizontal,
           $wrap: true,
@@ -230,7 +278,7 @@
 
       .widgets {
         @include xy-cell(
-          $size: 6,
+          $size: 12,
           $gutters: 0,
         );
         @include xy-grid(
@@ -238,11 +286,29 @@
           $wrap: true,
         );
 
-        .widget:not(.widget_text) {
+        @include breakpoint(medium) {
           @include xy-cell(
             $size: 6,
             $gutters: 0,
           );
+
+          &:first-of-type() {
+            padding-right: rem-calc(64);
+          }
+        }
+
+        .widget:not(.widget_text) {
+          @include xy-cell(
+            $size: 12,
+            $gutters: 0,
+          );
+
+          @include breakpoint(medium) {
+            @include xy-cell(
+              $size: 6,
+              $gutters: 0,
+            );
+          }
         }
 
         .menu {
@@ -250,6 +316,10 @@
           @include menu-direction(
             $dir: vertical,
           );
+
+          a {
+            padding-left: 0;
+          }
         }
       }
 
@@ -258,6 +328,11 @@
           $size: 12,
           $gutters: 0,
         );
+        margin-top: rem-calc(64);
+
+        * {
+          margin-bottom: rem-calc(0);
+        }
       }
     }
   }
@@ -285,11 +360,23 @@
       );
       height: 20%;
       overflow: hidden;
+      box-shadow: none;
+
+      & > .url {
+        display: flex;
+        position: relative;
+        flex-wrap: wrap;
+        height: 100%;
+        align-items: center;
+        align-content: center;
+        justify-content: flex-end;
+      }
 
       .tribe-events-event-image {
+        position: absolute;
+        left: 0;
         width: rem-calc(150);
         margin-right: rem-calc(16);
-        float: left;
         background-color: $black;
 
         img {
@@ -308,9 +395,21 @@
       }
 
       .title {
+        @include xy-cell(
+          $size: 12,
+          $gutters: 0,
+        );
         max-height: rem-calc(44);
-        margin-top: rem-calc(24);
-        margin-bottom: rem-calc(16);
+        margin-bottom: rem-calc(0);
+        margin-left: rem-calc(158);
+      }
+
+      .meta {
+        @include xy-cell(
+          $size: 12,
+          $gutters: 0,
+        );
+        margin-left: rem-calc(158);
       }
 
       .tags {
@@ -329,13 +428,16 @@
 
   .mission {
     @include xy-cell(12);
+    display: none;
     z-index: 90;
 
     @include breakpoint(medium){
       @include xy-cell(6);
+      display: block;
       position: absolute;
-      top: 0;
-      right: 0;
+      top: 50vh;
+      right: rem-calc(20);
+      transform: translateY(-100%);
     }
   }
 
@@ -345,6 +447,8 @@
       $gutters: 0,
     );
     margin-top: $global-margin;
+    margin-right: $global-margin * -1;
+    margin-left: $global-margin * -1;
 
     .grid-sizer,
     .post,
@@ -369,7 +473,7 @@
           content: "";
           display: block;
           padding-bottom: 75%;
-          background-color: $black;
+          background-color: $white;
           border-radius: 1rem;
           box-shadow: rem-calc(0 0 20) rgba($black, .23);
         }
@@ -422,12 +526,23 @@
 
     .masthead {
       position: absolute;
+      display: flex;
       right: rem-calc(20);
       z-index: 10;
+      height: 100%;
+      min-width: rem-calc(200);
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .title {
+      margin-bottom: 0;
     }
 
     .button {
       @include button-expand();
+      @include button-style();
+      margin-bottom: 0;
     }
   }
 
@@ -436,6 +551,7 @@
       $size: 12,
       $gutters: 0,
     );
+    position: relative;
   }
 }
 
@@ -467,17 +583,6 @@
 
     @include breakpoint(medium){
       @include xy-grid-layout(
-        $n: 2,
-        $selector: '.post-event',
-        $gutter-output: false,
-      )
-
-      &::after {
-        @include xy-cell(6, false);
-      }
-    }
-    @include breakpoint(large){
-      @include xy-grid-layout(
         $n: 3,
         $selector: '.post-event',
         $gutter-output: false,
@@ -490,13 +595,16 @@
   }
 
   .post-event {
+    overflow: hidden;
     position: relative;
     margin-top: rem-calc(32);
     margin-right: auto;
     margin-bottom: rem-calc(32);
     margin-left: auto;
     background-color: $white;
-    box-shadow: 0 1px 0 0 rgba($black, .1);
+    border-radius: 1rem;
+    box-shadow: rem-calc(0 0 20) rgba($black, .23);
+
 
     @include breakpoint(medium) {
       margin-right: 0;
@@ -579,13 +687,17 @@
 
   .single-event,
   .tribe-events-single {
-    @include xy-cell(12);
+    @include xy-cell(
+      $size: 12,
+      $gutters: 0,
+    );
+    padding: 0;
 
     .header {
       @include xy-grid('horizontal');
       height: auto;
 
-      @include breakpoint(medium) {
+      @include breakpoint(large) {
         @include xy-grid('horizontal', false);
       }
 
@@ -593,7 +705,7 @@
         width: 100%;
         margin-bottom: rem-calc(0);
 
-        @include breakpoint(medium) {
+        @include breakpoint(large) {
           @include xy-cell(auto, false);
         }
       }
@@ -601,25 +713,18 @@
       .wrap {
         position: relative;
         width: 100%;
+        margin-top: $global-margin;
         margin-bottom: rem-calc(0);
 
-        @include breakpoint(medium){
+        @include breakpoint(large){
           @include xy-cell(4, false);
           margin-right: rem-calc(0);
           margin-left: rem-calc(24);
         }
-      }
 
-      .button {
-        @include button-style();
-        @include button-expand(true);
-        margin-bottom: 0;
-
-        @include breakpoint(medium) {
+        .button {
           position: absolute;
-          right: 0;
           bottom: 0;
-          left: 0;
         }
       }
     }
@@ -629,7 +734,6 @@
       top: rem-calc(150);
       left: 0;
       width: 100%;
-      z-index: -1;
 
       @include breakpoint(medium){
         top: 0;
@@ -647,8 +751,18 @@
       padding: 0;
 
       [class*=button] {
+        @include button-style();
+        @include button-expand();
         margin-top: 0;
         margin-bottom: 0;
+
+        &:first-child() {
+          margin-right: $global-margin/2;
+        }
+
+        &:last-child() {
+          margin-left: $global-margin/2;
+        }
       }
 
       .tribe-events-cal-links {
@@ -659,7 +773,7 @@
         margin-bottom: 0;
         margin-left: auto;
 
-        @include breakpoint(medium){
+        @include breakpoint(large){
           @include xy-cell(4, false);
           margin-right: inherit;
         }
@@ -667,8 +781,10 @@
     }
 
     .description {
-      margin-top: rem-calc(24);
-      margin-bottom: rem-calc(24);
+      @include xy-cell(
+        $size: 8,
+      );
+      margin: rem-calc(24) auto;
 
       [class*='tribe-'] {
         display: none;

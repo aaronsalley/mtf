@@ -11,7 +11,7 @@
       <h1 class="branding">
         <?php bloginfo('name'); ?>
         <?php bloginfo('description'); ?>
-        <button class="menu-icon" type="button" data-open="navDrawer"></button>
+        <button class="menu-icon" type="button" data-open="nav-drawer"></button>
         <?php the_custom_logo(); ?>
       </h1>
       <menu class="menu">
@@ -28,3 +28,4 @@
       <?php get_template_part('template-parts/navigation', 'drawer'); ?>
       <div id="content">
         <div class="content-inner">
+          <div class="wrap">

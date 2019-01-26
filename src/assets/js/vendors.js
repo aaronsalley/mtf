@@ -9,7 +9,7 @@ import Raven from 'raven-js';
 Foundation.addToJquery($);
 $(document).foundation();
 
-const navDrawer = new Foundation.OffCanvas($('#navDrawer'), {
+const navDrawer = new Foundation.OffCanvas($('#nav-drawer'), {
   transition: 'slide',
   contentId: 'main',
   nested: false,

@@ -46,7 +46,7 @@ $disabled: .38;
 
 @mixin button {
   font-family: 'Strongbox JNL';
-  font-size: rem-calc(10);
+  font-size: rem-calc(16);
   font-weight: 600;
   letter-spacing: rem-calc(1.25);
   text-transform: uppercase;
@@ -58,37 +58,60 @@ $disabled: .38;
 
 .button,
 .button a {
-  font-family: "Strongbox JNL";
-  font-size: rem-calc(16);
+  @include button;
   color: $white;
 }
 
 .mission {
-  font-size: rem-calc(18);
+  @include h4;
   color: $white;
+  text-align: right;
 }
 
 .masthead {
   color: $white;
+
+  .title {
+    @include h3;
+    text-align: center;
+  }
 }
 
 .menu {
   .off-canvas & .menu-item a {
+    font-family: 'Strongbox JNL';
+    font-size: rem-calc(24);
     text-align: right;
-    color: inherit;
+    color: $white;
+
+    &::before {
+      font-size: 1rem;
+    }
   }
 
-  &.icon a {
-    font-size: 0;
+  &.icons a {
+    font-size: 0 !important;
+  }
+
+  &#social {
+    &::before {
+      @include xy-cell(
+        $size: full,
+      );
+      content: "Follow MTF";
+      font-family: 'Strongbox JNL';
+      text-align: right;
+      color: $white;
+    }
   }
 
   @mixin social-link($icon: "") {
     &::before {
       content: $icon;
       display: inline-block;
+      margin-right: rem-calc(8);
       font-family: 'Socicon' !important;
       speak: none;
-      font-size: 1rem;
       font-style: normal;
       font-weight: normal;
       font-variant: normal;
@@ -142,6 +165,40 @@ $disabled: .38;
   }
 
   .tag {
+    @include caption;
+  }
+}
+
+.single-event .header ,
+.tribe-events-single .header {
+  .title {
+    @include h3;
+  }
+
+  .venue {
+    @include body2;
+  }
+
+  .schedule {
+    @include body2;
+  }
+
+  .tag {
+    @include caption;
+  }
+}
+
+.widget {
+  .menu-item {
+    @include caption;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: rem-calc(1);
+  }
+}
+
+.colophon {
+  * {
     @include caption;
   }
 }

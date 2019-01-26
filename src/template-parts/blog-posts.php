@@ -21,6 +21,5 @@
       </div>
     </article>
   <?php endwhile; else : ?>
-    <p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
   <?php endif; wp_reset_postdata();?>
 </section>

@@ -1,3 +1,4 @@
+          </div>
           <footer id="footer">
             <div class="wrap">
               <div class="widgets">

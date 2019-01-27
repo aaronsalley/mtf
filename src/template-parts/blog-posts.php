@@ -9,16 +9,14 @@
     $class = is_sticky() ? 'sticky' : '';
     ?>
     <article <?php post_class($class); ?>>
-      <div class="container">
-        <figure class="image"></figure>
-        <header class="header">
+      <a href="<?php the_permalink(); ?>">
+        <div class="container">
+          <figure class="image" style="background-image:url(<?php the_post_thumbnail_url(); ?>)">
+            <?php the_post_thumbnail(); ?>
+          </figure>
           <h3 class="lead"><?php the_title(); ?></h3>
-          <p class="meta"></p>
-          <section class="teaser">
-            <?php the_excerpt(); ?>
-          </section>
-        </header>
-      </div>
+        </div>
+      </a>
     </article>
   <?php endwhile; else : ?>
   <?php endif; wp_reset_postdata();?>

@@ -23,7 +23,6 @@ const msnry = new Masonry( '.blog-posts', {
 
 const fac = new FastAverageColor();
 fac.getColorAsync(document.querySelector('img'), function(color) {
-    console.log(color);
 });
 
 if (process.env.NODE_ENV == 'production') {

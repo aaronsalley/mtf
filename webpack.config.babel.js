@@ -42,7 +42,8 @@ const generateScopedName = (localName, resourcePath) => {
     return localName;
     // return componentName + '_' + localName;
   } else {
-    return uniqueId(componentName) + '_' + uniqueId(localName);
+    return localName;
+    // return uniqueId(componentName) + '_' + uniqueId(localName);
   }
 };
 

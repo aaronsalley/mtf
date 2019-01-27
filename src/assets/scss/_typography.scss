@@ -154,6 +154,7 @@ $disabled: .38;
 .home .hentry {
   .lead {
     @include h4;
+    font-size: rem-calc(20);
     color: $white;
   }
 }

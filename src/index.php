@@ -3,7 +3,7 @@
 
   <?php get_template_part('template-parts/header', 'masthead'); ?>
 
-  <section class="content">
+  <section <?php post_class('content'); ?>>
     <?php the_content(); ?>
   </section>
 <?php endwhile; else : ?>

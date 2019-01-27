@@ -132,6 +132,10 @@
         a {
           padding: $global-padding;
         }
+
+        .sub-menu {
+          display: none;
+        }
       }
 
       &#social {
@@ -170,7 +174,7 @@
         content: "";
         display: block;
         padding-bottom: 100%;
-        background-color: rgba($black, .83);
+        background-color: rgba($black, .75);
       }
 
       img {
@@ -221,6 +225,11 @@
       @include xy-grid(
         $wrap: false,
       );
+      display: none;
+
+      @include breakpoint(medium) {
+        display: flex;
+      }
     }
   }
 
@@ -361,6 +370,7 @@
       height: 20%;
       overflow: hidden;
       box-shadow: none;
+      border-radius: 0;
 
       & > .url {
         display: flex;
@@ -480,12 +490,28 @@
       }
 
       .image {
+        overflow: hidden;
         position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: 1rem;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        img {
+          display: none;
+        }
       }
 
-      .header {
+      .lead {
         position: absolute;
-        bottom: 0;
+        right: $global-margin;
+        bottom: $global-margin;
+        left: $global-margin;
+        width: auto;
       }
     }
 
@@ -510,7 +536,7 @@
 }
 
 #app.tribe-events-page-template,
-#app.singular,
+#app.single,
 #app.page {
   .header {
     @include xy-cell(

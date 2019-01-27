@@ -151,6 +151,13 @@ $disabled: .38;
   }
 }
 
+.home .hentry {
+  .lead {
+    @include h4;
+    color: $white;
+  }
+}
+
 .post-event {
   .title {
     @include h5;
@@ -166,6 +173,10 @@ $disabled: .38;
 
   .tag {
     @include caption;
+  }
+
+  a {
+    color: inherit;
   }
 }
 

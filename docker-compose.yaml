@@ -15,6 +15,7 @@ services:
     volumes:
       - theme:/var/www/html/wp-content/themes/mtf/dist
       - ./wp-plugins:/var/www/html/wp-content/plugins
+      - ./wp-uploads:/var/www/html/wp-content/uploads
     depends_on:
       - mysql
   mysql:

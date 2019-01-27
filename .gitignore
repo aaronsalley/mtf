@@ -8,6 +8,7 @@ wp-plugins
 
 # Use this as a whitelist
 !src/*
+!src/**/*
 !.babelrc
 !.gitignore
 !.eslintrc

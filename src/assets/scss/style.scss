@@ -2,14 +2,13 @@
   * Theme Name: Musical Theatre Factory
   * Author: Disruptv.io
   * Author URI: https://disruptv.io
-  * Description: The 2019 theme for WordPress.
-  * Version: 3.0.4
+  * Description: The MTF theme for WordPress.
+  * Version: 4.0.1
   * License: MIT
   * License URI: https://opensource.org/licenses/MIT
   * Text Domain: mtf
   */
 
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import 'settings';
 @import 'foundation';
 
@@ -20,8 +19,8 @@
 
 // Grids (choose one)
 @include foundation-xy-grid-classes;
-@include foundation-grid;
-@include foundation-flex-grid;
+// @include foundation-grid;
+// @include foundation-flex-grid;
 
 // Generic components
 @include foundation-button;
@@ -70,616 +69,334 @@
 @include foundation-visibility-classes;
 @include foundation-prototype-classes;
 
-$disabled: .38;
-
-@mixin h3 {
-  font-family: 'Strongbox JNL';
-  font-size: rem-calc(32);
-  letter-spacing: rem-calc(.25);
-  text-transform: uppercase;
-};
-
-@mixin h4 {
-  font-family: 'Strongbox JNL';
-  font-size: rem-calc(24);
-  letter-spacing: rem-calc(.25);
-  text-transform: uppercase;
-};
-
-@mixin h5 {
-  font-family: 'Strongbox JNL';
-  font-size: rem-calc(16);
-  text-transform: uppercase;
-};
-
-@mixin body {
-  font-family: $body-font-family;
-  font-size: $global-font-size;
-  line-height: $global-lineheight;
+@import 'typography';
+@mixin mtf-gradient {
+  background-color: #ff3600; // Old browsers
+  filter-gradient: #ff3600, #ffffff, horizontal; // IE6-9
+  background-image: linear-gradient(left, rgba(#ff3600, .8) 0%,rgba(#ff00e4, .8) 50%,rgba(#ffffff, .8) 100%), url('../img/mtf_brushstroke.png');
+  background-position: center;
 }
 
-@mixin body2 {
-  font-family: 'Roboto Condensed';
-  font-size: rem-calc(16);
-  letter-spacing: rem-calc(.25);
-  line-height: rem-calc(20);
-}
+// Global Skeleton Styles
+#app {
+  @include xy-grid-frame(
+    $vertical: true,
+  );
+  @include xy-grid(
+    $direction: vertical,
+    $wrap: false,
+  );
 
-@mixin caption {
-  font-family: 'Roboto Condensed';
-  font-size: rem-calc(12);
-  letter-spacing: rem-calc(.4);
-  line-height: rem-calc(16);
-}
-
-@mixin button {
-  font-family: 'Strongbox JNL';
-  font-size: rem-calc(10);
-  font-weight: 600;
-  letter-spacing: rem-calc(1.25);
-  text-transform: uppercase;
-}
-
-html {
-  background-color: rgba(black, 1);
-}
-
-#header-bar{
-  z-index: 10000;
-
-  &.is-stuck {
-    @include breakpoint(medium) {
-      background-color: $topbar-background;
-    }
+  &.admin-bar {
+    height: calc(100vh - 32px);
   }
 
-  .title-bar {
-    justify-content: space-between;
-    background: inherit;
-    @include breakpoint(medium) {
-      display: none;
-    }
-
-    &:before {
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      transform: rotate(180deg);
-      background-color: rgba(black, 1);
-      background-image: url('../img/mtf_brushstroke.jpg');
-      content: '';
-      z-index: -1;
-    }
-
-    .mtf-logo {
-      max-width: rem-calc(250);
-    }
-  }
-}
-
-#topbar {
-  @include xy-grid-container();
-  // @include xy-grid('horizontal');
-  @include top-bar-container;
-  display: none;
-  position: relative;
-  justify-content: space-between;
-  height: rem-calc(104);
-  margin-bottom: rem-calc(24);
-  @include breakpoint(medium) {
-    display: flex;
-  }
-
-  .is-at-top & {
-    background: inherit;
-  }
-
-  .branding {
-    display: none;
-    position: relative;
-    align-self: flex-end;
-    width: rem-calc(272);
-    height: rem-calc(80);
+  .button {
+    @include button-style;
     margin-bottom: 0;
-    margin-left: -1 * $global-padding;
-    font-size: 0;
-    overflow-y: hidden;
+
+    a {
+      padding: 0;
+    }
+  }
+
+  .off-canvas {
+    @include mtf-gradient;
+    width: 100%;
+    min-width: calc(100% - 56px);
+    max-width: calc(100% - 56px);
+    padding-top: rem-calc(48);
+    background-image: url('../img/mtf_red_texture.png');
+
     @include breakpoint(medium) {
-      display: flex;
+      min-width: rem-calc(256);
+      max-width: rem-calc(256);
     }
 
-    img {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-    }
-  }
-
-  .main.menu {
-    display: flex;
-    flex-grow: 1;
-    align-items: flex-end;
-    align-self: flex-start;
-    box-shadow: rem-calc(0 16 16 16) black;
-    @include breakpoint(medium) {
-      align-self: center;
-      box-shadow: none;
-    }
-
-    .menu {
-      @include menu-direction(vertical);
-      flex-grow: 1;
-      @include breakpoint(medium){
-        @include menu-direction(horizontal);
-        justify-content: flex-end;
-      }
-    }
-
-    .menu-item {
-      @include h5;
-      padding-top: rem-calc(16);
-      padding-bottom: rem-calc(16);
-      @include breakpoint(medium) {
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-
-      a {
-        padding-right: rem-calc(0);
-        padding-bottom: rem-calc(0);
-        padding-left: rem-calc(40);
-        color: $black;
-      }
-    }
-  }
-
-  .social.menu {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: rem-calc(32);
-    z-index: 5;
-    @include breakpoint(medium){
-      display: flex;
-    }
-
-    .menu-item {
-      align-self: center;
-      width: rem-calc(24);
-      height: rem-calc(24);
-      background-repeat: no-repeat;
-      background-position: center;
-      font-size: 0;
-      overflow: hidden;
-      &:not(:last-of-type){
-        margin-right: rem-calc(24);
-      }
-    }
-
-    .facebook {
-      background-image: url('../img/Facebook.svg');
-    }
-
-    .twitter,
-    .twitter-bird {
-      background-image: url('../img/Twitter.svg');
-    }
-
-    .instagram {
-      background-image: url('../img/Instagram.svg');
-    }
-
-    .youtube {
-      background-image: url('../img/YouTube.svg');
-    }
-
-    .donate.button {
-      @include button;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: rem-calc(96);
-      margin-left: rem-calc(40);
-      font-size: 1rem;
-    }
-  }
-}
-
-#bottombar {
-  height: rem-calc(136);
-  margin-top: rem-calc(24);
-  background-color: rgba(black, 1);
-  background-image: url('../img/mtf_brushstroke.jpg');
-
-  .wrap {
-    @include xy-grid-container();
-    @include xy-grid('horizontal');
-    @include xy-grid-layout(
-      $n: 2,
-      $selector: '.post-event',
-      $gutter-output: false,
-    )
-    justify-content: space-between;
-    padding: rem-calc(32 24);
-
-    &:before {
-      display: block;
-      width: auto;
-      content: '';
-    }
-  }
-
-  .widgets {
-    display: none;
     @include breakpoint(large) {
-      @include xy-grid-container();
-      @include xy-grid('horizontal');
-      display: flex;
+      position: relative;
     }
 
     .menu {
-      @include xy-grid-container($padding: 0);
-      @include xy-grid('horizontal', false);
+      @include xy-cell(
+        $size: full,
+        $gutters: 0,
+      );
       @include menu-base;
 
-      & > .menu-item {
-        @include xy-cell(auto);
-
-        .sub-menu {
-          @include menu-base;
-          @include menu-direction('vertical');
-        }
+      &#main-nav {
+        @include menu-direction(
+          $dir: vertical,
+        )
 
         a {
-          color: rgba($white, .68);
-          @include caption;
+          padding: $global-padding;
+        }
+
+        .sub-menu {
+          display: none;
         }
       }
-    }
-  }
 
-  #mailchimp {
-    max-width: rem-calc(348);
-    margin: rem-calc(32 0);
-
-    .input-group {
-      margin-bottom: rem-calc(4);
-
-      input[name='email'] {
-        padding: rem-calc(16);
-        border: 0;
-        background-color: rgba($white, .08);
-        color: rgba($white, 1);
-      }
-    }
-
-    .button {
-      min-width: rem-calc(96);
-      background-color: rgba($white, .08);
-      color: rgba($primary-color, 1);
-      @include button;
-    }
-
-    .gdpr {
-      padding: rem-calc(16);
-      color: rgba($white, 1);
-      @include caption;
-    }
-
-    p,
-    .address {
-      color: rgba($white, $disabled);
-      font-size: rem-calc(12 * .68);
-      text-align: right;
-      @include caption;
-    }
-  }
-}
-
-#wp_main {
-  @include xy-grid-container($padding: 0);
-  @include xy-grid('horizontal');
-  position: relative;
-
-  .header {
-    .archive &,
-    .page &,
-    .single & {
-      display: flex;
-      position: relative;
-      width: 100%;
-      height: rem-calc(120);
-
-      &:before {
-        display: block;
+      &#social {
+        @include menu-icons;
+        @include menu-icon-position;
         position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: rgba($black, .87);
-        content: '';
-      }
-
-      .masthead {
-        align-self: center;
-        min-width: rem-calc(300);
-        margin-right: auto;
-        margin-left: auto;
-        z-index: 5;
-        @include breakpoint(medium){
-          margin-right: rem-calc(48);
-        }
-
-        .title {
-          color: $white;
-          text-align: center;
-          @include h4;
-        }
-
-        .button {
-          @include button-expand();
-          margin-bottom: 0;
-          @include button;
-        }
-      }
-    }
-  }
-
-  .content {
-    .page & {
-      @include xy-cell(12);
-      margin-top: rem-calc(16);
-      margin-bottom: rem-calc(16);
-      @include breakpoint(medium) {
-        @include xy-cell(10);
-        @include xy-cell-offset(2);
-      }
-      @include breakpoint(large) {
-        @include xy-cell(8);
-        @include xy-cell-offset(4);
-      }
-    }
-
-    body[class*='tribe-events-'] & {
-      position: relative;
-      margin-top: rem-calc(32);
-      margin-bottom: rem-calc(32);
-      z-index: 5;
-      // padding-top: rem-calc(32);
-      // padding-bottom: rem-calc(64);
-      @include breakpoint(medium){
-        @include xy-cell(10);
-        margin-right: auto;
-        margin-left: auto;
-      }
-    }
-  }
-
-  .mission {
-    display: none;
-    position: absolute;
-    right: rem-calc(24);
-    bottom: rem-calc(24);
-    width: rem-calc(360);
-    color: $white;
-    text-align: center;
-    z-index: 100;
-    @include h4;
-    @include breakpoint(medium) {
-      display: block;
-    }
-  }
-
-  #instagram {
-    @include xy-cell-block-container;
-    @include xy-cell-base();
-    flex-direction: row;
-
-    &.wall {
-      @include xy-cell(9, false);
-      display: none;
-      position: absolute;
-      right: 0;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      min-height: rem-calc(480);
-      overflow: hidden;
-      @include breakpoint(medium) {
-        display: inherit;
-      }
-
-      &:before {
-        display: block;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: rgba($black, .87);
-        content: '';
-      }
-
-      .wrap {
-        @include xy-cell-block-container;
-        flex-direction: row;
-        flex-wrap: wrap;
+        bottom: 0;
         justify-content: flex-end;
-        width: auto;
       }
     }
+  }
 
-    &.feed {
+  .gallery {
+    @include xy-grid-frame(
+      $nested: true,
+    );
+    @include xy-cell-base(auto);
+    height: rem-calc(120);
+
+    .wrap {
+      @include xy-grid();
       position: absolute;
-      width: 100%;
-      min-height: rem-calc(150);
-      overflow: hidden;
-
-      .wrap {
-        @include xy-cell-block-container;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        width: auto;
-      }
+      top: 0;
+      left: 0;
+      width: 120% !important;
+      margin: 0 !important;
     }
 
     .post {
+      overflow: hidden;
       position: relative;
+      z-index: 1;
       width: rem-calc(120);
 
-      &:before {
+      &::after {
+        content: "";
         display: block;
-        position: relative;
-        width: 100%;
         padding-bottom: 100%;
-        background-color: rgba($black, .82);
-        content: '';
-        z-index: 1;
+        background-color: rgba($black, .75);
       }
 
       img {
-        position: absolute;;
+        position: absolute;
         top: 0;
         left: 0;
+        z-index: -1;
+        height: auto;
+        width: auto;
+        min-height: 100%;
+        min-width: 100%
       }
     }
   }
 
-  body[class*='tribe-events-'] & {
-    @include xy-grid('vertical');
+  #header {
+    @include top-bar-container;
+    overflow: hidden;
+    min-height: rem-calc(72);
+    // background-image: url('../img/mtf_brushstroke.png');
+    background-position: center;
+
+    .menu-icon {
+      height: rem-calc(24);
+      width: rem-calc(24);
+      margin: rem-calc(24);
+
+      @include breakpoint(large) {
+        display: none;
+      }
+    }
+
+    .branding {
+      margin-bottom: 0;
+    }
+
+    .mtf-logo {
+      width: auto;
+      max-height: rem-calc(36);
+      margin-left: rem-calc(8);
+
+      @include breakpoint(large) {
+        max-height: rem-calc(48);
+      }
+    }
+
+    .menu {
+      @include xy-grid(
+        $wrap: false,
+      );
+      display: none;
+
+      @include breakpoint(medium) {
+        display: flex;
+      }
+    }
+  }
+
+  #main {
+    @include xy-grid(
+      $direction: horizontal,
+      $wrap: false,
+    );
+    flex: 1 100%;
+
+    #content {
+      @include xy-grid();
+      position: relative;
+      flex-grow: 1;
+      background-color: $white;
+
+      .content-inner {
+        @include xy-cell(
+          $size: full,
+          $gutters: 0,
+        );
+        @include xy-cell-block(
+          $vertical: true,
+        );
+        @include xy-grid();
+
+        & > .wrap {
+          @include xy-cell(
+            $size: full,
+            $gutters: 0,
+          );
+          @include xy-grid-container();
+          @include xy-grid();
+          position: relative;
+        }
+      }
+    }
+
+    #footer {
+      @include xy-cell(
+        $size: full,
+        $gutters: 0,
+      );
+      padding-top: rem-calc(124);
+      padding-bottom: rem-calc(124);
+      background-color: $body-background;
+
+      .wrap {
+        @include xy-grid-container();
+        @include xy-grid(
+          $direction: horizontal,
+          $wrap: true,
+        );
+      }
+
+      .widgets {
+        @include xy-cell(
+          $size: 12,
+          $gutters: 0,
+        );
+        @include xy-grid(
+          $direction: horizontal,
+          $wrap: true,
+        );
+
+        @include breakpoint(medium) {
+          @include xy-cell(
+            $size: 6,
+            $gutters: 0,
+          );
+
+          &:first-of-type() {
+            padding-right: rem-calc(64);
+          }
+        }
+
+        .widget:not(.widget_text) {
+          @include xy-cell(
+            $size: 12,
+            $gutters: 0,
+          );
+
+          @include breakpoint(medium) {
+            @include xy-cell(
+              $size: 6,
+              $gutters: 0,
+            );
+          }
+        }
+
+        .menu {
+          @include menu-base;
+          @include menu-direction(
+            $dir: vertical,
+          );
+
+          a {
+            padding-left: 0;
+          }
+        }
+      }
+
+      .colophon {
+        @include xy-cell(
+          $size: 12,
+          $gutters: 0,
+        );
+        margin-top: rem-calc(64);
+
+        * {
+          margin-bottom: rem-calc(0);
+        }
+      }
+    }
   }
 }
 
-#tribe-events {
-  position: relative;
-
-  [class*=button] {
-    @extend .button;
-    @include button;
-  }
-
-  .blur {
-    position: absolute;
-    top: rem-calc(150);
-    left: 0;
-    width: 100%;
-    z-index: 1;
+// Home Skeleton Styles
+#app.home {
+  .events {
+    @include xy-grid-frame(
+      $nested: true,
+    );
     @include breakpoint(medium){
-      top: 0;
+      @include xy-cell(
+        $size: 5,
+        $gutters: 0,
+      );
+      max-width: rem-calc(360);
     }
 
-    img {
-      width: 100%;
-      opacity: .28;
-      filter: blur(20px);
-    }
-  }
-
-  #events-bar {
-    @include xy-cell(9);
-    margin: auto;
-  }
-
-  &.events {
-    position: relative;
-    width: 100%;
-    z-index: 5;
-    @include breakpoint(medium) {
-      @include xy-cell(6, false);
-    }
-    @include breakpoint(large) {
-      @include xy-cell(4, false);
-    }
-
-    .home & {
-      @include breakpoint(medium) {
-        min-height: rem-calc(480);
-        background-color: $body-background;
-      }
-    }
-  }
-
-  .events-loop,
-  .related-events {
-    @include xy-grid('horizontal');
-    justify-content: space-between;
-    @include xy-grid-layout(
-      $n: 1,
-      $selector: '.post-event',
-      $gutter-output: false
-    )
-    @include breakpoint(medium){
-      @include xy-grid-layout(
-        $n: 2,
-        $selector: '.post-event',
-        $gutter-output: false
-      )
-
-      &:after {
-        @include xy-cell(6, false);
-        display: block;
-        content: '';
-      }
-    };
-    @include breakpoint(large){
-      @include xy-grid-layout(
-        $n: 3,
-        $selector: '.post-event',
-        $gutter-output: false,
-      )
-
-      &:after {
-        @include xy-cell(4, false);
-        display: block;
-        content: '';
-      }
-    };
-  }
-
-  .post-event {
-    position: relative;
-    margin-top: rem-calc(32);
-    margin-right: auto;
-    margin-bottom: rem-calc(32);
-    margin-left: auto;
-    background-color: $white;
-    box-shadow: 0 1px 0 0 rgba($black, .1);
-    @include breakpoint(medium) {
-      margin-right: 0;
-      margin-left: 0;
-    }
-
-    &.tribe-event-featured {
-    }
-
-    &:not(.has-tags) {
-      padding-bottom: rem-calc(42);
-    }
-
-    .home & {
-      margin: 0;
+    .post-event {
+      @include xy-cell(
+        $size: 12,
+        $gutters: 0,
+        $gutter-position: top right bottom left,
+      );
+      height: 20%;
       overflow: hidden;
+      box-shadow: none;
+      border-radius: 0;
+
+      & > .url {
+        display: flex;
+        position: relative;
+        flex-wrap: wrap;
+        height: 100%;
+        align-items: center;
+        align-content: center;
+        justify-content: flex-end;
+      }
 
       .tribe-events-event-image {
-        position: relative;
-        width: rem-calc(120);
+        position: absolute;
+        left: 0;
+        width: rem-calc(150);
         margin-right: rem-calc(16);
-        float: left;
         background-color: $black;
-        overflow: hidden;
 
         img {
-          position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
         }
 
         &:before {
-          display: block;
-          width: 100%;
-          padding-bottom: 100%;
-          content: '';
+          padding-bottom: 50%;
         }
       }
 
@@ -688,19 +405,21 @@ html {
       }
 
       .title {
+        @include xy-cell(
+          $size: 12,
+          $gutters: 0,
+        );
         max-height: rem-calc(44);
-        margin-top: rem-calc(24);
-        margin-bottom: rem-calc(16);
-        text-overflow: ellipsis;
-        white-space: normal;
-        overflow: hidden;
-        @include h5;
+        margin-bottom: rem-calc(0);
+        margin-left: rem-calc(158);
       }
 
-      .schedule {
-      }
-
-      .venue {
+      .meta {
+        @include xy-cell(
+          $size: 12,
+          $gutters: 0,
+        );
+        margin-left: rem-calc(158);
       }
 
       .tags {
@@ -711,9 +430,215 @@ html {
         padding-bottom: 0;
       }
     }
+  }
 
-    a {
-      color: $body-font-color;
+  .gallery {
+    height: 50vh;
+  }
+
+  .mission {
+    @include xy-cell(12);
+    display: none;
+    z-index: 90;
+
+    @include breakpoint(medium){
+      @include xy-cell(6);
+      display: block;
+      position: absolute;
+      top: 50vh;
+      right: rem-calc(20);
+      transform: translateY(-100%);
+    }
+  }
+
+  .blog-posts {
+    @include xy-cell(
+      $size: 12,
+      $gutters: 0,
+    );
+    margin-top: $global-margin;
+    margin-right: $global-margin * -1;
+    margin-left: $global-margin * -1;
+
+    .grid-sizer,
+    .post,
+    .sticky ~ .sticky {
+      position: relative;
+      @include xy-cell(
+        $size: 6,
+        $gutter-position: top right bottom left,
+      );
+
+      @include breakpoint(medium) {
+        @include xy-cell(
+          $size: 4,
+          $gutter-position: top right bottom left,
+        );
+      }
+
+      .container {
+        position: relative;
+
+        &::after {
+          content: "";
+          display: block;
+          padding-bottom: 75%;
+          background-color: $white;
+          border-radius: 1rem;
+          box-shadow: rem-calc(0 0 20) rgba($black, .23);
+        }
+      }
+
+      .image {
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: 1rem;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        img {
+          display: none;
+        }
+      }
+
+      .lead {
+        position: absolute;
+        right: $global-margin;
+        bottom: $global-margin;
+        left: $global-margin;
+        width: auto;
+      }
+    }
+
+    .sticky {
+      @include xy-cell(
+        $size: 12,
+        $gutter-position: top right bottom left,
+      );
+
+      @include breakpoint(medium) {
+        @include xy-cell(
+          $size: 8,
+          $gutter-position: top right bottom left,
+        );
+      }
+
+      .container::after {
+        padding-bottom: 56.25%;
+      }
+    }
+  }
+}
+
+#app.tribe-events-page-template,
+#app.single,
+#app.page {
+  .header {
+    @include xy-cell(
+      $size: 12,
+      $gutters: 0,
+    );
+    position: relative;
+    height: rem-calc(120);
+
+    .gallery {
+      height: rem-calc(120);
+    }
+
+    .masthead {
+      position: absolute;
+      display: flex;
+      right: rem-calc(20);
+      z-index: 10;
+      height: 100%;
+      min-width: rem-calc(200);
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .title {
+      margin-bottom: 0;
+    }
+
+    .button {
+      @include button-expand();
+      @include button-style();
+      margin-bottom: 0;
+    }
+  }
+
+  .content {
+    @include xy-cell(
+      $size: 12,
+      $gutters: 0,
+    );
+    position: relative;
+  }
+}
+
+#tribe-events {
+  @include xy-cell(
+    $size: 12,
+    $gutters: 0,
+  );
+
+  #events-bar {
+    @include xy-cell(9);
+    margin: auto;
+  }
+
+  .events-loop,
+  .related-events {
+    @include xy-grid('horizontal');
+    @include xy-grid-layout(
+      $n: 1,
+      $selector: '.post-event',
+      $gutter-output: false,
+    )
+    justify-content: space-between;
+
+    &::after {
+      display: block;
+      content: '';
+    }
+
+    @include breakpoint(medium){
+      @include xy-grid-layout(
+        $n: 3,
+        $selector: '.post-event',
+        $gutter-output: false,
+      )
+
+      &::after {
+        @include xy-cell(4, false);
+      }
+    }
+  }
+
+  .post-event {
+    overflow: hidden;
+    position: relative;
+    margin-top: rem-calc(32);
+    margin-right: auto;
+    margin-bottom: rem-calc(32);
+    margin-left: auto;
+    background-color: $white;
+    border-radius: 1rem;
+    box-shadow: rem-calc(0 0 20) rgba($black, .23);
+
+
+    @include breakpoint(medium) {
+      margin-right: 0;
+      margin-left: 0;
+    }
+
+    &:not(.has-tags) {
+      padding-bottom: rem-calc(42);
     }
 
     .tribe-events-event-image {
@@ -737,25 +662,20 @@ html {
     }
 
     .title,
-    .meta,
-    .tags {
+    .meta {
       margin: rem-calc(0 16);
-    }
 
-    .venue {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      @include body2;
-    }
+      &,
+      & > * {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
 
-    .schedule {
-      max-height: 1.25rem;
-      margin: rem-calc(4 0);
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      @include body2;
+      .schedule {
+        max-height: 1.25rem;
+        margin: rem-calc(4 0);
+      }
     }
 
     .cost {
@@ -775,6 +695,9 @@ html {
     .tags {
       height: rem-calc(42);
       margin-top: rem-calc(8);
+      margin-right: rem-calc(16);
+      margin-bottom: rem-calc(0);
+      margin-left: rem-calc(16);
       padding-top: rem-calc(8);
       padding-bottom: rem-calc(8);
       border-top: 1px solid rgba($black, .1);
@@ -784,24 +707,31 @@ html {
 
       .tag {
         margin-right: rem-calc(8);
-        @include caption;
       }
     }
   }
 
-  .single-event {
-    @include xy-cell(12);
+  .single-event,
+  .tribe-events-single {
+    @include xy-cell(
+      $size: 12,
+      $gutters: 0,
+    );
+    padding: 0;
 
-    #header {
+    .header {
       @include xy-grid('horizontal');
-      @include breakpoint(medium) {
+      height: auto;
+
+      @include breakpoint(large) {
         @include xy-grid('horizontal', false);
       }
 
       .tribe-events-event-image {
         width: 100%;
         margin-bottom: rem-calc(0);
-        @include breakpoint(medium) {
+
+        @include breakpoint(large) {
           @include xy-cell(auto, false);
         }
       }
@@ -809,25 +739,36 @@ html {
       .wrap {
         position: relative;
         width: 100%;
+        margin-top: $global-margin;
         margin-bottom: rem-calc(0);
-        @include breakpoint(medium){
+
+        @include breakpoint(large){
           @include xy-cell(4, false);
           margin-right: rem-calc(0);
           margin-left: rem-calc(24);
         }
+
+        .button {
+          position: absolute;
+          bottom: 0;
+        }
+      }
+    }
+
+    .blur {
+      position: absolute;
+      top: rem-calc(150);
+      left: 0;
+      width: 100%;
+
+      @include breakpoint(medium){
+        top: 0;
       }
 
-      .button {
-        @include button-style();
-        @include button-expand(true);
-        margin-bottom: 0;
-        @include breakpoint(medium) {
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          font-size: map-get($button-sizes, 'large');
-        }
+      img {
+        width: 100%;
+        opacity: .28;
+        filter: blur(20px);
       }
     }
 
@@ -836,14 +777,17 @@ html {
       padding: 0;
 
       [class*=button] {
+        @include button-style();
+        @include button-expand();
         margin-top: 0;
         margin-bottom: 0;
-        font-size: rem-calc(8);
-        @include breakpoint(medium) {
-          font-size: map-get($button-sizes, 'tiny');
+
+        &:first-child() {
+          margin-right: $global-margin/2;
         }
-        @include breakpoint(large) {
-          font-size: map-get($button-sizes, 'small');
+
+        &:last-child() {
+          margin-left: $global-margin/2;
         }
       }
 
@@ -854,24 +798,19 @@ html {
         margin-right: auto;
         margin-bottom: 0;
         margin-left: auto;
-        @include breakpoint(medium){
+
+        @include breakpoint(large){
           @include xy-cell(4, false);
           margin-right: inherit;
         }
       }
     }
 
-    .title {
-      @include h3;
-    }
-
-    .schedule {
-      @include body;
-    }
-
     .description {
-      margin-top: rem-calc(24);
-      margin-bottom: rem-calc(24);
+      @include xy-cell(
+        $size: 8,
+      );
+      margin: rem-calc(24) auto;
 
       [class*='tribe-'] {
         display: none;
@@ -880,10 +819,6 @@ html {
 
     .related-events {
       @include xy-cell(12, false);
-
-      .related-events-title {
-        @include h4;
-      }
     }
   }
 
@@ -891,25 +826,5 @@ html {
     & > iframe {
       min-height: rem-calc(300);
     }
-  }
-}
-
-.nf-form-cont {
-  .submit-container,
-  .file_upload-container {
-    .nf-field-element {
-      display: flex;
-
-      .button,
-      .btn {
-        @include button-style();
-        min-width: rem-calc(200);
-        @include button;
-      }
-    }
-  }
-
-  .label-hidden .nf-field-description {
-    order: 10;
   }
 }

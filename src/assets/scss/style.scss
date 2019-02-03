@@ -827,6 +827,7 @@
         );
         justify-content: space-between;
         margin-bottom: 0;
+        margin-left: auto;
 
         @include breakpoint(large){
           @include xy-cell(4, false);

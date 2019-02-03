@@ -711,7 +711,7 @@
       margin: rem-calc(8);
       padding: rem-calc(4 16);
       background-color: rgba($white, .83);
-      z-index: 5;
+      z-index: 1;
 
       & > *:not(.ticket-cost) {
         display: none;

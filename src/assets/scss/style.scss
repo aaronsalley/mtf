@@ -353,6 +353,7 @@
     @include xy-grid-frame(
       $nested: true,
     );
+    min-height: rem-calc(460);
     @include breakpoint(medium){
       @include xy-cell(
         $size: 5,
@@ -434,6 +435,7 @@
 
   .gallery {
     height: 50vh;
+    min-height: rem-calc(460);
   }
 
   .mission {
@@ -765,6 +767,7 @@
         width: 100%;
         margin-top: $global-margin;
         margin-bottom: rem-calc(0);
+        padding-bottom: rem-calc(75);
 
         @include breakpoint(large){
           @include xy-cell(4, false);
@@ -817,11 +820,13 @@
 
       .tribe-events-cal-links {
         @include xy-grid('horizontal', false);
-        @include xy-cell(7, false);
+        @include xy-cell(
+          $size: 12,
+          $gutter-output: false,
+          $gutters:0,
+        );
         justify-content: space-between;
-        margin-right: auto;
         margin-bottom: 0;
-        margin-left: auto;
 
         @include breakpoint(large){
           @include xy-cell(4, false);
@@ -832,9 +837,14 @@
 
     .description {
       @include xy-cell(
-        $size: 8,
+        $size: 11,
       );
       margin: rem-calc(24) auto;
+      @include breakpoint(medium){
+        @include xy-cell(
+          $size: 8,
+        );
+      }
 
       [class*='tribe-'] {
         display: none;

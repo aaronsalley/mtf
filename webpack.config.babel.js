@@ -9,7 +9,9 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import incstr from 'incstr';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import NodemonPlugin from 'nodemon-webpack-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import path from 'path';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import webpack from 'webpack';
 
 const createUniqueIdGenerator = () => {
@@ -163,6 +165,14 @@ const optimization = {
       },
     },
   },
+  minimizer: process.env.NODE_ENV !== 'production' ? '' : [
+    new UglifyJsPlugin({
+      cache: true,
+      parallel: true,
+      sourceMap: true // set to true if you want JS source maps
+    }),
+    new OptimizeCSSAssetsPlugin({}),
+  ],
 };
 const watchOptions = {
   ignored: [

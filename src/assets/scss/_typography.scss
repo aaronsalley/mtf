@@ -154,8 +154,12 @@ $disabled: .38;
 .home .hentry {
   .lead {
     @include h4;
-    font-size: rem-calc(20);
+    font-size: rem-calc(14);
     color: $white;
+
+    @include breakpoint(medium) {
+      font-size: rem-calc(20);
+    }
   }
 }
 

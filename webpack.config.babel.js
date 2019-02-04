@@ -165,7 +165,7 @@ const optimization = {
       },
     },
   },
-  minimizer: process.env.NODE_ENV !== 'production' ? '' : [
+  minimizer: process.env.NODE_ENV !== 'production' ? [] : [
     new UglifyJsPlugin({
       cache: true,
       parallel: true,

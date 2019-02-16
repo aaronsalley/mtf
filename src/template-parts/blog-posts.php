@@ -8,13 +8,13 @@
     while ( $_posts->have_posts() ) : $_posts->the_post();
     $class = is_sticky() ? 'sticky' : '';
     ?>
-    <article <?php post_class($class); ?>>
+    <article <?php post_class($class); ?> itemscope itemtype="http://schema.org/Article">
       <a href="<?php the_permalink(); ?>">
         <div class="container">
           <figure class="image" style="background-image:url(<?php the_post_thumbnail_url(); ?>)">
             <?php the_post_thumbnail(); ?>
           </figure>
-          <h3 class="lead"><?php the_title(); ?></h3>
+          <h3 class="lead" itemprop="headline"><?php the_title(); ?></h3>
         </div>
       </a>
     </article>

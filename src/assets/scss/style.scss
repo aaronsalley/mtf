@@ -598,9 +598,9 @@
 
     &.post {
       @include xy-cell(
-        $size: 10,
+        $size: 12,
         $gutters: rem-calc(32),
-        $gutter-position: top bottom,
+        $gutter-position: top right bottom left,
       );
       position: relative;
     }

@@ -548,6 +548,10 @@
       .container::after {
         padding-bottom: 56.25%;
       }
+
+      .image::before {
+        padding-bottom: 25%;
+      }
     }
   }
 }

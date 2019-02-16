@@ -163,6 +163,13 @@ $disabled: .38;
   }
 }
 
+.single-post .hentry {
+  .title {
+    @include h3;
+    text-align: center;
+  }
+}
+
 .post-event {
   .title {
     @include h5;

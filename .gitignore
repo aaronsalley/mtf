@@ -1,24 +1,8 @@
 # Ignore everything not declared below
-dist
-node_modules
-wp-data
-wp-plugins
+.build/
+dist/
+node_modules/
+wp-data/
+wp-plugins/
+logs/
 .env
-*
-
-# Use this as a whitelist
-!src/*
-!src/**/*
-!.babelrc
-!.gitignore
-!.eslintrc
-!.sass-lint.yml
-!docker-compose.yaml
-!Dockerfile
-!gulpfile.babel.js
-!package.json
-!package-lock.json
-!README.md
-!tsconfig.json
-!tslint.json
-!webpack.config.babel.js

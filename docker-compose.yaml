@@ -13,9 +13,9 @@ services:
         define('WP_MEMORY_LIMIT', '128M');
         define('WP_DEFAULT_THEME', 'Musical Theatre Factory');
     volumes:
-      - theme:/var/www/html/wp-content/themes/mtf/dist
-      - ./wp-plugins:/var/www/html/wp-content/plugins
-      - ./wp-uploads:/var/www/html/wp-content/uploads
+      - ./packages/wordpress/theme/.build:/var/www/html/wp-content/themes/mtf
+      - ./packages/wordpress/wp-plugins:/var/www/html/wp-content/plugins
+      - ./packages/wordpress/wp-uploads:/var/www/html/wp-content/uploads
     depends_on:
       - mysql
   mysql:
@@ -24,9 +24,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
     volumes:
-      - ./wp-data:/var/lib/mysql
+      - ./packages/wordpress/wp-data:/var/lib/mysql
 
-  app:
+  api:
     build: .
     restart: always
     ports:
@@ -35,17 +35,16 @@ services:
     env_file:
       - .env
     volumes:
-      - theme:/var/www/html/wp-content/themes/mtf/dist
-      - ./src:/var/www/html/wp-content/themes/mtf/src
+      - packages/api/:/home/api
     depends_on:
       - mongo
     networks:
-      - mtf
+      - app
   mongo:
     image: mongo
     restart: always
     networks:
-      - mtf
+      - app
     ports:
       - 9003:27017
 
@@ -66,6 +65,6 @@ volumes:
   theme:
 
 networks:
-  mtf:
+  app:
   sonarnet:
     driver: bridge

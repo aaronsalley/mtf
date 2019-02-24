@@ -47,7 +47,7 @@ router.route('/')
  *      201:
  *        description: OK
  */
-router.route('/{:ID}')
+router.route('/:artistID')
   .get(Artists.readArtist)
   .patch(Artists.updateArtist)
   .delete(Artists.deleteArtist);

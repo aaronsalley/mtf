@@ -2,9 +2,12 @@
 
 import logger from 'logger';
 
+import artistServices from '../../services/artists';
+
 class Artists {
   createArtist = async (req, res, next) => {
     try {
+      artistServices.Services()
       res.status(201).send('Created artist.')
     } catch(error) {
       logger.error(error);
@@ -12,7 +15,7 @@ class Artists {
     }
   }
 
-  readArtist = async (req, res, next) => {
+  getArtist = async (req, res, next) => {
     try {
       res.status(201).send('Created artist.')
     } catch(error) {

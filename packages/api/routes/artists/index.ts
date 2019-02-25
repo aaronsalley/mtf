@@ -36,11 +36,19 @@ router.route('/')
  *    responses:
  *      200:
  *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Artist'
  *  patch:
  *    operationId:
  *    responses:
  *      201:
  *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Artist'
  *  delete:
  *    operationId:
  *    responses:
@@ -48,7 +56,7 @@ router.route('/')
  *        description: OK
  */
 router.route('/:artistID')
-  .get(Artists.readArtist)
+  .get(Artists.getArtist)
   .patch(Artists.updateArtist)
   .delete(Artists.deleteArtist);
 

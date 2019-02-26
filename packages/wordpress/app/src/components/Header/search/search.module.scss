@@ -1,0 +1,34 @@
+// @import 'settings';
+@import 'foundation';
+
+@include foundation-global-styles;
+@include foundation-forms;
+@include foundation-typography;
+
+@include foundation-xy-grid-classes;
+
+@include foundation-button;
+@include foundation-button-group;
+
+.search_bar {
+  @extend .input-group;
+  width: auto;
+  margin-bottom: 0;
+
+  .input {
+    @extend .input-group-field;
+    align-self: stretch;
+    height: auto;
+  }
+
+  .button_group {
+    @extend .input-group-button;
+
+    .button {
+      @include button();
+      margin: 0;
+      align-self: stretch;
+      height: auto;
+    }
+  }
+}

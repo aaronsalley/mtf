@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import styles from './Header.module.scss';
 
-class Header extends Component {
-  render() {
-    return (
-      <header></header>
-    );
-  }
+import Search from './search';
+import UserMenu from './userMenu';
+
+const Header = () => {
+  return (
+    <header className={styles.header}>
+      <div className={styles.branding}>
+        <i className={styles.icon}>menu</i>
+        <span className={styles.logo}></span>
+      </div>
+      <Search />
+      <UserMenu />
+    </header>
+  );
 }
 
 export default Header;

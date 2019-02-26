@@ -1,18 +1,15 @@
 import React from 'react';
-import './App.css';
+import styles from './App.module.scss';
 
-import Footer from '../Footer';
 import Header from '../Header';
 import Main from '../Main';
-import Sidebar from '../Sidebar';
+import Footer from '../Footer';
 
 const App = () => {
   return (
-    <div className="App">
+    <div className={styles.superView}>
       <Header />
-      <Sidebar />
       <Main />
-      <Footer />
     </div>
   )
 }

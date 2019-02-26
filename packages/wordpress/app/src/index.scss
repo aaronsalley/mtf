@@ -1,3 +1,13 @@
+// @import 'settings';
+@import 'foundation';
+
+// Global styles
+@include foundation-global-styles;
+@include foundation-forms;
+@include foundation-typography;
+
+@include foundation-xy-grid-classes;
+
 body {
   margin: 0;
   padding: 0;
@@ -11,4 +21,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+body, #app :global {
+  @include xy-grid-frame(
+    $vertical: true,
+  );
 }

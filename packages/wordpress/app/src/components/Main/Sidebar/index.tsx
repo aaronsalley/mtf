@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import styles from './Sidebar.module.scss';
 
 const Sidebar = () => {
   return (
-    <aside></aside>
+    <aside className={styles.sidebar}>
+    </aside>
   );
 }
 

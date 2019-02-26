@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 const Sidebar = () => {
   return (
-    <aside></aside>
+    <aside>
+    </aside>
   );
 }
 

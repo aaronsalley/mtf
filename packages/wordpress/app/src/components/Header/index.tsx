@@ -8,7 +8,9 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.branding}>
-        <i className={styles.icon}>menu</i>
+        <button className={styles.button}>
+          <i className={styles.icon}>menu</i>
+        </button>
         <span className={styles.logo}></span>
       </div>
       <Search />

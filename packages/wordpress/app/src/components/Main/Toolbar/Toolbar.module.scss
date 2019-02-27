@@ -56,7 +56,9 @@
 // @include foundation-visibility-classes;
 // @include foundation-prototype-classes;
 
-.content {
-  @include xy-cell(auto);
+.toolbar {
+  @include xy-cell();
+  width: rem-calc(48);
   height: auto;
+  box-shadow: inset 1px 0 0 0 rgba(100,121,143,0.122)
 }

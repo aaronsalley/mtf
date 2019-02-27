@@ -109,6 +109,7 @@ module.exports = function(webpackEnv) {
           includePaths: [
             path.resolve(__dirname, '../node_modules'),
             path.resolve(__dirname, '../node_modules/foundation-sites/scss'),
+            path.resolve(__dirname, './'),
           ],
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
@@ -146,6 +147,8 @@ module.exports = function(webpackEnv) {
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
+      // External vendor code
+      path.resolve(__dirname, '../src/vendors.js'),
     ].filter(Boolean),
     output: {
       // The build folder.

@@ -1,4 +1,4 @@
-// @import 'settings';
+@import 'settings';
 @import 'foundation';
 
 // Global styles
@@ -59,12 +59,25 @@
 .header {
   @include top-bar-container;
   height: rem-calc(64);
+  box-shadow: inset 0 -1px 0 0 rgba(100,121,143,0.122);
 
   .branding {
     width: auto;
 
-    .logo {
+    .button {
+      @include button(
+        $background: transparent,
+        $background-hover: $light-gray,
+        $color: rgba(0,0,0,.54),
+      );
+      margin: 0;
+      padding: rem-calc(8);
+      border-radius: 100%;
+      font-family: 'Material Icons';
+      font-size: rem-calc(24);
+    }
 
+    .logo {
     }
   }
 }

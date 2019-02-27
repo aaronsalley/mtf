@@ -1,4 +1,4 @@
-// @import 'settings';
+@import 'settings';
 @import 'foundation';
 
 @include foundation-global-styles;
@@ -13,22 +13,52 @@
 .search_bar {
   @extend .input-group;
   width: auto;
+  height: rem-calc(48);
   margin-bottom: 0;
+  background-color: rgba(0,0,0,0.04);
+  border: 0;
+  border-radius: rem-calc(4);
+
+  .label {
+    @extend .input-group-label;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    margin: rem-calc(4);
+    padding: rem-calc(7);
+    border-radius: 100%;
+    align-self: stretch;
+    height: auto;
+    font-family: 'Material Icons';
+    font-size: rem-calc(24);
+    color: rgba(0,0,0,.54),
+  }
 
   .input {
     @extend .input-group-field;
     align-self: stretch;
     height: auto;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
   }
 
   .button_group {
     @extend .input-group-button;
 
     .button {
-      @include button();
-      margin: 0;
+      @include button(
+        $background: transparent,
+        $background-hover: $light-gray,
+        $color: rgba(0,0,0,.54),
+      );
+      margin: rem-calc(4);
+      padding: rem-calc(7);
+      border-radius: 100%;
       align-self: stretch;
       height: auto;
+      font-family: 'Material Icons';
+      font-size: rem-calc(24);
     }
   }
 }

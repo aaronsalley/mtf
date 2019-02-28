@@ -57,7 +57,9 @@
 // @include foundation-prototype-classes;
 
 .sidebar {
-  @include xy-cell();
+  @include xy-cell(
+    $gutters: 0,
+  );
   width: rem-calc(186);
   height: auto;
 }

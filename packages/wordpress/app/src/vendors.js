@@ -1,21 +1,12 @@
-import $ from 'jquery';
-import Foundation from 'foundation-sites';
+import Raven from 'raven-js';
 
-const dropdownApps = new Foundation.Dropdown($('#apps'), {
-  postition: 'bottom',
-  alignment: 'center',
-});
-const dropdownNotifications = new Foundation.Dropdown($('#notifications'), {
-  postition: 'bottom',
-  alignment: 'center',
-});
-const dropdownUser = new Foundation.Dropdown($('#user'), {
-  postition: 'bottom',
-  alignment: 'center',
-});
+if (process.env.NODE_ENV === 'production') {
+  Raven.config(process.env.SENTRY_DSN).install();
 
-export {
-  dropdownApps,
-  dropdownNotifications,
-  dropdownUser
+  (function(w, d, s, l, i) {
+    w[l]=w[l]||[]; w[l].push({'gtm.start':
+    new Date().getTime(), 'event': 'gtm.js'}); let f=d.getElementsByTagName(s)[0];
+    let j=d.createElement(s); let dl=l!=='dataLayer'?'&l='+l:''; j.async=true; j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl; f.parentNode.insertBefore(j, f);
+  })(window, document, 'script', 'dataLayer', process.env.GTM_ID);
 }

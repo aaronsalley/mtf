@@ -61,10 +61,6 @@
 // @include foundation-prototype-classes;
 
 .main {
-  @include xy-cell(
-    $size: auto,
-    $gutters: 0,
-  );
   @include xy-cell-block-container;
   @include xy-grid(
     $direction: horizontal,

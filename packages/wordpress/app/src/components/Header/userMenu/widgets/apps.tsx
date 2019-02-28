@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
+import 'foundation-sites';
 import styles from '../userMenu.module.scss';
 
 class Widget extends Component {
+  async componentDidMount() {
+    const options = {
+      postition: 'bottom',
+      alignment: 'center',
+      closeOnClick: true,
+    }
+    const dropdown = new Foundation.Dropdown($('#apps'), options);
+  }
   render() {
     return (
       <div className={styles.apps}>

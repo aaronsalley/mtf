@@ -57,6 +57,8 @@
 // @include foundation-prototype-classes;
 
 .content {
-  @include xy-cell(auto);
-  height: auto;
+  @include xy-cell(
+    $size: auto,
+    $gutters: 0,
+  );
 }

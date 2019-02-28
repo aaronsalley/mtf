@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import styles from './list.module.scss';
 
 const mapStateToProps = (state: object, ownProps: any) => {
@@ -22,10 +23,9 @@ class List extends Component<any, any> {
       for ( let i = 0; i < count; i ++ ) {
         json.push(
           {
-            'email': `someone@domain.com`,
-            'name': 'First Last',
-            'headshot':'https://randomuser.me/api/portraits/men/7.jpg',
-            'reel': 'reel',
+            'id': '1234567890',
+            'name': 'people',
+            'title':'title'
           },
         );
       }
@@ -46,24 +46,14 @@ class List extends Component<any, any> {
    */
   ListItem = (data: any) => {
     const {
-      headshot,
       name,
-      email,
-      reel,
+      id,
+      title,
     } = data.value;
 
     return (
       <div className={styles.item}>
-        <a href="#">
-          <div>
-            <img src={headshot as string} />
-          </div>
-          <h5 className={styles.name}>{name as string}</h5>
-        </a>
-        <div className={styles.actions}>
-          <a href={'mailto:' + email as string} className={styles.action}>email</a>
-          <a href={reel as string} className={styles.action}>video_library</a>
-        </div>
+        <h6>{title}</h6>
       </div>
     )
   }

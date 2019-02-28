@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styles from './Main.module.scss';
 
 import Content from './Content';
@@ -9,7 +10,9 @@ const Main = () => {
   return (
     <div className={styles.main}>
       <Sidebar />
-      <Content />
+      <Switch>
+        <Route path='/' component={Content} />
+      </Switch>
       <Toolbar />
     </div>
   );

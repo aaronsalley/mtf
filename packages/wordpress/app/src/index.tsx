@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import './index.scss';
 import './vendors.js';
@@ -10,7 +11,9 @@ import * as serviceWorker from './serviceWorker';
 
 const renderApp = ({store}:any) => ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <Route path="/" component={App} />
+    </Router>
   </Provider>
   , document.getElementById('app')
 );

@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import styles from './single.module.scss';
 
-const mapStateToProps = (state: object, ownProps: any) => {
+const mapStateToProps = (state: any, ownProps: any) => {
   return {
+    editable: state.editable,
   }
 }
 
@@ -12,7 +13,7 @@ class List extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      editable: true,
+      editable: false,
       data: {},
     };
   }
@@ -39,7 +40,7 @@ class List extends Component<any, any> {
   }
 
   Profile = () => {
-    if ( this.state.editable ){
+    if ( this.props.editable ){
       return (
         <this.EditProfile />
       )

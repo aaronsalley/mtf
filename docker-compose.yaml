@@ -26,16 +26,28 @@ services:
     volumes:
       - ./packages/wordpress/wp-data:/var/lib/mysql
 
-  api:
-    build: .
+  react:
+    build: ./packages/wordpress/app
     restart: always
     ports:
-      - 9001:9001
-      - 9999:9999
-    env_file:
-      - .env
+      - 4001
+    # env_file:
+    #   - ./packages/wordpress/app/config/.env
     volumes:
-      - packages/api/:/home/api
+      - ./packages/wordpress/app/:/home/app
+    depends_on:
+      - api
+    networks:
+      - app
+  api:
+    build: ./packages/api
+    restart: always
+    ports:
+      - 4999
+    env_file:
+      - ./packages/api/config/.env
+    volumes:
+      - ./packages/api/:/home/api
     depends_on:
       - mongo
     networks:

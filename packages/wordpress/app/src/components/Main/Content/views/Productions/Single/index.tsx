@@ -12,20 +12,17 @@ class List extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      data: [],
+      data: {},
     };
   }
 
   async componentDidMount() {
-    let json = [];
+    let json: any = {};
     try {
-      const count = 100;
-      for ( let i = 0; i < count; i ++ ) {
-        json.push(
-          {
-          },
-        );
-      }
+      json = {
+        'id': '1234567890',
+        'name': 'productions',
+      };
     } catch(error) {
       if (process.env.NODE_ENV !== 'production')
         console.log(error);

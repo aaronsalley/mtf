@@ -2,7 +2,7 @@
 
 import logger from 'logger';
 
-import Artist from '../../db/artists';
+import Artist from '../../db/people';
 
 class Services {
   Services = () => {

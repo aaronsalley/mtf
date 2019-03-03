@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
  *
  * components:
  *  schemas:
- *   Artist:
+ *   Person:
  *    type: object
  *    required:
  *    - username
@@ -40,10 +40,10 @@ import mongoose from 'mongoose';
  *          labels:
  *            type: string
  */
-const artistSchema = new mongoose.Schema({
+const personSchema = new mongoose.Schema({
   name: {
     type: String,
-    default: 'Artist',
+    default: 'Person',
   },
   first_name: String,
   last_name: String,
@@ -53,4 +53,4 @@ const artistSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model('Artist', artistSchema);
+export default mongoose.model('Person', personSchema);

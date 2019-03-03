@@ -16,7 +16,7 @@ import routes from './routes/index';
 const app = express();
 app.use(cors());
 
-// connectToDb();
+connectToDb();
 
 /**
  * Sentry connection
@@ -52,14 +52,14 @@ const swaggerSpec = swaggerJSDoc({
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Aisis',
+      title: 'Musical Theater Factory',
       version: `${process.env.VERSION}`,
     },
   },
   // Path to the API docs
   apis: [
-    './routes/**/*.ts',
-    './db/**/*.ts'
+    './src/routes/**/*.ts',
+    './src/db/**/*.ts',
   ],
 });
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

@@ -19,7 +19,7 @@ dotenv.config({
 
 // Define paths
 config.paths = {
-  SOURCE: path.resolve(__dirname, '..'),
+  SOURCE: path.resolve(__dirname, '../src'),
   BUILD: process.env.NODE_ENV !== 'production' ?
     path.resolve(__dirname, '../.build') :
     path.resolve(__dirname, '../dist'),

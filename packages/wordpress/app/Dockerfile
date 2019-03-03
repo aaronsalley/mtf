@@ -5,7 +5,7 @@ WORKDIR /home/app
 
 # Copy & install NPM modules
 COPY ./package.json /home/app/package.json
-RUN npm install --silent
+RUN npm install --silent && npm install node-sass
 
 # Copy app files
 COPY . /home/app
@@ -14,4 +14,4 @@ COPY . /home/app
 CMD ["npm", "start"]
 
 # Open the port
-EXPOSE 4001
+EXPOSE 3000

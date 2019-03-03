@@ -1,1 +1,11 @@
-!config/.env
+**/*
+!config/
+!controllers/
+!db/
+!routes/
+!services/
+!tests/
+!utils/
+!.babelrc
+!index.ts
+!package.json

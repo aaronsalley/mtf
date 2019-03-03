@@ -4,14 +4,14 @@ import express from 'express';
 import logger from 'logger';
 
 import authCheck from '../../services/authService';
-import Artists from '../../controllers/artists';
+import People from '../../controllers/people';
 
 const router = express.Router();
 
 /**
  * @swagger
  *
- * /artists:
+ * /people:
  *  post:
  *    operationId:
  *    responses:
@@ -24,13 +24,13 @@ const router = express.Router();
  *        description: OK
  */
 router.route('/')
-  .post(Artists.createArtist)
-  .get(Artists.createArtist);
+  .post(People.createPerson)
+  .get(People.createPerson);
 
 /**
  * @swagger
  *
- * /artists/{artistID}:
+ * /people/{artistID}:
  *  get:
  *    operationId:
  *    responses:
@@ -39,7 +39,7 @@ router.route('/')
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Artist'
+ *              $ref: '#/components/schemas/Person'
  *  patch:
  *    operationId:
  *    responses:
@@ -48,7 +48,7 @@ router.route('/')
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Artist'
+ *              $ref: '#/components/schemas/Person'
  *  delete:
  *    operationId:
  *    responses:
@@ -56,8 +56,8 @@ router.route('/')
  *        description: OK
  */
 router.route('/:artistID')
-  .get(Artists.getArtist)
-  .patch(Artists.updateArtist)
-  .delete(Artists.deleteArtist);
+  .get(People.getPerson)
+  .patch(People.updatePerson)
+  .delete(People.deletePerson);
 
 export default router;

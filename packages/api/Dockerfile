@@ -14,4 +14,4 @@ COPY . /home/api
 CMD ["npm", "start"]
 
 # Open the port
-EXPOSE 4999
+EXPOSE 4739

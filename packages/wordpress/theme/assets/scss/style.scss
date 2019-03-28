@@ -245,6 +245,7 @@
       position: relative;
       flex-grow: 1;
       background-color: $white;
+      max-height: 100vh;
 
       .content-inner {
         @include xy-cell(

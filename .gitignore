@@ -6,3 +6,4 @@ wp-data/
 wp-plugins/
 logs/
 .env
+.DS_Store

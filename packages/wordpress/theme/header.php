@@ -6,18 +6,16 @@
     <link rel="profile" href="http://gmpg.org/xfn/11">
     <?php wp_head(); ?>
   </head>
-  <body <?php body_class('app'); ?>>
-    <header class="header">
+  <body id="app" <?php body_class(); ?>>
+    <header id="topbar" class="header">
       <div class="container">
-        <div class="logo">
+        <div class="branding">
           <?php the_custom_logo(); ?>
         </div>
-        <?php wp_nav_menu( array(
-          'theme_location'  =>  'menu-2',
-          'container'       =>  '',
-        )); ?>
+        <?php wp_nav_menu(); ?>
+        <button class="menu-icon" type="button" data-toggle="sidenav"></button>
       </div>
     </header>
-    <div class="main">
+    <div id="content" class="container">
       <?php get_sidebar(); ?>
-      <section class="content">
+      <div id="main" class="main">

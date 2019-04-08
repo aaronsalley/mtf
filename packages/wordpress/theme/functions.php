@@ -200,6 +200,7 @@ add_action( 'after_setup_theme', 'mtf_content_width', 0 );
  * Enqueue scripts and styles.
  */
 function mtf_scripts() {
+	wp_enqueue_script( 'mtf-vendors', get_theme_file_uri( '/assets/js/vendors.js' ), array(), null, true );
 	wp_enqueue_style( 'mtf-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
 
 	wp_style_add_data( 'mtf-style', 'rtl', 'replace' );
@@ -209,7 +210,7 @@ function mtf_scripts() {
 		wp_enqueue_script( 'mtf-touch-navigation', get_theme_file_uri( '/js/touch-keyboard-navigation.js' ), array(), '1.1', true );
 	}
 
-	wp_enqueue_style( 'mtf-print-style', get_template_directory_uri() . '/print.css', array(), wp_get_theme()->get( 'Version' ), 'print' );
+	// wp_enqueue_style( 'mtf-print-style', get_template_directory_uri() . '/print.css', array(), wp_get_theme()->get( 'Version' ), 'print' );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );

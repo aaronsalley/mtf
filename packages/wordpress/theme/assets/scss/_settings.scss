@@ -61,6 +61,8 @@
 //  56. Xy Grid
 
 @import 'foundation-sites/scss/util/util';
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700,900');
+$mtf_red: #EA2430;
 
 // 1. Global
 // ---------
@@ -82,7 +84,7 @@ $black: #0a0a0a;
 $white: #fefefe;
 $body-background: $white;
 $body-font-color: $black;
-$body-font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+$body-font-family: 'Lato', Helvetica, Roboto, Arial, sans-serif;
 $body-antialiased: true;
 $global-margin: 1rem;
 $global-padding: 1rem;
@@ -391,12 +393,12 @@ $dropdownmenu-arrow-size: 6px;
 $dropdownmenu-arrow-padding: 1.5rem;
 $dropdownmenu-min-width: 200px;
 $dropdownmenu-background: $white;
-$dropdownmenu-submenu-background: $dropdownmenu-background;
+$dropdownmenu-submenu-background: $mtf_red;
 $dropdownmenu-padding: $global-menu-padding;
 $dropdownmenu-nested-margin: 0;
 $dropdownmenu-submenu-padding: $dropdownmenu-padding;
-$dropdownmenu-border: 1px solid $medium-gray;
-$dropdown-menu-item-color-active: get-color(primary);
+$dropdownmenu-border: 0px;
+$dropdown-menu-item-color-active: transparent;
 $dropdown-menu-item-background-active: transparent;
 
 // 19. Flexbox Utilities

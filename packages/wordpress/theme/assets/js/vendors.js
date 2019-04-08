@@ -7,6 +7,22 @@ import Raven from 'raven-js';
 Foundation.addToJquery($);
 $(document).foundation();
 
+const topbar = new Foundation.Sticky($('#topbar'), {
+  container: '',
+  stickyOn: 'small',
+  containerClass: 'page',
+});
+
+const sidenav = (
+  new Foundation.OffCanvas($('#sidenav'), {
+    nested: true,
+    contentId: 'app',
+    isRevealed: true,
+    revealOn: 'large',
+  }),
+  new Foundation.DropdownMenu($('#sidenav .menu:first-child'), {})
+);
+
 if (process.env.NODE_ENV == 'production') {
   Raven.config(process.env.SENTRY_DSN).install();
 

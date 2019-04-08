@@ -4,5 +4,7 @@ dist/
 node_modules/
 wp-data/
 wp-plugins/
+wp-uploads/
 logs/
 .env
+.DS_Store

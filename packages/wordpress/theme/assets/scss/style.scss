@@ -35,7 +35,7 @@
 // @include foundation-breadcrumbs;
 // @include foundation-callout;
 // @include foundation-card;
-// @include foundation-dropdown;
+@include foundation-dropdown;
 // @include foundation-pagination;
 // @include foundation-tooltip;
 
@@ -51,13 +51,13 @@
 @include foundation-menu;
 @include foundation-menu-icon;
 // @include foundation-accordion-menu;
-@include foundation-drilldown-menu;
-// @include foundation-dropdown-menu;
+// @include foundation-drilldown-menu;
+@include foundation-dropdown-menu;
 
 // Layout components
-// @include foundation-off-canvas;
-// @include foundation-reveal;
-// @include foundation-sticky;
+@include foundation-off-canvas;
+@include foundation-reveal;
+@include foundation-sticky;
 // @include foundation-title-bar;
 @include foundation-top-bar;
 
@@ -67,84 +67,199 @@
 // @include foundation-visibility-classes;
 // @include foundation-prototype-classes;
 
-.app {
-  position: relative;
+body {
+  @include breakpoint(large) {
+    overflow: hidden;
+  }
 
-  & > .header {
-    @include top-bar-container;
+  #topbar {
     @include xy-cell(
-      $size: 12,
+      $size: full,
       $gutters: 0,
     );
+    @include top-bar-container;
     position: fixed;
-    top: rem-calc(24);
-    z-index: 10;
     height: rem-calc(72);
 
     .container {
-      @include xy-grid-container();
-      @include top-bar-container;
       @include xy-cell(
-        $size: 12,
+        $size: full,
         $gutters: 0,
       );
-      margin-right: auto;
-      margin-left: auto;
+      @include xy-grid-container(
+        $padding: 0,
+      );
+      @include xy-grid();
+      justify-content: space-between;
+      align-items: center;
     }
-  }
 
-  & > .main {
-    @include xy-grid();
-    @include xy-grid-container();
-    position: relative;
+    .custom-logo {
+      width: auto;
+      max-height: rem-calc(64);
+      padding-left: rem-calc(16);
+    }
 
-    .sidebar {
-      @include xy-grid(
-        $direction: vertical,
-      );
-      @include xy-cell(
-        $size: shrink,
-        $gutters: 0,
-      );
-      width: rem-calc(192);
-      height: 100vh;
+    .menu {
+      display: none;
 
-      justify-content: center;
+      @include breakpoint(medium) {
+        @include menu-base;
+      }
 
-      & > .menu {
-        ul {
-          @include menu-base;
+      .menu-item {
+        font-weight: 900;
+        text-transform: uppercase;
+
+        &:not(:last-child) {
+          border-right: 2px solid $white;
         }
 
-        &:first-child() {
-          @include menu-direction(
-            $dir: vertical,
-          );
-
+        &:last-child a {
+          color: $mtf_red;
         }
 
-        &:last-child() {
-          position: absolute;
-          bottom: 0;
+        a {
+          padding-top: 0;
+          padding-right: rem-calc(38);
+          padding-bottom: 0;
+          padding-left: rem-calc(38);
+          font-size: rem-calc(12);
+          color: $white;
         }
       }
     }
 
-    .content {
+    .menu-icon {
+      @include breakpoint(large) {
+        display: none !important;
+      }
+    }
+  }
+
+  #content {
+    @include xy-grid(
+      $wrap: false,
+    );
+    @include xy-grid-container(
+      $padding: 0,
+    );
+    @include off-canvas-basics;
+    @include off-canvas-content;
+
+    @include breakpoint(large) {
+      @include xy-grid-frame(
+        $vertical: true,
+      );
+    }
+
+    #sidenav {
+      @include xy-cell-block-container;
+      @include off-canvas-base;
+      @include off-canvas-position(
+        $position: right,
+      );
+      @include off-canvas-reveal(
+        $position: right,
+      );
+      justify-content: center;
+
+      @include breakpoint(large) {
+        @include xy-cell(
+          $size: shrink,
+        );
+        @include in-canvas;
+        width: 100%;
+        max-width: rem-calc(192);
+      }
+
+      .menu {
+        @include menu-base;
+      }
+
+      .menu:first-child() {
+        @include menu-direction(
+          $dir: vertical,
+        );
+        height: 100vh;
+        justify-content: center;
+      }
+
+      .menu:last-child() {
+        @include menu-icons;
+        position: absolute;
+        bottom: 0;
+      }
+
+      .menu-item {
+        position: static;
+        list-style: none;
+
+        a {
+          padding-top: rem-calc(54/2);
+          padding-right: rem-calc(24);
+          padding-bottom: rem-calc(54/2);
+          padding-left: rem-calc(24);
+          color: inherit;
+        }
+      }
+
+      .is-active > a {
+        background: transparent;
+      }
+
+      .is-dropdown-submenu-parent.is-active {
+        & > a {
+          position: relative;
+        }
+
+        & > a::before {
+          content: '';
+          display: block;
+          width: rem-calc(24);
+          height: rem-calc(24);
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translate(50%, -50%) rotate(45deg);
+          background-color: $mtf_red;
+        }
+      }
+
+      .is-dropdown-submenu.js-dropdown-active {
+        @include xy-grid(
+          $direction: vertical,
+          $wrap: false,
+        );
+        height: 100vh;
+        margin-left: 0;
+        justify-content: center;
+        background-color: $mtf_red;
+
+        a {
+          color: $white;
+        }
+      }
+    }
+
+    #main {
       @include xy-cell(
         $size: auto,
         $gutters: 0,
       );
+      @include xy-cell-block();
 
-      .footer {
+      & > .footer {
+        @include xy-cell(
+          $size: full,
+          $gutters: 0,
+        );
         background-color: $light-gray;
       }
     }
   }
+}
 
-  &.admin-bar {
-    .main .sidebar {
-      height: calc( 100vh - 32px);
-    }
-  }
+.elementor-29 .elementor-element.elementor-element-4a2f833 .eael-img-accordion {
+  height: 85vh !important;
 }

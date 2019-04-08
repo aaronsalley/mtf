@@ -1,4 +1,4 @@
-<div class="sidebar">
+<div id="sidenav" class="sidebar">
   <?php wp_nav_menu( array(
     'theme_location'  =>  'menu-1',
     'container'       =>  '',

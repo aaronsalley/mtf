@@ -1,161 +1,236 @@
 <?php
-  /**
-   * Musical Theatre Factory functions and definitions
-   *
-   * Functions that are not pluggable (not wrapped in function_exists()) are
-   * instead attached to a filter or action hook.
-   */
+/**
+ * Musical Theatre Factory functions and definitions
+ *
+ * @link https://developer.wordpress.org/themes/basics/theme-functions/
+ *
+ * @package WordPress
+ * @subpackage Twenty_Nineteen
+ * @since 1.0.0
+ */
 
-  include('inc/helpers.php');
-  include('inc/permissions.php');
-  include('inc/projects.php');
+/**
+ * Musical Theatre Factory only works in WordPress 4.7 or later.
+ */
+if ( version_compare( $GLOBALS['wp_version'], '4.7', '<' ) ) {
+	require get_template_directory() . '/inc/back-compat.php';
+	return;
+}
 
-  require_once('inc/tgmpa/class-tgm-plugin-activation.php');
+if ( ! function_exists( 'mtf_setup' ) ) :
+	/**
+	 * Sets up theme defaults and registers support for various WordPress features.
+	 *
+	 * Note that this function is hooked into the after_setup_theme hook, which
+	 * runs before the init hook. The init hook is too late for some features, such
+	 * as indicating support for post thumbnails.
+	 */
+	function mtf_setup() {
+		/*
+		 * Make theme available for translation.
+		 * Translations can be filed in the /languages/ directory.
+		 * If you're building a theme based on Musical Theatre Factory, use a find and replace
+		 * to change 'mtf' to the name of your theme in all the template files.
+		 */
+		load_theme_textdomain( 'mtf', get_template_directory() . '/languages' );
 
-  add_action( 'after_setup_theme', 'mtf_setup' );
-  if ( ! function_exists( 'mtf_setup' ) ) :
-    function mtf_setup() {
-    	load_theme_textdomain( 'mtf' );
+		// Add default posts and comments RSS feed links to head.
+		add_theme_support( 'automatic-feed-links' );
 
-      add_post_type_support( 'page', 'excerpt' );
+		/*
+		 * Let WordPress manage the document title.
+		 * By adding theme support, we declare that this theme does not use a
+		 * hard-coded <title> tag in the document head, and expect WordPress to
+		 * provide it for us.
+		 */
+		add_theme_support( 'title-tag' );
 
-      add_image_size( 'event', 1200, 600, array('center', 'center') );
+		/*
+		 * Enable support for Post Thumbnails on posts and pages.
+		 *
+		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+		 */
+		add_theme_support( 'post-thumbnails' );
+		set_post_thumbnail_size( 1568, 9999 );
 
-      // Ready for WooCommerce
-      add_theme_support( 'woocommerce' );
-      // add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
+		// This theme uses wp_nav_menu() in two locations.
+		register_nav_menus(
+			array(
+				'menu-1' => __( 'Primary', 'mtf' ),
+				'menu-2' => __( 'Secondary', 'mtf' ),
+				'footer' => __( 'Footer Menu', 'mtf' ),
+				'social' => __( 'Social Links Menu', 'mtf' ),
+			)
+		);
 
-    	add_theme_support( 'automatic-feed-links' );
-      add_theme_support( 'title-tag' );
-    	add_theme_support( 'post-thumbnails' );
-      add_theme_support( 'html5', array(
-    		'search-form',
-    		'comment-form',
-    		'comment-list',
-    		'gallery',
-    		'caption',
-    	) );
-      add_theme_support( 'post-formats', array(
-    		'aside',
-    		'image',
-    		'video',
-    		'quote',
-    		'link',
-    		'gallery',
-    		'audio',
-    	) );
-      add_theme_support( 'custom-background', array(
-        'wp-head-callback' => 'return_false',
-      ) );
-    	add_theme_support( 'custom-logo' );
-      add_theme_support( 'customize-selective-refresh-widgets' );
+		/*
+		 * Switch default core markup for search form, comment form, and comments
+		 * to output valid HTML5.
+		 */
+		add_theme_support(
+			'html5',
+			array(
+				'search-form',
+				'comment-form',
+				'comment-list',
+				'gallery',
+				'caption',
+			)
+		);
 
-    	register_nav_menus( array(
-    		'primary' => __( 'Primary Navigation Menu', 'mtf' ),
-    		'action' => __( 'Action Menu', 'mtf' ),
-    		'social' => __( 'Social Media', 'mtf' )
-    	) );
-    	register_sidebar( array(
-    		'name' => __( 'About MTF', 'mtf' ),
-    		'before_widget' => '<div class="widget %2$s">',
-    		'after_widget'  => '</div>',
-    		'before_title' => '<h5 class="title">',
-    		'after_title' => '</h5>'
-    	) );
-      register_sidebar( array(
-    		'name' => __( 'Footer Widgets', 'mtf' ),
-        'before_widget' => '<div class="widget %2$s">',
-    		'after_widget'  => '</div>',
-    		'before_title' => '<h5 class="title">',
-    		'after_title' => '</h5>'
-    	) );
-      register_sidebar( array(
-    		'name' => __( 'Colophon', 'mtf' ),
-        'before_widget' => '<div class="widget %2$s">',
-    		'after_widget'  => '</div>',
-    		'before_title' => '<h5 class="title">',
-    		'after_title' => '</h5>'
-    	) );
+		/**
+		 * Add support for core custom logo.
+		 *
+		 * @link https://codex.wordpress.org/Theme_Logo
+		 */
+		add_theme_support( 'custom-logo' );
 
-      add_filter( 'feed_links_show_comments_feed', 'return_false' );
-      add_filter( 'get_custom_logo', 'change_logo_class' );
-      function change_logo_class( $html ) {
-    	    $html = str_replace( 'custom-logo', 'mtf-logo', $html );
-    	    $html = str_replace( 'custom-logo-link', 'mtf-home-link', $html );
+		// Add theme support for selective refresh for widgets.
+		add_theme_support( 'customize-selective-refresh-widgets' );
 
-    	    return $html;
-    	}
+		// Add support for Block Styles.
+		add_theme_support( 'wp-block-styles' );
 
-    	// Indicate widget sidebars can use selective refresh in the Customizer.
-    	add_editor_style( array( 'assets/css/editor-style.css' ) );
-    }
-  endif; // mtf_setup
+		// Add support for full and wide align images.
+		add_theme_support( 'align-wide' );
 
-  add_action( 'wp_enqueue_scripts', 'mtf_scripts' );
-  function mtf_scripts() {
-  	wp_enqueue_style( 'mtf-fonts', get_theme_file_uri( 'assets/fonts/fonts.css' ), array( 'mtf-style' ) );
+		// Add support for editor styles.
+		add_theme_support( 'editor-styles' );
 
-  	wp_enqueue_style( 'mtf-style', get_stylesheet_uri() );
+		// Enqueue editor styles.
+		add_editor_style( 'style-editor.css' );
 
-  	if ( is_customize_preview() ) {
-  		wp_enqueue_style( 'mtf-ie9', get_theme_file_uri( 'assets/css/ie9.css' ), array( 'mtf-style' ));
-  		wp_style_add_data( 'mtf-ie9', 'conditional', 'IE 9' );
-  	}
+		// Add custom editor font sizes.
+		add_theme_support(
+			'editor-font-sizes',
+			array(
+				array(
+					'name'      => __( 'Small', 'mtf' ),
+					'shortName' => __( 'S', 'mtf' ),
+					'size'      => 19.5,
+					'slug'      => 'small',
+				),
+				array(
+					'name'      => __( 'Normal', 'mtf' ),
+					'shortName' => __( 'M', 'mtf' ),
+					'size'      => 22,
+					'slug'      => 'normal',
+				),
+				array(
+					'name'      => __( 'Large', 'mtf' ),
+					'shortName' => __( 'L', 'mtf' ),
+					'size'      => 36.5,
+					'slug'      => 'large',
+				),
+				array(
+					'name'      => __( 'Huge', 'mtf' ),
+					'shortName' => __( 'XL', 'mtf' ),
+					'size'      => 49.5,
+					'slug'      => 'huge',
+				),
+			)
+		);
 
-  	wp_enqueue_style( 'mtf-ie8', get_theme_file_uri( 'assets/css/ie8.css' ), array( 'mtf-style' ));
-  	wp_style_add_data( 'mtf-ie8', 'conditional', 'lt IE 9' );
+		// Editor color palette.
+		add_theme_support(
+			'editor-color-palette',
+			array(
+				array(
+					'name'  => __( 'Dark Gray', 'mtf' ),
+					'slug'  => 'dark-gray',
+					'color' => '#111',
+				),
+				array(
+					'name'  => __( 'Light Gray', 'mtf' ),
+					'slug'  => 'light-gray',
+					'color' => '#767676',
+				),
+				array(
+					'name'  => __( 'White', 'mtf' ),
+					'slug'  => 'white',
+					'color' => '#FFF',
+				),
+			)
+		);
 
-  	wp_enqueue_script( 'html5', get_theme_file_uri( 'assets/js/html5.js' ));
-  	wp_script_add_data( 'html5', 'conditional', 'lt IE 9' );
+		// Add support for responsive embedded content.
+		add_theme_support( 'responsive-embeds' );
+	}
+endif;
+add_action( 'after_setup_theme', 'mtf_setup' );
 
-  	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-  		wp_enqueue_script( 'comment-reply' );
-  	}
+/**
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function mtf_widgets_init() {
 
-  	wp_dequeue_style( 'hm-wcdon-frontend-styles' );
+	register_sidebar(
+		array(
+			'name'          => __( 'Footer', 'mtf' ),
+			'id'            => 'sidebar-1',
+			'description'   => __( 'Add widgets here to appear in your footer.', 'mtf' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
 
-  	wp_enqueue_script( 'mtf-script', get_theme_file_uri( 'assets/js/vendors.js' ), null, null, true );
-    // wp_enqueue_script( 'mtf-react', get_theme_file_uri( 'assets/js/react.js' ), null, null, true );
+}
+add_action( 'widgets_init', 'mtf_widgets_init' );
 
-  	wp_localize_script( 'mtf-script', 'screenReaderText', array(
-  		'expand'   => __( 'expand child menu', 'mtf' ),
-  		'collapse' => __( 'collapse child menu', 'mtf' )
-  	) );
-  }
+/**
+ * Set the content width in pixels, based on the theme's design and stylesheet.
+ *
+ * Priority 0 to make it available to lower priority callbacks.
+ *
+ * @global int $content_width Content width.
+ */
+function mtf_content_width() {
+	// This variable is intended to be overruled from themes.
+	// Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$GLOBALS['content_width'] = apply_filters( 'mtf_content_width', 640 );
+}
+add_action( 'after_setup_theme', 'mtf_content_width', 0 );
 
-  add_action( 'admin_enqueue_scripts', 'mtf_admin_scripts' );
-  function mtf_admin_scripts() {
-  	wp_enqueue_style( 'mtf-admin', get_theme_file_uri( 'assets/css/admin.css' ) );
-  }
+/**
+ * Enqueue scripts and styles.
+ */
+function mtf_scripts() {
+	wp_enqueue_style( 'mtf-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
 
-  add_action( 'tgmpa_register', 'mtf_register_required_plugins' );
-  function mtf_register_required_plugins() {
-    $plugins = array(
-  		array(
-  			'name'      => 'The Events Calendar',
-  			'slug'      => 'the-events-calendar',
-  			'required'  => true,
-  		),
+	wp_style_add_data( 'mtf-style', 'rtl', 'replace' );
 
-      array(
-  			'name'      => 'Ninja Forms',
-  			'slug'      => 'ninja-forms',
-  			'required'  => false,
-  		),
-  	);
+	if ( has_nav_menu( 'menu-1' ) ) {
+		wp_enqueue_script( 'mtf-priority-menu', get_theme_file_uri( '/js/priority-menu.js' ), array(), '1.1', true );
+		wp_enqueue_script( 'mtf-touch-navigation', get_theme_file_uri( '/js/touch-keyboard-navigation.js' ), array(), '1.1', true );
+	}
 
-    $config = array(
-  		'id'           => 'mtf',                   // Unique ID for hashing notices for multiple instances of TGMPA.
-  		'default_path' => '',                      // Default absolute path to bundled plugins.
-  		'menu'         => 'tgmpa-install-plugins', // Menu slug.
-  		'parent_slug'  => 'themes.php',            // Parent menu slug.
-  		'capability'   => 'edit_theme_options',    // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
-  		'has_notices'  => true,                    // Show admin notices or not.
-  		'dismissable'  => true,                    // If false, a user cannot dismiss the nag message.
-  		'dismiss_msg'  => '',                      // If 'dismissable' is false, this message will be output at top of nag.
-  		'is_automatic' => true,                   // Automatically activate plugins after installation or not.
-  		'message'      => '',                      // Message to output right before the plugins table.
-    );
+	wp_enqueue_style( 'mtf-print-style', get_template_directory_uri() . '/print.css', array(), wp_get_theme()->get( 'Version' ), 'print' );
 
-    tgmpa( $plugins, $config );
-  }
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'mtf_scripts' );
+
+/**
+ * Fix skip link focus in IE11.
+ *
+ * This does not enqueue the script because it is tiny and because it is only for IE11,
+ * thus it does not warrant having an entire dedicated blocking script being loaded.
+ *
+ * @link https://git.io/vWdr2
+ */
+function mtf_skip_link_focus_fix() {
+	// The following is minified via `terser --compress --mangle -- js/skip-link-focus-fix.js`.
+	?>
+	<script>
+	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+	</script>
+	<?php
+}
+add_action( 'wp_print_footer_scripts', 'mtf_skip_link_focus_fix' );

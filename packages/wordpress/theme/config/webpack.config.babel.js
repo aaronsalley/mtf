@@ -3,15 +3,15 @@
 import BrowserSyncPlugin from 'browser-sync-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-import dotenv from 'dotenv';
 import Dotenv from 'dotenv-webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import incstr from 'incstr';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import path from 'path';
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
-import webpack from 'webpack';
+import safePostCssParser from 'postcss-safe-parser';
+import TerserPlugin from 'terser-webpack-plugin';
+
+import paths from './paths';
 
 const createUniqueIdGenerator = () => {
   const index = {};
@@ -48,159 +48,180 @@ const generateScopedName = (localName, resourcePath) => {
   }
 };
 
-const config = {
-  webpack: {
-  },
-};
-
-config.envfile = path.resolve(__dirname, './.env');
-dotenv.config({
-  path: config.envfile,
-});
-
-config.paths = {
-  SOURCE: path.resolve(__dirname, '..'),
-  BUILD: process.env.NODE_ENV !== 'production' ?
-    path.resolve(__dirname, '../.build') :
-    path.resolve(__dirname, '../dist'),
-};
-
 const entry = {
-  style: config.paths.SOURCE + '/assets/scss/style.scss',
-  vendors: config.paths.SOURCE + '/assets/js/vendors.js',
+  'style': paths.source + '/assets/scss/style.scss',
+  'vendors': paths.source + '/assets/js/vendors.js',
 };
-const output = process.env.NODE_ENV !== 'production' ? {
-  path: config.paths.BUILD,
+const output = {
+  path: process.env.NODE_ENV !== 'production' ? paths.build : paths.dist,
   filename: 'assets/js/[name].js',
-  chunkFilename: 'assets/js/[name].chunk.js',
-  publicPath: '/',
-} : {
-  path: config.paths.BUILD,
-  filename: 'assets/js/[name].[hash].js',
-  chunkFilename: 'assets/js/[name].chunk.[hash].js',
-  publicPath: '/',
 };
-const modules = {
-  rules: [
-    {
-      test: /\.(j|t)s(x)?$/,
-      enforce: 'pre',
-      exclude: /node_modules/,
-      use: [
-        {
-          loader: 'babel-loader',
-          options: {
-            babelrc: false,
-            extends: path.resolve(__dirname, '../.babelrc'),
-          },
+const rules = [
+  // js, jsx, ts, tsx
+  {
+    test: /\.(j|t)s(x)?$/,
+    exclude: /node_modules/,
+    use: [
+      {
+        loader: 'babel-loader',
+      },
+    ],
+  },
+  // images
+  {
+    test: /\.(png|svg|jpg|gif)$/,
+    use: [
+      {
+        'loader': 'file-loader',
+        'options': {
+          name: '[path][name].[ext]',
+          context: paths.source,
+          // publicPath: paths.build + '/assets',
         },
-      ],
+      },
+    ],
+  },
+  // fonts
+  {
+    test: /\.(ttf|eot|woff|woff2)$/,
+    use: {
+      loader: 'file-loader',
+      options: {
+        name: '[path][name].[ext]',
+        context: paths.source,
+        // publicPath: paths.build + '/assets',
+      },
     },
-    {
-      test: /\.(png|svg|jpg|gif)$/,
-      use: [
-        {
-          'loader': 'file-loader',
-          'options': {
-            useRelativePath: true,
-            name: '[name].[ext]',
-            context: config.paths.SOURCE,
-            publicPath: config.paths.BUILD + '/assets/img/',
-          },
+  },
+  // scss
+  {
+    test: /\.(s)?css$/,
+    use: [
+      MiniCssExtractPlugin.loader,
+      {
+        loader: 'css-loader',
+        options: {
+          // modules: true,
+          camelCase: true,
+          // getLocalIdent: (context, localIdentName, localName) => {
+          //   return generateScopedName(localName, context.resourcePath);
+          // },
+          // localIdentName: '[name]_[local]_[hash:base64:5]',
+          sourceMap: process.env.NODE_ENV !== 'production' ? true : false,
+          importLoaders: 2,
         },
-      ],
-    },
-    {
-      test: /\.(s)?css$/,
-      use: [
-        MiniCssExtractPlugin.loader,
-        {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            camelCase: true,
-            getLocalIdent: (context, localIdentName, localName) => {
-              return generateScopedName(localName, context.resourcePath);
-            },
-            localIdentName: '[name]_[local]_[hash:base64:5]',
-            sourceMap: true,
-            importLoaders: 2,
-          },
-        },
-        {
-          loader: 'postcss-loader',
-          options: {
-            plugins: [require('autoprefixer')({
-              browsers: [
-                'last 2 versions',
-                'ie >= 9',
-                'android >= 4.4',
-                'ios >= 7',
-              ],
-            })],
-            sourceMap: true,
-          },
-        },
-        {
-          loader: 'sass-loader',
-          options: {
-            includePaths: [
-              path.resolve(__dirname, '../node_modules'),
-              path.resolve(__dirname, '../node_modules/foundation-sites/scss'),
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          plugins: [require('autoprefixer')({
+            browsers: [
+              'last 2 versions',
+              'ie >= 9',
+              'android >= 4.4',
+              'ios >= 7',
             ],
-            sourceMap: true,
-          },
+          })],
+          sourceMap: process.env.NODE_ENV !== 'production' ? true : false,
         },
-      ],
-    },
-  ],
+      },
+      {
+        loader: 'sass-loader',
+        options: {
+          includePaths: [
+            path.resolve(__dirname, '../node_modules'),
+            path.resolve(__dirname, '../node_modules/foundation-sites/scss'),
+          ],
+          sourceMap: process.env.NODE_ENV !== 'production' ? true : false,
+        },
+      },
+    ],
+  },
+];
+const modules = {
+  rules,
 };
 const resolve = {
+  modules: ['node_modules'],
   extensions: [
-    '*', '.js', '.jsx', '.ts', '.tsx',
+    '*', '.js', '.jsx', '.ts', '.tsx', '.scss',
   ],
+};
+const performance = {};
+const externals = {
+  jquery: 'jQuery',
+  // react: 'React',
+  // reactDOM: 'ReactDOM',
 };
 const plugins = [
   new BrowserSyncPlugin({
-    // server: {
-    //   baseDir: config.paths.BUILD,
-    //   // middleware: [historyApiFallback()],
-    //   index: 'index.html',
-    // },
-    // port: process.env.WEB_PORT,
-    proxy: 'localhost:9000',
-    browser: 'Google Chrome',
+    host: process.env.HOST || '0.0.0.0',
+    port: process.env.PORT || 4000,
+    proxy: process.env.PROXY ? process.env.PROXY : null,
     open: false,
-    cors: true,
-    https: true,
-    ui: false,
   }),
-  new CleanWebpackPlugin(
-      [
-        config.paths.BUILD + '/**/*',
-      ], {
-        allowExternal: true,
-      }
-  ),
+  new CleanWebpackPlugin({
+    cleanStaleWebpackAssets: false,
+    cleanAfterEveryBuildPatterns: [
+      '!**/*.php',
+      '!/assets/**/*',
+    ],
+  }),
   new CopyWebpackPlugin([
-    config.paths.SOURCE + '/**/*.php',
-    config.paths.SOURCE + '/screenshot.*',
-    config.paths.SOURCE + '/assets/fonts/**/*',
-  ], {
-    // context: 'src/',
-  }
-  ),
+    paths.source + '/**/*.php',
+    paths.source + '/screenshot.*',
+    paths.source + '/assets/fonts/**/*',
+    paths.source + '/assets/img/**/*',
+  ]),
   new Dotenv({
-    path: config.envfile,
+    path: paths.envfile,
   }),
   new MiniCssExtractPlugin({
     filename: 'style.css',
     chunkFilename: process.env.NODE_ENV !== 'production' ?
       'assets/css/[id].css' : 'assets/css/[id].[hash].css',
   }),
-  new webpack.NoEmitOnErrorsPlugin(),
 ];
 const optimization = {
+  minimize: process.env.NODE_ENV === 'production' ? true : false,
+  minimizer: [
+    new TerserPlugin({
+      terserOptions: {
+        parse: {
+          ecma: 8,
+        },
+        compress: {
+          ecma: 5,
+          warnings: false,
+          comparisons: false,
+          inline: 2,
+        },
+        mangle: {
+          safari10: true,
+        },
+        output: {
+          ecma: 5,
+          comments: false,
+          ascii_only: true,
+        },
+      },
+      parallel: true,
+      cache: true,
+      sourceMap: process.env.NODE_ENV !== 'production' ? true : false,
+    }),
+    // This is only used in production mode
+    new OptimizeCSSAssetsPlugin({
+      cssProcessorOptions: {
+        parser: safePostCssParser,
+        map: process.env.NODE_ENV !== 'production' ? true : false
+          ? {
+            inline: false,
+            annotation: true,
+          }
+          : false,
+      },
+    }),
+  ],
   splitChunks: {
     chunks: 'async',
     minSize: 30000,
@@ -222,14 +243,6 @@ const optimization = {
       },
     },
   },
-  minimizer: process.env.NODE_ENV !== 'production' ? [] : [
-    new UglifyJsPlugin({
-      cache: true,
-      parallel: true,
-      sourceMap: true, // set to true if you want JS source maps
-    }),
-    new OptimizeCSSAssetsPlugin({}),
-  ],
 };
 const watchOptions = {
   ignored: [
@@ -237,7 +250,7 @@ const watchOptions = {
   ],
 };
 const devServer = {
-  contentBase: config.paths.BUILD,
+  contentBase: paths.build,
   compress: true,
   port: process.env.WEB_PORT,
   historyApiFallback: true,
@@ -245,23 +258,22 @@ const devServer = {
   hot: true,
 };
 
-config.webpack = {
-  mode: process.env.NODE_ENV,
+const webpackConfig = {
+  mode: process.env.NODE_ENV || 'development',
+  context: path.resolve(__dirname, '../'),
   entry: entry,
   output: output,
+  optimization: optimization,
   module: modules,
   resolve: resolve,
+  performance: performance,
+  devtool: process.env.NODE_ENV === 'production' ? false : 'inline-source-map',
+  target: 'web',
+  externals: externals,
+  stats: 'errors-only',
   plugins: plugins,
-  optimization: optimization,
-  // devServer: devServer,
   watch: process.env.NODE_ENV !== 'production' ? true : false,
-  watchOptions: watchOptions,
-  devtool: 'eval-source-map',
-  target: 'node',
-  stats: {
-    warnings: false,
-  },
   cache: true,
 };
 
-export default config.webpack;
+export default webpackConfig;

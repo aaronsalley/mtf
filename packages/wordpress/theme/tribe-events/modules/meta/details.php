@@ -49,6 +49,7 @@ $time_formatted = apply_filters( 'tribe_events_single_event_time_formatted', $ti
 $time_title = apply_filters( 'tribe_events_single_event_time_title', __( 'Time:', 'the-events-calendar' ), $event_id );
 
 $cost    = tribe_get_formatted_cost();
+$website = tribe_get_event_website_link();
 ?>
 
 <div class="tribe-events-meta-group tribe-events-meta-group-details">
@@ -140,6 +141,14 @@ $cost    = tribe_get_formatted_cost();
 		?>
 
 		<?php echo tribe_meta_event_tags( sprintf( esc_html__( '%s Tags:', 'the-events-calendar' ), tribe_get_event_label_singular() ), ', ', false ) ?>
+
+		<?php
+		// Event Website
+		if ( ! empty( $website ) ) : ?>
+
+			<dt class="tribe-events-event-url-label"> <?php esc_html_e( 'Website:', 'the-events-calendar' ) ?> </dt>
+			<dd class="tribe-events-event-url"> <?php echo $website; ?> </dd>
+		<?php endif ?>
 
 		<?php do_action( 'tribe_events_single_meta_details_section_end' ) ?>
 	</dl>

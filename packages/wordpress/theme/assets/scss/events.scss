@@ -56,37 +56,131 @@
 // @include foundation-visibility-classes;
 // @include foundation-prototype-classes;
 
+$margin: .5em;
+
 #tribe-events {
   .archive & {
     margin-top: rem-calc(120);
+
+    a {
+      color: inherit;
+    }
   }
 
-  .events-loop {
+  #tribe-events-topbar {
+    @include xy-grid(
+      $wrap: false,
+    );
+
+    #tribe-events-bar {
+      @include xy-cell(
+        $size: 9,
+        $gutters: 0,
+      );
+    }
+  }
+
+  // Events loops
+  .tribe-events-list:not(.tribe-events-day) [class*='events-loop'] {
     @include xy-grid();
 
-    .post-event {
+    // Each entry
+    .type-tribe_events {
       @include xy-cell(
         $size: 3,
         $gutters: 0,
       );
+      height: rem-calc(300);
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+
+      &:hover {
+        z-index: 999;
+
+        [class*='event-image'] {
+          img {
+            transition: all .5s ease-in-out;
+            transform: translateY($margin*-1) scale(1.05);
+            box-shadow: 0px $margin $margin rgba(0,0,0,.18);
+          }
+        }
+        [class*='description'] {
+          transition: opacity .5s .5s ease-in-out, height .5s ease-in-out;
+          opacity: 1;
+          height: 100px;
+        }
+      }
     }
 
-    // &[class*='featured'] {
-    //   @include xy-cell(
-    //     $size: 6,
-    //   );
-    // }
+    [class*='featured'] {
+      // @include xy-cell(
+      //   $size: 6,
+      // );
+      padding: 0;
+      background-color: transparent;
+    }
 
     [class*='event-image'] {
-      margin-bottom: $global-margin;
+      @include xy-cell(
+        $size: full,
+        $gutters: 0,
+      );
+      margin-bottom: 0;
+
+      img {
+        transition: all .5s .25s ease-in-out;
+        box-shadow: initial;
+      }
     }
 
-    [class*='title'] {
-      margin-bottom: $global-margin;
+    [class*='event-title'] {
+      @include xy-cell(
+        $size: full,
+        $gutters: $margin,
+      );
+      margin-top: $margin;
+      margin-bottom: $margin;
+      font-size: rem-calc(16);
+      font-weight: bold;
+      text-transform: uppercase;
     }
 
-    [class*='meta'] {
-      margin-bottom: $global-margin;
+    .magic-box {
+      @include xy-cell(
+        $size: full,
+        $gutters: $margin,
+      );
+      position: absolute;
+      bottom: 0;
+    }
+
+    [class*='event-meta'] {
+      padding-bottom: $margin;
+      border-bottom: 2px solid $black;
+
+      [class*='schedule'] {
+        margin-bottom: $margin;
+        font-weight: bold;
+      }
+
+      [class*='cost'] {
+        margin-bottom: $margin;
+        font-weight: bold;
+      }
+    }
+
+    [class*='description'] {
+      @include xy-cell(
+        $size: full,
+        $gutters: 0,
+      );
+      overflow: hidden;
+      opacity: 0;
+      height: 0;
+      font-size: rem-calc(8);
+      transition: opacity .25s ease-in-out, height .5s .25s ease-in-out;
     }
   }
 }

@@ -26,7 +26,7 @@ $more = false;
 		<?php do_action( 'tribe_events_inside_before_loop' ); ?>
 
 		<!-- Month / Year Headers -->
-		<?php tribe_events_list_the_date_headers(); ?>
+		<?php //tribe_events_list_the_date_headers(); ?>
 
 		<!-- Event  -->
 		<?php

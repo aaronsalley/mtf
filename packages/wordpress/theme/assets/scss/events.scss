@@ -1,5 +1,7 @@
 @import 'settings';
 @import 'foundation';
+// TODO: import tribe styles to always work
+// @import 'tribe.pcss';
 
 // Global styles
 @include foundation-global-styles;
@@ -61,10 +63,6 @@ $margin: .5em;
 #tribe-events {
   .archive & {
     margin-top: rem-calc(120);
-
-    a {
-      color: inherit;
-    }
   }
 
   #tribe-events-topbar {
@@ -72,32 +70,65 @@ $margin: .5em;
       $wrap: false,
     );
 
-    #tribe-events-bar {
+    [class$='title-bar'] {
       @include xy-cell(
-        $size: 9,
+        $size: auto,
         $gutters: 0,
       );
+
+      * {
+        text-align: left;
+      }
+    }
+
+    #tribe-events-bar {
+      @include xy-cell(
+        $size: shrink,
+        $gutters: 0,
+      );
+      visibility: hidden;
     }
   }
 
   // Events loops
   .tribe-events-list:not(.tribe-events-day) [class*='events-loop'] {
     @include xy-grid();
+    max-width: none;
+
+    a {
+      color: inherit;
+    }
 
     // Each entry
     .type-tribe_events {
       @include xy-cell(
-        $size: 3,
+        $size: full,
         $gutters: 0,
       );
       height: rem-calc(300);
+      @include breakpoint(medium){
+        @include xy-cell(
+          $size: 4,
+          $gutters: 0,
+        );
+      }
+      @include breakpoint(large){
+        @include xy-cell(
+          $size: 3,
+          $gutters: 0,
+        );
+      }
 
       &:first-of-type {
         margin-top: 0;
       }
 
       &:hover {
-        z-index: 999;
+        z-index: 12;
+
+        .magic-box {
+          // TODO: Fix animation to be responsive
+        }
 
         [class*='event-image'] {
           img {
@@ -109,7 +140,7 @@ $margin: .5em;
         [class*='description'] {
           transition: opacity .5s .5s ease-in-out, height .5s ease-in-out;
           opacity: 1;
-          height: 100px;
+          height: 7em;
         }
       }
     }
@@ -181,6 +212,130 @@ $margin: .5em;
       height: 0;
       font-size: rem-calc(8);
       transition: opacity .25s ease-in-out, height .5s .25s ease-in-out;
+    }
+  }
+
+  // Single Event
+  .tribe-events-single {
+    padding: 0;
+    @include breakpoint(xlarge){
+      margin-top: rem-calc(120);
+    }
+
+    [class*='event-image'] {
+      @include breakpoint(xlarge){
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        margin-bottom: 0;
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        img {
+          display: none;
+        }
+      }
+    }
+
+    .hentry > *:not([class*='event-image']){
+      @include xy-cell(
+        $size: full,
+      );
+    }
+
+    [class*='event-title'] {
+      margin-top: 2em;
+      margin-bottom: 2em;
+      font-size: rem-calc(32);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    [class*='event-category'] {
+      margin-top: 1em;
+      margin-bottom: 1em;
+
+      a {
+        color: inherit;
+      }
+    }
+
+    [class*='events-schedule'] {
+      @include xy-cell(
+        $size: full,
+        $gutters: 0,
+      );
+      @include xy-grid(
+        $wrap: true,
+      );
+      margin-top: 4em;
+      margin-bottom: 4em;
+      @include breakpoint(medium) {
+        @include xy-grid(
+          $wrap: false,
+        );
+        justify-content: space-between;
+      }
+
+      &::before,
+      &::after {
+        @include breakpoint(medium) {
+          display: none;
+        }
+      }
+
+      & > * {
+        line-height: rem-calc(36);
+        @include breakpoint(small only) {
+          @include xy-cell(
+            $size: full,
+            $gutters: 0,
+          );
+          justify-content: center;
+          text-align: center;
+        }
+      }
+
+      [class$='dates'] {
+        @include xy-grid(
+          $wrap: false,
+        );
+        font-size: rem-calc(18);
+        font-weight: 800;
+        text-transform: uppercase;
+
+        dfn {
+          display: block;
+          font-size: rem-calc(14);
+          font-weight: normal;
+          font-style: normal;
+          text-transform: none;
+        }
+      }
+
+      [class*='venue'] {
+        font-size: rem-calc(16);
+      }
+
+      [class*='cost'] {
+        font-size: rem-calc(16);
+      }
+
+      [class*='tickets-cta'] {
+        height: 50%;
+        border-bottom: $margin/2 solid $black;
+        font-size: rem-calc(12);
+        font-weight: 800;
+        text-transform: uppercase;
+        color: inherit;
+        @include breakpoint(medium) {
+          padding-left: rem-calc(32);
+        }
+      }
     }
   }
 }

@@ -13,15 +13,35 @@ const topbar = new Foundation.Sticky($('#topbar'), {
   containerClass: 'page',
 });
 
+// TODO: handle resize issues
 const sidenav = (
   new Foundation.OffCanvas($('#sidenav'), {
-    nested: true,
+    closeOnClick: true,
     contentId: 'app',
+    nested: true,
+    contentScroll: false,
     isRevealed: true,
     revealOn: 'large',
   }),
   new Foundation.DropdownMenu($('#sidenav .menu:first-child'), {})
 );
+
+//Background tricks for single events on really xlarge devices
+const single_bg = () => {
+  const image = $('.single #tribe-events .tribe-events-event-image');
+  const content = $('.single #content');
+  const sidenav = $('#sidenav');
+
+  if( Foundation.MediaQuery.atLeast('xlarge') && image ){
+    const url = image.children('img').attr('src');
+    const marginLeft = (content.outerWidth(true)- content.innerWidth())/2;
+    return image.width(marginLeft + sidenav.outerWidth(true)).css('background-image',`url(${url})`)
+  }
+
+  return image.removeAttr('style');
+}
+$(document).ready(single_bg);
+$(window).resize(single_bg);
 
 if (process.env.NODE_ENV == 'production') {
   Raven.config(process.env.SENTRY_DSN).install();

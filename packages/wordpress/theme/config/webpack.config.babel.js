@@ -95,7 +95,7 @@ const rules = [
   },
   // scss
   {
-    test: /\.(s)?css$/,
+    test: /\.(p|s)?css$/,
     use: [
       MiniCssExtractPlugin.loader,
       {
@@ -144,7 +144,7 @@ const modules = {
 const resolve = {
   modules: ['node_modules'],
   extensions: [
-    '*', '.js', '.jsx', '.ts', '.tsx', '.scss',
+    '*', '.js', '.jsx', '.ts', '.tsx', '.scss', '.pcss',
   ],
 };
 const performance = {};

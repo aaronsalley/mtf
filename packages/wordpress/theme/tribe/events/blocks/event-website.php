@@ -13,6 +13,8 @@
  *
  */
 
+return;
+
 if ( ! $this->attr( 'href' ) || ! $this->attr( 'urlLabel' ) ) {
 	return;
 }

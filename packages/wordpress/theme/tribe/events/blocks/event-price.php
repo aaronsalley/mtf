@@ -13,8 +13,8 @@
  *
  */
 
-$cost             = $this->attr( 'cost' );
-$cost_description = $this->attr( 'costDescription' );
+return;
+
 ?>
 <div class="tribe-block tribe-block__event-price">
 	<?php if ( $cost ) : ?>

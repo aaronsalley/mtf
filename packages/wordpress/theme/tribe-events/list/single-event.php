@@ -11,6 +11,13 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
+$time_format = get_option( 'time_format', Tribe__Date_Utils::TIMEFORMAT );
+
+$start_date = tribe_get_start_date( null, false, 'F j' );
+$start_time = tribe_get_start_date( null, false, $time_format );
+$start_ts = tribe_get_start_date( null, false, Tribe__Date_Utils::DBDATEFORMAT );
+$end_date = tribe_get_display_end_date( null, false, 'F j' );
+$end_ts = tribe_get_end_date( null, false, Tribe__Date_Utils::DBDATEFORMAT );
 ?>
 <!-- Event Image -->
 <?php echo tribe_event_featured_image( null, 'medium' ); ?>
@@ -30,11 +37,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="tribe-events-event-meta">
 		<a class="tribe-event-url" href="<?php echo esc_url( tribe_get_event_link() ); ?>" title="<?php the_title_attribute() ?>" rel="bookmark">
 			<!-- Schedule & Recurrence Details -->
-			<span class="tribe-event-schedule-details"><?php echo tribe_events_event_schedule_details(); ?></span>
-			<?php if ( tribe_get_cost() ) : ?>
-				<!-- Event Cost -->
-				<span class="ticket-cost"><?php echo tribe_get_cost( null, true ); ?></span>
-			<?php endif; ?>
+			<div class="tribe-events-dates">
+				<span class="tribe-events-start-date">
+					<time datetime="<?php esc_attr_e( $start_ts ) ?>"><?php esc_html_e( $start_date ) ?>
+						<?php if ( !tribe_event_is_multiday() ) : esc_html_e(' at '); // Multiday events	?>
+							<span><?php esc_html_e( $start_time ) ?></span>
+						<?php endif; ?>
+					</time>
+				</span>
+				<?php if ( tribe_event_is_multiday() ) : echo ' - '; // Multiday events	?>
+					<span class="tribe-events-end-date">
+						<time datetime="<?php esc_attr_e( $end_ts ) ?>"><?php esc_html_e( $end_date ) ?></time>
+					</span>
+				<?php endif; ?>
+			</div>
 		</a>
 	</div><!-- .tribe-events-event-meta -->
 	<?php do_action( 'tribe_events_after_the_meta' ); ?>

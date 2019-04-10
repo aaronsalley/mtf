@@ -14,7 +14,4 @@
  */
 ?>
 
-<?php $event_id = $this->get( 'post_id' ); ?>
-<div id="post-<?php echo absint( $event_id ); ?>" <?php post_class(); ?>>
-	<?php the_content(); ?>
-</div>
+<?php the_content(); ?>

@@ -80,6 +80,9 @@ body {
     @include top-bar-container;
     position: fixed;
     height: rem-calc(72);
+    @include breakpoint(large) {
+      z-index: 14;
+    }
 
     .container {
       @include xy-cell(
@@ -159,18 +162,24 @@ body {
       @include off-canvas-position(
         $position: right,
       );
-      @include off-canvas-reveal(
-        $position: right,
-      );
       justify-content: center;
 
       @include breakpoint(large) {
         @include xy-cell(
           $size: shrink,
         );
+        @include off-canvas-reveal(
+          $position: right,
+        );
         @include in-canvas;
         width: 100%;
         max-width: rem-calc(192);
+      }
+
+      &.is-open {
+        @include off-canvas-reveal(
+          $position: right,
+        );
       }
 
       .menu {
@@ -231,6 +240,7 @@ body {
           $direction: vertical,
           $wrap: false,
         );
+        z-index: 15;
         height: 100vh;
         margin-left: 0;
         justify-content: center;

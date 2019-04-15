@@ -6,5 +6,4 @@ This theme depends on:
 
 TODOS
 - MU plugins installer
-- How to keep comments that define theme
 - Solutions for mobile degredation

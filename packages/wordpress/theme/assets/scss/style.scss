@@ -1,4 +1,4 @@
-/**!
+/*!
   * Theme Name: Musical Theatre Factory
   * Author: Disruptv.io
   * Author URI: https://disruptv.io
@@ -156,6 +156,7 @@ body {
   }
 
   #sidenav {
+    // TODO: have this open to the left on mobile
     @include xy-cell-block-container;
     @include off-canvas-base;
     @include off-canvas-position(
@@ -179,6 +180,7 @@ body {
       @include off-canvas-reveal(
         $position: right,
       );
+      overflow: visible;
     }
 
     .menu {
@@ -204,6 +206,7 @@ body {
       list-style: none;
 
       a {
+        overflow: hidden;
         padding-top: rem-calc(54/2);
         padding-right: rem-calc(24);
         padding-bottom: rem-calc(54/2);
@@ -234,9 +237,16 @@ body {
         height: rem-calc(24);
         position: absolute;
         top: 50%;
-        right: 0;
-        transform: translate(50%, -50%) rotate(45deg);
+        left: 0;
+        right: auto;
+        transform: translate(-50%, -50%) rotate(45deg);
         background-color: $mtf_red;
+
+        @include breakpoint(large) {
+          left: auto;
+          right: 0;
+          transform: translate(50%, -50%) rotate(45deg);
+        }
       }
     }
 
@@ -266,9 +276,11 @@ body {
     );
     @include xy-cell-block();
 
-    .page:not(.home) & {
-      padding-left: rem-calc(200);
-    };
+    @include breakpoint(large){
+      .page:not(.home) & {
+        padding-left: rem-calc(200);
+      };
+    }
 
     & > .footer {
       @include xy-cell(
@@ -278,6 +290,10 @@ body {
       background-color: $light-gray;
     }
   }
+}
+
+.archive {
+  // Style this for post archives
 }
 
 // Elementor

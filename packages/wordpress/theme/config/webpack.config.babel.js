@@ -13,41 +13,6 @@ import TerserPlugin from 'terser-webpack-plugin';
 
 import paths from './paths';
 
-const createUniqueIdGenerator = () => {
-  const index = {};
-  const generateNextId = incstr.idGenerator({
-    alphabet: 'abcefghijklmnopqrstuvwxyz0123456789',
-  });
-
-  return (name) => {
-    if (index[name]) {
-      return index[name];
-    }
-
-    let nextId;
-    do {
-      nextId = generateNextId();
-    } while (/^[0-9]/.test(nextId));
-
-    index[name] = generateNextId();
-
-    return index[name];
-  };
-};
-const uniqueId = createUniqueIdGenerator();
-const generateScopedName = (localName, resourcePath) => {
-  const componentFile = resourcePath.split('/').slice(-1);
-  const componentName = componentFile.toString().split('.').slice(0, 1);
-
-  if (process.env.NODE_ENV !== 'production') {
-    return localName;
-    // return componentName + '_' + localName;
-  } else {
-    return localName;
-    // return uniqueId(componentName) + '_' + uniqueId(localName);
-  }
-};
-
 const entry = {
   'style': paths.source + '/assets/scss/style.scss',
   'vendors': paths.source + '/assets/js/vendors.js',
@@ -76,7 +41,6 @@ const rules = [
         'options': {
           name: '[path][name].[ext]',
           context: paths.source,
-          // publicPath: paths.build + '/assets',
         },
       },
     ],
@@ -89,7 +53,6 @@ const rules = [
       options: {
         name: '[path][name].[ext]',
         context: paths.source,
-        // publicPath: paths.build + '/assets',
       },
     },
   },
@@ -101,12 +64,7 @@ const rules = [
       {
         loader: 'css-loader',
         options: {
-          // modules: true,
           camelCase: true,
-          // getLocalIdent: (context, localIdentName, localName) => {
-          //   return generateScopedName(localName, context.resourcePath);
-          // },
-          // localIdentName: '[name]_[local]_[hash:base64:5]',
           sourceMap: process.env.NODE_ENV !== 'production' ? true : false,
           importLoaders: 2,
         },
@@ -150,8 +108,6 @@ const resolve = {
 const performance = {};
 const externals = {
   jquery: 'jQuery',
-  // react: 'React',
-  // reactDOM: 'ReactDOM',
 };
 const plugins = [
   new BrowserSyncPlugin({

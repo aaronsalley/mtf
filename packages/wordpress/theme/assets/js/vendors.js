@@ -43,6 +43,9 @@ const single_bg = () => {
 $(document).ready(single_bg);
 $(window).resize(single_bg);
 
+// TODO: set ticket iframe to content height
+// .js-ticket-widget .g-grid .g-grid--page-margin-manual
+
 if (process.env.NODE_ENV == 'production') {
   Raven.config(process.env.SENTRY_DSN).install();
 

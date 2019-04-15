@@ -71,206 +71,217 @@ body {
   @include breakpoint(large) {
     overflow: hidden;
   }
+}
 
-  #topbar {
+#topbar {
+  @include xy-cell(
+    $size: full,
+    $gutters: 0,
+  );
+  @include top-bar-container;
+  position: fixed;
+  height: rem-calc(72);
+
+  .container {
     @include xy-cell(
       $size: full,
       $gutters: 0,
     );
-    @include top-bar-container;
-    position: fixed;
-    height: rem-calc(72);
-    @include breakpoint(large) {
-      z-index: 14;
+    @include xy-grid-container(
+      $padding: 0,
+    );
+    @include xy-grid();
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .custom-logo {
+    z-index: 999999;
+    width: auto;
+    max-height: rem-calc(64);
+    padding-left: rem-calc(16);
+  }
+
+  .menu {
+    display: none;
+
+    @include breakpoint(medium) {
+      @include menu-base;
     }
 
-    .container {
-      @include xy-cell(
-        $size: full,
-        $gutters: 0,
-      );
-      @include xy-grid-container(
-        $padding: 0,
-      );
-      @include xy-grid();
-      justify-content: space-between;
-      align-items: center;
-    }
+    .menu-item {
+      font-weight: 900;
+      text-transform: uppercase;
 
-    .custom-logo {
-      width: auto;
-      max-height: rem-calc(64);
-      padding-left: rem-calc(16);
-    }
-
-    .menu {
-      display: none;
-
-      @include breakpoint(medium) {
-        @include menu-base;
+      &:not(:last-child) {
+        border-right: 2px solid $white;
       }
 
-      .menu-item {
-        font-weight: 900;
-        text-transform: uppercase;
-
-        &:not(:last-child) {
-          border-right: 2px solid $white;
-        }
-
-        &:last-child a {
-          color: $mtf_red;
-        }
-
-        a {
-          padding-top: 0;
-          padding-right: rem-calc(38);
-          padding-bottom: 0;
-          padding-left: rem-calc(38);
-          font-size: rem-calc(12);
-          color: $white;
-        }
+      &:last-child a {
+        color: $mtf_red;
       }
-    }
 
-    .menu-icon {
-      @include breakpoint(large) {
-        display: none !important;
+      a {
+        padding-top: 0;
+        padding-right: rem-calc(38);
+        padding-bottom: 0;
+        padding-left: rem-calc(38);
+        font-size: rem-calc(12);
+        color: $white;
       }
     }
   }
 
-  #content {
-    @include xy-grid(
-      $wrap: false,
-    );
-    @include xy-grid-container(
-      $padding: 0,
-    );
-    @include off-canvas-basics;
-    @include off-canvas-content;
-
+  .menu-icon {
     @include breakpoint(large) {
-      @include xy-grid-frame(
-        $vertical: true,
-      );
-    }
-
-    #sidenav {
-      @include xy-cell-block-container;
-      @include off-canvas-base;
-      @include off-canvas-position(
-        $position: right,
-      );
-      justify-content: center;
-
-      @include breakpoint(large) {
-        @include xy-cell(
-          $size: shrink,
-        );
-        @include off-canvas-reveal(
-          $position: right,
-        );
-        @include in-canvas;
-        width: 100%;
-        max-width: rem-calc(192);
-      }
-
-      &.is-open {
-        @include off-canvas-reveal(
-          $position: right,
-        );
-      }
-
-      .menu {
-        @include menu-base;
-      }
-
-      .menu:first-child() {
-        @include menu-direction(
-          $dir: vertical,
-        );
-        height: 100vh;
-        justify-content: center;
-      }
-
-      .menu:last-child() {
-        @include menu-icons;
-        position: absolute;
-        bottom: 0;
-      }
-
-      .menu-item {
-        position: static;
-        list-style: none;
-
-        a {
-          padding-top: rem-calc(54/2);
-          padding-right: rem-calc(24);
-          padding-bottom: rem-calc(54/2);
-          padding-left: rem-calc(24);
-          color: inherit;
-        }
-      }
-
-      .is-active > a {
-        background: transparent;
-      }
-
-      .is-dropdown-submenu-parent.is-active {
-        & > a {
-          position: relative;
-        }
-
-        & > a::before {
-          content: '';
-          display: block;
-          width: rem-calc(24);
-          height: rem-calc(24);
-          position: absolute;
-          top: 50%;
-          right: 0;
-          transform: translate(50%, -50%) rotate(45deg);
-          background-color: $mtf_red;
-        }
-      }
-
-      .is-dropdown-submenu.js-dropdown-active {
-        @include xy-grid(
-          $direction: vertical,
-          $wrap: false,
-        );
-        z-index: 15;
-        height: 100vh;
-        margin-left: 0;
-        justify-content: center;
-        background-color: $mtf_red;
-
-        a {
-          color: $white;
-        }
-      }
-    }
-
-    #main {
-      @include xy-cell(
-        $size: auto,
-        $gutters: 0,
-      );
-      @include xy-cell-block();
-
-      & > .footer {
-        @include xy-cell(
-          $size: full,
-          $gutters: 0,
-        );
-        background-color: $light-gray;
-      }
+      display: none !important;
     }
   }
 }
 
-.elementor-29 .elementor-element.elementor-element-4a2f833 .eael-img-accordion {
+#content {
+  @include xy-grid(
+    $wrap: false,
+  );
+  @include xy-grid-container(
+    $padding: 0,
+  );
+  @include off-canvas-basics;
+  @include off-canvas-content;
+
+  @include breakpoint(large) {
+    @include xy-grid-frame(
+      $vertical: true,
+    );
+  }
+
+  #sidenav {
+    @include xy-cell-block-container;
+    @include off-canvas-base;
+    @include off-canvas-position(
+      $position: right,
+    );
+    justify-content: center;
+
+    @include breakpoint(large) {
+      @include xy-cell(
+        $size: shrink,
+      );
+      @include off-canvas-reveal(
+        $position: right,
+      );
+      @include in-canvas;
+      width: 100%;
+      max-width: rem-calc(192);
+    }
+
+    &.is-open {
+      @include off-canvas-reveal(
+        $position: right,
+      );
+    }
+
+    .menu {
+      @include menu-base;
+    }
+
+    .menu:first-child() {
+      @include menu-direction(
+        $dir: vertical,
+      );
+      height: 100vh;
+      justify-content: center;
+    }
+
+    .menu:last-child() {
+      @include menu-icons;
+      position: absolute;
+      bottom: 0;
+    }
+
+    .menu-item {
+      position: static;
+      list-style: none;
+
+      a {
+        padding-top: rem-calc(54/2);
+        padding-right: rem-calc(24);
+        padding-bottom: rem-calc(54/2);
+        padding-left: rem-calc(24);
+        color: inherit;
+      }
+    }
+
+    .is-active > a {
+      background: transparent;
+    }
+
+    .submenu {
+      display: none;
+    }
+
+    .is-dropdown-submenu-parent.current-menu-item,
+    .is-dropdown-submenu-parent.current-menu-ancestor,
+    .is-dropdown-submenu-parent.is-active {
+      & > a {
+        position: relative;
+      }
+
+      & > a::before {
+        content: '';
+        display: block;
+        width: rem-calc(24);
+        height: rem-calc(24);
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(50%, -50%) rotate(45deg);
+        background-color: $mtf_red;
+      }
+    }
+
+    .is-dropdown-submenu-parent.current-menu-item .is-dropdown-submenu,
+    .is-dropdown-submenu-parent.current-menu-ancestor .is-dropdown-submenu,
+    .is-dropdown-submenu.js-dropdown-active {
+      @include xy-grid(
+        $direction: vertical,
+        $wrap: false,
+      );
+      // z-index: 15;
+      height: 100vh;
+      margin-left: 0;
+      justify-content: center;
+      background-color: $mtf_red;
+
+      a {
+        color: $white;
+      }
+    }
+  }
+
+  #main {
+    @include xy-cell(
+      $size: auto,
+      $gutters: 0,
+    );
+    @include xy-cell-block();
+
+    .page:not(.home) & {
+      padding-left: rem-calc(200);
+    };
+
+    & > .footer {
+      @include xy-cell(
+        $size: full,
+        $gutters: 0,
+      );
+      background-color: $light-gray;
+    }
+  }
+}
+
+// Elementor
+[class$='img-accordion'] {
   height: 85vh !important;
 }
 

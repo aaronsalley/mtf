@@ -60,6 +60,12 @@
 
 $margin: .5em;
 
+.page.events-archive {
+  #content #main {
+    padding-left: 0;
+  }
+}
+
 #tribe-events {
   .archive & {
     margin-top: rem-calc(120);

@@ -1,9 +1,13 @@
-This theme depends on:
-- The Events Calendar
-- Elementor
-- Essential Addons for Elementor
-- Ninja Forms
-
 TODOS
-- MU plugins installer
-- Solutions for mobile degredation
+- Solutions for mobile degradation
+- Vendors.js
+  - Sidenav movements at breakpoints
+  - Dynamic iFrame height
+- Style.scss
+  - Sidenav needs to open to the left on mobile
+  - Style post archives
+- Events.scss
+  - import tribe defaults
+  - fix animation of magicbox to be responsive
+- Archive.php & index.php
+  - display loop at the end

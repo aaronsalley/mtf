@@ -5,7 +5,7 @@
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
  * @package WordPress
- * @subpackage Twenty_Nineteen
+ * @subpackage MTF
  * @since 1.0.0
  */
 
@@ -235,3 +235,52 @@ function mtf_skip_link_focus_fix() {
 	<?php
 }
 add_action( 'wp_print_footer_scripts', 'mtf_skip_link_focus_fix' );
+
+require_once get_template_directory() . '/inc/class-tgm-plugin-activation.php';
+function mtf_register_required_plugins() {
+	/*
+	 * Array of plugin arrays. Required keys are name and slug.
+	 * If the source is NOT from the .org repo, then source is also required.
+	 */
+	$plugins = array(
+		array(
+			'name'      => 'Elementor',
+			'slug'      => 'elementor',
+			'required'  => true,
+		),
+		array(
+			'name'      => 'Essential Addons for Elementor',
+			'slug'      => 'essential-addons-for-elementor-lite',
+			'required'  => true,
+		),
+		array(
+			'name'      => 'The Events Calendar',
+			'slug'      => 'the-events-calendar',
+			'required'  => true,
+		),
+		array(
+			'name'      => 'Ninja Forms',
+			'slug'      => 'ninja-forms',
+			'required'  => false,
+		),
+	);
+
+	/*
+	 * Array of configuration settings. Amend each line as needed.
+	 */
+	$config = array(
+		'id'           => 'mtf',                   // Unique ID for hashing notices for multiple instances of TGMPA.
+		'default_path' => '',                      // Default absolute path to bundled plugins.
+		'menu'         => 'tgmpa-install-plugins', // Menu slug.
+		'parent_slug'  => 'themes.php',            // Parent menu slug.
+		'capability'   => 'edit_theme_options',    // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
+		'has_notices'  => true,                    // Show admin notices or not.
+		'dismissable'  => false,                   // If false, a user cannot dismiss the nag message.
+		'dismiss_msg'  => '',                      // If 'dismissable' is false, this message will be output at top of nag.
+		'is_automatic' => true,                    // Automatically activate plugins after installation or not.
+		'message'      => '',                      // Message to output right before the plugins table.
+	);
+
+	tgmpa( $plugins, $config );
+}
+add_action( 'tgmpa_register', 'mtf_register_required_plugins' );

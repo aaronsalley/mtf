@@ -293,7 +293,10 @@ body {
 }
 
 .archive {
-  // Style this for post archives
+  // TODO: Style this for post archives
+  .post {
+    @include card-container();
+  }
 }
 
 // Elementor

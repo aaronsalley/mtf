@@ -294,6 +294,10 @@ body {
 
 .archive {
   // TODO: Style this for post archives
+  #content #main {
+    margin-top: rem-calc(120);
+  }
+  
   .post {
     @include card-container();
   }

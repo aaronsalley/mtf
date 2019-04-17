@@ -67,10 +67,6 @@ $margin: .5em;
 }
 
 #tribe-events {
-  .archive & {
-    margin-top: rem-calc(120);
-  }
-
   #tribe-events-topbar {
     @include xy-grid(
       $wrap: false,

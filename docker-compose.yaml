@@ -2,20 +2,22 @@ version: '3.7'
 
 services:
   wordpress:
+    # docker-compose exec wordpress chown -R www-data:www-data /var/www/html
     image: wordpress
     restart: always
     ports:
       - 9000:80
+      - 443
     environment:
       WORDPRESS_DB_PASSWORD: password
       WORDPRESS_TABLE_PREFIX: mtf_
       WORDPRESS_CONFIG_EXTRA: |
-        define('WP_DEFAULT_THEME', 'mtf');
+        define('WP_DEFAULT_THEME', 'Musical Theatre Factory');
     volumes:
       - ./packages/wordpress/theme/.build:/var/www/html/wp-content/themes/mtf
-      - ./packages/wordpress/wp-plugins:/var/www/html/wp-content/plugins
-      - ./packages/wordpress/wp-uploads:/var/www/html/wp-content/uploads
-      - ./packages/wordpress/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./packages/wordpress/theme/wp-plugins:/var/www/html/wp-content/plugins
+      - ./packages/wordpress/theme/wp-uploads:/var/www/html/wp-content/uploads
+      - ./packages/wordpress/theme/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     depends_on:
       - mysql
   mysql:
@@ -23,14 +25,14 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
-    volumes:
-      - ./packages/wordpress/wp-data:/var/lib/mysql
+    # volumes:
+    #   - ./packages/wordpress/theme/wp-data:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: mysql
     ports:
-      - 9001:80
+      - 80
 
   react:
     build: ./packages/wordpress/app
@@ -78,9 +80,6 @@ services:
   #     - 9006:5601
   #     - 9007:9200
   #     - 9008:5044
-
-volumes:
-  theme:
 
 networks:
   app:

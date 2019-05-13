@@ -12,7 +12,10 @@
         <div class="branding">
           <?php the_custom_logo(); ?>
         </div>
-        <?php wp_nav_menu(); ?>
+        <?php wp_nav_menu( array(
+          'theme_location'  =>  'menu-2',
+          'container'       =>  '',
+        )); ?>
         <button class="menu-icon" type="button" data-toggle="sidenav"></button>
       </div>
     </header>

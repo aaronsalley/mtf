@@ -13,7 +13,6 @@ const topbar = new Foundation.Sticky($('#topbar'), {
   containerClass: 'page',
 });
 
-// TODO: handle resize issues
 const sidenav = (
   new Foundation.OffCanvas($('#sidenav'), {
     closeOnClick: true,
@@ -23,7 +22,14 @@ const sidenav = (
     isRevealed: true,
     revealOn: 'large',
   }),
-  new Foundation.DropdownMenu($('#sidenav .menu:first-child'), {})
+
+  (() => {
+    if (Foundation.MediaQuery.atLeast('medium')) {
+      new Foundation.DropdownMenu($('#sidenav .menu:first-child'), {})
+    } else {
+      new Foundation.Drilldown($('#sidenav .menu:first-child'), {})
+    }  
+  })()
 );
 
 //Background tricks for single events on really xlarge devices
@@ -36,12 +42,12 @@ const single_bg = () => {
     const url = image.children('img').attr('src');
     const marginLeft = (content.outerWidth(true)- content.innerWidth())/2;
     return image.width(marginLeft + sidenav.outerWidth(true)).css('background-image',`url(${url})`)
+  } else if ( image ) {
+    return image.removeAttr('style');
   }
-
-  return image.removeAttr('style');
 }
-$(document).ready(single_bg);
-$(window).resize(single_bg);
+$(window).ready(single_bg);
+$(window).resize(sidenav, single_bg);
 
 // TODO: set ticket iframe to content height
 // .js-ticket-widget .g-grid .g-grid--page-margin-manual

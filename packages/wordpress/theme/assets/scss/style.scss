@@ -51,7 +51,7 @@
 @include foundation-menu;
 @include foundation-menu-icon;
 // @include foundation-accordion-menu;
-// @include foundation-drilldown-menu;
+@include foundation-drilldown-menu;
 @include foundation-dropdown-menu;
 
 // Layout components
@@ -66,6 +66,8 @@
 // @include foundation-flex-classes;
 // @include foundation-visibility-classes;
 // @include foundation-prototype-classes;
+
+@import '../fonts/fonts';
 
 body {
   @include breakpoint(large) {
@@ -96,7 +98,6 @@ body {
   }
 
   .custom-logo {
-    z-index: 999999;
     width: auto;
     max-height: rem-calc(64);
     padding-left: rem-calc(16);
@@ -105,7 +106,7 @@ body {
   .menu {
     display: none;
 
-    @include breakpoint(medium) {
+    @include breakpoint(large) {
       @include menu-base;
     }
 
@@ -156,7 +157,6 @@ body {
   }
 
   #sidenav {
-    // TODO: have this open to the left on mobile
     @include xy-cell-block-container;
     @include off-canvas-base;
     @include off-canvas-position(
@@ -181,24 +181,59 @@ body {
         $position: right,
       );
       overflow: visible;
+      z-index: 12 !important;
+    }
+
+    &.is-transition-overlap {
+      z-index: inherit;
     }
 
     .menu {
       @include menu-base;
-    }
 
-    .menu:first-child() {
-      @include menu-direction(
-        $dir: vertical,
-      );
-      height: 100vh;
-      justify-content: center;
-    }
+      &:first-child {
+        @include menu-direction(
+          $dir: vertical,
+        );
+        @include xy-cell(
+          $size: full,
+          $gutters: 0,
+        );
+        height: 100vh;
+        justify-content: center;
+      }
+      
+      // Socials
+      &:last-child:not(:first-child) {
+        @include menu-icons;
+        position: absolute;
+        bottom: 0;
 
-    .menu:last-child() {
-      @include menu-icons;
-      position: absolute;
-      bottom: 0;
+        .menu-item {
+          a {
+            font-size: 0;
+
+            &::before {
+              content: "";
+              display: block;
+              font-family: 'Socicon';
+              font-size: 1rem;
+            }
+          }
+
+          &.facebook a::before {
+            content: "\e028";
+          }
+
+          &.twitter a::before {
+            content: "\e08d";
+          }
+
+          &.instagram a::before {
+            content: "\e044";
+          }
+        }
+      }
     }
 
     .menu-item {
@@ -223,6 +258,36 @@ body {
       display: none;
     }
 
+    // Only applies to small screens
+    .is-drilldown {
+      @include foundation-drilldown-menu;
+
+      .drilldown a {
+        padding: rem-calc(54/2) rem-calc(24);
+      }
+
+      .is-drilldown-submenu.drilldown-submenu-cover-previous.is-active {
+        @include xy-grid(
+          $direction: vertical,
+          $wrap: false,
+        );
+        height: 100vh;
+        margin-left: 0;
+        justify-content: center;
+        background-color: $mtf_red;
+  
+        a {
+          padding: rem-calc(54/2) rem-calc(24);
+          color: $white;
+        }
+
+        .js-drilldown-back > a::before {
+          border-color: transparent $white transparent transparent;
+        }
+      }
+    }
+
+    // Only applies to tablets and up
     .is-dropdown-submenu-parent.current-menu-item,
     .is-dropdown-submenu-parent.current-menu-ancestor,
     .is-dropdown-submenu-parent.is-active {
@@ -257,7 +322,7 @@ body {
         $direction: vertical,
         $wrap: false,
       );
-      // z-index: 15;
+      z-index: 999999;
       height: 100vh;
       margin-left: 0;
       justify-content: center;
@@ -265,6 +330,10 @@ body {
 
       a {
         color: $white;
+
+        &:hover {
+          font-weight: bold;
+        }
       }
     }
   }

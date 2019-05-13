@@ -2,12 +2,12 @@ version: '3.7'
 
 services:
   wordpress:
+    # Remember to run
     # docker-compose exec wordpress chown -R www-data:www-data /var/www/html
     image: wordpress
     restart: always
     ports:
       - 9000:80
-      - 443
     environment:
       WORDPRESS_DB_PASSWORD: password
       WORDPRESS_TABLE_PREFIX: mtf_
@@ -25,14 +25,16 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
-    # volumes:
-    #   - ./packages/wordpress/theme/wp-data:/var/lib/mysql
+    volumes:
+      - ./packages/wordpress/theme/wp-data:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: mysql
     ports:
       - 80
+    depends_on:
+      - mysql
 
   react:
     build: ./packages/wordpress/app
@@ -83,5 +85,3 @@ services:
 
 networks:
   app:
-  sonarnet:
-    driver: bridge

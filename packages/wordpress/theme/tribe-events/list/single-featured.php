@@ -13,7 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <!-- Event Image -->
-<?php echo tribe_event_featured_image( null, 'large' ); ?>
+<?php 
+if ( tribe_event_featured_image() ) {
+	echo tribe_event_featured_image( null, 'large' );
+} else {
+	echo '<div class="event-image-placeholder"></div>';
+}
+?>
 
 <!-- Event Title -->
 <?php do_action( 'tribe_events_before_the_event_title' ) ?>
@@ -30,11 +36,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="tribe-events-event-meta">
 		<a class="tribe-event-url" href="<?php echo esc_url( tribe_get_event_link() ); ?>" title="<?php the_title_attribute() ?>" rel="bookmark">
 			<!-- Schedule & Recurrence Details -->
-			<span class="tribe-event-schedule-details"><?php echo tribe_events_event_schedule_details(); ?></span>
-			<?php if ( tribe_get_cost() ) : ?>
-				<!-- Event Cost -->
-				<span class="ticket-cost"><?php echo tribe_get_cost( null, true ); ?></span>
-			<?php endif; ?>
+			<div class="tribe-events-dates">
+				<span class="tribe-events-start-date">
+					<time datetime="<?php esc_attr_e( $start_ts ) ?>"><?php esc_html_e( $start_date ) ?>
+						<?php if ( !tribe_event_is_multiday() ) : esc_html_e(' at '); // Multiday events	?>
+							<span><?php esc_html_e( $start_time ) ?></span>
+						<?php endif; ?>
+					</time>
+				</span>
+				<?php if ( tribe_event_is_multiday() ) : echo ' - '; // Multiday events	?>
+					<span class="tribe-events-end-date">
+						<time datetime="<?php esc_attr_e( $end_ts ) ?>"><?php esc_html_e( $end_date ) ?></time>
+					</span>
+				<?php endif; ?>
+			</div>
 		</a>
 	</div><!-- .tribe-events-event-meta -->
 	<?php do_action( 'tribe_events_after_the_meta' ); ?>
@@ -47,4 +62,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</a>
 	</div><!-- .tribe-events-list-event-description -->
 	<?php do_action( 'tribe_events_after_the_content' ); ?>
+
+	<div class="tribe-events-list-tags">
+		<?php echo tribe_get_event_categories(); ?>
+		<?php echo tribe_meta_event_tags(); ?>
+		foo
+	</div>
 </div>

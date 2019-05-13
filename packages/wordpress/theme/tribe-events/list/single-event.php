@@ -20,7 +20,13 @@ $end_date = tribe_get_display_end_date( null, false, 'F j' );
 $end_ts = tribe_get_end_date( null, false, Tribe__Date_Utils::DBDATEFORMAT );
 ?>
 <!-- Event Image -->
-<?php echo tribe_event_featured_image( null, 'medium' ); ?>
+<?php 
+if ( tribe_event_featured_image() ) {
+	echo tribe_event_featured_image( null, 'medium' );
+} else {
+	echo '<div class="event-image-placeholder"></div>';
+}
+?>
 
 <!-- Event Title -->
 <?php do_action( 'tribe_events_before_the_event_title' ) ?>
@@ -63,4 +69,10 @@ $end_ts = tribe_get_end_date( null, false, Tribe__Date_Utils::DBDATEFORMAT );
 		</a>
 	</div><!-- .tribe-events-list-event-description -->
 	<?php do_action( 'tribe_events_after_the_content' ); ?>
+
+	<div class="tribe-events-list-tags">
+		<?php echo tribe_get_event_categories(); ?>
+		<?php echo tribe_meta_event_tags(); ?>
+		foo
+	</div>
 </div>

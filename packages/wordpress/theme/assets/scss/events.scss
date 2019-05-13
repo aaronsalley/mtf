@@ -107,7 +107,6 @@ $margin: .5em;
         $size: full,
         $gutters: 0,
       );
-      height: rem-calc(300);
       @include breakpoint(medium){
         @include xy-cell(
           $size: 4,
@@ -120,6 +119,7 @@ $margin: .5em;
           $gutters: 0,
         );
       }
+      height: rem-calc(360);
 
       &:first-of-type {
         margin-top: 0;
@@ -129,16 +129,15 @@ $margin: .5em;
         z-index: 12;
 
         .magic-box {
-          // TODO: Fix animation to be responsive
         }
 
         [class*='event-image'] {
-          img {
-            transition: all .5s ease-in-out;
-            transform: translateY($margin*-1) scale(1.05);
-            box-shadow: 0px $margin $margin rgba(0,0,0,.18);
-          }
+          transition: all .5s ease-in-out;
+          box-shadow: 0px $margin $margin rgba(0,0,0,.18);
+          transform: translateY($margin*-1) scale(1.05);
         }
+
+        // TODO: Fix animation to be responsive
         [class*='description'] {
           transition: opacity .5s .5s ease-in-out, height .5s ease-in-out;
           opacity: 1;
@@ -148,9 +147,16 @@ $margin: .5em;
     }
 
     [class*='featured'] {
-      // @include xy-cell(
-      //   $size: 6,
-      // );
+      @include breakpoint(medium){
+        @include xy-cell(
+          $size: 8,
+        );
+      }
+      @include breakpoint(large){
+        @include xy-cell(
+          $size: 6,
+        );
+      }
       padding: 0;
       background-color: transparent;
     }
@@ -160,11 +166,23 @@ $margin: .5em;
         $size: full,
         $gutters: 0,
       );
+      overflow: hidden;
+      position: relative;
       margin-bottom: 0;
+      transition: all .5s .25s ease-in-out;
+      box-shadow: initial;
+
+      &::after {
+        content: "";
+        display: block;
+        padding-bottom: 50%;
+      }
 
       img {
-        transition: all .5s .25s ease-in-out;
-        box-shadow: initial;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
       }
     }
 
@@ -201,6 +219,10 @@ $margin: .5em;
       [class*='cost'] {
         margin-bottom: $margin;
         font-weight: bold;
+      }
+
+      [class*='tags'] {
+        font-size: rem-calc(8);
       }
     }
 

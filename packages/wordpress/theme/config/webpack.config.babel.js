@@ -203,6 +203,9 @@ const optimization = {
 const watchOptions = {
   ignored: [
     'node_modules',
+    'wp-data',
+    'wp-plugins',
+    'wp-uploads',
   ],
 };
 const devServer = {

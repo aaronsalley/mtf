@@ -4,5 +4,5 @@
     <?php the_content(); ?>
   </article>
 <?php endwhile; endif; ?>
-<?php // TODO: if there's a category, display loop before the footer ?>
+<?php get_template_part('related', 'loop'); ?>
 <?php get_footer(); ?>

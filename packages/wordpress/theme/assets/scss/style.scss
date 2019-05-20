@@ -84,6 +84,10 @@ body {
   position: fixed;
   height: rem-calc(72);
 
+  .admin-bar &.is-stuck {
+    top: rem-calc(32) !important;
+  }
+
   .container {
     @include xy-cell(
       $size: full,
@@ -154,6 +158,10 @@ body {
     @include xy-grid-frame(
       $vertical: true,
     );
+
+    .admin-bar & {
+      height: calc(100vh - 32px);
+    }
   }
 
   #sidenav {

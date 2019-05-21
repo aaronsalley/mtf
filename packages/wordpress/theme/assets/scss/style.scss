@@ -86,6 +86,10 @@ body {
 
   .admin-bar &.is-stuck {
     top: rem-calc(32) !important;
+
+    @include breakpoint(medium down) {
+      z-index: 9999;
+    }
   }
 
   .container {

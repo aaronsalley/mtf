@@ -30,7 +30,6 @@ $end_ts = tribe_get_end_date( null, false, Tribe__Date_Utils::DBDATEFORMAT );
 $website = tribe_get_event_website_url();
 $button_text = 'Get tickets';
 if ( $website && !strpos($website, 'eventbrite.com') ) {
-	$website = tribe_get_event_website_url();
 	if(strpos($website, 'google.com')) {
 		$button_text = 'Get Started';
 	}

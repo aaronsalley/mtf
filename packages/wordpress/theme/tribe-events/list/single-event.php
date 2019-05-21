@@ -73,6 +73,5 @@ if ( tribe_event_featured_image() ) {
 	<div class="tribe-events-list-tags">
 		<?php echo tribe_get_event_categories(); ?>
 		<?php echo tribe_meta_event_tags(); ?>
-		foo
 	</div>
 </div>

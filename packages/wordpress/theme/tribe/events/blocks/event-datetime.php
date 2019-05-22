@@ -16,19 +16,6 @@
 $event_id = get_the_ID();
 $event = get_post( $event_id );
 
-/**
- * If a yearless date format should be preferred.
- *
- * By default, this will be true if the event starts and ends in the current year.
- *
- * @since 0.2.5-alpha
- *
- * @param bool    $use_yearless_format
- * @param WP_Post $event
- */
-
-$event_id = get_the_ID();
-
 $date_format = 'F j';
 $start_date = tribe_get_start_date( $event_id, false, $date_format );
 $start_day = tribe_get_start_date( $event_id, false, 'l' );
@@ -37,9 +24,20 @@ $end_date = tribe_get_end_date( $event_id, false, $date_format );
 $end_day = tribe_get_end_date( $event_id, false, 'l' );
 $end_ts = tribe_get_end_date( $event_id, false, Tribe__Date_Utils::DBDATEFORMAT );
 
-// TODO: get website link
-$website = tribe_get_event_website_link( $event_id );
+if ( has_blocks( get_the_content( $event_id ) ) ) {
+  $blocks = parse_blocks( get_the_content( $event_id ) );
+  foreach ( $blocks as $block ) {
+    if( $block[blockName] === 'tribe/event-website') {
+     $website = $block[attrs][urlLabel];
+    }
+  }
+} else {
+  $website = tribe_get_event_website_url();
+}
+
 $button_text = 'Get tickets';
+$rel = 'bookmark';
+$target = '_blank';
 if ( $website && !strpos($website, 'eventbrite.com') ) {
 	if(strpos($website, 'google.com')) {
 		$button_text = 'Get Started';
@@ -49,6 +47,8 @@ if ( $website && !strpos($website, 'eventbrite.com') ) {
 	}
 } else {
 	$website = '#get-tickets';
+  $rel = 'noopener';
+  $target = '_self';
 }
 ?>
 
@@ -71,5 +71,8 @@ if ( $website && !strpos($website, 'eventbrite.com') ) {
   <?php if ( tribe_get_cost() ) : ?>
     <span class="tribe-events-cost"><?php echo tribe_get_cost( null, true ) ?></span>
   <?php endif; ?>
-  <a href="<?php echo $website; ?>" class="tribe-events-tickets-cta"><?php echo $button_text; ?></a>
+  <a href="<?php echo $website; ?>" 
+     rel="<?php echo $rel; ?>" 
+     target="<?php echo $target; ?>"
+     class="tribe-events-tickets-cta"><?php echo $button_text; ?></a>
 </div>

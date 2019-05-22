@@ -27,8 +27,20 @@ $end_date = tribe_get_display_end_date( null, false, 'F j' );
 $end_day = tribe_get_display_end_date( null, false, 'l' );
 $end_ts = tribe_get_end_date( null, false, Tribe__Date_Utils::DBDATEFORMAT );
 
-$website = tribe_get_event_website_url();
+if ( has_blocks( get_the_content( $event_id ) ) ) {
+  $blocks = parse_blocks( get_the_content( $event_id ) );
+  foreach ( $blocks as $block ) {
+    if( $block[blockName] === 'tribe/event-website') {
+     $website = $block[attrs][urlLabel];
+    }
+  }
+} else {
+  $website = tribe_get_event_website_url();
+}
+
 $button_text = 'Get tickets';
+$rel = 'bookmark';
+$target = '_blank';
 if ( $website && !strpos($website, 'eventbrite.com') ) {
 	if(strpos($website, 'google.com')) {
 		$button_text = 'Get Started';
@@ -38,6 +50,8 @@ if ( $website && !strpos($website, 'eventbrite.com') ) {
 	}
 } else {
 	$website = '#get-tickets';
+  $rel = 'noopener';
+  $target = '_self';
 }
 ?>
 
@@ -94,7 +108,10 @@ if ( $website && !strpos($website, 'eventbrite.com') ) {
 				<?php if ( tribe_get_cost() ) : ?>
 					<span class="tribe-events-cost"><?php echo tribe_get_cost( null, true ) ?></span>
 				<?php endif; ?>
-				<a href="<?php echo $website; ?>" class="tribe-events-tickets-cta"><?php echo $button_text; ?></a>
+				<a href="<?php echo $website; ?>" 
+					rel="<?php echo $rel; ?>" 
+					target="<?php echo $target; ?>"
+					class="tribe-events-tickets-cta"><?php echo $button_text; ?></a>
 			</div>
 
 			<!-- Event content -->

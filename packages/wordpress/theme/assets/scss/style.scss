@@ -64,10 +64,11 @@
 // Helpers
 // @include foundation-float-classes;
 // @include foundation-flex-classes;
-// @include foundation-visibility-classes;
+@include foundation-visibility-classes;
 // @include foundation-prototype-classes;
 
 @import '../fonts/fonts';
+$margin: .5em;
 
 body {
   @include breakpoint(large) {
@@ -374,13 +375,94 @@ body {
 }
 
 .archive {
-  // TODO: Style this for post archives
   #content #main {
-    margin-top: rem-calc(120);
+    @include xy-grid();
+    padding-top: rem-calc(120);
   }
   
   .post {
     @include card-container();
+    transition: all .5s .25s ease-in-out;
+    box-shadow: initial;
+    padding: $margin;
+
+    @include xy-cell(
+      $size: full,
+      $gutters: $margin,
+    );
+    @include breakpoint(medium){
+      @include xy-cell(
+        $size: 4,
+        $gutters: $margin,
+      );
+    }
+    @include breakpoint(large){
+      @include xy-cell(
+        $size: 3,
+        $gutters: $margin,
+      );
+    }
+
+    &:hover {
+      transition: all .5s ease-in-out;
+      box-shadow: 0px $margin $margin rgba(0,0,0,.18);
+      transform: translateY($margin*-1) scale(1.05);
+      z-index: 12;
+    }
+
+    &.sticky {
+      @include breakpoint(medium){
+        @include xy-cell(
+          $size: 8,
+        );
+      }
+      @include breakpoint(large){
+        @include xy-cell(
+          $size: 6,
+        );
+      }
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .title {
+      @include xy-cell(
+        $size: full,
+        $gutters: 0,
+      );
+      margin-top: $margin;
+      margin-bottom: $margin;
+      font-size: rem-calc(16);
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .date {
+      font-size: rem-calc(8);
+      font-weight: bold;
+      color: lighten($color: $black, $amount: 50);
+    }
+
+    .excerpt {
+      font-size: rem-calc(10);
+    }
+
+    .readmore {
+      float: right;
+      padding-bottom: $margin;
+      border-bottom: 2px solid $black;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: rem-calc(10);
+    }
+  }
+}
+
+.single {
+  #content #main {
+    margin-top: rem-calc(120);
   }
 }
 

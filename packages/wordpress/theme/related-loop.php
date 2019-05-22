@@ -44,4 +44,5 @@ if ( $related->have_posts() ) : while ( $related->have_posts() ) : $related->the
       <?php the_excerpt(); ?>
     </a>
   </article>
-<?php endwhile; endif; ?>
+<?php endwhile; endif; 
+wp_reset_postquery();

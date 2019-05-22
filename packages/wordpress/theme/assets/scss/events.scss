@@ -183,6 +183,7 @@ $margin: .5em;
         top: 0;
         right: 0;
         left: 0;
+        width: 100%;
       }
     }
 
@@ -242,9 +243,7 @@ $margin: .5em;
   // Single Event
   .tribe-events-single {
     padding: 0;
-    @include breakpoint(xlarge){
-      margin-top: rem-calc(120);
-    }
+    margin-top: rem-calc(120);
 
     [class*='event-image'] {
       @include breakpoint(xlarge){

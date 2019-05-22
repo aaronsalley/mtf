@@ -83,13 +83,13 @@ body {
   @include top-bar-container;
   position: fixed;
   height: rem-calc(72);
+  
+  @include breakpoint(medium down) {
+    z-index: 11;
+  }
 
   .admin-bar &.is-stuck {
     top: rem-calc(32) !important;
-
-    @include breakpoint(medium down) {
-      z-index: 9999;
-    }
   }
 
   .container {

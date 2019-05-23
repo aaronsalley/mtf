@@ -16,98 +16,63 @@
 $event_id = get_the_ID();
 $event = get_post( $event_id );
 
-/**
- * If a yearless date format should be preferred.
- *
- * By default, this will be true if the event starts and ends in the current year.
- *
- * @since 0.2.5-alpha
- *
- * @param bool    $use_yearless_format
- * @param WP_Post $event
- */
-$use_yearless_format = apply_filters( 'tribe_events_event_block_datetime_use_yearless_format',
-	(
-		tribe_get_start_date( $event_id, false, 'Y' ) === date_i18n( 'Y' )
-		&& tribe_get_end_date( $event_id, false, 'Y' ) === date_i18n( 'Y' )
-	),
-	$event
-);
+$date_format = 'F j';
+$start_date = tribe_get_start_date( $event_id, false, $date_format );
+$start_day = tribe_get_start_date( $event_id, false, 'l' );
+$start_ts = tribe_get_start_date( $event_id, false, Tribe__Date_Utils::DBDATEFORMAT );
+$end_date = tribe_get_end_date( $event_id, false, $date_format );
+$end_day = tribe_get_end_date( $event_id, false, 'l' );
+$end_ts = tribe_get_end_date( $event_id, false, Tribe__Date_Utils::DBDATEFORMAT );
 
-$time_format = tribe_get_time_format();
-$date_format = tribe_get_date_format( $use_yearless_format );
-
-$timezone = get_post_meta( $event_id, '_EventTimezone', true );
-$show_time_zone = $this->attr( 'showTimeZone' );
-$time_zone_label = $this->attr( 'timeZoneLabel' );
-
-
-$formatted_start_date = tribe_get_start_date( $event_id, false, $date_format );
-$formatted_start_time = tribe_get_start_time( $event_id, $time_format );
-$formatted_end_date = tribe_get_end_date( $event_id, false, $date_format );
-$formatted_end_time = tribe_get_end_time( $event_id, $time_format );
-
-$separator_date = get_post_meta( $event_id, '_EventDateTimeSeparator', true );
-$separator_time = get_post_meta( $event_id, '_EventTimeRangeSeparator', true );
-
-if ( empty( $separator_time ) ) {
-	$separator_time = tribe_get_option( 'timeRangeSeparator', ' - ' );
-}
-if ( empty( $separator_date ) ) {
-	$separator_date = tribe_get_option( 'dateTimeSeparator', ' - ' );
+if ( has_blocks( get_the_content( $event_id ) ) ) {
+  $blocks = parse_blocks( get_the_content( $event_id ) );
+  foreach ( $blocks as $block ) {
+    if( $block[blockName] === 'tribe/event-website') {
+     $website = $block[attrs][urlLabel];
+    }
+  }
+} else {
+  $website = tribe_get_event_website_url();
 }
 
-$is_all_day       = tribe_event_is_all_day( $event_id );
-$is_same_day      = $formatted_start_date == $formatted_end_date;
-
+$button_text = 'Get tickets';
+$rel = 'bookmark';
+$target = '_blank';
+if ( $website && !strpos($website, 'eventbrite.com') ) {
+	if(strpos($website, 'google.com')) {
+		$button_text = 'Get Started';
+	}
+	if(strpos($website, 'goo.gl/forms')) {
+		$button_text = 'Sign Up';
+	}
+} else {
+	$website = '#get-tickets';
+  $rel = 'noopener';
+  $target = '_self';
+}
 ?>
 
-<?php $event_id = $this->get( 'post_id' ); ?>
 <div class="tribe-events-schedule tribe-clearfix">
-	<h2 class="tribe-events-schedule__datetime">
-		<span class="tribe-events-schedule__date tribe-events-schedule__date--start">
-			<?php echo $formatted_start_date; ?>
-		</span>
-
-		<?php if ( ! $is_all_day ) : ?>
-			<span class="tribe-events-schedule__separator tribe-events-schedule__separator--date">
-				<?php echo $separator_date; ?>
-			</span>
-			<span class="tribe-events-schedule__time tribe-events-schedule__time--start">
-				<?php echo $formatted_start_time; ?>
-			</span>
-		<?php elseif ( $is_same_day ) : ?>
-			<span class="tribe-events-schedule__all-day"><?php echo __( 'All day', 'the-events-calendar' ); ?></span>
-		<?php endif; ?>
-
-		<?php if ( ! $is_all_day || ! $is_same_day ) : ?>
-			<span class="tribe-events-schedule__separator tribe-events-schedule__separator--time">
-				<?php echo $separator_time; ?>
-			</span>
-		<?php endif; ?>
-
-		<?php if ( ! $is_same_day ) : ?>
-			<span class="tribe-events-schedule__date tribe-events-schedule__date--end">
-				<?php echo $formatted_end_date; ?>
-			</span>
-
-			<?php if ( ! $is_all_day ) : ?>
-				<span class="tribe-events-schedule__separator tribe-events-schedule__separator--date">
-					<?php echo $separator_date; ?>
-				</span>
-				<span class="tribe-events-schedule__time tribe-events-schedule__time--end">
-					<?php echo $formatted_end_time; ?>
-				</span>
-			<?php endif; ?>
-
-		<?php elseif ( ! $is_all_day ) : ?>
-			<span class="tribe-events-schedule__time tribe-events-schedule__time--end">
-				<?php echo $formatted_end_time; ?>
-			</span>
-		<?php endif; ?>
-
-		<?php if ( $show_time_zone ) : ?>
-			<span class="tribe-events-schedule__timezone"><?php echo esc_html( $time_zone_label ); ?></span>
-		<?php endif; ?>
-	</h2>
+  <div class="tribe-events-dates">
+    <span class="tribe-events-start-date">
+      <time datetime="<?php esc_attr_e( $start_ts ) ?>"><?php esc_html_e( $start_date ) ?></time>
+      <dfn><?php esc_html_e( $start_day ) ?></dfn>
+    </span>
+    <?php if ( tribe_event_is_multiday() ) : echo ' - '; // Multiday events	?>
+      <span class="tribe-events-end-date">
+        <time datetime="<?php esc_attr_e( $end_ts ) ?>"><?php esc_html_e( $end_date ) ?></time>
+        <dfn><?php esc_html_e( $end_day ) ?></dfn>
+      </span>
+    <?php endif; ?>
+  </div>
+  <?php if ( tribe_get_venue() ) : ?>
+    <span class="tribe-events-venue"><?php echo tribe_get_venue(); ?></span>
+  <?php endif; ?>
+  <?php if ( tribe_get_cost() ) : ?>
+    <span class="tribe-events-cost"><?php echo tribe_get_cost( null, true ) ?></span>
+  <?php endif; ?>
+  <a href="<?php echo $website; ?>" 
+     rel="<?php echo $rel; ?>" 
+     target="<?php echo $target; ?>"
+     class="tribe-events-tickets-cta"><?php echo $button_text; ?></a>
 </div>

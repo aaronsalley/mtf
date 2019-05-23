@@ -17,15 +17,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 do_action( 'tribe_events_before_template' );
 ?>
+<header id="tribe-events-topbar">
+	<?php
+	// Title Bar
+	tribe_get_template_part( 'list/title-bar' );
 
-<!-- Title Bar -->
-<?php tribe_get_template_part( 'list/title-bar' ); ?>
-
-	<!-- Tribe Bar -->
-<?php tribe_get_template_part( 'modules/bar' ); ?>
-
-	<!-- Main Events Content -->
-<?php tribe_get_template_part( 'list/content' ); ?>
+	// Tribe Bar
+	tribe_get_template_part( 'modules/bar' );
+	?>
+</header>
+<?php
+// Main Events Content
+tribe_get_template_part( 'list/content' );
+?>
 
 	<div class="tribe-clear"></div>
 

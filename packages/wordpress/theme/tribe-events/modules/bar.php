@@ -35,8 +35,6 @@ if ( count( $views ) > 1 ) {
 <?php do_action( 'tribe_events_bar_before_template' ) ?>
 <div id="tribe-events-bar">
 
-	<h2 class="tribe-events-visuallyhidden"><?php printf( esc_html__( '%s Search and Views Navigation', 'the-events-calendar' ), tribe_get_event_label_plural() ); ?></h2>
-
 	<form id="tribe-bar-form" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>" name="tribe-bar-form" method="post" action="<?php echo esc_attr( $current_url ); ?>">
 
 		<?php if ( ! empty( $filters ) ) : ?>
@@ -58,7 +56,6 @@ if ( count( $views ) > 1 ) {
 
 				<div id="tribe-bar-filters" class="tribe-bar-filters" aria-hidden="true">
 					<div class="tribe-bar-filters-inner tribe-clearfix">
-						<h3 class="tribe-events-visuallyhidden"><?php printf( esc_html__( '%s Search', 'the-events-calendar' ), tribe_get_event_label_plural() ); ?></h3>
 						<?php foreach ( $filters as $filter ) : ?>
 							<div class="<?php echo esc_attr( $filter['name'] ) ?>-filter">
 								<label class="label-<?php echo esc_attr( $filter['name'] ) ?>" for="<?php echo esc_attr( $filter['name'] ) ?>"><?php echo $filter['caption'] ?></label>

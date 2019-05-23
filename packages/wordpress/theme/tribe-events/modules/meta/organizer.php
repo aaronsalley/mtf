@@ -28,17 +28,10 @@ $website = tribe_get_organizer_website_link();
 				continue;
 			}
 
-			if ( in_array( tribe_get_organizer( $organizer ), array( 'Musical Theatre Factory', 'MTF' ) ) ) {
-				$name = tribe_get_organizer( $organizer ); // no link
-			} elseif ( tribe_get_organizer_website_url( $organizer ) ) {
-				$name = '<a href=' . tribe_get_organizer_website_url( $organizer ) . '>' . tribe_get_organizer( $organizer ) . '</a>';
-			} else {
-				$name = tribe_get_organizer_link( $organizer );
-			}
 			?>
 			<dt style="display:none;"><?php // This element is just to make sure we have a valid HTML ?></dt>
 			<dd class="tribe-organizer">
-				<?php echo $name; ?>
+				<?php echo tribe_get_organizer_link( $organizer ) ?>
 			</dd>
 			<?php
 		}

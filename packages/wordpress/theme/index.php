@@ -1,12 +1,8 @@
 <?php get_header(); ?>
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-
-  <?php get_template_part('template-parts/header', 'masthead'); ?>
-
-  <section <?php post_class('content'); ?>>
+  <article <?php post_class(); ?>>
     <?php the_content(); ?>
-  </section>
-<?php endwhile; else : ?>
-	<p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
-<?php endif; ?>
+  </article>
+<?php endwhile; endif; ?>
+<?php // get_template_part('related', 'loop'); ?>
 <?php get_footer(); ?>

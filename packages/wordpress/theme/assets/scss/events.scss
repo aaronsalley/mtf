@@ -370,5 +370,11 @@ $margin: .5em;
         }
       }
     }
+
+    .eventbrite-ticket-embed {
+      iframe {
+        min-height: rem-calc(278);
+      }
+    }
   }
 }

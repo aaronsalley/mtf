@@ -71,7 +71,7 @@ if ( tribe_event_featured_image() ) {
 	<?php do_action( 'tribe_events_after_the_content' ); ?>
 
 	<div class="tribe-events-list-tags">
-		<?php echo tribe_get_event_categories(); ?>
-		<?php echo tribe_meta_event_tags(); ?>
+		<?php // echo tribe_get_event_categories(); ?>
+		<?php // echo tribe_meta_event_tags(); ?>
 	</div>
 </div>

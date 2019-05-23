@@ -199,7 +199,7 @@ add_action( 'after_setup_theme', 'mtf_content_width', 0 );
  * Enqueue scripts and styles.
  */
 function mtf_scripts() {
-	wp_enqueue_script( 'mtf-vendors', get_theme_file_uri( '/assets/js/vendors.js' ), array(), null, true );
+	wp_enqueue_script( 'mtf-vendors', get_theme_file_uri( '/assets/js/vendors.js' ), array('jquery'), /* wp_get_theme()->get( 'Version' ) */ null, true );
 	wp_enqueue_style( 'mtf-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
 
 	wp_style_add_data( 'mtf-style', 'rtl', 'replace' );

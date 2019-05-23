@@ -1,59 +1,56 @@
 'use strict';
 
 import $ from 'jquery';
-import FastAverageColor from 'fast-average-color/dist/index.es6';
 import Foundation from 'foundation-sites';
-import Masonry from 'masonry-layout';
 import Raven from 'raven-js';
 
 Foundation.addToJquery($);
 $(document).foundation();
 
-const navDrawer = new Foundation.OffCanvas($('#nav-drawer'), {
-  transition: 'slide',
-  contentId: 'main',
-  nested: false,
+const topbar = new Foundation.Sticky($('#topbar'), {
+  container: '',
+  stickyOn: 'small',
+  containerClass: 'page',
 });
 
-(function blogFader() {
-  const fac = new FastAverageColor();
-  const blogPosts = document.querySelector('.blog-posts');
-  if(typeof(blogPosts) != 'undefined' && blogPosts != null) {
-    const articleImages = blogPosts.querySelectorAll('img');
-    const msnry = new Masonry( blogPosts, {
-      columnWidth: '.grid-sizer',
-      itemSelector: '.post',
-      percentPosition: true,
-    });
+const sidenav = (
+  new Foundation.OffCanvas($('#sidenav'), {
+    closeOnClick: true,
+    contentId: 'app',
+    nested: true,
+    contentScroll: false,
+    isRevealed: true,
+    revealOn: 'large',
+  }),
 
-    let stylesheet = document.createElement('style');
-        stylesheet.appendChild(document.createTextNode(""));
-        document.head.appendChild(stylesheet);
-        stylesheet = stylesheet.sheet;
+  (() => {
+    if (Foundation.MediaQuery.atLeast('medium')) {
+      new Foundation.DropdownMenu($('#sidenav .menu:first-child'), {})
+    } else {
+      new Foundation.Drilldown($('#sidenav .menu:first-child'), {})
+    }  
+  })()
+);
 
-    let i = 0;
+//Background tricks for single events on really xlarge devices
+const single_bg = () => {
+  const image = $('.single #tribe-events .tribe-events-event-image');
+  const content = $('.single #content');
+  const sidenav = $('#sidenav');
 
-    articleImages.forEach(function(image) {
-      i++;
-
-      fac.getColorAsync(image, function(color) {
-        const regExp = /post-([0-9]+)/;
-        const postID = regExp.exec(this.closest('.post').className);
-        const target = '.' + postID[0] + ' .image::before';
-        const from = 'rgba(' + color.value[0] + ',' + color.value[1] + ',' + color.value[2] + ',0)';
-        const to = 'rgba(' + color.value[0] + ',' + color.value[1] + ',' + color.value[2] + ',1)';
-
-        let style = 'background-image: -webkit-gradient(linear, left top, left bottom, from(' + from + '), to(' + to + ')) !important; background-image: linear-gradient(top, ' + from + ' 0%, ' + to + ' 100%) !important;';
-
-        return stylesheet.addRule(target, style);
-      });
-    });
-  } else {
-
-    return false;
-
+  if( Foundation.MediaQuery.atLeast('xlarge') && image ){
+    const url = image.children('img').attr('src');
+    const marginLeft = (content.outerWidth(true)- content.innerWidth())/2;
+    return image.width(marginLeft + sidenav.outerWidth(true)).css('background-image',`url(${url})`)
+  } else if ( image ) {
+    return image.removeAttr('style');
   }
-})();
+}
+$(window).ready(single_bg);
+$(window).resize(sidenav, single_bg);
+
+// TODO: set ticket iframe to content height
+// .js-ticket-widget .g-grid .g-grid--page-margin-manual
 
 if (process.env.NODE_ENV == 'production') {
   Raven.config(process.env.SENTRY_DSN).install();

@@ -20,10 +20,28 @@ $events_label_plural   = tribe_get_event_label_plural();
 
 $event_id = get_the_ID();
 
-$website = tribe_get_event_website_url();
+$start_date = tribe_get_start_date( null, false, 'F j' );
+$start_day = tribe_get_start_date( null, false, 'l' );
+$start_ts = tribe_get_start_date( null, false, Tribe__Date_Utils::DBDATEFORMAT );
+$end_date = tribe_get_display_end_date( null, false, 'F j' );
+$end_day = tribe_get_display_end_date( null, false, 'l' );
+$end_ts = tribe_get_end_date( null, false, Tribe__Date_Utils::DBDATEFORMAT );
+
+if ( has_blocks( get_the_content( $event_id ) ) ) {
+  $blocks = parse_blocks( get_the_content( $event_id ) );
+  foreach ( $blocks as $block ) {
+    if( $block[blockName] === 'tribe/event-website') {
+     $website = $block[attrs][urlLabel];
+    }
+  }
+} else {
+  $website = tribe_get_event_website_url();
+}
+
 $button_text = 'Get tickets';
+$rel = 'bookmark';
+$target = '_blank';
 if ( $website && !strpos($website, 'eventbrite.com') ) {
-	$website = tribe_get_event_website_url();
 	if(strpos($website, 'google.com')) {
 		$button_text = 'Get Started';
 	}
@@ -32,55 +50,97 @@ if ( $website && !strpos($website, 'eventbrite.com') ) {
 	}
 } else {
 	$website = '#get-tickets';
+  $rel = 'noopener';
+  $target = '_self';
 }
 ?>
+
 <div id="tribe-events-content" class="tribe-events-single">
-	<div class="blur">
-		<?php echo tribe_event_featured_image( $event_id, 'event', false ); ?>
-	</div>
+	<?php while ( have_posts() ) :  the_post(); ?>
+		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+			<!-- Event featured image, but exclude link -->
+			<?php echo tribe_event_featured_image( $event_id, 'full', false ); ?>
 
-	<?php tribe_get_template_part('list/title', 'bar'); ?>
+			<p class="tribe-events-back">
+				<a href="<?php echo esc_url( tribe_get_events_link() ); ?>"> <?php printf( '&laquo; ' . esc_html_x( 'All %s', '%s Events plural label', 'the-events-calendar' ), $events_label_plural ); ?></a>
+			</p>
 
-	<div class="content">
-		<!-- Notices -->
-		<?php tribe_the_notices(); ?>
+			<!-- Notices -->
+			<?php tribe_the_notices(); ?>
 
-		<?php while ( have_posts() ) :  the_post(); ?>
-			<div id="post-<?php the_ID(); ?>" <?php post_class('single-event'); ?>>
-				<!-- Event header -->
-				<header class="header" <?php tribe_events_the_header_attributes() ?>>
-					<?php echo tribe_event_featured_image( $event_id, 'event', false ); ?>
-					<div class="wrap">
-						<?php echo tribe_events_event_schedule_details( $event_id, '<h5 class="schedule">', '</h5>' ); ?>
-						<?php the_title( '<h2 class="title">', '</h2>' ); ?>
+			<!-- Event header -->
+			<div id="tribe-events-header" <?php tribe_events_the_header_attributes(); ?>>
+				<!-- Navigation -->
+				<nav class="tribe-events-nav-pagination" aria-label="<?php printf( esc_html__( '%s Navigation', 'the-events-calendar' ), $events_label_singular ); ?>">
+					<ul class="tribe-events-sub-nav">
+						<li class="tribe-events-nav-previous"><?php tribe_the_prev_event_link( '<span>&laquo;</span> %title%' ) ?></li>
+						<li class="tribe-events-nav-next"><?php tribe_the_next_event_link( '%title% <span>&raquo;</span>' ) ?></li>
+					</ul>
+					<!-- .tribe-events-sub-nav -->
+				</nav>
+			</div>
+			<!-- #tribe-events-header -->
 
-						<div class="schedule tribe-clearfix">
-							<?php if ( tribe_get_cost() ) : ?>
-								<span class="cost"><?php echo tribe_get_cost( null, true ) ?></span>
-							<?php endif; ?>
-						</div>
-						<a class="button" href="<?php echo $website; ?>"><?php esc_html_e($button_text); ?></a>
-					</div>
-				</header>
-				<menu class="links">
-					<?php do_action( 'tribe_events_single_event_after_the_content' ) ?>
-				</menu>
-				<!-- #header -->
+			<?php the_title( '<h2 class="tribe-events-single-event-title">', '</h2>' ); ?>
+			<?php echo tribe_get_event_taxonomy( $event_id, array(
+							'before'	=> '<p class="tribe-events-single-event-category">',
+							'sep'			=> ' ',
+							'after'		=> '</p>',
+						));
+			?>
 
-				<!-- Event content -->
-				<?php do_action( 'tribe_events_single_event_before_the_content' ) ?>
-				<div class="description">
-					<?php the_content(); ?>
+			<div class="tribe-events-schedule tribe-clearfix">
+				<div class="tribe-events-dates">
+					<span class="tribe-events-start-date">
+				    <time datetime="<?php esc_attr_e( $start_ts ) ?>"><?php esc_html_e( $start_date ) ?></time>
+						<dfn><?php esc_html_e( $start_day ) ?></dfn>
+					</span>
+					<?php if ( tribe_event_is_multiday() ) : echo ' - '; // Multiday events	?>
+						<span class="tribe-events-end-date">
+							<time datetime="<?php esc_attr_e( $end_ts ) ?>"><?php esc_html_e( $end_date ) ?></time>
+							<dfn><?php esc_html_e( $end_day ) ?></dfn>
+						</span>
+					<?php endif; ?>
 				</div>
-				<!-- .single-event-description -->
+				<?php if ( tribe_get_venue() ) : ?>
+				  <span class="tribe-events-venue"><?php echo tribe_get_venue(); ?></span>
+				<?php endif; ?>
+				<?php if ( tribe_get_cost() ) : ?>
+					<span class="tribe-events-cost"><?php echo tribe_get_cost( null, true ) ?></span>
+				<?php endif; ?>
+				<a href="<?php echo $website; ?>" 
+					rel="<?php echo $rel; ?>" 
+					target="<?php echo $target; ?>"
+					class="tribe-events-tickets-cta"><?php echo $button_text; ?></a>
+			</div>
 
-				<!-- Event meta -->
-				<?php do_action( 'tribe_events_single_event_before_the_meta' ) ?>
-				<?php tribe_get_template_part( 'modules/meta' ); ?>
-				<?php do_action( 'tribe_events_single_event_after_the_meta' ) ?>
-			</div> <!-- #post-x -->
-			<?php if ( get_post_type() == Tribe__Events__Main::POSTTYPE && tribe_get_option( 'showComments', false ) ) comments_template() ?>
-		<?php endwhile; ?>
+			<!-- Event content -->
+			<?php do_action( 'tribe_events_single_event_before_the_content' ) ?>
+			<div class="tribe-events-single-event-description tribe-events-content">
+				<?php the_content(); ?>
+			</div>
+			<!-- .tribe-events-single-event-description -->
+			<?php do_action( 'tribe_events_single_event_after_the_content' ) ?>
 
-	</div><!-- #content -->
+			<!-- Event meta -->
+			<?php do_action( 'tribe_events_single_event_before_the_meta' ) ?>
+			<?php tribe_get_template_part( 'modules/meta' ); ?>
+			<?php do_action( 'tribe_events_single_event_after_the_meta' ) ?>
+		</div> <!-- #post-x -->
+		<?php if ( get_post_type() == Tribe__Events__Main::POSTTYPE && tribe_get_option( 'showComments', false ) ) comments_template() ?>
+	<?php endwhile; ?>
+
+	<!-- Event footer -->
+	<div id="tribe-events-footer">
+		<!-- Navigation -->
+		<nav class="tribe-events-nav-pagination" aria-label="<?php printf( esc_html__( '%s Navigation', 'the-events-calendar' ), $events_label_singular ); ?>">
+			<ul class="tribe-events-sub-nav">
+				<li class="tribe-events-nav-previous"><?php tribe_the_prev_event_link( '<span>&laquo;</span> %title%' ) ?></li>
+				<li class="tribe-events-nav-next"><?php tribe_the_next_event_link( '%title% <span>&raquo;</span>' ) ?></li>
+			</ul>
+			<!-- .tribe-events-sub-nav -->
+		</nav>
+	</div>
+	<!-- #tribe-events-footer -->
+
 </div><!-- #tribe-events-content -->

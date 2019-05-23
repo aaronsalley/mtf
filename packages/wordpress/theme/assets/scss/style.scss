@@ -1,9 +1,9 @@
-/**!
+/*!
   * Theme Name: Musical Theatre Factory
   * Author: Disruptv.io
   * Author URI: https://disruptv.io
   * Description: The MTF theme for WordPress.
-  * Version: 4.0.1
+  * Version: 5.0.0
   * License: MIT
   * License URI: https://opensource.org/licenses/MIT
   * Text Domain: mtf
@@ -19,40 +19,38 @@
 
 // Grids (choose one)
 @include foundation-xy-grid-classes;
-// @include foundation-grid;
-// @include foundation-flex-grid;
 
 // Generic components
-@include foundation-button;
-@include foundation-button-group;
-@include foundation-close-button;
-@include foundation-label;
-@include foundation-progress-bar;
-@include foundation-slider;
-@include foundation-switch;
-@include foundation-table;
+// @include foundation-button;
+// @include foundation-button-group;
+// @include foundation-close-button;
+// @include foundation-label;
+// @include foundation-progress-bar;
+// @include foundation-slider;
+// @include foundation-switch;
+// @include foundation-table;
 
 // Basic components
-@include foundation-badge;
-@include foundation-breadcrumbs;
-@include foundation-callout;
-@include foundation-card;
+// @include foundation-badge;
+// @include foundation-breadcrumbs;
+// @include foundation-callout;
+// @include foundation-card;
 @include foundation-dropdown;
-@include foundation-pagination;
-@include foundation-tooltip;
+// @include foundation-pagination;
+// @include foundation-tooltip;
 
 // Containers
-@include foundation-accordion;
-@include foundation-media-object;
-@include foundation-orbit;
-@include foundation-responsive-embed;
-@include foundation-tabs;
-@include foundation-thumbnail;
+// @include foundation-accordion;
+// @include foundation-media-object;
+// @include foundation-orbit;
+// @include foundation-responsive-embed;
+// @include foundation-tabs;
+// @include foundation-thumbnail;
 
 // Menu-based containers
 @include foundation-menu;
 @include foundation-menu-icon;
-@include foundation-accordion-menu;
+// @include foundation-accordion-menu;
 @include foundation-drilldown-menu;
 @include foundation-dropdown-menu;
 
@@ -60,811 +58,417 @@
 @include foundation-off-canvas;
 @include foundation-reveal;
 @include foundation-sticky;
-@include foundation-title-bar;
+// @include foundation-title-bar;
 @include foundation-top-bar;
 
 // Helpers
-@include foundation-float-classes;
-@include foundation-flex-classes;
+// @include foundation-float-classes;
+// @include foundation-flex-classes;
 @include foundation-visibility-classes;
-@include foundation-prototype-classes;
+// @include foundation-prototype-classes;
 
-@import 'typography';
-@mixin mtf-gradient {
-  background-color: #ff3600; // Old browsers
-  filter-gradient: #ff3600, #ffffff, horizontal; // IE6-9
-  background-image: linear-gradient(left, rgba(#ff3600, .8) 0%,rgba(#ff00e4, .8) 50%,rgba(#ffffff, .8) 100%), url('../img/mtf_brushstroke.png');
-  background-position: center;
+@import '../fonts/fonts';
+$margin: .5em;
+
+body {
+  @include breakpoint(large) {
+    overflow: hidden;
+  }
 }
 
-// Global Skeleton Styles
-#app {
-  @include xy-grid-frame(
-    $vertical: true,
+#topbar {
+  @include xy-cell(
+    $size: full,
+    $gutters: 0,
   );
-  @include xy-grid(
-    $direction: vertical,
-    $wrap: false,
-  );
-
-  &.admin-bar {
-    height: calc(100vh - 32px);
+  @include top-bar-container;
+  position: fixed;
+  height: rem-calc(72);
+  
+  @include breakpoint(medium down) {
+    z-index: 11;
   }
 
-  .button {
-    @include button-style;
-    margin-bottom: 0;
-
-    a {
-      padding: 0;
-    }
+  .admin-bar &.is-stuck {
+    top: rem-calc(32) !important;
   }
 
-  .off-canvas {
-    @include mtf-gradient;
-    width: 100%;
-    min-width: calc(100% - 56px);
-    max-width: calc(100% - 56px);
-    padding-top: rem-calc(48);
-    background-image: url('../img/mtf_red_texture.png');
+  .container {
+    @include xy-cell(
+      $size: full,
+      $gutters: 0,
+    );
+    @include xy-grid-container(
+      $padding: 0,
+    );
+    @include xy-grid();
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    @include breakpoint(medium) {
-      min-width: rem-calc(256);
-      max-width: rem-calc(256);
-    }
+  .custom-logo {
+    width: auto;
+    max-height: rem-calc(64);
+    padding-left: rem-calc(16);
+  }
+
+  .menu {
+    display: none;
 
     @include breakpoint(large) {
-      position: relative;
+      @include menu-base;
+    }
+
+    .menu-item {
+      font-weight: 900;
+      text-transform: uppercase;
+
+      &:not(:last-child) {
+        border-right: 2px solid $white;
+      }
+
+      &:last-child a {
+        color: $mtf_red;
+      }
+
+      a {
+        padding-top: 0;
+        padding-right: rem-calc(38);
+        padding-bottom: 0;
+        padding-left: rem-calc(38);
+        font-size: rem-calc(12);
+        color: $white;
+      }
+    }
+  }
+
+  .menu-icon {
+    @include breakpoint(large) {
+      display: none !important;
+    }
+  }
+}
+
+#content {
+  @include xy-grid(
+    $wrap: false,
+  );
+  @include xy-grid-container(
+    $padding: 0,
+  );
+  @include off-canvas-basics;
+  @include off-canvas-content;
+
+  @include breakpoint(large) {
+    @include xy-grid-frame(
+      $vertical: true,
+    );
+
+    .admin-bar & {
+      height: calc(100vh - 32px);
+    }
+  }
+
+  #sidenav {
+    @include xy-cell-block-container;
+    @include off-canvas-base;
+    @include off-canvas-position(
+      $position: right,
+    );
+    justify-content: center;
+
+    @include breakpoint(large) {
+      @include xy-cell(
+        $size: shrink,
+      );
+      @include off-canvas-reveal(
+        $position: right,
+      );
+      @include in-canvas;
+      width: 100%;
+      max-width: rem-calc(192);
+    }
+
+    &.is-open {
+      @include off-canvas-reveal(
+        $position: right,
+      );
+      overflow: visible;
+      z-index: 12 !important;
+    }
+
+    &.is-transition-overlap {
+      z-index: inherit;
     }
 
     .menu {
-      @include xy-cell(
-        $size: full,
-        $gutters: 0,
-      );
       @include menu-base;
 
-      &#main-nav {
+      &:first-child {
         @include menu-direction(
           $dir: vertical,
-        )
-
-        a {
-          padding: $global-padding;
-        }
-
-        .sub-menu {
-          display: none;
-        }
+        );
+        @include xy-cell(
+          $size: full,
+          $gutters: 0,
+        );
+        height: 100vh;
+        justify-content: center;
       }
-
-      &#social {
+      
+      // Socials
+      &:last-child:not(:first-child) {
         @include menu-icons;
-        @include menu-icon-position;
         position: absolute;
         bottom: 0;
-        justify-content: flex-end;
+
+        .menu-item {
+          a {
+            font-size: 0;
+
+            &::before {
+              content: "";
+              display: block;
+              font-family: 'Socicon';
+              font-size: 1rem;
+            }
+          }
+
+          &.facebook a::before {
+            content: "\e028";
+          }
+
+          &.twitter a::before {
+            content: "\e08d";
+          }
+
+          &.instagram a::before {
+            content: "\e044";
+          }
+        }
       }
     }
-  }
 
-  .gallery {
-    @include xy-grid-frame(
-      $nested: true,
-    );
-    @include xy-cell-base(auto);
-    height: rem-calc(120);
+    .menu-item {
+      position: static;
+      list-style: none;
 
-    .wrap {
-      @include xy-grid();
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 120% !important;
-      margin: 0 !important;
+      a {
+        overflow: hidden;
+        padding-top: rem-calc(54/2);
+        padding-right: rem-calc(24);
+        padding-bottom: rem-calc(54/2);
+        padding-left: rem-calc(24);
+        color: inherit;
+      }
     }
 
-    .post {
-      overflow: hidden;
-      position: relative;
-      z-index: 1;
-      width: rem-calc(120);
+    .is-active > a {
+      background: transparent;
+    }
 
-      &::after {
-        content: "";
+    .submenu {
+      display: none;
+    }
+
+    // Only applies to small screens
+    .is-drilldown {
+      @include foundation-drilldown-menu;
+
+      .drilldown a {
+        padding: rem-calc(54/2) rem-calc(24);
+      }
+
+      .is-drilldown-submenu.drilldown-submenu-cover-previous.is-active {
+        @include xy-grid(
+          $direction: vertical,
+          $wrap: false,
+        );
+        height: 100vh;
+        margin-left: 0;
+        justify-content: center;
+        background-color: $mtf_red;
+  
+        a {
+          padding: rem-calc(54/2) rem-calc(24);
+          color: $white;
+        }
+
+        .js-drilldown-back > a::before {
+          border-color: transparent $white transparent transparent;
+        }
+      }
+    }
+
+    // Only applies to tablets and up
+    .is-dropdown-submenu-parent.current-menu-item,
+    .is-dropdown-submenu-parent.current-menu-ancestor,
+    .is-dropdown-submenu-parent.is-active {
+      & > a {
+        position: relative;
+      }
+
+      & > a::before {
+        content: '';
         display: block;
-        padding-bottom: 100%;
-        background-color: rgba($black, .75);
-      }
-
-      img {
+        width: rem-calc(24);
+        height: rem-calc(24);
         position: absolute;
-        top: 0;
+        top: 50%;
         left: 0;
-        z-index: -1;
-        height: auto;
-        width: auto;
-        min-height: 100%;
-        min-width: 100%
-      }
-    }
-  }
+        right: auto;
+        transform: translate(-50%, -50%) rotate(45deg);
+        background-color: $mtf_red;
 
-  #header {
-    @include top-bar-container;
-    overflow: hidden;
-    min-height: rem-calc(72);
-    // background-image: url('../img/mtf_brushstroke.png');
-    background-position: center;
-
-    .menu-icon {
-      height: rem-calc(24);
-      width: rem-calc(24);
-      margin: rem-calc(24);
-
-      @include breakpoint(large) {
-        display: none;
+        @include breakpoint(large) {
+          left: auto;
+          right: 0;
+          transform: translate(50%, -50%) rotate(45deg);
+        }
       }
     }
 
-    .branding {
-      margin-bottom: 0;
-    }
-
-    .mtf-logo {
-      width: auto;
-      max-height: rem-calc(36);
-      margin-left: rem-calc(8);
-
-      @include breakpoint(large) {
-        max-height: rem-calc(48);
-      }
-    }
-
-    .menu {
+    .is-dropdown-submenu-parent.current-menu-item .is-dropdown-submenu,
+    .is-dropdown-submenu-parent.current-menu-ancestor .is-dropdown-submenu,
+    .is-dropdown-submenu.js-dropdown-active {
       @include xy-grid(
+        $direction: vertical,
         $wrap: false,
       );
-      display: none;
+      z-index: 999999;
+      height: 100vh;
+      margin-left: 0;
+      justify-content: center;
+      background-color: $mtf_red;
 
-      @include breakpoint(medium) {
-        display: flex;
+      a {
+        color: $white;
+
+        &:hover {
+          font-weight: bold;
+        }
       }
     }
   }
 
   #main {
-    @include xy-grid(
-      $direction: horizontal,
-      $wrap: false,
+    @include xy-cell(
+      $size: auto,
+      $gutters: 0,
     );
-    flex: 1 100%;
+    @include xy-cell-block();
 
-    #content {
-      @include xy-grid();
-      position: relative;
-      flex-grow: 1;
-      background-color: $white;
-      max-height: 100vh;
-
-      .content-inner {
-        @include xy-cell(
-          $size: full,
-          $gutters: 0,
-        );
-        @include xy-cell-block(
-          $vertical: true,
-        );
-        @include xy-grid();
-
-        & > .wrap {
-          @include xy-cell(
-            $size: full,
-            $gutters: 0,
-          );
-          @include xy-grid-container();
-          @include xy-grid();
-          position: relative;
-        }
-      }
+    @include breakpoint(large){
+      .page:not(.home) & {
+        padding-left: rem-calc(200);
+      };
     }
 
-    #footer {
+    & > .footer {
       @include xy-cell(
         $size: full,
         $gutters: 0,
       );
-      padding-top: rem-calc(124);
-      padding-bottom: rem-calc(124);
-      background-color: $body-background;
-
-      .wrap {
-        @include xy-grid-container();
-        @include xy-grid(
-          $direction: horizontal,
-          $wrap: true,
-        );
-      }
-
-      .widgets {
-        @include xy-cell(
-          $size: 12,
-          $gutters: 0,
-        );
-        @include xy-grid(
-          $direction: horizontal,
-          $wrap: true,
-        );
-
-        @include breakpoint(medium) {
-          @include xy-cell(
-            $size: 6,
-            $gutters: 0,
-          );
-
-          &:first-of-type() {
-            padding-right: rem-calc(64);
-          }
-        }
-
-        .widget:not(.widget_text) {
-          @include xy-cell(
-            $size: 12,
-            $gutters: 0,
-          );
-
-          @include breakpoint(medium) {
-            @include xy-cell(
-              $size: 6,
-              $gutters: 0,
-            );
-          }
-        }
-
-        .menu {
-          @include menu-base;
-          @include menu-direction(
-            $dir: vertical,
-          );
-
-          a {
-            padding-left: 0;
-          }
-        }
-      }
-
-      .colophon {
-        @include xy-cell(
-          $size: 12,
-          $gutters: 0,
-        );
-        margin-top: rem-calc(64);
-
-        * {
-          margin-bottom: rem-calc(0);
-        }
-      }
+      background-color: $light-gray;
     }
   }
 }
 
-// Home Skeleton Styles
-#app.home {
-  .events {
-    @include xy-grid-frame(
-      $nested: true,
-    );
-    min-height: rem-calc(460);
-    @include breakpoint(medium){
-      @include xy-cell(
-        $size: 5,
-        $gutters: 0,
-      );
-      max-width: rem-calc(360);
-    }
-
-    .post-event {
-      @include xy-cell(
-        $size: 12,
-        $gutters: 0,
-        $gutter-position: top right bottom left,
-      );
-      height: 20%;
-      overflow: hidden;
-      box-shadow: none;
-      border-radius: 0;
-
-      & > .url {
-        display: flex;
-        position: relative;
-        flex-wrap: wrap;
-        height: 100%;
-        align-items: center;
-        align-content: center;
-        justify-content: flex-end;
-      }
-
-      .tribe-events-event-image {
-        position: absolute;
-        left: 0;
-        width: rem-calc(150);
-        margin-right: rem-calc(16);
-        background-color: $black;
-
-        img {
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
-
-        &:before {
-          padding-bottom: 50%;
-        }
-      }
-
-      .cost {
-        zoom: .75;
-      }
-
-      .title {
-        @include xy-cell(
-          $size: 12,
-          $gutters: 0,
-        );
-        max-height: rem-calc(44);
-        margin-bottom: rem-calc(0);
-        margin-left: rem-calc(158);
-      }
-
-      .meta {
-        @include xy-cell(
-          $size: 12,
-          $gutters: 0,
-        );
-        margin-left: rem-calc(158);
-      }
-
-      .tags {
-        display: none;
-      }
-
-      &:not(.has-tags) {
-        padding-bottom: 0;
-      }
-    }
+.archive {
+  #content #main {
+    @include xy-grid();
+    padding-top: rem-calc(120);
   }
+  
+  .post {
+    @include card-container();
+    transition: all .5s .25s ease-in-out;
+    box-shadow: initial;
+    padding: $margin;
 
-  .gallery {
-    height: 50vh;
-    min-height: rem-calc(460);
-  }
-
-  .mission {
-    @include xy-cell(12);
-    display: none;
-    z-index: 90;
-
-    @include breakpoint(medium){
-      @include xy-cell(6);
-      display: block;
-      position: absolute;
-      top: 50vh;
-      right: rem-calc(20);
-      transform: translateY(-100%);
-    }
-  }
-
-  .blog-posts {
     @include xy-cell(
-      $size: 12,
-      $gutters: 0,
+      $size: full,
+      $gutters: $margin,
     );
-    margin-top: $global-margin;
-    margin-right: $global-margin * -1;
-    margin-left: $global-margin * -1;
-
-    .grid-sizer,
-    .post,
-    .sticky ~ .sticky {
-      position: relative;
+    @include breakpoint(medium){
       @include xy-cell(
-        $size: 6,
-        $gutter-position: top right bottom left,
+        $size: 4,
+        $gutters: $margin,
       );
-
-      @include breakpoint(medium) {
-        @include xy-cell(
-          $size: 4,
-          $gutter-position: top right bottom left,
-        );
-      }
-
-      .container {
-        position: relative;
-
-        &::after {
-          content: "";
-          display: block;
-          padding-bottom: 75%;
-          background-color: $white;
-          border-radius: 1rem;
-          box-shadow: rem-calc(0 0 20) rgba($black, .23);
-        }
-      }
-
-      .image {
-        overflow: hidden;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        border-radius: 1rem;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-
-        &::before {
-          content: "";
-          display: block;
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          z-index: 1;
-          padding-bottom: 50%;
-          filter-gradient: #00000000, #000000, vertical; // IE6-9
-          background-image: linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
-          border-radius: 1rem;
-        }
-
-        img {
-          display: none;
-        }
-      }
-
-      .lead {
-        position: absolute;
-        right: $global-margin;
-        bottom: $global-margin;
-        left: $global-margin;
-        z-index: 10;
-        width: auto;
-      }
+    }
+    @include breakpoint(large){
+      @include xy-cell(
+        $size: 3,
+        $gutters: $margin,
+      );
     }
 
-    .sticky {
-      @include xy-cell(
-        $size: 12,
-        $gutter-position: top right bottom left,
-      );
+    &:hover {
+      transition: all .5s ease-in-out;
+      box-shadow: 0px $margin $margin rgba(0,0,0,.18);
+      transform: translateY($margin*-1) scale(1.05);
+      z-index: 12;
+    }
 
-      @include breakpoint(medium) {
+    &.sticky {
+      @include breakpoint(medium){
         @include xy-cell(
           $size: 8,
-          $gutter-position: top right bottom left,
         );
       }
-
-      .container::after {
-        padding-bottom: 56.25%;
-      }
-
-      .image::before {
-        padding-bottom: 25%;
+      @include breakpoint(large){
+        @include xy-cell(
+          $size: 6,
+        );
       }
     }
-  }
-}
 
-#app.tribe-events-page-template,
-#app.single,
-#app.page {
-  .header {
-    @include xy-cell(
-      $size: 12,
-      $gutters: 0,
-    );
-    position: relative;
-    height: rem-calc(120);
-
-    .gallery {
-      height: rem-calc(120);
-    }
-
-    .masthead {
-      position: absolute;
-      display: flex;
-      right: rem-calc(20);
-      z-index: 10;
-      height: 100%;
-      min-width: rem-calc(200);
-      flex-direction: column;
-      justify-content: center;
+    a {
+      color: inherit;
     }
 
     .title {
-      margin-bottom: 0;
-    }
-
-    .button {
-      @include button-expand();
-      @include button-style();
-      margin-bottom: 0;
-    }
-  }
-
-  .content {
-    @include xy-cell(
-      $size: 12,
-      $gutters: 0,
-    );
-    position: relative;
-
-    &.post {
       @include xy-cell(
-        $size: 12,
-        $gutters: rem-calc(32),
-        $gutter-position: top right bottom left,
+        $size: full,
+        $gutters: 0,
       );
-      position: relative;
+      margin-top: $margin;
+      margin-bottom: $margin;
+      font-size: rem-calc(16);
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .date {
+      font-size: rem-calc(8);
+      font-weight: bold;
+      color: lighten($color: $black, $amount: 50);
+    }
+
+    .excerpt {
+      font-size: rem-calc(10);
+    }
+
+    .readmore {
+      float: right;
+      padding-bottom: $margin;
+      border-bottom: 2px solid $black;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: rem-calc(10);
     }
   }
 }
 
-#tribe-events {
-  @include xy-cell(
-    $size: 12,
-    $gutters: 0,
-  );
-
-  #events-bar {
-    @include xy-cell(9);
-    margin: auto;
-  }
-
-  .events-loop,
-  .related-events {
-    @include xy-grid('horizontal');
-    @include xy-grid-layout(
-      $n: 1,
-      $selector: '.post-event',
-      $gutter-output: false,
-    )
-    justify-content: space-between;
-
-    &::after {
-      display: block;
-      content: '';
-    }
-
-    @include breakpoint(medium){
-      @include xy-grid-layout(
-        $n: 3,
-        $selector: '.post-event',
-        $gutter-output: false,
-      )
-
-      &::after {
-        @include xy-cell(4, false);
-      }
-    }
-  }
-
-  .post-event {
-    overflow: hidden;
-    position: relative;
-    margin-top: rem-calc(32);
-    margin-right: auto;
-    margin-bottom: rem-calc(32);
-    margin-left: auto;
-    background-color: $white;
-    border-radius: 1rem;
-    box-shadow: rem-calc(0 0 20) rgba($black, .23);
-
-
-    @include breakpoint(medium) {
-      margin-right: 0;
-      margin-left: 0;
-    }
-
-    &:not(.has-tags) {
-      padding-bottom: rem-calc(42);
-    }
-
-    .tribe-events-event-image {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-
-      &:before {
-        display: block;
-        width: 100%;
-        padding-bottom: 50%;
-        background-color: white;
-        content: '';
-      }
-
-      img {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-    }
-
-    .title,
-    .meta {
-      margin: rem-calc(0 16);
-
-      &,
-      & > * {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-      }
-
-      .schedule {
-        max-height: 1.25rem;
-        margin: rem-calc(4 0);
-      }
-    }
-
-    .cost {
-      position: absolute;
-      top: 0;
-      right: 0;
-      margin: rem-calc(8);
-      padding: rem-calc(4 16);
-      background-color: rgba($white, .83);
-      z-index: 1;
-
-      & > *:not(.ticket-cost) {
-        display: none;
-      }
-    }
-
-    .tags {
-      height: rem-calc(42);
-      margin-top: rem-calc(8);
-      margin-right: rem-calc(16);
-      margin-bottom: rem-calc(0);
-      margin-left: rem-calc(16);
-      padding-top: rem-calc(8);
-      padding-bottom: rem-calc(8);
-      border-top: 1px solid rgba($black, .1);
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-
-      .tag {
-        margin-right: rem-calc(8);
-      }
-    }
-  }
-
-  .single-event,
-  .tribe-events-single {
-    @include xy-cell(
-      $size: 12,
-      $gutters: 0,
-    );
-    padding: 0;
-
-    .header {
-      @include xy-grid('horizontal');
-      height: auto;
-
-      @include breakpoint(large) {
-        @include xy-grid('horizontal', false);
-      }
-
-      .tribe-events-event-image {
-        width: 100%;
-        margin-bottom: rem-calc(0);
-
-        @include breakpoint(large) {
-          @include xy-cell(auto, false);
-        }
-      }
-
-      .wrap {
-        position: relative;
-        width: 100%;
-        margin-top: $global-margin;
-        margin-bottom: rem-calc(0);
-        padding-bottom: rem-calc(75);
-
-        @include breakpoint(large){
-          @include xy-cell(4, false);
-          margin-right: rem-calc(0);
-          margin-left: rem-calc(24);
-        }
-
-        .button {
-          position: absolute;
-          bottom: 0;
-        }
-      }
-    }
-
-    .blur {
-      position: absolute;
-      top: rem-calc(150);
-      left: 0;
-      width: 100%;
-
-      @include breakpoint(medium){
-        top: 0;
-      }
-
-      img {
-        width: 100%;
-        opacity: .28;
-        filter: blur(20px);
-      }
-    }
-
-    .links {
-      @include xy-grid('horizontal', false);
-      padding: 0;
-
-      [class*=button] {
-        @include button-style();
-        @include button-expand();
-        margin-top: 0;
-        margin-bottom: 0;
-
-        &:first-child() {
-          margin-right: $global-margin/2;
-        }
-
-        &:last-child() {
-          margin-left: $global-margin/2;
-        }
-      }
-
-      .tribe-events-cal-links {
-        @include xy-grid('horizontal', false);
-        @include xy-cell(
-          $size: 12,
-          $gutter-output: false,
-          $gutters:0,
-        );
-        justify-content: space-between;
-        margin-bottom: 0;
-        margin-left: auto;
-
-        @include breakpoint(large){
-          @include xy-cell(4, false);
-          margin-right: inherit;
-        }
-      }
-    }
-
-    .description {
-      @include xy-cell(
-        $size: 11,
-      );
-      margin: rem-calc(24) auto;
-      @include breakpoint(medium){
-        @include xy-cell(
-          $size: 8,
-        );
-      }
-
-      [class*='tribe-'] {
-        display: none;
-      }
-    }
-
-    .related-events {
-      @include xy-cell(12, false);
-    }
-  }
-
-  .eventbrite-ticket-embed {
-    & > iframe {
-      min-height: rem-calc(300);
-    }
+.single {
+  #content #main {
+    margin-top: rem-calc(120);
   }
 }
+
+// Elementor
+[class$='img-accordion'] {
+  height: 85vh !important;
+}
+
+@import 'events.scss';

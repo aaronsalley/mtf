@@ -15,8 +15,8 @@ services:
         define('WP_DEFAULT_THEME', 'Musical Theatre Factory');
     volumes:
       - ./packages/wordpress/theme/.build:/var/www/html/wp-content/themes/mtf
-      - ./packages/wordpress/theme/wp-plugins:/var/www/html/wp-content/plugins
-      - ./packages/wordpress/theme/wp-uploads:/var/www/html/wp-content/uploads
+      - ./packages/wordpress/theme/wp-content/wp-plugins:/var/www/html/wp-content/plugins
+      - ./packages/wordpress/theme/wp-content/wp-uploads:/var/www/html/wp-content/uploads
       - ./packages/wordpress/theme/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     depends_on:
       - mysql

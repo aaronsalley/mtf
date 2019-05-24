@@ -1,9 +1,15 @@
-.env
-.DS_Store
-.build/
-dist/
+# Exclude everything by default
+*
+
+# Whitelist these things
+!*/
+!packages/**
+!.gitignore
+!/docker-compose.yaml
+!/lerna.json
+!/package.json
+!/README.md
+
+# Always exclude these things
 node_modules/
-wp-data
-wp-plugins
-wp-uploads
-logs/
+.DS_Store

@@ -7,6 +7,26 @@ import Raven from 'raven-js';
 Foundation.addToJquery($);
 $(document).foundation();
 
+const manifest = (
+  (() => {
+    let json = {
+      'name': '',
+      'short_name': 'MTF',
+      'description': '',
+      'start_url': '',
+      'background_color': '',
+      'theme_color': '',
+      'icons': [{
+
+      }],
+    }
+    const stringyManifest = JSON.stringify(json);
+    const blob = new Blob([stringyManifest], {type: 'application/json'});
+    const manifestURL = URL.createObjectURL(blob);
+    $('#manifest').setAttribute('href', manifestURL);
+  })()
+);
+
 const topbar = new Foundation.Sticky($('#topbar'), {
   container: '',
   stickyOn: 'small',

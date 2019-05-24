@@ -117,18 +117,21 @@ const plugins = [
     open: false,
   }),
   new CleanWebpackPlugin({
-    cleanStaleWebpackAssets: false,
-    cleanAfterEveryBuildPatterns: [
-      '!**/*.php',
-      '!/assets/**/*',
-    ],
+    // cleanStaleWebpackAssets: false,
+    // cleanAfterEveryBuildPatterns: [
+    //   '!**/*.php',
+    //   '!/assets/**/*',
+    // ],
   }),
   new CopyWebpackPlugin([
+    paths.source + '/**/*.json',
     paths.source + '/**/*.php',
     paths.source + '/screenshot.*',
     paths.source + '/assets/fonts/**/*',
     paths.source + '/assets/img/**/*',
-  ]),
+  ], {
+    context: 'src',
+  }),
   new Dotenv({
     path: paths.envfile,
   }),

@@ -8,22 +8,33 @@ Foundation.addToJquery($);
 $(document).foundation();
 
 const manifest = (
-  (() => {
-    let json = {
-      'name': '',
-      'short_name': 'MTF',
-      'description': '',
-      'start_url': '',
-      'background_color': '',
-      'theme_color': '',
-      'icons': [{
+  (async () => {
+    const wp = await $.ajax('/index.php?rest_route=/');
+    const icon = await $('[rel="icon"], [rel="apple-touch-icon-precomposed"], [name="msapplication-TileImage"]');
 
-      }],
+    let icons = [];
+    for( let i = 0; i < icon.length; i++){
+      icons.push({
+        'src': icon[i].href !== undefined ? icon[i].href : icon[i].content,
+        'size': icon[i].sizes !== undefined ? icon[i].sizes.value : '',
+        'type': 'image/png',
+      })
+    }
+
+    let json = {
+      'name': wp.name,
+      'short_name': 'MTF',
+      'description': wp.description,
+      'start_url': wp.url,
+      'display': 'standalone',
+      'background_color': '#eeeeee',
+      'theme_color': '#EA2430',
+      'icons': icons,
     }
     const stringyManifest = JSON.stringify(json);
     const blob = new Blob([stringyManifest], {type: 'application/json'});
     const manifestURL = URL.createObjectURL(blob);
-    $('#manifest').setAttribute('href', manifestURL);
+    $('#manifest').attr('href', manifestURL);
   })()
 );
 

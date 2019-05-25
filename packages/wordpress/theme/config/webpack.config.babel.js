@@ -114,14 +114,14 @@ const plugins = [
     host: process.env.HOST || '0.0.0.0',
     port: process.env.PORT || 4000,
     proxy: process.env.PROXY ? process.env.PROXY : null,
-    open: false,
+    open: true,
   }),
   new CleanWebpackPlugin({
     // cleanStaleWebpackAssets: false,
-    // cleanAfterEveryBuildPatterns: [
-    //   '!**/*.php',
-    //   '!/assets/**/*',
-    // ],
+    cleanAfterEveryBuildPatterns: [
+      '!**/*.php',
+      '!/assets/**/*',
+    ],
   }),
   new CopyWebpackPlugin([
     paths.source + '/**/*.json',
@@ -212,12 +212,12 @@ const watchOptions = {
   ],
 };
 const devServer = {
-  contentBase: paths.build,
-  compress: true,
-  port: process.env.WEB_PORT,
-  historyApiFallback: true,
-  open: true,
-  hot: true,
+  // contentBase: paths.build,
+  // compress: true,
+  // port: process.env.PORT,
+  // historyApiFallback: true,
+  // open: true,
+  // hot: true,
 };
 
 const webpackConfig = {
@@ -234,7 +234,9 @@ const webpackConfig = {
   externals: externals,
   stats: 'errors-only',
   plugins: plugins,
+  devServer: devServer,
   watch: process.env.NODE_ENV !== 'production' ? true : false,
+  watchOptions: watchOptions,
   cache: true,
 };
 

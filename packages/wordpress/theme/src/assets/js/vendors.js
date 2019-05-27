@@ -27,7 +27,7 @@ const manifest = (
       'description': wp.description,
       'start_url': wp.url,
       'display': 'standalone',
-      'background_color': '#eeeeee',
+      'background_color': '#000000',
       'theme_color': '#EA2430',
       'icons': icons,
     }

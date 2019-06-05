@@ -1,0 +1,18 @@
+# Exclude everything by default
+*
+
+# Whitelist these things
+!*/
+!config/**
+!public/**
+!scripts/**
+!src/**
+!.dockerignore
+!.gitignore
+!Dockerfile
+!/package.json
+!/README.md
+!/tsconfig.json
+
+# Always exclude these things
+.env

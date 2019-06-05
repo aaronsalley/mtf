@@ -112,7 +112,7 @@ const externals = {
 const plugins = [
   new BrowserSyncPlugin({
     host: process.env.HOST || '0.0.0.0',
-    port: process.env.PORT || 4000,
+    port: process.env.WEB_PORT || 4000,
     proxy: process.env.PROXY ? process.env.PROXY : null,
     open: true,
   }),
@@ -214,7 +214,7 @@ const watchOptions = {
 const devServer = {
   // contentBase: paths.build,
   // compress: true,
-  // port: process.env.PORT,
+  // port: process.env.WEB_PORT,
   // historyApiFallback: true,
   // open: true,
   // hot: true,

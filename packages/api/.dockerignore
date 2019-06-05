@@ -1,11 +1,9 @@
-**/*
+# Exclude everything by default
+*
+
+# Whitelist these things
+!*/
 !config/
-!controllers/
-!db/
-!routes/
-!services/
-!tests/
-!utils/
+!src/
 !.babelrc
-!index.ts
 !package.json

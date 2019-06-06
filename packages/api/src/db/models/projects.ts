@@ -15,6 +15,8 @@ import mongoose from 'mongoose';
  *    properties:
  *      name:
  *        type: string
+ *        enum: [project, person]
+ *        description: Name of the entity type. Autoset by the API.
  */
 const projectSchema = new mongoose.Schema({
   name: {

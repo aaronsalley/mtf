@@ -15,4 +15,5 @@
 !/tsconfig.json
 
 # Always exclude these things
+node_modules/
 .env

@@ -15,30 +15,14 @@ import mongoose from 'mongoose';
  *    properties:
  *      name:
  *        type: string
- *      username:
- *        type: string
+ *        enum: [project, person]
+ *        description: Name of the entity type. Autoset by the API.
  *      first_name:
  *        type: string
- *      middle_name:
- *        type: string
+ *        description: Person's given name.
  *      last_name:
  *        type: string
- *      ssn:
- *        type: string
- *      birth_date:
- *        type: string
- *        format: date
- *      photos:
- *        type: array
- *        items:
- *          $ref: '#/components/schemas/document'
- *      email_addresses:
- *        type: object
- *        properties:
- *          address:
- *            type: string
- *          labels:
- *            type: string
+ *        description: Person's family name.
  */
 const personSchema = new mongoose.Schema({
   name: {

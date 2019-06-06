@@ -14,10 +14,10 @@ services:
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_DEFAULT_THEME', 'Musical Theatre Factory');
     volumes:
-      - ./packages/wordpress/theme/.build:/var/www/html/wp-content/themes/mtf
-      - ./packages/wordpress/theme/wp-content/wp-plugins:/var/www/html/wp-content/plugins
-      - ./packages/wordpress/theme/wp-content/wp-uploads:/var/www/html/wp-content/uploads
-      - ./packages/wordpress/theme/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./packages/wordpress/.build:/var/www/html/wp-content/themes/mtf
+      - ./packages/wordpress/wp-content/wp-plugins:/var/www/html/wp-content/plugins
+      - ./packages/wordpress/wp-content/wp-uploads:/var/www/html/wp-content/uploads
+      - ./packages/wordpress/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     depends_on:
       - mysql
   mysql:
@@ -26,7 +26,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
     volumes:
-      - ./packages/wordpress/theme/wp-data:/var/lib/mysql
+      - ./packages/wordpress/wp-data:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
@@ -37,14 +37,14 @@ services:
       - mysql
 
   react:
-    build: ./packages/wordpress/app
+    build: ./packages/app
     restart: always
     ports:
       - 3000
     # env_file:
-    #   - ./packages/wordpress/app/config/.env
+    #   - ./packages/app/config/.env
     volumes:
-      - ./packages/wordpress/app/src:/home/app/src
+      - ./packages/app/src:/home/app/src
     depends_on:
       - api
     networks:

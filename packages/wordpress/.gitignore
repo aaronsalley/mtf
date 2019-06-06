@@ -12,5 +12,6 @@
 !README.md
 
 # Always exclude these things
+node_modules/
 wp-*
 .env

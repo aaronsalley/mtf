@@ -1,9 +1,0 @@
-# Exclude everything by default
-*
-
-# Whitelist these things
-!*/
-!config/
-!src/
-!.babelrc
-!package.json

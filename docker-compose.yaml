@@ -7,17 +7,18 @@ services:
     image: wordpress
     restart: always
     ports:
-      - 9000:80
+      - "32769:80"
     environment:
       WORDPRESS_DB_PASSWORD: password
-      WORDPRESS_TABLE_PREFIX: mtf_
+      WORDPRESS_DEBUG: 1
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_DEFAULT_THEME', 'Musical Theatre Factory');
+      WORDPRESS_TABLE_PREFIX: mtf_
     volumes:
-      - ./packages/wordpress/.build:/var/www/html/wp-content/themes/mtf
-      - ./packages/wordpress/wp-content/wp-plugins:/var/www/html/wp-content/plugins
-      - ./packages/wordpress/wp-content/wp-uploads:/var/www/html/wp-content/uploads
-      - ./packages/wordpress/config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./.build:/var/www/html/wp-content/themes/mtf
+      - ./e2e/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - wp-content:/var/www/html/wp-content/plugins
+      - wp-content:/var/www/html/wp-content/uploads
     depends_on:
       - mysql
   mysql:
@@ -26,49 +27,27 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
     volumes:
-      - ./packages/wordpress/wp-data:/var/lib/mysql
+      - wp-data:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: mysql
-    ports:
-      - 80
     depends_on:
       - mysql
 
-  react:
-    build: ./packages/app
-    restart: always
-    ports:
-      - 3000
-    # env_file:
-    #   - ./packages/app/config/.env
-    volumes:
-      - ./packages/app/src:/home/app/src
-    depends_on:
-      - api
-    networks:
-      - app
-  api:
-    build: ./packages/api
-    restart: always
-    ports:
-      - 4739
-    env_file:
-      - ./packages/api/config/.env
-    volumes:
-      - ./packages/api/src:/home/api/src
-    depends_on:
-      - mongo
-    networks:
-      - app
-  mongo:
-    image: mongo
-    restart: always
-    networks:
-      - app
-    ports:
-      - 9003:27017
+  # react:
+  #   build: ./packages/app
+  #   restart: always
+  #   ports:
+  #     - 3000
+  #   # env_file:
+  #   #   - ./packages/app/config/.env
+  #   volumes:
+  #     - ./.build:/var/www/html/wp-content/themes/mtf
+  #   depends_on:
+  #     - wordpress
+  #   networks:
+  #     - app
 
   # sonarqube:
   #   image: sonarqube
@@ -83,5 +62,6 @@ services:
   #     - 9007:9200
   #     - 9008:5044
 
-networks:
-  app:
+volumes:
+  wp-content:
+  wp-data:

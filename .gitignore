@@ -1,15 +1,16 @@
 # Exclude everything by default
-*
+/*
 
 # Whitelist these things
-!*/
-!packages/**
+!/config
+!/e2e
+!/src
+!.babelrc
 !.gitignore
-!/docker-compose.yaml
-!/lerna.json
-!/package.json
-!/README.md
+!package.json
+!README.md
 
 # Always exclude these things
 node_modules/
+.env
 .DS_Store

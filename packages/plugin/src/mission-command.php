@@ -1,26 +1,41 @@
 <?php
+namespace Mission_Command;
+
 /**
- * Plugin Name: Mission Command
- * Description: Mission command has everything you need to effectively run your non-profit on a shoestring buget.
- * Plugin URI: 
- * Author: Disruptv
- * Version: 1.0.0
- * Author URI: https://disruptv.io
  *
- * Text Domain: mission_command
+ * @link              http://example.com
+ * @since             1.0.0
+ * @package           Mission_Command
  *
- * @package Mission Command
+ * @wordpress-plugin
+ * Plugin Name:       Mission Command
+ * Plugin URI:        https://disruptv.io/missioncommand
+ * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Version:           1.0.0
+ * Author:            Disruptv
+ * Author URI:        https://disruptv.io/
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       mission-command
+ * Domain Path:       /languages
  */
 
- if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
 }
 
+/**
+ * Currently plugin version.
+ */
 define( 'MISSION_COMMAND_VERSION', '1.0.0' );
 
+/**
+ * The code that runs during plugin activation.
+ */
 function activate_mission_command() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/activator.php';
-	Plugin_Name_Activator::activate();
+	Activator::activate();
 }
 
 /**
@@ -28,7 +43,7 @@ function activate_mission_command() {
  */
 function deactivate_mission_command() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/deactivator.php';
-	Plugin_Name_Deactivator::deactivate();
+	Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_mission_command' );
@@ -43,10 +58,6 @@ require plugin_dir_path( __FILE__ ) . 'includes/plugin.php';
 /**
  * Begins execution of the plugin.
  *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
  * @since    1.0.0
  */
 function run_mission_command() {
@@ -55,4 +66,4 @@ function run_mission_command() {
 	$plugin->run();
 
 }
-// run_mission_command();
+run_mission_command();

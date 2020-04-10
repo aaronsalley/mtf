@@ -6,7 +6,7 @@
  * runs before the init hook. The init hook is too late for some features, such
  * as indicating support for post thumbnails.
  */
-function mission_command_theme_support() {
+function mtf_theme_support() {
 
 	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
@@ -36,7 +36,7 @@ function mission_command_theme_support() {
 	set_post_thumbnail_size( 1200, 9999 );
 
 	// Add custom image size used in Cover Template.
-	add_image_size( 'mission_command-fullscreen', 1980, 9999 );
+	add_image_size( 'mtf-fullscreen', 1980, 9999 );
 
 	// Custom logo.
 	$logo_width  = 120;
@@ -86,10 +86,10 @@ function mission_command_theme_support() {
 	/*
 	 * Make theme available for translation.
 	 * Translations can be filed in the /languages/ directory.
-	 * If you're building a theme based on Disruptv, use a find and replace
-	 * to change 'mission_command' to the name of your theme in all the template files.
+	 * If you're building a theme based on MTF, use a find and replace
+	 * to change 'mtf' to the name of your theme in all the template files.
 	 */
-	load_theme_textdomain( 'mission_command' );
+	load_theme_textdomain( 'mtf' );
 
 	// Add support for full and wide align images.
 	add_theme_support( 'align-wide' );
@@ -104,12 +104,12 @@ function mission_command_theme_support() {
 	 * Adds `async` and `defer` support for scripts registered or enqueued
 	 * by the theme.
 	 */
-	$loader = new Disruptv_Script_Loader();
+	$loader = new MTF_Script_Loader();
 	add_filter( 'script_loader_tag', array( $loader, 'filter_script_loader_tag' ), 10, 2 );
 
 }
 
-add_action( 'after_setup_theme', 'mission_command_theme_support' );
+add_action( 'after_setup_theme', 'mtf_theme_support' );
 
 /**
  * REQUIRED FILES
@@ -148,26 +148,26 @@ require get_template_directory() . '/admin/index.php';
 /**
  * Register and Enqueue Styles.
  */
-function mission_command_register_styles() {
+function mtf_register_styles() {
 
 	$theme_version = wp_get_theme()->get( 'Version' );
 
-	wp_enqueue_style( 'mission_command-style', get_template_directory_uri() . '/static/css/style.css', array(), $theme_version );
-	wp_style_add_data( 'mission_command-style', 'rtl', 'replace' );
+	wp_enqueue_style( 'mtf-style', get_template_directory_uri() . '/static/css/style.css', array(), $theme_version );
+	wp_style_add_data( 'mtf-style', 'rtl', 'replace' );
 
 	// Add output of Customizer settings as inline style.
-	wp_add_inline_style( 'mission_command-style', mission_command_get_customizer_css( 'front-end' ) );
+	wp_add_inline_style( 'mtf-style', mtf_get_customizer_css( 'front-end' ) );
 
 	// Add print CSS.
-	wp_enqueue_style( 'mission_command-print-style', get_template_directory_uri() . '/static/css/print.css', null, $theme_version, 'print' );
+	wp_enqueue_style( 'mtf-print-style', get_template_directory_uri() . '/static/css/print.css', null, $theme_version, 'print' );
 
 }
-add_action( 'wp_enqueue_scripts', 'mission_command_register_styles' );
+add_action( 'wp_enqueue_scripts', 'mtf_register_styles' );
 
 /**
  * Register and Enqueue Scripts.
  */
-function mission_command_register_scripts() {
+function mtf_register_scripts() {
 
 	$theme_version = wp_get_theme()->get( 'Version' );
 
@@ -175,14 +175,11 @@ function mission_command_register_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
-	wp_enqueue_script( 'mission_command-js', get_template_directory_uri() . '/static/js/vendors.js', array(), $theme_version, false );
-	wp_enqueue_script( 'mission_command-react', get_template_directory_uri() . '/static/js/react.js', array(), $theme_version, false );
-	wp_script_add_data( 'mission_command-react', 'async', true );
-
+	wp_enqueue_script( 'mtf-js', get_template_directory_uri() . '/static/js/vendors.js', array(), $theme_version, false );
 }
-add_action( 'wp_enqueue_scripts', 'mission_command_register_scripts' );
+add_action( 'wp_enqueue_scripts', 'mtf_register_scripts' );
 
-function mission_command_skip_link_focus_fix() {
+function mtf_skip_link_focus_fix() {
 	// The following is minified via `terser --compress --mangle -- assets/js/skip-link-focus-fix.js`.
 	?>
 	<script>
@@ -190,32 +187,41 @@ function mission_command_skip_link_focus_fix() {
 	</script>
 	<?php
 }
-add_action( 'wp_print_footer_scripts', 'mission_command_skip_link_focus_fix' );
+add_action( 'wp_print_footer_scripts', 'mtf_skip_link_focus_fix' );
 
-function mission_command_non_latin_languages() {
-	$custom_css = mission_command_Non_Latin_Languages::get_non_latin_css( 'front-end' );
+function mtf_non_latin_languages() {
+	$custom_css = MTF_Non_Latin_Languages::get_non_latin_css( 'front-end' );
 
 	if ( $custom_css ) {
-		wp_add_inline_style( 'mission_command-style', $custom_css );
+		wp_add_inline_style( 'mtf-style', $custom_css );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'mission_command_non_latin_languages' );
+add_action( 'wp_enqueue_scripts', 'mtf_non_latin_languages' );
 
-function mission_command_menus() {
+function remove_dashboard_widgets(){
+	remove_meta_box( 'dashboard_right_now', 'dashboard', 'normal' );
+	remove_meta_box( 'dashboard_activity', 'dashboard', 'normal' );
+	remove_meta_box( 'dashboard_quick_press', 'dashboard', 'side' );
+	remove_meta_box( 'dashboard_primary', 'dashboard', 'side' );
+	remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' );
+}
+add_action( 'wp_dashboard_setup', 'remove_dashboard_widgets');
+
+function mtf_menus() {
 
 	$locations = array(
-		'primary'  => __( 'Desktop Horizontal Menu', 'mission_command' ),
-		'expanded' => __( 'Desktop Expanded Menu', 'mission_command' ),
-		'mobile'   => __( 'Mobile Menu', 'mission_command' ),
-		'footer'   => __( 'Footer Menu', 'mission_command' ),
-		'social'   => __( 'Social Menu', 'mission_command' ),
+		'primary'  => __( 'Desktop Horizontal Menu', 'mtf' ),
+		'expanded' => __( 'Desktop Expanded Menu', 'mtf' ),
+		'mobile'   => __( 'Mobile Menu', 'mtf' ),
+		'footer'   => __( 'Footer Menu', 'mtf' ),
+		'social'   => __( 'Social Menu', 'mtf' ),
 	);
 
 	register_nav_menus( $locations );
 }
-add_action( 'init', 'mission_command_menus' );
+add_action( 'init', 'mtf_menus' );
 
-function mission_command_get_custom_logo( $html ) {
+function mtf_get_custom_logo( $html ) {
 
 	$logo_id = get_theme_mod( 'custom_logo' );
 
@@ -262,7 +268,7 @@ function mission_command_get_custom_logo( $html ) {
 	return $html;
 
 }
-add_filter( 'get_custom_logo', 'mission_command_get_custom_logo' );
+add_filter( 'get_custom_logo', 'mtf_get_custom_logo' );
 
 if ( ! function_exists( 'wp_body_open' ) ) {
 
@@ -274,12 +280,12 @@ if ( ! function_exists( 'wp_body_open' ) ) {
 	}
 }
 
-function mission_command_skip_link() {
-	echo '<a class="skip-link screen-reader-text" href="#site-content">' . __( 'Skip to the content', 'mission_command' ) . '</a>';
+function mtf_skip_link() {
+	echo '<a class="skip-link screen-reader-text" href="#site-content">' . __( 'Skip to the content', 'mtf' ) . '</a>';
 }
-add_action( 'wp_body_open', 'mission_command_skip_link', 5 );
+add_action( 'wp_body_open', 'mtf_skip_link', 5 );
 
-function mission_command_sidebar_registration() {
+function mtf_sidebar_registration() {
 
 	// Arguments used in all register_sidebar() calls.
 	$shared_args = array(
@@ -294,9 +300,9 @@ function mission_command_sidebar_registration() {
 		array_merge(
 			$shared_args,
 			array(
-				'name'        => __( 'Footer #1', 'mission_command' ),
+				'name'        => __( 'Footer #1', 'mtf' ),
 				'id'          => 'sidebar-1',
-				'description' => __( 'Widgets in this area will be displayed in the first column in the footer.', 'mission_command' ),
+				'description' => __( 'Widgets in this area will be displayed in the first column in the footer.', 'mtf' ),
 			)
 		)
 	);
@@ -306,36 +312,36 @@ function mission_command_sidebar_registration() {
 		array_merge(
 			$shared_args,
 			array(
-				'name'        => __( 'Footer #2', 'mission_command' ),
+				'name'        => __( 'Footer #2', 'mtf' ),
 				'id'          => 'sidebar-2',
-				'description' => __( 'Widgets in this area will be displayed in the second column in the footer.', 'mission_command' ),
+				'description' => __( 'Widgets in this area will be displayed in the second column in the footer.', 'mtf' ),
 			)
 		)
 	);
 
 }
-add_action( 'widgets_init', 'mission_command_sidebar_registration' );
+add_action( 'widgets_init', 'mtf_sidebar_registration' );
 
-function mission_command_block_editor_styles() {
+function mtf_block_editor_styles() {
 
 	$css_dependencies = array();
 
 	// Enqueue the editor styles.
-	wp_enqueue_style( 'mission_command-block-editor-styles', get_theme_file_uri( '/static/css/editor-style-block.css' ), $css_dependencies, wp_get_theme()->get( 'Version' ), 'all' );
-	wp_style_add_data( 'mission_command-block-editor-styles', 'rtl', 'replace' );
+	wp_enqueue_style( 'mtf-block-editor-styles', get_theme_file_uri( '/static/css/editor-style-block.css' ), $css_dependencies, wp_get_theme()->get( 'Version' ), 'all' );
+	wp_style_add_data( 'mtf-block-editor-styles', 'rtl', 'replace' );
 
 	// Add inline style from the Customizer.
-	wp_add_inline_style( 'mission_command-block-editor-styles', mission_command_get_customizer_css( 'block-editor' ) );
+	wp_add_inline_style( 'mtf-block-editor-styles', mtf_get_customizer_css( 'block-editor' ) );
 
 	// Add inline style for non-latin fonts.
-	wp_add_inline_style( 'mission_command-block-editor-styles', mission_command_Non_Latin_Languages::get_non_latin_css( 'block-editor' ) );
+	wp_add_inline_style( 'mtf-block-editor-styles', MTF_Non_Latin_Languages::get_non_latin_css( 'block-editor' ) );
 
 	// Enqueue the editor script.
-	wp_enqueue_script( 'mission_command-block-editor-script', get_theme_file_uri( '/static/js/wordpress.js' ), array( 'wp-blocks', 'wp-dom' ), wp_get_theme()->get( 'Version' ), true );
+	wp_enqueue_script( 'mtf-block-editor-script', get_theme_file_uri( '/static/js/wordpress.js' ), array( 'wp-blocks', 'wp-dom' ), wp_get_theme()->get( 'Version' ), true );
 }
-add_action( 'enqueue_block_editor_assets', 'mission_command_block_editor_styles', 1, 1 );
+add_action( 'enqueue_block_editor_assets', 'mtf_block_editor_styles', 1, 1 );
 
-function mission_command_classic_editor_styles() {
+function mtf_classic_editor_styles() {
 
 	$classic_editor_styles = array(
 		'/static/css/editor-style-classic.css',
@@ -344,11 +350,11 @@ function mission_command_classic_editor_styles() {
 	add_editor_style( $classic_editor_styles );
 
 }
-add_action( 'init', 'mission_command_classic_editor_styles' );
+add_action( 'init', 'mtf_classic_editor_styles' );
 
-function mission_command_add_classic_editor_customizer_styles( $mce_init ) {
+function mtf_add_classic_editor_customizer_styles( $mce_init ) {
 
-	$styles = mission_command_get_customizer_css( 'classic-editor' );
+	$styles = mtf_get_customizer_css( 'classic-editor' );
 
 	if ( ! isset( $mce_init['content_style'] ) ) {
 		$mce_init['content_style'] = $styles . ' ';
@@ -359,11 +365,11 @@ function mission_command_add_classic_editor_customizer_styles( $mce_init ) {
 	return $mce_init;
 
 }
-add_filter( 'tiny_mce_before_init', 'mission_command_add_classic_editor_customizer_styles' );
+add_filter( 'tiny_mce_before_init', 'mtf_add_classic_editor_customizer_styles' );
 
-function mission_command_add_classic_editor_non_latin_styles( $mce_init ) {
+function mtf_add_classic_editor_non_latin_styles( $mce_init ) {
 
-	$styles = mission_command_Non_Latin_Languages::get_non_latin_css( 'classic-editor' );
+	$styles = MTF_Non_Latin_Languages::get_non_latin_css( 'classic-editor' );
 
 	// Return if there are no styles to add.
 	if ( ! $styles ) {
@@ -379,31 +385,31 @@ function mission_command_add_classic_editor_non_latin_styles( $mce_init ) {
 	return $mce_init;
 
 }
-add_filter( 'tiny_mce_before_init', 'mission_command_add_classic_editor_non_latin_styles' );
+add_filter( 'tiny_mce_before_init', 'mtf_add_classic_editor_non_latin_styles' );
 
-function mission_command_block_editor_settings() {
+function mtf_block_editor_settings() {
 
 	// Block Editor Palette.
 	$editor_color_palette = array(
 		array(
-			'name'  => __( 'Accent Color', 'mission_command' ),
+			'name'  => __( 'Accent Color', 'mtf' ),
 			'slug'  => 'accent',
-			'color' => mission_command_get_color_for_area( 'content', 'accent' ),
+			'color' => mtf_get_color_for_area( 'content', 'accent' ),
 		),
 		array(
-			'name'  => __( 'Primary', 'mission_command' ),
+			'name'  => __( 'Primary', 'mtf' ),
 			'slug'  => 'primary',
-			'color' => mission_command_get_color_for_area( 'content', 'text' ),
+			'color' => mtf_get_color_for_area( 'content', 'text' ),
 		),
 		array(
-			'name'  => __( 'Secondary', 'mission_command' ),
+			'name'  => __( 'Secondary', 'mtf' ),
 			'slug'  => 'secondary',
-			'color' => mission_command_get_color_for_area( 'content', 'secondary' ),
+			'color' => mtf_get_color_for_area( 'content', 'secondary' ),
 		),
 		array(
-			'name'  => __( 'Subtle Background', 'mission_command' ),
+			'name'  => __( 'Subtle Background', 'mtf' ),
 			'slug'  => 'subtle-background',
-			'color' => mission_command_get_color_for_area( 'content', 'borders' ),
+			'color' => mtf_get_color_for_area( 'content', 'borders' ),
 		),
 	);
 
@@ -414,7 +420,7 @@ function mission_command_block_editor_settings() {
 		$background_color     = $background_color_arr[0]['default-color'];
 	}
 	$editor_color_palette[] = array(
-		'name'  => __( 'Background Color', 'mission_command' ),
+		'name'  => __( 'Background Color', 'mtf' ),
 		'slug'  => 'background',
 		'color' => '#' . $background_color,
 	);
@@ -429,26 +435,26 @@ function mission_command_block_editor_settings() {
 		'editor-font-sizes',
 		array(
 			array(
-				'name'      => _x( 'Small', 'Name of the small font size in the block editor', 'mission_command' ),
-				'shortName' => _x( 'S', 'Short name of the small font size in the block editor.', 'mission_command' ),
+				'name'      => _x( 'Small', 'Name of the small font size in the block editor', 'mtf' ),
+				'shortName' => _x( 'S', 'Short name of the small font size in the block editor.', 'mtf' ),
 				'size'      => 18,
 				'slug'      => 'small',
 			),
 			array(
-				'name'      => _x( 'Regular', 'Name of the regular font size in the block editor', 'mission_command' ),
-				'shortName' => _x( 'M', 'Short name of the regular font size in the block editor.', 'mission_command' ),
+				'name'      => _x( 'Regular', 'Name of the regular font size in the block editor', 'mtf' ),
+				'shortName' => _x( 'M', 'Short name of the regular font size in the block editor.', 'mtf' ),
 				'size'      => 21,
 				'slug'      => 'normal',
 			),
 			array(
-				'name'      => _x( 'Large', 'Name of the large font size in the block editor', 'mission_command' ),
-				'shortName' => _x( 'L', 'Short name of the large font size in the block editor.', 'mission_command' ),
+				'name'      => _x( 'Large', 'Name of the large font size in the block editor', 'mtf' ),
+				'shortName' => _x( 'L', 'Short name of the large font size in the block editor.', 'mtf' ),
 				'size'      => 26.25,
 				'slug'      => 'large',
 			),
 			array(
-				'name'      => _x( 'Larger', 'Name of the larger font size in the block editor', 'mission_command' ),
-				'shortName' => _x( 'XL', 'Short name of the larger font size in the block editor.', 'mission_command' ),
+				'name'      => _x( 'Larger', 'Name of the larger font size in the block editor', 'mtf' ),
+				'shortName' => _x( 'XL', 'Short name of the larger font size in the block editor.', 'mtf' ),
 				'size'      => 32,
 				'slug'      => 'larger',
 			),
@@ -457,46 +463,46 @@ function mission_command_block_editor_settings() {
 
 	// If we have a dark background color then add support for dark editor style.
 	// We can determine if the background color is dark by checking if the text-color is white.
-	if ( '#ffffff' === strtolower( mission_command_get_color_for_area( 'content', 'text' ) ) ) {
+	if ( '#ffffff' === strtolower( mtf_get_color_for_area( 'content', 'text' ) ) ) {
 		add_theme_support( 'dark-editor-style' );
 	}
 
 }
-add_action( 'after_setup_theme', 'mission_command_block_editor_settings' );
+add_action( 'after_setup_theme', 'mtf_block_editor_settings' );
 
-function mission_command_read_more_tag( $html ) {
+function mtf_read_more_tag( $html ) {
 	return preg_replace( '/<a(.*)>(.*)<\/a>/iU', sprintf( '<div class="read-more-button-wrap"><a$1><span class="faux-button">$2</span> <span class="screen-reader-text">"%1$s"</span></a></div>', get_the_title( get_the_ID() ) ), $html );
 }
-add_filter( 'the_content_more_link', 'mission_command_read_more_tag' );
+add_filter( 'the_content_more_link', 'mtf_read_more_tag' );
 
-function mission_command_customize_controls_enqueue_scripts() {
+function mtf_customize_controls_enqueue_scripts() {
 	$theme_version = wp_get_theme()->get( 'Version' );
 
 	// Add script for controls.
-	wp_enqueue_script( 'mission_command-customize-controls', get_template_directory_uri() . '/static/js/wordpress.js', array( 'customize-controls', 'underscore', 'jquery' ), $theme_version, false );
-	wp_localize_script( 'mission_command-customize-controls', 'mission_commandBgColors', mission_command_get_customizer_color_vars() );
+	wp_enqueue_script( 'mtf-customize-controls', get_template_directory_uri() . '/static/js/wordpress.js', array( 'customize-controls', 'underscore', 'jquery' ), $theme_version, false );
+	wp_localize_script( 'mtf-customize-controls', 'mtfBgColors', mtf_get_customizer_color_vars() );
 }
-add_action( 'customize_controls_enqueue_scripts', 'mission_command_customize_controls_enqueue_scripts' );
+add_action( 'customize_controls_enqueue_scripts', 'mtf_customize_controls_enqueue_scripts' );
 
-function mission_command_customize_preview_init() {
+function mtf_customize_preview_init() {
 	$theme_version = wp_get_theme()->get( 'Version' );
 
-	wp_enqueue_script( 'mission_command-customize-preview', get_theme_file_uri( '/static/js/wordpress.js' ), array( 'customize-preview', 'customize-selective-refresh', 'jquery' ), $theme_version, true );
-	wp_localize_script( 'mission_command-customize-preview', 'mission_commandBgColors', mission_command_get_customizer_color_vars() );
-	wp_localize_script( 'mission_command-customize-preview', 'mission_commandPreviewEls', mission_command_get_elements_array() );
+	wp_enqueue_script( 'mtf-customize-preview', get_theme_file_uri( '/static/js/wordpress.js' ), array( 'customize-preview', 'customize-selective-refresh', 'jquery' ), $theme_version, true );
+	wp_localize_script( 'mtf-customize-preview', 'mtfBgColors', mtf_get_customizer_color_vars() );
+	wp_localize_script( 'mtf-customize-preview', 'mtfPreviewEls', mtf_get_elements_array() );
 
 	wp_add_inline_script(
-		'mission_command-customize-preview',
+		'mtf-customize-preview',
 		sprintf(
 			'wp.customize.selectiveRefresh.partialConstructor[ %1$s ].prototype.attrs = %2$s;',
 			wp_json_encode( 'cover_opacity' ),
-			wp_json_encode( mission_command_customize_opacity_range() )
+			wp_json_encode( mtf_customize_opacity_range() )
 		)
 	);
 }
-add_action( 'customize_preview_init', 'mission_command_customize_preview_init' );
+add_action( 'customize_preview_init', 'mtf_customize_preview_init' );
 
-function mission_command_get_color_for_area( $area = 'content', $context = 'text' ) {
+function mtf_get_color_for_area( $area = 'content', $context = 'text' ) {
 
 	// Get the value from the theme-mod.
 	$settings = get_theme_mod(
@@ -526,7 +532,7 @@ function mission_command_get_color_for_area( $area = 'content', $context = 'text
 	return false;
 }
 
-function mission_command_get_customizer_color_vars() {
+function mtf_get_customizer_color_vars() {
 	$colors = array(
 		'content'       => array(
 			'setting' => 'background_color',
@@ -538,7 +544,7 @@ function mission_command_get_customizer_color_vars() {
 	return $colors;
 }
 
-function mission_command_get_elements_array() {
+function mtf_get_elements_array() {
 
 	// The array is formatted like this:
 	// [key-in-saved-setting][sub-key-in-setting][css-property] = [elements].
@@ -596,17 +602,17 @@ function mission_command_get_elements_array() {
 	);
 
 	/**
-	* Filters Disruptv theme elements
+	* Filters MTF theme elements
 	*
 	* @since MissionCommand 6.0.0
 	*
 	* @param array Array of elements
 	*/
-	return apply_filters( 'mission_command_get_elements_array', $elements );
+	return apply_filters( 'mtf_get_elements_array', $elements );
 }
 
 require_once dirname( __FILE__ ) . '/classes/class-tgm-plugin-activation.php';
-function mission_command_register_required_plugins() {
+function mtf_register_required_plugins() {
 	/*
 	 * Array of plugin arrays. Required keys are name and slug.
 	 * If the source is NOT from the .org repo, then source is also required.
@@ -642,7 +648,7 @@ function mission_command_register_required_plugins() {
 	);
 
 	$config = array(
-		'id'           => 'mission_command',                 // Unique ID for hashing notices for multiple instances of TGMPA.
+		'id'           => 'mtf',                 // Unique ID for hashing notices for multiple instances of TGMPA.
 		'default_path' => '',                      // Default absolute path to bundled plugins.
 		'menu'         => 'mtf-install-plugins', // Menu slug.
 		'parent_slug'  => 'plugins.php',            // Parent menu slug.
@@ -656,7 +662,7 @@ function mission_command_register_required_plugins() {
 
 	tgmpa( $plugins, $config );
 }
-add_action( 'tgmpa_register', 'mission_command_register_required_plugins' );
+add_action( 'tgmpa_register', 'mtf_register_required_plugins' );
 
 function theme_prefix_register_elementor_locations( $elementor_theme_manager ) {
 

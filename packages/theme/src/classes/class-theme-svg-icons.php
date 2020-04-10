@@ -3,16 +3,16 @@
  * Custom icons for this theme.
  *
  * @package WordPress
- * @subpackage Disruptv
+ * @subpackage MTF
  * @since MissionCommand 6.0.0
  */
 
-if ( ! class_exists( 'Disruptv_SVG_Icons' ) ) {
+if ( ! class_exists( 'MTF_SVG_Icons' ) ) {
 	/**
 	 * SVG ICONS CLASS
 	 * Retrieve the SVG code for the specified icon. Based on a solution in Twenty Nineteen.
 	 */
-	class Disruptv_SVG_Icons {
+	class MTF_SVG_Icons {
 		/**
 		 * GET SVG CODE
 		 * Get the SVG code for the specified icon
@@ -61,7 +61,7 @@ if ( ! class_exists( 'Disruptv_SVG_Icons' ) ) {
 			}
 			foreach ( $regex_map as $icon => $regex ) {
 				if ( preg_match( $regex, $uri ) ) {
-					return mission_command_get_theme_svg( $icon, 'social' );
+					return mtf_get_theme_svg( $icon, 'social' );
 				}
 			}
 			return null;

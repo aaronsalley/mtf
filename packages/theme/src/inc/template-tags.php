@@ -3,7 +3,7 @@
  * Custom template tags for this theme.
  *
  * @package WordPress
- * @subpackage Disruptv
+ * @subpackage MTF
  * @since MissionCommand 6.0.0
  */
 
@@ -29,7 +29,7 @@
  *
  * @return string $html Compiled HTML based on our arguments.
  */
-function mission_command_site_logo( $args = array(), $echo = true ) {
+function mtf_site_logo( $args = array(), $echo = true ) {
 	$logo       = get_custom_logo();
 	$site_title = get_bloginfo( 'name' );
 	$contents   = '';
@@ -48,12 +48,12 @@ function mission_command_site_logo( $args = array(), $echo = true ) {
 	$args = wp_parse_args( $args, $defaults );
 
 	/**
-	 * Filters the arguments for `mission_command_site_logo()`.
+	 * Filters the arguments for `mtf_site_logo()`.
 	 *
 	 * @param array  $args     Parsed arguments.
 	 * @param array  $defaults Function's default arguments.
 	 */
-	$args = apply_filters( 'mission_command_site_logo_args', $args, $defaults );
+	$args = apply_filters( 'mtf_site_logo_args', $args, $defaults );
 
 	if ( has_custom_logo() ) {
 		$contents  = sprintf( $args['logo'], $logo, esc_html( $site_title ) );
@@ -68,14 +68,14 @@ function mission_command_site_logo( $args = array(), $echo = true ) {
 	$html = sprintf( $args[ $wrap ], $classname, $contents );
 
 	/**
-	 * Filters the arguments for `mission_command_site_logo()`.
+	 * Filters the arguments for `mtf_site_logo()`.
 	 *
 	 * @param string $html      Compiled html based on our arguments.
 	 * @param array  $args      Parsed arguments.
 	 * @param string $classname Class name based on current view, home or single.
 	 * @param string $contents  HTML for site title or logo.
 	 */
-	$html = apply_filters( 'mission_command_site_logo', $html, $args, $classname, $contents );
+	$html = apply_filters( 'mtf_site_logo', $html, $args, $classname, $contents );
 
 	if ( ! $echo ) {
 		return $html;
@@ -92,7 +92,7 @@ function mission_command_site_logo( $args = array(), $echo = true ) {
  *
  * @return string $html The HTML to display.
  */
-function mission_command_site_description( $echo = true ) {
+function mtf_site_description( $echo = true ) {
 	$description = get_bloginfo( 'description' );
 
 	if ( ! $description ) {
@@ -112,7 +112,7 @@ function mission_command_site_description( $echo = true ) {
 	 * @param string $description  Site description via `bloginfo()`.
 	 * @param string $wrapper      The format used in case you want to reuse it in a `sprintf()`.
 	 */
-	$html = apply_filters( 'mission_command_site_description', $html, $description, $wrapper );
+	$html = apply_filters( 'mtf_site_description', $html, $description, $wrapper );
 
 	if ( ! $echo ) {
 		return $html;
@@ -131,7 +131,7 @@ function mission_command_site_description( $echo = true ) {
  *
  * @return bool
  */
-function mission_command_is_comment_by_post_author( $comment = null ) {
+function mtf_is_comment_by_post_author( $comment = null ) {
 
 	if ( is_object( $comment ) && $comment->user_id > 0 ) {
 
@@ -157,14 +157,14 @@ function mission_command_is_comment_by_post_author( $comment = null ) {
  *
  * @return string $link Link to the top of the page.
  */
-function mission_command_filter_comment_reply_link( $link ) {
+function mtf_filter_comment_reply_link( $link ) {
 
 	$link = str_replace( 'class=\'', 'class=\'do-not-scroll ', $link );
 	return $link;
 
 }
 
-add_filter( 'comment_reply_link', 'mission_command_filter_comment_reply_link' );
+add_filter( 'comment_reply_link', 'mtf_filter_comment_reply_link' );
 
 /**
  * Post Meta
@@ -176,9 +176,9 @@ add_filter( 'comment_reply_link', 'mission_command_filter_comment_reply_link' );
  * @param int    $post_id The ID of the post for which the post meta should be output.
  * @param string $location Which post meta location to output – single or preview.
  */
-function mission_command_the_post_meta( $post_id = null, $location = 'single-top' ) {
+function mtf_the_post_meta( $post_id = null, $location = 'single-top' ) {
 
-	echo mission_command_get_post_meta( $post_id, $location ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in mission_command_get_post_meta().
+	echo mtf_get_post_meta( $post_id, $location ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in mtf_get_post_meta().
 
 }
 
@@ -189,7 +189,7 @@ function mission_command_the_post_meta( $post_id = null, $location = 'single-top
  * @param int    $post_id Post ID.
  * @param string $text    Anchor text.
  */
-function mission_command_edit_post_link( $link, $post_id, $text ) {
+function mtf_edit_post_link( $link, $post_id, $text ) {
 	if ( is_admin() ) {
 		return $link;
 	}
@@ -203,7 +203,7 @@ function mission_command_edit_post_link( $link, $post_id, $text ) {
 	$text = sprintf(
 		wp_kses(
 			/* translators: %s: Post title. Only visible to screen readers. */
-			__( 'Edit <span class="screen-reader-text">%s</span>', 'mission_command' ),
+			__( 'Edit <span class="screen-reader-text">%s</span>', 'mtf' ),
 			array(
 				'span' => array(
 					'class' => array(),
@@ -213,11 +213,11 @@ function mission_command_edit_post_link( $link, $post_id, $text ) {
 		get_the_title( $post_id )
 	);
 
-	return '<div class="post-meta-wrapper post-meta-edit-link-wrapper"><ul class="post-meta"><li class="post-edit meta-wrapper"><span class="meta-icon">' . mission_command_get_theme_svg( 'edit' ) . '</span><span class="meta-text"><a href="' . esc_url( $edit_url ) . '">' . $text . '</a></span></li></ul><!-- .post-meta --></div><!-- .post-meta-wrapper -->';
+	return '<div class="post-meta-wrapper post-meta-edit-link-wrapper"><ul class="post-meta"><li class="post-edit meta-wrapper"><span class="meta-icon">' . mtf_get_theme_svg( 'edit' ) . '</span><span class="meta-text"><a href="' . esc_url( $edit_url ) . '">' . $text . '</a></span></li></ul><!-- .post-meta --></div><!-- .post-meta-wrapper -->';
 
 }
 
-add_filter( 'edit_post_link', 'mission_command_edit_post_link', 10, 3 );
+add_filter( 'edit_post_link', 'mtf_edit_post_link', 10, 3 );
 
 /**
  * Get the post meta.
@@ -225,7 +225,7 @@ add_filter( 'edit_post_link', 'mission_command_edit_post_link', 10, 3 );
  * @param int    $post_id The ID of the post.
  * @param string $location The location where the meta is shown.
  */
-function mission_command_get_post_meta( $post_id = null, $location = 'single-top' ) {
+function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 
 	// Require post ID.
 	if ( ! $post_id ) {
@@ -241,7 +241,7 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
 	 *
 	 * @param array Array of post types
 	 */
-	$disallowed_post_types = apply_filters( 'mission_command_disallowed_post_types_for_meta_output', array( 'page' ) );
+	$disallowed_post_types = apply_filters( 'mtf_disallowed_post_types_for_meta_output', array( 'page' ) );
 	// Check whether the post type is allowed to output post meta.
 	if ( in_array( get_post_type( $post_id ), $disallowed_post_types, true ) ) {
 		return;
@@ -267,7 +267,7 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
 		* }
 		*/
 		$post_meta = apply_filters(
-			'mission_command_post_meta_location_single_top',
+			'mtf_post_meta_location_single_top',
 			array(
 				'author',
 				'post-date',
@@ -292,7 +292,7 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
 		* }
 		*/
 		$post_meta = apply_filters(
-			'mission_command_post_meta_location_single_bottom',
+			'mtf_post_meta_location_single_bottom',
 			array(
 				'tags',
 			)
@@ -335,7 +335,7 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
 				 * @param string $location  The location where the meta is shown.
 				 *                          Accepts 'single-top' or 'single-bottom'.
 				 */
-				do_action( 'mission_command_start_of_post_meta_list', $post_id, $post_meta, $location );
+				do_action( 'mtf_start_of_post_meta_list', $post_id, $post_meta, $location );
 
 				// Author.
 				if ( in_array( 'author', $post_meta, true ) ) {
@@ -344,14 +344,14 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
 					?>
 					<li class="post-author meta-wrapper">
 						<span class="meta-icon">
-							<span class="screen-reader-text"><?php _e( 'Post author', 'mission_command' ); ?></span>
-							<?php mission_command_the_theme_svg( 'user' ); ?>
+							<span class="screen-reader-text"><?php _e( 'Post author', 'mtf' ); ?></span>
+							<?php mtf_the_theme_svg( 'user' ); ?>
 						</span>
 						<span class="meta-text">
 							<?php
 							printf(
 								/* translators: %s: Author name. */
-								__( 'By %s', 'mission_command' ),
+								__( 'By %s', 'mtf' ),
 								'<a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author_meta( 'display_name' ) ) . '</a>'
 							);
 							?>
@@ -368,8 +368,8 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
 					?>
 					<li class="post-date meta-wrapper">
 						<span class="meta-icon">
-							<span class="screen-reader-text"><?php _e( 'Post date', 'mission_command' ); ?></span>
-							<?php mission_command_the_theme_svg( 'calendar' ); ?>
+							<span class="screen-reader-text"><?php _e( 'Post date', 'mtf' ); ?></span>
+							<?php mtf_the_theme_svg( 'calendar' ); ?>
 						</span>
 						<span class="meta-text">
 							<a href="<?php the_permalink(); ?>"><?php the_time( get_option( 'date_format' ) ); ?></a>
@@ -386,11 +386,11 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
 					?>
 					<li class="post-categories meta-wrapper">
 						<span class="meta-icon">
-							<span class="screen-reader-text"><?php _e( 'Categories', 'mission_command' ); ?></span>
-							<?php mission_command_the_theme_svg( 'folder' ); ?>
+							<span class="screen-reader-text"><?php _e( 'Categories', 'mtf' ); ?></span>
+							<?php mtf_the_theme_svg( 'folder' ); ?>
 						</span>
 						<span class="meta-text">
-							<?php _ex( 'In', 'A string that is output before one or more categories', 'mission_command' ); ?> <?php the_category( ', ' ); ?>
+							<?php _ex( 'In', 'A string that is output before one or more categories', 'mtf' ); ?> <?php the_category( ', ' ); ?>
 						</span>
 					</li>
 					<?php
@@ -404,8 +404,8 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
 					?>
 					<li class="post-tags meta-wrapper">
 						<span class="meta-icon">
-							<span class="screen-reader-text"><?php _e( 'Tags', 'mission_command' ); ?></span>
-							<?php mission_command_the_theme_svg( 'tag' ); ?>
+							<span class="screen-reader-text"><?php _e( 'Tags', 'mtf' ); ?></span>
+							<?php mtf_the_theme_svg( 'tag' ); ?>
 						</span>
 						<span class="meta-text">
 							<?php the_tags( '', ', ', '' ); ?>
@@ -422,7 +422,7 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
 					?>
 					<li class="post-comment-link meta-wrapper">
 						<span class="meta-icon">
-							<?php mission_command_the_theme_svg( 'comment' ); ?>
+							<?php mtf_the_theme_svg( 'comment' ); ?>
 						</span>
 						<span class="meta-text">
 							<?php comments_popup_link(); ?>
@@ -439,10 +439,10 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
 					?>
 					<li class="post-sticky meta-wrapper">
 						<span class="meta-icon">
-							<?php mission_command_the_theme_svg( 'bookmark' ); ?>
+							<?php mtf_the_theme_svg( 'bookmark' ); ?>
 						</span>
 						<span class="meta-text">
-							<?php _e( 'Sticky post', 'mission_command' ); ?>
+							<?php _e( 'Sticky post', 'mtf' ); ?>
 						</span>
 					</li>
 					<?php
@@ -462,7 +462,7 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
 				 * @param string $location  The location where the meta is shown.
 				 *                          Accepts 'single-top' or 'single-bottom'.
 				 */
-				do_action( 'mission_command_end_of_post_meta_list', $post_id, $post_meta, $location );
+				do_action( 'mtf_end_of_post_meta_list', $post_id, $post_meta, $location );
 
 				?>
 
@@ -502,7 +502,7 @@ function mission_command_get_post_meta( $post_id = null, $location = 'single-top
  *
  * @return array $css_class CSS Class names.
  */
-function mission_command_filter_wp_list_pages_item_classes( $css_class, $item, $depth, $args, $current_page ) {
+function mtf_filter_wp_list_pages_item_classes( $css_class, $item, $depth, $args, $current_page ) {
 
 	// Only apply to wp_list_pages() calls with match_menu_classes set to true.
 	$match_menu_classes = isset( $args['match_menu_classes'] );
@@ -525,7 +525,7 @@ function mission_command_filter_wp_list_pages_item_classes( $css_class, $item, $
 
 }
 
-add_filter( 'page_css_class', 'mission_command_filter_wp_list_pages_item_classes', 10, 5 );
+add_filter( 'page_css_class', 'mtf_filter_wp_list_pages_item_classes', 10, 5 );
 
 /**
  * Add a Sub Nav Toggle to the Expanded Menu and Mobile Menu.
@@ -536,7 +536,7 @@ add_filter( 'page_css_class', 'mission_command_filter_wp_list_pages_item_classes
  *
  * @return stdClass $args An object of wp_nav_menu() arguments.
  */
-function mission_command_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
+function mtf_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
 
 	// Add sub menu toggles to the Expanded Menu with toggles.
 	if ( isset( $args->show_toggles ) && $args->show_toggles ) {
@@ -549,10 +549,10 @@ function mission_command_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
 		if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
 
 			$toggle_target_string = '.menu-modal .menu-item-' . $item->ID . ' > .sub-menu';
-			$toggle_duration      = mission_command_toggle_duration();
+			$toggle_duration      = mtf_toggle_duration();
 
 			// Add the sub menu toggle.
-			$args->after .= '<button class="toggle sub-menu-toggle fill-children-current-color" data-toggle-target="' . $toggle_target_string . '" data-toggle-type="slidetoggle" data-toggle-duration="' . absint( $toggle_duration ) . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'mission_command' ) . '</span>' . mission_command_get_theme_svg( 'chevron-down' ) . '</button>';
+			$args->after .= '<button class="toggle sub-menu-toggle fill-children-current-color" data-toggle-target="' . $toggle_target_string . '" data-toggle-type="slidetoggle" data-toggle-duration="' . absint( $toggle_duration ) . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'mtf' ) . '</span>' . mtf_get_theme_svg( 'chevron-down' ) . '</button>';
 
 		}
 
@@ -572,7 +572,7 @@ function mission_command_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
 
 }
 
-add_filter( 'nav_menu_item_args', 'mission_command_add_sub_toggles_to_main_menu', 10, 3 );
+add_filter( 'nav_menu_item_args', 'mtf_add_sub_toggles_to_main_menu', 10, 3 );
 
 /**
  * Display SVG icons in social links menu.
@@ -583,12 +583,12 @@ add_filter( 'nav_menu_item_args', 'mission_command_add_sub_toggles_to_main_menu'
  * @param  array   $args        wp_nav_menu() arguments.
  * @return string  $item_output The menu item output with social icon.
  */
-function mission_command_nav_menu_social_icons( $item_output, $item, $depth, $args ) {
+function mtf_nav_menu_social_icons( $item_output, $item, $depth, $args ) {
 	// Change SVG icon inside social links menu if there is supported URL.
 	if ( 'social' === $args->theme_location ) {
-		$svg = Disruptv_SVG_Icons::get_social_link_svg( $item->url );
+		$svg = MTF_SVG_Icons::get_social_link_svg( $item->url );
 		if ( empty( $svg ) ) {
-			$svg = mission_command_get_theme_svg( 'link' );
+			$svg = mtf_get_theme_svg( 'link' );
 		}
 		$item_output = str_replace( $args->link_after, '</span>' . $svg, $item_output );
 	}
@@ -596,7 +596,7 @@ function mission_command_nav_menu_social_icons( $item_output, $item, $depth, $ar
 	return $item_output;
 }
 
-add_filter( 'walker_nav_menu_start_el', 'mission_command_nav_menu_social_icons', 10, 4 );
+add_filter( 'walker_nav_menu_start_el', 'mtf_nav_menu_social_icons', 10, 4 );
 
 /**
  * Classes
@@ -605,7 +605,7 @@ add_filter( 'walker_nav_menu_start_el', 'mission_command_nav_menu_social_icons',
  * Add No-JS Class.
  * If we're missing JavaScript support, the HTML element will have a no-js class.
  */
-function mission_command_no_js_class() {
+function mtf_no_js_class() {
 
 	?>
 	<script>document.documentElement.className = document.documentElement.className.replace( 'no-js', 'js' );</script>
@@ -613,7 +613,7 @@ function mission_command_no_js_class() {
 
 }
 
-add_action( 'wp_head', 'mission_command_no_js_class' );
+add_action( 'wp_head', 'mtf_no_js_class' );
 
 /**
  * Add conditional body classes.
@@ -622,7 +622,7 @@ add_action( 'wp_head', 'mission_command_no_js_class' );
  *
  * @return array $classes Classes added to the body tag.
  */
-function mission_command_body_classes( $classes ) {
+function mtf_body_classes( $classes ) {
 
 	global $post;
 	$post_type = isset( $post ) ? $post->post_type : false;
@@ -711,7 +711,7 @@ function mission_command_body_classes( $classes ) {
 
 }
 
-add_filter( 'body_class', 'mission_command_body_classes' );
+add_filter( 'body_class', 'mtf_body_classes' );
 
 /**
  * Archives
@@ -723,10 +723,10 @@ add_filter( 'body_class', 'mission_command_body_classes' );
  *
  * @return string $title Current archive title.
  */
-function mission_command_get_the_archive_title( $title ) {
+function mtf_get_the_archive_title( $title ) {
 
 	$regex = apply_filters(
-		'mission_command_get_the_archive_title_regex',
+		'mtf_get_the_archive_title_regex',
 		array(
 			'pattern'     => '/(\A[^\:]+\:)/',
 			'replacement' => '<span class="color-accent">$1</span>',
@@ -743,7 +743,7 @@ function mission_command_get_the_archive_title( $title ) {
 
 }
 
-add_filter( 'get_the_archive_title', 'mission_command_get_the_archive_title' );
+add_filter( 'get_the_archive_title', 'mtf_get_the_archive_title' );
 
 /**
  * Miscellaneous
@@ -753,7 +753,7 @@ add_filter( 'get_the_archive_title', 'mission_command_get_the_archive_title' );
  *
  * @return integer Duration in milliseconds
  */
-function mission_command_toggle_duration() {
+function mtf_toggle_duration() {
 	/**
 	 * Filters the animation duration/speed used usually for submenu toggles.
 	 *
@@ -761,7 +761,7 @@ function mission_command_toggle_duration() {
 	 *
 	 * @param integer $duration Duration in milliseconds.
 	 */
-	$duration = apply_filters( 'mission_command_toggle_duration', 250 );
+	$duration = apply_filters( 'mtf_toggle_duration', 250 );
 
 	return $duration;
 }
@@ -781,7 +781,7 @@ function mission_command_toggle_duration() {
  * @param string $prefix Prefix for the returned ID.
  * @return string Unique ID.
  */
-function mission_command_unique_id( $prefix = '' ) {
+function mtf_unique_id( $prefix = '' ) {
 	static $id_counter = 0;
 	if ( function_exists( 'wp_unique_id' ) ) {
 		return wp_unique_id( $prefix );

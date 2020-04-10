@@ -4,6 +4,8 @@ const fs = require('fs');
 const path = require('path');
 
 const appDirectory = fs.realpathSync(process.cwd());
+const HMR = require('./hmr.js');
+const hmr = HMR.getClient();
 
 const moduleFileExtensions = [
   'web.mjs',
@@ -19,18 +21,6 @@ const moduleFileExtensions = [
   'jsx',
 ];
 
-const appCopyFiles = [
-  'style.css',
-  'screenshot.*',
-  '*.php',
-  '*.json',
-  'admin/**',
-  'assets/fonts/**',
-  'assets/img/**',
-  'classes/**',
-  'inc/**',
-];
-
 const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
 module.exports = {
@@ -38,19 +28,7 @@ module.exports = {
   appPath: resolveApp('.'),
   appBuild: resolveApp('build'),
   appTemp: resolveApp('.build'),
-  appIndex: {
-    'style': resolveApp('src/assets/scss/style.scss'),
-    'print': resolveApp('src/assets/scss/print.scss'),
-    'vendors': resolveApp('src/assets/js/vendors.js'),
-    'wordpress': [
-      resolveApp('src/assets/js/color-calculations.js'),
-      resolveApp('src/assets/js/customize-controls.js'),
-      resolveApp('src/assets/js/customize-preview.js'),
-      resolveApp('src/assets/js/customize.js'),
-      resolveApp('src/assets/js/editor-script-block.js'),
-      resolveApp('src/assets/js/index.js'),
-      resolveApp('src/assets/js/skip-link-focus-fix.js'),
-    ],
+  appFiles: {
     'react': resolveApp('src/index.jsx'),
   },
   appPackageJson: resolveApp('package.json'),
@@ -61,4 +39,3 @@ module.exports = {
 };
 
 module.exports.moduleFileExtensions = moduleFileExtensions;
-module.exports.appCopyFiles = appCopyFiles;

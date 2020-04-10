@@ -3,16 +3,16 @@
  * Custom page walker for this theme.
  *
  * @package WordPress
- * @subpackage Disruptv
+ * @subpackage MTF
  * @since MissionCommand 6.0.0
  */
 
-if ( ! class_exists( 'Disruptv_Walker_Page' ) ) {
+if ( ! class_exists( 'MTF_Walker_Page' ) ) {
 	/**
 	 * CUSTOM PAGE WALKER
 	 * A custom walker for pages.
 	 */
-	class Disruptv_Walker_Page extends Walker_Page {
+	class MTF_Walker_Page extends Walker_Page {
 
 		/**
 		 * Outputs the beginning of the current element in the tree.
@@ -67,7 +67,7 @@ if ( ! class_exists( 'Disruptv_Walker_Page' ) ) {
 
 			if ( '' === $page->post_title ) {
 				/* translators: %d: ID of a post. */
-				$page->post_title = sprintf( __( '#%d (no title)', 'mission_command' ), $page->ID );
+				$page->post_title = sprintf( __( '#%d (no title)', 'mtf' ), $page->ID );
 			}
 
 			$args['link_before'] = empty( $args['link_before'] ) ? '' : $args['link_before'];
@@ -101,10 +101,10 @@ if ( ! class_exists( 'Disruptv_Walker_Page' ) ) {
 				if ( isset( $args['pages_with_children'][ $page->ID ] ) ) {
 
 					$toggle_target_string = '.menu-modal .page-item-' . $page->ID . ' > ul';
-					$toggle_duration      = mission_command_toggle_duration();
+					$toggle_duration      = mtf_toggle_duration();
 
 					// Add the sub menu toggle.
-					$args['list_item_after'] .= '<button class="toggle sub-menu-toggle fill-children-current-color" data-toggle-target="' . $toggle_target_string . '" data-toggle-type="slidetoggle" data-toggle-duration="' . absint( $toggle_duration ) . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'mission_command' ) . '</span>' . mission_command_get_theme_svg( 'chevron-down' ) . '</button>';
+					$args['list_item_after'] .= '<button class="toggle sub-menu-toggle fill-children-current-color" data-toggle-target="' . $toggle_target_string . '" data-toggle-type="slidetoggle" data-toggle-duration="' . absint( $toggle_duration ) . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'mtf' ) . '</span>' . mtf_get_theme_svg( 'chevron-down' ) . '</button>';
 
 				}
 

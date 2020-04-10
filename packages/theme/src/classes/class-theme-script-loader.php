@@ -7,15 +7,15 @@
  * Based on a solution in WP Rig.
  *
  * @package WordPress
- * @subpackage Disruptv
+ * @subpackage MTF
  * @since MissionCommand 6.0.0
  */
 
-if ( ! class_exists( 'Disruptv_Script_Loader' ) ) {
+if ( ! class_exists( 'MTF_Script_Loader' ) ) {
 	/**
 	 * A class that provides a way to add `async` or `defer` attributes to scripts.
 	 */
-	class Disruptv_Script_Loader {
+	class MTF_Script_Loader {
 
 		/**
 		 * Adds async/defer attributes to enqueued / registered scripts.

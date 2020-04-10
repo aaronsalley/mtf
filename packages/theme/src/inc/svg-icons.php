@@ -3,25 +3,25 @@
  * Twenty Twenty SVG Icon helper functions
  *
  * @package WordPress
- * @subpackage Disruptv
+ * @subpackage MTF
  * @since MissionCommand 6.0.0
  */
 
-if ( ! function_exists( 'mission_command_the_theme_svg' ) ) {
+if ( ! function_exists( 'mtf_the_theme_svg' ) ) {
 	/**
 	 * Output and Get Theme SVG.
-	 * Output and get the SVG markup for an icon in the Disruptv_SVG_Icons class.
+	 * Output and get the SVG markup for an icon in the MTF_SVG_Icons class.
 	 *
 	 * @param string $svg_name The name of the icon.
 	 * @param string $group The group the icon belongs to.
 	 * @param string $color Color code.
 	 */
-	function mission_command_the_theme_svg( $svg_name, $group = 'ui', $color = '' ) {
-		echo mission_command_get_theme_svg( $svg_name, $group, $color ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in mission_command_get_theme_svg().
+	function mtf_the_theme_svg( $svg_name, $group = 'ui', $color = '' ) {
+		echo mtf_get_theme_svg( $svg_name, $group, $color ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in mtf_get_theme_svg().
 	}
 }
 
-if ( ! function_exists( 'mission_command_get_theme_svg' ) ) {
+if ( ! function_exists( 'mtf_get_theme_svg' ) ) {
 
 	/**
 	 * Get information about the SVG icon.
@@ -30,11 +30,11 @@ if ( ! function_exists( 'mission_command_get_theme_svg' ) ) {
 	 * @param string $group The group the icon belongs to.
 	 * @param string $color Color code.
 	 */
-	function mission_command_get_theme_svg( $svg_name, $group = 'ui', $color = '' ) {
+	function mtf_get_theme_svg( $svg_name, $group = 'ui', $color = '' ) {
 
 		// Make sure that only our allowed tags and attributes are included.
 		$svg = wp_kses(
-			Disruptv_SVG_Icons::get_svg( $svg_name, $group, $color ),
+			MTF_SVG_Icons::get_svg( $svg_name, $group, $color ),
 			array(
 				'svg'     => array(
 					'class'       => true,

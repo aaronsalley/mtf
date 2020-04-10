@@ -3,15 +3,15 @@
  * Customizer settings for this theme.
  *
  * @package WordPress
- * @subpackage Disruptv
+ * @subpackage MTF
  * @since MissionCommand 6.0.0
  */
 
-if ( ! class_exists( 'Disruptv_Customize' ) ) {
+if ( ! class_exists( 'MTF_Customize' ) ) {
 	/**
 	 * CUSTOMIZER SETTINGS
 	 */
-	class Disruptv_Customize {
+	class MTF_Customize {
 
 		/**
 		 * Register customizer options.
@@ -30,7 +30,7 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 				'blogname',
 				array(
 					'selector'        => '.site-title a',
-					'render_callback' => 'mission_command_customize_partial_blogname',
+					'render_callback' => 'mtf_customize_partial_blogname',
 				)
 			);
 
@@ -38,7 +38,7 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 				'blogdescription',
 				array(
 					'selector'        => '.site-description',
-					'render_callback' => 'mission_command_customize_partial_blogdescription',
+					'render_callback' => 'mtf_customize_partial_blogdescription',
 				)
 			);
 
@@ -46,7 +46,7 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 				'custom_logo',
 				array(
 					'selector'        => '.header-titles [class*=site-]:not(.site-description)',
-					'render_callback' => 'mission_command_customize_partial_site_logo',
+					'render_callback' => 'mtf_customize_partial_site_logo',
 				)
 			);
 
@@ -54,7 +54,7 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 				'retina_logo',
 				array(
 					'selector'        => '.header-titles [class*=site-]:not(.site-description)',
-					'render_callback' => 'mission_command_customize_partial_site_logo',
+					'render_callback' => 'mtf_customize_partial_site_logo',
 				)
 			);
 
@@ -78,8 +78,8 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 					'type'        => 'checkbox',
 					'section'     => 'title_tagline',
 					'priority'    => 10,
-					'label'       => __( 'Retina logo', 'mission_command' ),
-					'description' => __( 'Scales the logo to half its uploaded size, making it sharp on high-res screens.', 'mission_command' ),
+					'label'       => __( 'Retina logo', 'mtf' ),
+					'description' => __( 'Scales the logo to half its uploaded size, making it sharp on high-res screens.', 'mtf' ),
 				)
 			);
 
@@ -98,7 +98,7 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 					$wp_customize,
 					'header_footer_background_color',
 					array(
-						'label'   => __( 'Header &amp; Footer Background Color', 'mission_command' ),
+						'label'   => __( 'Header &amp; Footer Background Color', 'mtf' ),
 						'section' => 'colors',
 					)
 				)
@@ -120,10 +120,10 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 				array(
 					'type'    => 'radio',
 					'section' => 'colors',
-					'label'   => __( 'Primary Color', 'mission_command' ),
+					'label'   => __( 'Primary Color', 'mtf' ),
 					'choices' => array(
-						'default' => __( 'Default', 'mission_command' ),
-						'custom'  => __( 'Custom', 'mission_command' ),
+						'default' => __( 'Default', 'mtf' ),
+						'custom'  => __( 'Custom', 'mtf' ),
 					),
 				)
 			);
@@ -180,7 +180,7 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 					array(
 						'section'         => 'colors',
 						'settings'        => 'accent_hue',
-						'description'     => __( 'Apply a custom color for links, buttons, featured images.', 'mission_command' ),
+						'description'     => __( 'Apply a custom color for links, buttons, featured images.', 'mtf' ),
 						'mode'            => 'hue',
 						'active_callback' => function() use ( $wp_customize ) {
 							return ( 'custom' === $wp_customize->get_setting( 'accent_hue_active' )->value() );
@@ -199,7 +199,7 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 			$wp_customize->add_section(
 				'options',
 				array(
-					'title'      => __( 'Theme Options', 'mission_command' ),
+					'title'      => __( 'Theme Options', 'mtf' ),
 					'priority'   => 40,
 					'capability' => 'edit_theme_options',
 				)
@@ -222,7 +222,7 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 					'type'     => 'checkbox',
 					'section'  => 'options',
 					'priority' => 10,
-					'label'    => __( 'Show search in header', 'mission_command' ),
+					'label'    => __( 'Show search in header', 'mtf' ),
 				)
 			);
 
@@ -243,7 +243,7 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 					'type'     => 'checkbox',
 					'section'  => 'options',
 					'priority' => 10,
-					'label'    => __( 'Show author bio', 'mission_command' ),
+					'label'    => __( 'Show author bio', 'mtf' ),
 				)
 			);
 
@@ -264,10 +264,10 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 					'type'     => 'radio',
 					'section'  => 'options',
 					'priority' => 10,
-					'label'    => __( 'On archive pages, posts show:', 'mission_command' ),
+					'label'    => __( 'On archive pages, posts show:', 'mtf' ),
 					'choices'  => array(
-						'full'    => __( 'Full text', 'mission_command' ),
-						'summary' => __( 'Summary', 'mission_command' ),
+						'full'    => __( 'Full text', 'mtf' ),
+						'summary' => __( 'Summary', 'mtf' ),
 					),
 				)
 			);
@@ -278,9 +278,9 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 			$wp_customize->add_section(
 				'cover_template_options',
 				array(
-					'title'       => __( 'Cover Template', 'mission_command' ),
+					'title'       => __( 'Cover Template', 'mtf' ),
 					'capability'  => 'edit_theme_options',
-					'description' => __( 'Settings for the "Cover Template" page template. Add a featured image to use as background.', 'mission_command' ),
+					'description' => __( 'Settings for the "Cover Template" page template. Add a featured image to use as background.', 'mtf' ),
 					'priority'    => 42,
 				)
 			);
@@ -302,8 +302,8 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 				array(
 					'type'        => 'checkbox',
 					'section'     => 'cover_template_options',
-					'label'       => __( 'Fixed Background Image', 'mission_command' ),
-					'description' => __( 'Creates a parallax effect when the visitor scrolls.', 'mission_command' ),
+					'label'       => __( 'Fixed Background Image', 'mtf' ),
+					'description' => __( 'Creates a parallax effect when the visitor scrolls.', 'mtf' ),
 				)
 			);
 
@@ -325,7 +325,7 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 			);
 
 			$wp_customize->add_control(
-				new Disruptv_Separator_Control(
+				new MTF_Separator_Control(
 					$wp_customize,
 					'cover_template_separator_1',
 					array(
@@ -339,7 +339,7 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 			$wp_customize->add_setting(
 				'cover_template_overlay_background_color',
 				array(
-					'default'           => mission_command_get_color_for_area( 'content', 'accent' ),
+					'default'           => mtf_get_color_for_area( 'content', 'accent' ),
 					'sanitize_callback' => 'sanitize_hex_color',
 				)
 			);
@@ -349,8 +349,8 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 					$wp_customize,
 					'cover_template_overlay_background_color',
 					array(
-						'label'       => __( 'Overlay Background Color', 'mission_command' ),
-						'description' => __( 'The color used for the overlay. Defaults to the accent color.', 'mission_command' ),
+						'label'       => __( 'Overlay Background Color', 'mtf' ),
+						'description' => __( 'The color used for the overlay. Defaults to the accent color.', 'mtf' ),
 						'section'     => 'cover_template_options',
 					)
 				)
@@ -371,8 +371,8 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 					$wp_customize,
 					'cover_template_overlay_text_color',
 					array(
-						'label'       => __( 'Overlay Text Color', 'mission_command' ),
-						'description' => __( 'The color used for the text in the overlay.', 'mission_command' ),
+						'label'       => __( 'Overlay Text Color', 'mtf' ),
+						'description' => __( 'The color used for the text in the overlay.', 'mtf' ),
 						'section'     => 'cover_template_options',
 					)
 				)
@@ -392,11 +392,11 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 			$wp_customize->add_control(
 				'cover_template_overlay_opacity',
 				array(
-					'label'       => __( 'Overlay Opacity', 'mission_command' ),
-					'description' => __( 'Make sure that the contrast is high enough so that the text is readable.', 'mission_command' ),
+					'label'       => __( 'Overlay Opacity', 'mtf' ),
+					'description' => __( 'Make sure that the contrast is high enough so that the text is readable.', 'mtf' ),
 					'section'     => 'cover_template_options',
 					'type'        => 'range',
-					'input_attrs' => mission_command_customize_opacity_range(),
+					'input_attrs' => mtf_customize_opacity_range(),
 				)
 			);
 
@@ -461,39 +461,39 @@ if ( ! class_exists( 'Disruptv_Customize' ) ) {
 	}
 
 	// Setup the Theme Customizer settings and controls.
-	add_action( 'customize_register', array( 'Disruptv_Customize', 'register' ) );
+	add_action( 'customize_register', array( 'MTF_Customize', 'register' ) );
 
 }
 
 /**
  * PARTIAL REFRESH FUNCTIONS
  * */
-if ( ! function_exists( 'mission_command_customize_partial_blogname' ) ) {
+if ( ! function_exists( 'mtf_customize_partial_blogname' ) ) {
 	/**
 	 * Render the site title for the selective refresh partial.
 	 */
-	function mission_command_customize_partial_blogname() {
+	function mtf_customize_partial_blogname() {
 		bloginfo( 'name' );
 	}
 }
 
-if ( ! function_exists( 'mission_command_customize_partial_blogdescription' ) ) {
+if ( ! function_exists( 'mtf_customize_partial_blogdescription' ) ) {
 	/**
 	 * Render the site description for the selective refresh partial.
 	 */
-	function mission_command_customize_partial_blogdescription() {
+	function mtf_customize_partial_blogdescription() {
 		bloginfo( 'description' );
 	}
 }
 
-if ( ! function_exists( 'mission_command_customize_partial_site_logo' ) ) {
+if ( ! function_exists( 'mtf_customize_partial_site_logo' ) ) {
 	/**
 	 * Render the site logo for the selective refresh partial.
 	 *
 	 * Doing it this way so we don't have issues with `render_callback`'s arguments.
 	 */
-	function mission_command_customize_partial_site_logo() {
-		mission_command_site_logo();
+	function mtf_customize_partial_site_logo() {
+		mtf_site_logo();
 	}
 }
 
@@ -503,7 +503,7 @@ if ( ! function_exists( 'mission_command_customize_partial_site_logo' ) ) {
  *
  * @return array Array containing attribute names and their values.
  */
-function mission_command_customize_opacity_range() {
+function mtf_customize_opacity_range() {
 	/**
 	 * Filter the input attributes for opacity
 	 *
@@ -516,7 +516,7 @@ function mission_command_customize_opacity_range() {
 	 * }
 	 */
 	return apply_filters(
-		'mission_command_customize_opacity_range',
+		'mtf_customize_opacity_range',
 		array(
 			'min'  => 0,
 			'max'  => 90,

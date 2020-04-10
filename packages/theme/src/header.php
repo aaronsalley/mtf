@@ -8,5 +8,4 @@
 </head>
 
 <body <?php body_class(); ?>>
-  <?php elementor_theme_do_location( 'header' ); ?>
-	<?php wp_body_open(); ?>
+<?php wp_body_open(); ?>

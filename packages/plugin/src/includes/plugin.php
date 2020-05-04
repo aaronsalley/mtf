@@ -49,8 +49,8 @@ class Mission_Command {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/loader.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/i18n.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/admin.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/api.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/index.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/index.php';
 
 		$this->loader = new Loader();
 
@@ -81,6 +81,7 @@ class Mission_Command {
 
 		$plugin_admin = new Admin( $this->get_mission_command(), $this->get_version() );
 
+		$this->loader->add_action( 'init', $plugin_admin, 'register_post_types' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu_pages' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );

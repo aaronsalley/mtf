@@ -93,7 +93,7 @@ module.exports = function (webpackEnv = 'development') {
     output: {
       path: isEnvProduction ? paths.appBuild : paths.appTemp,
       pathinfo: isEnvDevelopment,
-      filename: 'assets/js/[name].js',
+      filename: '[name].js',
     },
     optimization: {
       minimize: isEnvProduction,
@@ -175,7 +175,7 @@ module.exports = function (webpackEnv = 'development') {
               include: paths.appSrc,
               loader: require.resolve('babel-loader'),
               options: {
-                babelrc: false,
+                // babelrc: false,
                 configFile: false,
                 cacheDirectory: true,
                 cacheCompression: false,

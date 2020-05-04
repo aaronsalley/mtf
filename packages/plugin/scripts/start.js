@@ -48,12 +48,12 @@ browserSync.init({
     middleware,
   },
   // logLevel: 'silent',
-  files: ['../**/*.php'].map((element) => path.resolve(element)),
+  files: ['../**/*.php', '../**/*.jsx'].map((element) => path.resolve(element)),
   snippetOptions: {
     rule: {
       match: /<\/head>/i,
       fn: function (snippet, match) {
-        return `<script src="${paths.appTemp}"></script>${snippet}${match}`;
+        return `<script src="${paths.appTemp}/admin/js/admin.js"></script>${snippet}${match}`;
       },
     },
   },

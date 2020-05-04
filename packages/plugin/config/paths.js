@@ -29,7 +29,7 @@ module.exports = {
   appBuild: resolveApp('build'),
   appTemp: resolveApp('.build'),
   appFiles: {
-    'react': resolveApp('src/index.jsx'),
+    'admin/js/admin': resolveApp('src/admin/index.jsx'),
   },
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),

@@ -15,7 +15,82 @@ function mtf_theme_support() {
 	add_theme_support(
 		'custom-background',
 		array(
-			'default-color' => 'f5efe0',
+			'default-preset'			=>	'fill',
+			'default-repeat'			=>	'no-repeat',
+			'default-attachment'	=>	'scroll',
+			'default-color' 			=> 	'f5efe0',
+			'wp-head-callback'		=>	function () {
+				// $background is the saved custom image, or the default image.
+				$background = set_url_scheme( get_background_image() );
+				$color = get_background_color();
+		
+				if ( get_theme_support( 'custom-background', 'default-color' ) === $color ) {
+						$color = false;
+				}
+		
+				$type_attr = current_theme_supports( 'html5', 'style' ) ? '' : ' type="text/css"';
+		
+				if ( ! $background && ! $color ) {
+						if ( is_customize_preview() ) {
+								printf( '<style%s id="custom-background-css"></style>', $type_attr );
+						}
+						return;
+				}
+		
+				$style = $color ? "background-color: #$color;" : '';
+		
+				if ( $background ) {
+						$image = ' background-image: url("' . esc_url_raw( $background ) . '");';
+		
+						// Background Position.
+						$position_x = get_theme_mod( 'background_position_x', get_theme_support( 'custom-background', 'default-position-x' ) );
+						$position_y = get_theme_mod( 'background_position_y', get_theme_support( 'custom-background', 'default-position-y' ) );
+		
+						if ( ! in_array( $position_x, array( 'left', 'center', 'right' ), true ) ) {
+								$position_x = 'left';
+						}
+		
+						if ( ! in_array( $position_y, array( 'top', 'center', 'bottom' ), true ) ) {
+								$position_y = 'top';
+						}
+		
+						$position = " background-position: $position_x $position_y;";
+		
+						// Background Size.
+						$size = get_theme_mod( 'background_size', get_theme_support( 'custom-background', 'default-size' ) );
+		
+						if ( ! in_array( $size, array( 'auto', 'contain', 'cover' ), true ) ) {
+								$size = 'auto';
+						}
+		
+						$size = " background-size: $size;";
+		
+						// Background Repeat.
+						$repeat = get_theme_mod( 'background_repeat', get_theme_support( 'custom-background', 'default-repeat' ) );
+		
+						if ( ! in_array( $repeat, array( 'repeat-x', 'repeat-y', 'repeat', 'no-repeat' ), true ) ) {
+								$repeat = 'repeat';
+						}
+		
+						$repeat = " background-repeat: $repeat;";
+		
+						// Background Scroll.
+						$attachment = get_theme_mod( 'background_attachment', get_theme_support( 'custom-background', 'default-attachment' ) );
+		
+						if ( 'fixed' !== $attachment ) {
+								$attachment = 'scroll';
+						}
+		
+						$attachment = " background-attachment: $attachment;";
+		
+						$style .= $image . $position . $size . $repeat . $attachment;
+				}
+				?>
+<style<?php echo $type_attr; ?> id="custom-background-css">
+.custom-background:not(body) { <?php echo trim( $style ); ?> }
+</style>
+				<?php				
+			}
 		)
 	);
 
@@ -145,6 +220,9 @@ require get_template_directory() . '/inc/custom-css.php';
 // Custom Admin.
 require get_template_directory() . '/admin/index.php';
 
+// Required plugins.
+require get_template_directory() . '/inc/tgmpa-plugins.php';
+
 /**
  * Register and Enqueue Styles.
  */
@@ -152,14 +230,14 @@ function mtf_register_styles() {
 
 	$theme_version = wp_get_theme()->get( 'Version' );
 
-	wp_enqueue_style( 'mtf-style', get_template_directory_uri() . '/static/css/style.css', array(), $theme_version );
+	wp_enqueue_style( 'mtf-style', get_template_directory_uri() . '/assets/css/style.css', array(), $theme_version );
 	wp_style_add_data( 'mtf-style', 'rtl', 'replace' );
 
 	// Add output of Customizer settings as inline style.
 	wp_add_inline_style( 'mtf-style', mtf_get_customizer_css( 'front-end' ) );
 
 	// Add print CSS.
-	wp_enqueue_style( 'mtf-print-style', get_template_directory_uri() . '/static/css/print.css', null, $theme_version, 'print' );
+	wp_enqueue_style( 'mtf-print-style', get_template_directory_uri() . '/assets/css/print.css', null, $theme_version, 'print' );
 
 }
 add_action( 'wp_enqueue_scripts', 'mtf_register_styles' );
@@ -175,7 +253,7 @@ function mtf_register_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 
-	wp_enqueue_script( 'mtf-js', get_template_directory_uri() . '/static/js/vendors.js', array(), $theme_version, false );
+	wp_enqueue_script( 'mtf-js', get_template_directory_uri() . '/assets/js/vendors.js', array(), $theme_version, false );
 }
 add_action( 'wp_enqueue_scripts', 'mtf_register_scripts' );
 
@@ -327,7 +405,7 @@ function mtf_block_editor_styles() {
 	$css_dependencies = array();
 
 	// Enqueue the editor styles.
-	wp_enqueue_style( 'mtf-block-editor-styles', get_theme_file_uri( '/static/css/editor-style-block.css' ), $css_dependencies, wp_get_theme()->get( 'Version' ), 'all' );
+	wp_enqueue_style( 'mtf-block-editor-styles', get_theme_file_uri( '/assets/css/editor-style-block.css' ), $css_dependencies, wp_get_theme()->get( 'Version' ), 'all' );
 	wp_style_add_data( 'mtf-block-editor-styles', 'rtl', 'replace' );
 
 	// Add inline style from the Customizer.
@@ -337,14 +415,14 @@ function mtf_block_editor_styles() {
 	wp_add_inline_style( 'mtf-block-editor-styles', MTF_Non_Latin_Languages::get_non_latin_css( 'block-editor' ) );
 
 	// Enqueue the editor script.
-	wp_enqueue_script( 'mtf-block-editor-script', get_theme_file_uri( '/static/js/wordpress.js' ), array( 'wp-blocks', 'wp-dom' ), wp_get_theme()->get( 'Version' ), true );
+	wp_enqueue_script( 'mtf-block-editor-script', get_theme_file_uri( '/assets/js/wordpress.js' ), array( 'wp-blocks', 'wp-dom' ), wp_get_theme()->get( 'Version' ), true );
 }
 add_action( 'enqueue_block_editor_assets', 'mtf_block_editor_styles', 1, 1 );
 
 function mtf_classic_editor_styles() {
 
 	$classic_editor_styles = array(
-		'/static/css/editor-style-classic.css',
+		'/assets/css/editor-style-classic.css',
 	);
 
 	add_editor_style( $classic_editor_styles );
@@ -479,7 +557,7 @@ function mtf_customize_controls_enqueue_scripts() {
 	$theme_version = wp_get_theme()->get( 'Version' );
 
 	// Add script for controls.
-	wp_enqueue_script( 'mtf-customize-controls', get_template_directory_uri() . '/static/js/wordpress.js', array( 'customize-controls', 'underscore', 'jquery' ), $theme_version, false );
+	wp_enqueue_script( 'mtf-customize-controls', get_template_directory_uri() . '/assets/js/wordpress.js', array( 'customize-controls', 'underscore', 'jquery' ), $theme_version, false );
 	wp_localize_script( 'mtf-customize-controls', 'mtfBgColors', mtf_get_customizer_color_vars() );
 }
 add_action( 'customize_controls_enqueue_scripts', 'mtf_customize_controls_enqueue_scripts' );
@@ -487,7 +565,7 @@ add_action( 'customize_controls_enqueue_scripts', 'mtf_customize_controls_enqueu
 function mtf_customize_preview_init() {
 	$theme_version = wp_get_theme()->get( 'Version' );
 
-	wp_enqueue_script( 'mtf-customize-preview', get_theme_file_uri( '/static/js/wordpress.js' ), array( 'customize-preview', 'customize-selective-refresh', 'jquery' ), $theme_version, true );
+	wp_enqueue_script( 'mtf-customize-preview', get_theme_file_uri( '/assets/js/wordpress.js' ), array( 'customize-preview', 'customize-selective-refresh', 'jquery' ), $theme_version, true );
 	wp_localize_script( 'mtf-customize-preview', 'mtfBgColors', mtf_get_customizer_color_vars() );
 	wp_localize_script( 'mtf-customize-preview', 'mtfPreviewEls', mtf_get_elements_array() );
 
@@ -610,63 +688,3 @@ function mtf_get_elements_array() {
 	*/
 	return apply_filters( 'mtf_get_elements_array', $elements );
 }
-
-require_once dirname( __FILE__ ) . '/classes/class-tgm-plugin-activation.php';
-function mtf_register_required_plugins() {
-	/*
-	 * Array of plugin arrays. Required keys are name and slug.
-	 * If the source is NOT from the .org repo, then source is also required.
-	 */
-	$plugins = array(
-
-		// This is an example of how to include a plugin bundled with a theme.
-		array(
-			'name'               => 'Mission Command', // The plugin name.
-			'slug'               => 'mission-command', // The plugin slug (typically the folder name).
-			'source'             => dirname( __FILE__ ) . '/lib/plugins/mission-command.zip', // The plugin source.
-			'required'           => true, // If false, the plugin is only 'recommended' instead of required.
-			'version'            => '', // E.g. 1.0.0. If set, the active plugin must be this version or higher. If the plugin version is higher than the plugin version installed, the user will be notified to update the plugin.
-			'force_activation'   => true, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch.
-			'force_deactivation' => false, // If true, plugin is deactivated upon theme switch, useful for theme-specific plugins.
-			'external_url'       => 'https://github.com/jrfnl/WP-adminbar-comments-to-pending/archive/master.zip', // If set, overrides default API URL and points to an external URL.
-			'is_callable'        => '', // If set, this callable will be be checked for availability to determine if a plugin is active.
-		),
-
-		array(
-			'name'      => 'Elementor',
-			'slug'      => 'elementor',
-			'required'  => true,
-			'force_activation'   => true,
-		),
-
-		array(
-			'name'      => 'Essential Addons for Elementor',
-			'slug'      => 'essential-addons-for-elementor-lite',
-			'required'  => true,
-			'force_activation'   => true,
-		),
-	);
-
-	$config = array(
-		'id'           => 'mtf',                 // Unique ID for hashing notices for multiple instances of TGMPA.
-		'default_path' => '',                      // Default absolute path to bundled plugins.
-		'menu'         => 'mtf-install-plugins', // Menu slug.
-		'parent_slug'  => 'plugins.php',            // Parent menu slug.
-		'capability'   => 'manage_options',    // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
-		'has_notices'  => true,                    // Show admin notices or not.
-		'dismissable'  => true,                    // If false, a user cannot dismiss the nag message.
-		'dismiss_msg'  => '',                      // If 'dismissable' is false, this message will be output at top of nag.
-		'is_automatic' => true,                   // Automatically activate plugins after installation or not.
-		'message'      => '',                      // Message to output right before the plugins table.
-	);
-
-	tgmpa( $plugins, $config );
-}
-add_action( 'tgmpa_register', 'mtf_register_required_plugins' );
-
-function theme_prefix_register_elementor_locations( $elementor_theme_manager ) {
-
-	$elementor_theme_manager->register_all_core_location();
-
-}
-add_action( 'elementor/theme/register_locations', 'theme_prefix_register_elementor_locations' );

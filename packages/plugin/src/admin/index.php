@@ -38,12 +38,27 @@ class Admin {
 			'icon' => 'dashicons-analytics',
 		),
 	];
+	public $comp;
 
 	public function __construct( $mission_command, $version ) {
 
 		$this->mission_command = $mission_command;
 		$this->version = $version;
+
+		// $this->load_dependencies();
 		
+	}
+
+	function load_dependencies(){
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/components/events.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/components/people.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/components/projects.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/components/reports.php';
+
+	}
+
+	public function test(){
+		print_r('Testing testing testing');
 	}
 
 	private function add_admin_menu_separator( $position ) {
@@ -110,7 +125,7 @@ class Admin {
 					'public' => true,
 				// 	$hierarchical = false,
 					'has_archive' => false,
-					'supports' => ['title', 'thumbnail', 'page-attributes'],
+					'supports' => ['title', 'thumbnail', 'page-attributes', 'editor'],
 					'menu_icon' => $component['icon'],
 					'menu_position' => self::$position . '.' . $index,
 					'show_in_rest' => true,

@@ -16,37 +16,14 @@ class Admin {
 	protected $mission_command;
 	protected $version;
 	protected static $position = 26;
-	protected static $components = [
-		array ( 
-			'plural' => 'Events',
-			'singular' => 'Event',
-			'icon' => 'dashicons-tickets-alt',
-		),
-		array ( 
-			'plural' => 'People',
-			'singular' => 'Person',
-			'icon' => 'dashicons-groups',
-		),
-		array ( 
-			'plural' => 'Projects',
-			'singular' => 'Project',
-			'icon' => 'dashicons-awards',
-		),
-		array ( 
-			'plural' => 'Reports',
-			'singular' => 'Report',
-			'icon' => 'dashicons-analytics',
-		),
-	];
-	public $comp;
 
 	public function __construct( $mission_command, $version ) {
 
 		$this->mission_command = $mission_command;
 		$this->version = $version;
 
-		// $this->load_dependencies();
-		
+		$this->load_dependencies();
+		$this->add_admin_menu_separator(self::$position);
 	}
 
 	function load_dependencies(){
@@ -54,11 +31,7 @@ class Admin {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/components/people.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/components/projects.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/components/reports.php';
-
-	}
-
-	public function test(){
-		print_r('Testing testing testing');
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/components/email.php';
 	}
 
 	private function add_admin_menu_separator( $position ) {
@@ -84,59 +57,6 @@ class Admin {
 				'wp-menu-separator mission-command',
 		);
 		ksort($menu);
-	}
-
-	public function add_admin_menu_pages() {
-		
-		$this->add_admin_menu_separator( self::$position );
-
-		foreach( self::$components as $index => $component) {
-      add_submenu_page(
-				$parent_slug = 'edit.php?post_type=mission_cmd_' . strtolower($component['singular']),
-        $page_title = $component['plural'],
-        $menu_title = $component['plural'],
-        $capability = 'edit_posts',
-        $menu_slug = 'mission_cmd_' . strtolower($component['plural']),
-        $function = function (){
-          echo '<div id="mission-command">Mission Control React App</div>';
-        },
-        // $icon_url = $component['icon'],
-        // $position = self::$position . '.' . $index,
-			);
-		}
-	}
-
-	public function register_post_types() {
-		foreach( self::$components as $index => $component) {
-			register_post_type(
-				$post_type = 'mission_cmd_' . strtolower($component['singular']),
-        $args = array(
-					'labels' => [
-							'name' => __($component['plural'], 'mission_command'),
-							'singular_name' => __($component['singular'], 'mission_command'),
-							'add_new' => _x('Add New ' . $component['singular'], 'mission_command', 'mission_command'),
-							'edit_item' => __('Edit ' . $component['singular'], 'mission_command'),
-							'new_item' => __('New ' . $component['singular'], 'mission_command'),
-							'view_item' => __('View ' . $component['singular'], 'mission_command'),
-							'search_items' => __('Search ' . $component['plural'], 'mission_command'),
-							'not_found' => __('No ' . $component['plural'] . ' found', 'mission_command'),
-							'not_found_in_trash' => __('No ' . $component['plural'] . ' found in Trash', 'mission_command')
-					],
-					'public' => true,
-				// 	$hierarchical = false,
-					'has_archive' => false,
-					'supports' => ['title', 'thumbnail', 'page-attributes', 'editor'],
-					'menu_icon' => $component['icon'],
-					'menu_position' => self::$position . '.' . $index,
-					'show_in_rest' => true,
-					// 'taxonomies' => array('post_tag', 'product-categories'),
-					'rewrite' => [
-						'slug' => strtolower($component['singular']), 
-						'with_front' => false,
-					]
-				)
-			);
-		}
 	}
 
 	/**

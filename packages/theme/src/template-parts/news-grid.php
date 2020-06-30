@@ -16,7 +16,7 @@ if ( $query -> have_posts() ):
           <h5 class="h5 card-title"><?php the_title(); ?></h5>
         </header>
         <div class="card-body">
-          <div class="card-text"><?php the_date('m.d.Y'); ?></div>
+          <div class="card-text border border-dark"><?php the_date('m.d.Y'); ?></div>
           <div class="card-text excerpt"><?php the_excerpt(); ?></div>
         </div>
         <footer class="card-body d-flex justify-content-end">

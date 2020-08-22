@@ -7,4 +7,4 @@
   }); let f = d.getElementsByTagName(s)[0];
   let j = d.createElement(s); let dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-})(window, document, 'script', 'dataLayer', process.env.MissionCommand_GTM_ID);
+})(window, document, 'script', 'dataLayer', process.env.MTF_GTM_ID);

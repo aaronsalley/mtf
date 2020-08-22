@@ -7,15 +7,15 @@
  * Based on a solution in WP Rig.
  *
  * @package WordPress
- * @subpackage MTF
- * @since MissionCommand 6.0.0
+ * @subpackage Twenty_Twenty
+ * @since Twenty Twenty 1.0
  */
 
-if ( ! class_exists( 'MTF_Script_Loader' ) ) {
+if ( ! class_exists( 'WordPress_Script_Loader' ) ) {
 	/**
 	 * A class that provides a way to add `async` or `defer` attributes to scripts.
 	 */
-	class MTF_Script_Loader {
+	class WordPress_Script_Loader {
 
 		/**
 		 * Adds async/defer attributes to enqueued / registered scripts.

@@ -3,8 +3,8 @@
  * Custom template tags for this theme.
  *
  * @package WordPress
- * @subpackage MTF
- * @since MissionCommand 6.0.0
+ * @subpackage Twenty_Twenty
+ * @since Twenty Twenty 1.0
  */
 
 /**
@@ -21,15 +21,15 @@
 /**
  * Logo & Description
  */
+
 /**
  * Displays the site logo, either text or image.
  *
  * @param array   $args Arguments for displaying the site logo either as an image or text.
  * @param boolean $echo Echo or return the HTML.
- *
- * @return string $html Compiled HTML based on our arguments.
+ * @return string Compiled HTML based on our arguments.
  */
-function mtf_site_logo( $args = array(), $echo = true ) {
+function wordpress_site_logo( $args = array(), $echo = true ) {
 	$logo       = get_custom_logo();
 	$site_title = get_bloginfo( 'name' );
 	$contents   = '';
@@ -48,12 +48,12 @@ function mtf_site_logo( $args = array(), $echo = true ) {
 	$args = wp_parse_args( $args, $defaults );
 
 	/**
-	 * Filters the arguments for `mtf_site_logo()`.
+	 * Filters the arguments for `wordpress_site_logo()`.
 	 *
 	 * @param array  $args     Parsed arguments.
 	 * @param array  $defaults Function's default arguments.
 	 */
-	$args = apply_filters( 'mtf_site_logo_args', $args, $defaults );
+	$args = apply_filters( 'wordpress_site_logo_args', $args, $defaults );
 
 	if ( has_custom_logo() ) {
 		$contents  = sprintf( $args['logo'], $logo, esc_html( $site_title ) );
@@ -68,14 +68,14 @@ function mtf_site_logo( $args = array(), $echo = true ) {
 	$html = sprintf( $args[ $wrap ], $classname, $contents );
 
 	/**
-	 * Filters the arguments for `mtf_site_logo()`.
+	 * Filters the arguments for `wordpress_site_logo()`.
 	 *
-	 * @param string $html      Compiled html based on our arguments.
+	 * @param string $html      Compiled HTML based on our arguments.
 	 * @param array  $args      Parsed arguments.
 	 * @param string $classname Class name based on current view, home or single.
 	 * @param string $contents  HTML for site title or logo.
 	 */
-	$html = apply_filters( 'mtf_site_logo', $html, $args, $classname, $contents );
+	$html = apply_filters( 'wordpress_site_logo', $html, $args, $classname, $contents );
 
 	if ( ! $echo ) {
 		return $html;
@@ -89,10 +89,9 @@ function mtf_site_logo( $args = array(), $echo = true ) {
  * Displays the site description.
  *
  * @param boolean $echo Echo or return the html.
- *
- * @return string $html The HTML to display.
+ * @return string The HTML to display.
  */
-function mtf_site_description( $echo = true ) {
+function wordpress_site_description( $echo = true ) {
 	$description = get_bloginfo( 'description' );
 
 	if ( ! $description ) {
@@ -104,15 +103,15 @@ function mtf_site_description( $echo = true ) {
 	$html = sprintf( $wrapper, esc_html( $description ) );
 
 	/**
-	 * Filters the html for the site description.
+	 * Filters the HTML for the site description.
 	 *
-	 * @since MissionCommand 6.0.0
+	 * @since Twenty Twenty 1.0
 	 *
 	 * @param string $html         The HTML to display.
 	 * @param string $description  Site description via `bloginfo()`.
 	 * @param string $wrapper      The format used in case you want to reuse it in a `sprintf()`.
 	 */
-	$html = apply_filters( 'mtf_site_description', $html, $description, $wrapper );
+	$html = apply_filters( 'wordpress_site_description', $html, $description, $wrapper );
 
 	if ( ! $echo ) {
 		return $html;
@@ -124,14 +123,14 @@ function mtf_site_description( $echo = true ) {
 /**
  * Comments
  */
+
 /**
- * Check if the specified comment is written by the author of the post commented on.
+ * Checks if the specified comment is written by the author of the post commented on.
  *
  * @param object $comment Comment data.
- *
  * @return bool
  */
-function mtf_is_comment_by_post_author( $comment = null ) {
+function wordpress_is_comment_by_post_author( $comment = null ) {
 
 	if ( is_object( $comment ) && $comment->user_id > 0 ) {
 
@@ -149,36 +148,38 @@ function mtf_is_comment_by_post_author( $comment = null ) {
 }
 
 /**
- * Filter comment reply link to not JS scroll.
+ * Filters comment reply link to not JS scroll.
+ *
  * Filter the comment reply link to add a class indicating it should not use JS slow-scroll, as it
  * makes it scroll to the wrong position on the page.
  *
  * @param string $link Link to the top of the page.
- *
- * @return string $link Link to the top of the page.
+ * @return string Link to the top of the page.
  */
-function mtf_filter_comment_reply_link( $link ) {
+function wordpress_filter_comment_reply_link( $link ) {
 
 	$link = str_replace( 'class=\'', 'class=\'do-not-scroll ', $link );
 	return $link;
 
 }
 
-add_filter( 'comment_reply_link', 'mtf_filter_comment_reply_link' );
+add_filter( 'comment_reply_link', 'wordpress_filter_comment_reply_link' );
 
 /**
  * Post Meta
  */
+
 /**
- * Get and Output Post Meta.
- * If it's a single post, output the post meta values specified in the Customizer settings.
+ * Retrieves and displays the post meta.
  *
- * @param int    $post_id The ID of the post for which the post meta should be output.
+ * If it's a single post, outputs the post meta values specified in the Customizer settings.
+ *
+ * @param int    $post_id  The ID of the post for which the post meta should be output.
  * @param string $location Which post meta location to output – single or preview.
  */
-function mtf_the_post_meta( $post_id = null, $location = 'single-top' ) {
+function wordpress_the_post_meta( $post_id = null, $location = 'single-top' ) {
 
-	echo mtf_get_post_meta( $post_id, $location ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in mtf_get_post_meta().
+	echo wordpress_get_post_meta( $post_id, $location ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in wordpress_get_post_meta().
 
 }
 
@@ -189,7 +190,7 @@ function mtf_the_post_meta( $post_id = null, $location = 'single-top' ) {
  * @param int    $post_id Post ID.
  * @param string $text    Anchor text.
  */
-function mtf_edit_post_link( $link, $post_id, $text ) {
+function wordpress_edit_post_link( $link, $post_id, $text ) {
 	if ( is_admin() ) {
 		return $link;
 	}
@@ -203,7 +204,7 @@ function mtf_edit_post_link( $link, $post_id, $text ) {
 	$text = sprintf(
 		wp_kses(
 			/* translators: %s: Post title. Only visible to screen readers. */
-			__( 'Edit <span class="screen-reader-text">%s</span>', 'mtf' ),
+			__( 'Edit <span class="screen-reader-text">%s</span>', 'wordpress' ),
 			array(
 				'span' => array(
 					'class' => array(),
@@ -213,19 +214,19 @@ function mtf_edit_post_link( $link, $post_id, $text ) {
 		get_the_title( $post_id )
 	);
 
-	return '<div class="post-meta-wrapper post-meta-edit-link-wrapper"><ul class="post-meta"><li class="post-edit meta-wrapper"><span class="meta-icon">' . mtf_get_theme_svg( 'edit' ) . '</span><span class="meta-text"><a href="' . esc_url( $edit_url ) . '">' . $text . '</a></span></li></ul><!-- .post-meta --></div><!-- .post-meta-wrapper -->';
+	return '<div class="post-meta-wrapper post-meta-edit-link-wrapper"><ul class="post-meta"><li class="post-edit meta-wrapper"><span class="meta-icon">' . wordpress_get_theme_svg( 'edit' ) . '</span><span class="meta-text"><a href="' . esc_url( $edit_url ) . '">' . $text . '</a></span></li></ul><!-- .post-meta --></div><!-- .post-meta-wrapper -->';
 
 }
 
-add_filter( 'edit_post_link', 'mtf_edit_post_link', 10, 3 );
+add_filter( 'edit_post_link', 'wordpress_edit_post_link', 10, 3 );
 
 /**
- * Get the post meta.
+ * Retrieves the post meta.
  *
  * @param int    $post_id The ID of the post.
  * @param string $location The location where the meta is shown.
  */
-function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
+function wordpress_get_post_meta( $post_id = null, $location = 'single-top' ) {
 
 	// Require post ID.
 	if ( ! $post_id ) {
@@ -233,15 +234,17 @@ function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 	}
 
 	/**
-	 * Filters post types array
+	 * Filters post types array.
 	 *
-	 * This filter can be used to hide post meta information of post, page or custom post type registerd by child themes or plugins
+	 * This filter can be used to hide post meta information of post, page or custom post type
+	 * registered by child themes or plugins.
 	 *
-	 * @since MissionCommand 6.0.0
+	 * @since Twenty Twenty 1.0
 	 *
 	 * @param array Array of post types
 	 */
-	$disallowed_post_types = apply_filters( 'mtf_disallowed_post_types_for_meta_output', array( 'page' ) );
+	$disallowed_post_types = apply_filters( 'wordpress_disallowed_post_types_for_meta_output', array( 'page' ) );
+
 	// Check whether the post type is allowed to output post meta.
 	if ( in_array( get_post_type( $post_id ), $disallowed_post_types, true ) ) {
 		return;
@@ -253,21 +256,21 @@ function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 	// Get the post meta settings for the location specified.
 	if ( 'single-top' === $location ) {
 		/**
-		* Filters post meta info visibility
-		*
-		* Use this filter to hide post meta information like Author, Post date, Comments, Is sticky status
-		*
-		* @since MissionCommand 6.0.0
-		*
-		* @param array $args {
-		*  @type string 'author'
-		*  @type string 'post-date'
-		*  @type string 'comments'
-		*  @type string 'sticky'
-		* }
-		*/
+		 * Filters post meta info visibility.
+		 *
+		 * Use this filter to hide post meta information like Author, Post date, Comments, Is sticky status.
+		 *
+		 * @since Twenty Twenty 1.0
+		 *
+		 * @param array $args {
+		 *  @type string 'author'
+		 *  @type string 'post-date'
+		 *  @type string 'comments'
+		 *  @type string 'sticky'
+		 * }
+		 */
 		$post_meta = apply_filters(
-			'mtf_post_meta_location_single_top',
+			'wordpress_post_meta_location_single_top',
 			array(
 				'author',
 				'post-date',
@@ -281,18 +284,18 @@ function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 	} elseif ( 'single-bottom' === $location ) {
 
 		/**
-		* Filters post tags visibility
-		*
-		* Use this filter to hide post tags
-		*
-		* @since MissionCommand 6.0.0
-		*
-		* @param array $args {
-		*   @type string 'tags'
-		* }
-		*/
+		 * Filters post tags visibility.
+		 *
+		 * Use this filter to hide post tags.
+		 *
+		 * @since Twenty Twenty 1.0
+		 *
+		 * @param array $args {
+		 *   @type string 'tags'
+		 * }
+		 */
 		$post_meta = apply_filters(
-			'mtf_post_meta_location_single_bottom',
+			'wordpress_post_meta_location_single_bottom',
 			array(
 				'tags',
 			)
@@ -323,35 +326,35 @@ function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 				<?php
 
 				/**
-				 * Fires before post meta html display.
+				 * Fires before post meta HTML display.
 				 *
 				 * Allow output of additional post meta info to be added by child themes and plugins.
 				 *
-				 * @since MissionCommand 6.0.0
-				 * @since MissionCommand 6.0.0 Added the `$post_meta` and `$location` parameters.
+				 * @since Twenty Twenty 1.0
+				 * @since Twenty Twenty 1.1 Added the `$post_meta` and `$location` parameters.
 				 *
 				 * @param int    $post_id   Post ID.
 				 * @param array  $post_meta An array of post meta information.
 				 * @param string $location  The location where the meta is shown.
 				 *                          Accepts 'single-top' or 'single-bottom'.
 				 */
-				do_action( 'mtf_start_of_post_meta_list', $post_id, $post_meta, $location );
+				do_action( 'wordpress_start_of_post_meta_list', $post_id, $post_meta, $location );
 
 				// Author.
-				if ( in_array( 'author', $post_meta, true ) ) {
+				if ( post_type_supports( get_post_type( $post_id ), 'author' ) && in_array( 'author', $post_meta, true ) ) {
 
 					$has_meta = true;
 					?>
 					<li class="post-author meta-wrapper">
 						<span class="meta-icon">
-							<span class="screen-reader-text"><?php _e( 'Post author', 'mtf' ); ?></span>
-							<?php mtf_the_theme_svg( 'user' ); ?>
+							<span class="screen-reader-text"><?php _e( 'Post author', 'wordpress' ); ?></span>
+							<?php wordpress_the_theme_svg( 'user' ); ?>
 						</span>
 						<span class="meta-text">
 							<?php
 							printf(
 								/* translators: %s: Author name. */
-								__( 'By %s', 'mtf' ),
+								__( 'By %s', 'wordpress' ),
 								'<a href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author_meta( 'display_name' ) ) . '</a>'
 							);
 							?>
@@ -368,8 +371,8 @@ function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 					?>
 					<li class="post-date meta-wrapper">
 						<span class="meta-icon">
-							<span class="screen-reader-text"><?php _e( 'Post date', 'mtf' ); ?></span>
-							<?php mtf_the_theme_svg( 'calendar' ); ?>
+							<span class="screen-reader-text"><?php _e( 'Post date', 'wordpress' ); ?></span>
+							<?php wordpress_the_theme_svg( 'calendar' ); ?>
 						</span>
 						<span class="meta-text">
 							<a href="<?php the_permalink(); ?>"><?php the_time( get_option( 'date_format' ) ); ?></a>
@@ -386,11 +389,11 @@ function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 					?>
 					<li class="post-categories meta-wrapper">
 						<span class="meta-icon">
-							<span class="screen-reader-text"><?php _e( 'Categories', 'mtf' ); ?></span>
-							<?php mtf_the_theme_svg( 'folder' ); ?>
+							<span class="screen-reader-text"><?php _e( 'Categories', 'wordpress' ); ?></span>
+							<?php wordpress_the_theme_svg( 'folder' ); ?>
 						</span>
 						<span class="meta-text">
-							<?php _ex( 'In', 'A string that is output before one or more categories', 'mtf' ); ?> <?php the_category( ', ' ); ?>
+							<?php _ex( 'In', 'A string that is output before one or more categories', 'wordpress' ); ?> <?php the_category( ', ' ); ?>
 						</span>
 					</li>
 					<?php
@@ -404,8 +407,8 @@ function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 					?>
 					<li class="post-tags meta-wrapper">
 						<span class="meta-icon">
-							<span class="screen-reader-text"><?php _e( 'Tags', 'mtf' ); ?></span>
-							<?php mtf_the_theme_svg( 'tag' ); ?>
+							<span class="screen-reader-text"><?php _e( 'Tags', 'wordpress' ); ?></span>
+							<?php wordpress_the_theme_svg( 'tag' ); ?>
 						</span>
 						<span class="meta-text">
 							<?php the_tags( '', ', ', '' ); ?>
@@ -422,7 +425,7 @@ function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 					?>
 					<li class="post-comment-link meta-wrapper">
 						<span class="meta-icon">
-							<?php mtf_the_theme_svg( 'comment' ); ?>
+							<?php wordpress_the_theme_svg( 'comment' ); ?>
 						</span>
 						<span class="meta-text">
 							<?php comments_popup_link(); ?>
@@ -439,10 +442,10 @@ function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 					?>
 					<li class="post-sticky meta-wrapper">
 						<span class="meta-icon">
-							<?php mtf_the_theme_svg( 'bookmark' ); ?>
+							<?php wordpress_the_theme_svg( 'bookmark' ); ?>
 						</span>
 						<span class="meta-text">
-							<?php _e( 'Sticky post', 'mtf' ); ?>
+							<?php _e( 'Sticky post', 'wordpress' ); ?>
 						</span>
 					</li>
 					<?php
@@ -450,19 +453,19 @@ function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 				}
 
 				/**
-				 * Fires after post meta html display.
+				 * Fires after post meta HTML display.
 				 *
 				 * Allow output of additional post meta info to be added by child themes and plugins.
 				 *
-				 * @since MissionCommand 6.0.0
-				 * @since MissionCommand 6.0.0 Added the `$post_meta` and `$location` parameters.
+				 * @since Twenty Twenty 1.0
+				 * @since Twenty Twenty 1.1 Added the `$post_meta` and `$location` parameters.
 				 *
 				 * @param int    $post_id   Post ID.
 				 * @param array  $post_meta An array of post meta information.
 				 * @param string $location  The location where the meta is shown.
 				 *                          Accepts 'single-top' or 'single-bottom'.
 				 */
-				do_action( 'mtf_end_of_post_meta_list', $post_id, $post_meta, $location );
+				do_action( 'wordpress_end_of_post_meta_list', $post_id, $post_meta, $location );
 
 				?>
 
@@ -489,20 +492,21 @@ function mtf_get_post_meta( $post_id = null, $location = 'single-top' ) {
 /**
  * Menus
  */
+
 /**
- * Filter Classes of wp_list_pages items to match menu items.
+ * Filters classes of wp_list_pages items to match menu items.
+ *
  * Filter the class applied to wp_list_pages() items with children to match the menu class, to simplify.
  * styling of sub levels in the fallback. Only applied if the match_menu_classes argument is set.
  *
- * @param array  $css_class CSS Class names.
- * @param string $item Comment.
- * @param int    $depth Depth of the current comment.
- * @param array  $args An array of arguments.
- * @param string $current_page Whether or not the item is the current item.
- *
- * @return array $css_class CSS Class names.
+ * @param string[] $css_class    An array of CSS classes to be applied to each list item.
+ * @param WP_Post  $page         Page data object.
+ * @param int      $depth        Depth of page, used for padding.
+ * @param array    $args         An array of arguments.
+ * @param int      $current_page ID of the current page.
+ * @return array CSS class names.
  */
-function mtf_filter_wp_list_pages_item_classes( $css_class, $item, $depth, $args, $current_page ) {
+function wordpress_filter_wp_list_pages_item_classes( $css_class, $page, $depth, $args, $current_page ) {
 
 	// Only apply to wp_list_pages() calls with match_menu_classes set to true.
 	$match_menu_classes = isset( $args['match_menu_classes'] );
@@ -525,18 +529,17 @@ function mtf_filter_wp_list_pages_item_classes( $css_class, $item, $depth, $args
 
 }
 
-add_filter( 'page_css_class', 'mtf_filter_wp_list_pages_item_classes', 10, 5 );
+add_filter( 'page_css_class', 'wordpress_filter_wp_list_pages_item_classes', 10, 5 );
 
 /**
- * Add a Sub Nav Toggle to the Expanded Menu and Mobile Menu.
+ * Adds a Sub Nav Toggle to the Expanded Menu and Mobile Menu.
  *
- * @param stdClass $args An array of arguments.
- * @param string   $item Menu item.
- * @param int      $depth Depth of the current menu item.
- *
- * @return stdClass $args An object of wp_nav_menu() arguments.
+ * @param stdClass $args  An object of wp_nav_menu() arguments.
+ * @param WP_Post  $item  Menu item data object.
+ * @param int      $depth Depth of menu item. Used for padding.
+ * @return stdClass An object of wp_nav_menu() arguments.
  */
-function mtf_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
+function wordpress_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
 
 	// Add sub menu toggles to the Expanded Menu with toggles.
 	if ( isset( $args->show_toggles ) && $args->show_toggles ) {
@@ -549,10 +552,10 @@ function mtf_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
 		if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
 
 			$toggle_target_string = '.menu-modal .menu-item-' . $item->ID . ' > .sub-menu';
-			$toggle_duration      = mtf_toggle_duration();
+			$toggle_duration      = wordpress_toggle_duration();
 
 			// Add the sub menu toggle.
-			$args->after .= '<button class="toggle sub-menu-toggle fill-children-current-color" data-toggle-target="' . $toggle_target_string . '" data-toggle-type="slidetoggle" data-toggle-duration="' . absint( $toggle_duration ) . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'mtf' ) . '</span>' . mtf_get_theme_svg( 'chevron-down' ) . '</button>';
+			$args->after .= '<button class="toggle sub-menu-toggle fill-children-current-color" data-toggle-target="' . $toggle_target_string . '" data-toggle-type="slidetoggle" data-toggle-duration="' . absint( $toggle_duration ) . '" aria-expanded="false"><span class="screen-reader-text">' . __( 'Show sub menu', 'wordpress' ) . '</span>' . wordpress_get_theme_svg( 'chevron-down' ) . '</button>';
 
 		}
 
@@ -572,23 +575,23 @@ function mtf_add_sub_toggles_to_main_menu( $args, $item, $depth ) {
 
 }
 
-add_filter( 'nav_menu_item_args', 'mtf_add_sub_toggles_to_main_menu', 10, 3 );
+add_filter( 'nav_menu_item_args', 'wordpress_add_sub_toggles_to_main_menu', 10, 3 );
 
 /**
- * Display SVG icons in social links menu.
+ * Displays SVG icons in social links menu.
  *
- * @param  string  $item_output The menu item output.
- * @param  WP_Post $item        Menu item object.
- * @param  int     $depth       Depth of the menu.
- * @param  array   $args        wp_nav_menu() arguments.
- * @return string  $item_output The menu item output with social icon.
+ * @param string   $item_output The menu item's starting HTML output.
+ * @param WP_Post  $item        Menu item data object.
+ * @param int      $depth       Depth of the menu. Used for padding.
+ * @param stdClass $args        An object of wp_nav_menu() arguments.
+ * @return string The menu item output with social icon.
  */
-function mtf_nav_menu_social_icons( $item_output, $item, $depth, $args ) {
+function wordpress_nav_menu_social_icons( $item_output, $item, $depth, $args ) {
 	// Change SVG icon inside social links menu if there is supported URL.
 	if ( 'social' === $args->theme_location ) {
-		$svg = MTF_SVG_Icons::get_social_link_svg( $item->url );
+		$svg = WordPress_SVG_Icons::get_social_link_svg( $item->url );
 		if ( empty( $svg ) ) {
-			$svg = mtf_get_theme_svg( 'link' );
+			$svg = wordpress_get_theme_svg( 'link' );
 		}
 		$item_output = str_replace( $args->link_after, '</span>' . $svg, $item_output );
 	}
@@ -596,16 +599,18 @@ function mtf_nav_menu_social_icons( $item_output, $item, $depth, $args ) {
 	return $item_output;
 }
 
-add_filter( 'walker_nav_menu_start_el', 'mtf_nav_menu_social_icons', 10, 4 );
+add_filter( 'walker_nav_menu_start_el', 'wordpress_nav_menu_social_icons', 10, 4 );
 
 /**
  * Classes
  */
+
 /**
- * Add No-JS Class.
- * If we're missing JavaScript support, the HTML element will have a no-js class.
+ * Adds 'no-js' class.
+ *
+ * If we're missing JavaScript support, the HTML element will have a 'no-js' class.
  */
-function mtf_no_js_class() {
+function wordpress_no_js_class() {
 
 	?>
 	<script>document.documentElement.className = document.documentElement.className.replace( 'no-js', 'js' );</script>
@@ -613,16 +618,15 @@ function mtf_no_js_class() {
 
 }
 
-add_action( 'wp_head', 'mtf_no_js_class' );
+add_action( 'wp_head', 'wordpress_no_js_class' );
 
 /**
- * Add conditional body classes.
+ * Adds conditional body classes.
  *
  * @param array $classes Classes added to the body tag.
- *
- * @return array $classes Classes added to the body tag.
+ * @return array Classes added to the body tag.
  */
-function mtf_body_classes( $classes ) {
+function wordpress_body_classes( $classes ) {
 
 	global $post;
 	$post_type = isset( $post ) ? $post->post_type : false;
@@ -711,22 +715,22 @@ function mtf_body_classes( $classes ) {
 
 }
 
-add_filter( 'body_class', 'mtf_body_classes' );
+add_filter( 'body_class', 'wordpress_body_classes' );
 
 /**
  * Archives
  */
+
 /**
  * Filters the archive title and styles the word before the first colon.
  *
  * @param string $title Current archive title.
- *
- * @return string $title Current archive title.
+ * @return string Current archive title.
  */
-function mtf_get_the_archive_title( $title ) {
+function wordpress_get_the_archive_title( $title ) {
 
 	$regex = apply_filters(
-		'mtf_get_the_archive_title_regex',
+		'wordpress_get_the_archive_title_regex',
 		array(
 			'pattern'     => '/(\A[^\:]+\:)/',
 			'replacement' => '<span class="color-accent">$1</span>',
@@ -743,31 +747,32 @@ function mtf_get_the_archive_title( $title ) {
 
 }
 
-add_filter( 'get_the_archive_title', 'mtf_get_the_archive_title' );
+add_filter( 'get_the_archive_title', 'wordpress_get_the_archive_title' );
 
 /**
  * Miscellaneous
  */
+
 /**
- * Toggle animation duration in milliseconds.
+ * Toggles animation duration in milliseconds.
  *
- * @return integer Duration in milliseconds
+ * @return int Duration in milliseconds
  */
-function mtf_toggle_duration() {
+function wordpress_toggle_duration() {
 	/**
 	 * Filters the animation duration/speed used usually for submenu toggles.
 	 *
-	 * @since MissionCommand 6.0.0
+	 * @since Twenty Twenty 1.0
 	 *
-	 * @param integer $duration Duration in milliseconds.
+	 * @param int $duration Duration in milliseconds.
 	 */
-	$duration = apply_filters( 'mtf_toggle_duration', 250 );
+	$duration = apply_filters( 'wordpress_toggle_duration', 250 );
 
 	return $duration;
 }
 
 /**
- * Get unique ID.
+ * Gets unique ID.
  *
  * This is a PHP implementation of Underscore's uniqueId method. A static variable
  * contains an integer that is incremented with each call. This number is returned
@@ -776,12 +781,10 @@ function mtf_toggle_duration() {
  *
  * @see wp_unique_id() Themes requiring WordPress 5.0.3 and greater should use this instead.
  *
- * @staticvar int $id_counter
- *
  * @param string $prefix Prefix for the returned ID.
  * @return string Unique ID.
  */
-function mtf_unique_id( $prefix = '' ) {
+function wordpress_unique_id( $prefix = '' ) {
 	static $id_counter = 0;
 	if ( function_exists( 'wp_unique_id' ) ) {
 		return wp_unique_id( $prefix );

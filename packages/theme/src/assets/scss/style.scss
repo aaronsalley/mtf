@@ -1,0 +1,217 @@
+@import "variables";
+@import "bootstrap/scss/bootstrap";
+html {
+  overflow: hidden;
+  body {
+    overflow: auto;
+    height: 100vh;
+  }
+}
+
+.navbar {
+  .navbar-brand img {
+    width: auto;
+    max-height: 4rem;
+  }
+
+  .navbar-nav {
+    .nav-item {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.elementor-widget-button.btn .elementor-button,
+.btn:not(.btn-block),
+.btn:not(.elementor-widget-button) {
+  position: relative;
+  z-index: 1;
+  padding-left: 0;
+  padding-right: 0;
+  transition: $transition-base;
+
+  &::after {
+    content:"";
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    bottom: -3px;
+    right: 0;
+    z-index: -1;
+    border-radius: $border-radius;
+    background-color: $black;
+    transition: $transition-base;
+  }
+  &.text-left {
+    padding-right: $btn-padding-x * 2;
+  }
+  &.text-right {
+    padding-left: $btn-padding-x * 2;
+  }
+  &:hover {
+    padding-left: $btn-padding-x;
+    padding-right: $btn-padding-x;
+    color: $light !important;
+
+    &::after {
+      top: 0;
+    }  
+  }
+}
+
+.elementor-widget-button.btn-block .elementor-button,
+.btn-block:not(.elementor-widget-button) {
+  position: relative;
+  z-index: 1;
+  padding-left: 0;
+  padding-right: 0;
+  transition: $transition-base;
+  color: inherit;
+  background-color: inherit;
+
+  &::after {
+    content:"";
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    bottom: -3px;
+    right: 0;
+    z-index: -1;
+    border-radius: $border-radius;
+    transition: $transition-base;
+  }
+  &:hover {
+    padding-left: inherit;
+    padding-right: $btn-padding-x;
+
+    &::after {
+      top: 0;
+    }
+  }
+  #events & {
+    &::after {
+      background-color: $black;
+    }
+    &:hover {
+      color: $light !important;
+    }
+  }
+  #news & {
+    &::after {
+      background-color: $light;
+    }
+    &:hover {
+      color: $black !important;
+    }
+  }
+}
+
+#events, #news {
+  .card {
+    color: inherit;
+
+    .card-img-top {
+      overflow: hidden;
+      position: relative;
+      transition: $transition-base;
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      &::after {
+        content: "";
+        display: block;
+        padding-bottom: 9/16 * 100%;
+      }
+    }
+    .card-header {
+      padding-bottom: 0;
+      .card-title {
+        margin-bottom: 0;
+        font-weight: bold;
+      }  
+    }
+    .card-text.border {
+      padding: $card-spacer-y/2 $card-spacer-x/2;
+      margin-bottom: $card-spacer-x !important;
+      border-width: 2px !important;
+    }
+
+    &:hover {
+      z-index: 5;
+      text-decoration: none;
+      color: inherit;
+
+      .card-img-top {
+        box-shadow: $modal-content-box-shadow-sm-up;
+      }
+    }
+  }
+  &#events {
+    .card {
+      @include media-breakpoint-up(md){
+        .card-header {
+          overflow: hidden;
+          height: 4.25rem;
+        }
+        .card-body {
+          overflow: hidden;
+          position: relative;
+          height: 2.25rem;
+          margin-top: 4.75rem;
+          padding-top: 0;
+          transition: $transition-base;
+          .date {
+            padding-bottom: $headings-margin-bottom;
+            border-bottom: 3px solid $black;
+          }
+          .excerpt p {
+            overflow: hidden;
+            opacity: 0;
+            height: "#{$line-height-base}em" * 2;
+            transition: $transition-fade;
+            transition-duration: 1s;
+          }
+        }
+        &:hover {
+          .card-body {
+            height: 7rem;
+            margin-top: 0;
+    
+            .excerpt p {
+              opacity: 1;
+              top: 0%;
+            }
+          }
+        }
+      }
+    }
+  }
+  &#news {
+    div.card-body {
+      padding-bottom: 0;
+    }
+    footer.card-body {
+      padding-top: 0;
+    }
+  }
+  .card-columns {
+    @include media-breakpoint-up(sm) {
+      column-count: 1;
+    }
+    @include media-breakpoint-up(md) {
+      column-count: 2;
+    }
+    @include media-breakpoint-up(lg) {
+      column-count: 3;
+    }
+    @include media-breakpoint-up(xl) {
+      column-count: 4;
+    }
+  }
+}

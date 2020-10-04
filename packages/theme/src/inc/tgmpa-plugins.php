@@ -58,9 +58,18 @@ add_action( 'tgmpa_register', 'mtf_register_required_plugins' );
 /**
  * Register Elementor locations
  */
-function theme_prefix_register_elementor_locations( $elementor_theme_manager ) {
+function mtf_register_elementor_locations( $elementor_theme_manager ) {
 
 	$elementor_theme_manager->register_all_core_location();
 
 }
-add_action( 'elementor/theme/register_locations', 'theme_prefix_register_elementor_locations' );
+add_action( 'elementor/theme/register_locations', 'mtf_register_elementor_locations' );
+
+/**
+ * Register WooCommerce support
+ */
+function mtf_add_woocommerce_support() {
+    add_theme_support( 'woocommerce' );
+}
+
+add_action( 'after_setup_theme', 'mtf_add_woocommerce_support' );

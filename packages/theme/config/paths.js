@@ -26,7 +26,7 @@ const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp('mtf'),
   appTemp: resolveApp('.build'),
   appFiles: {
     'style': process.env.NODE_ENV === 'development' ?

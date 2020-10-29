@@ -1,5 +1,6 @@
 'use strict';
 
+/* eslint-disable */
 (function (w, d, s, l, i) {
   w[l] = w[l] || []; w[l].push({
     'gtm.start':
@@ -8,3 +9,4 @@
   let j = d.createElement(s); let dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
 })(window, document, 'script', 'dataLayer', process.env.MTF_GTM_ID);
+/* eslint-disable */

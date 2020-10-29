@@ -179,6 +179,16 @@ add_action( 'after_setup_theme', 'mtf_theme_support' );
 		// Required plugins.
 		require get_template_directory() . '/inc/tgmpa-plugins.php';
 
+function mtf_menus() {
+	register_nav_menus(
+		array(
+			'header-menu' => __( 'Header Menu' ),
+			'footer-menu' => __( 'Footer Menu' )
+		)
+	);
+}
+add_action( 'init', 'mtf_menus' );
+
 function mtf_register_styles() {
 
 	$theme_version = wp_get_theme()->get( 'Version' );

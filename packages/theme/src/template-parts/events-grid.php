@@ -33,7 +33,7 @@ $cta = 'Buy Tickets';
       </a>
       <?php endwhile; wp_reset_postdata(); ?>
     </div>
-    <a class="btn btn-block text-uppercase text-right font-weight-bold"><?php _e('See all events', 'mtf'); ?></a>
+    <a href="/events" class="btn btn-block text-uppercase text-right font-weight-bold"><?php _e('See all events', 'mtf'); ?></a>
   </div>
 </div>
 <?php endif; ?>

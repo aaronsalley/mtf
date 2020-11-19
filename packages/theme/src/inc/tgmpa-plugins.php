@@ -65,6 +65,35 @@ function mtf_register_elementor_locations( $elementor_theme_manager ) {
 }
 add_action( 'elementor/theme/register_locations', 'mtf_register_elementor_locations' );
 
+add_action('save_post_tribe-ea-record', function($postId, $post){
+  if($post->post_status === Tribe__Events__Aggregator__Records::$status->success){
+    $source = get_post_meta($postId, '_tribe_aggregator_source', true);
+    $idsToDelete = tribe_get_events([
+      'fields' => 'ids',
+      'posts_per_page' => -1,
+      'post_type' => 'tribe_events',
+      'post_status' => 'publish',
+      'start_date' => date('Y-m-d H:i:s', time()),
+      'meta_query' => [
+        'relation' => 'AND',
+        [
+          'key' => '_tribe_aggregator_source',
+          'value' => $source,
+          'compare' => '='
+        ],
+        [
+          'key' => '_tribe_aggregator_record',
+          'value' => $postId,
+          'compare' => '<'
+        ]
+      ],
+    ]);
+    foreach ($idsToDelete as $eventId) {
+      tribe_delete_event($eventId, true);
+    }
+  }
+}, 10, 2);
+
 /**
  * Register WooCommerce support
  */

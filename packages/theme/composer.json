@@ -1,0 +1,21 @@
+{
+  "name": "mtfmusicals/theme",
+  "type": "project",
+  "config": {
+    "vendor-dir": "lib"
+  },
+  "require": {
+    "tgmpa/tgm-plugin-activation": "^2.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mtfmusicals\\Theme\\": "/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Disruptv LLC",
+      "email": "aaron@disruptv.llc"
+    }
+  ]
+}

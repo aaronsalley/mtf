@@ -1,0 +1,17 @@
+{
+  "name": "mtfmusicals",
+  "version": "0.1.0",
+  "author": {
+    "name": "Disruptv LLC",
+    "email": "info@disruptv.llc"
+  },
+  "homepage": "https://disruptv.llc/dojo/",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "packages/dojo/react"
+  ],
+  "devDependencies": {
+    "typescript": "^4.1.2"
+  }
+}

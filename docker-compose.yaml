@@ -64,6 +64,14 @@ services:
       - ./packages/theme:/var/www/html/wp-content/themes/mtfmusicals
     depends_on:
       - web_db
+  dojo:
+    build: ./packages/dojo
+    image: dojo
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./packages/dojo/react/src:/home/dojo/src
 
 volumes:
   sql_data:

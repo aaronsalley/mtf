@@ -1,3 +1,3 @@
-[submodule "packages/dojo"]
-	path = packages/dojo
-	url = git@github.com:disruptv/dojo.git
+[submodule "packages/optack"]
+	path = packages/optack
+	url = git@github.com:aaronsalley/optack.git

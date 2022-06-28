@@ -25,7 +25,6 @@ services:
       WORDPRESS_DEBUG: 1
       WORDPRESS_CONFIG_EXTRA: |
         define( 'WP_ENVIRONMENT_TYPE', 'development' );
-        # define( 'WP_DEFAULT_THEME', 'mtfmusicals' );
 
         # Performance
         define( 'COMPRESS_CSS', true );
@@ -54,7 +53,9 @@ services:
         # / * Security */
         # define( 'FORCE_SSL_ADMIN', true );
         # define( 'WP_HTTP_BLOCK_EXTERNAL', true );
+        define( 'GRAPHQL_JWT_AUTH_SECRET_KEY', 'YOUR_STRONG_SECRET' );
     volumes:
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       # Persist wp-content
       - wp_data:/var/www/html/wp-content/plugins
       - wp_data:/var/www/html/wp-content/uploads
@@ -64,14 +65,14 @@ services:
       - ./packages/theme:/var/www/html/wp-content/themes/mtfmusicals
     depends_on:
       - web_db
-  dojo:
-    build: ./packages/dojo
-    image: dojo
-    restart: always
-    ports:
-      - '3000:3000'
-    volumes:
-      - ./packages/dojo/react/src:/home/dojo/src
+  # dojo:
+  #   build: ./packages/dojo
+  #   image: dojo
+  #   restart: always
+  #   ports:
+  #     - '3000'
+  #   volumes:
+  #     - ./packages/dojo/react/src:/home/dojo/src
 
 volumes:
   sql_data:

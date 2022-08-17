@@ -2,16 +2,24 @@
   "name": "mtfmusicals",
   "version": "0.1.0",
   "author": {
-    "name": "Disruptv LLC",
-    "email": "info@disruptv.llc"
+    "name": "Aaron Salley LLC",
+    "email": "info@aaronsalley.com"
   },
-  "homepage": "https://disruptv.llc/dojo/",
+  "homepage": "https://mtf.nyc/",
   "private": true,
   "workspaces": [
     "packages/*",
-    "packages/dojo/react"
+    "packages/optack/core"
   ],
-  "devDependencies": {
-    "typescript": "^4.1.2"
+  "scripts": {
+    "dev": "docker compose up",
+    "start": "docker compose -f compose.yaml -f compose.prod.yaml up -d"
+  },
+  "dependencies": {
+    "eslint": "^8.22.0",
+    "husky": "^8.0.1",
+    "lerna": "^4.0.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
   }
 }

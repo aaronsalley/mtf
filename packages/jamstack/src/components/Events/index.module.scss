@@ -1,0 +1,23 @@
+.container {
+  max-width: var(--mtf-max-width);
+  margin: auto;
+
+  h2 {
+    font-family: var(--mtf-font-display);
+    font-size: 2rem;
+    text-transform: uppercase;
+  }
+
+  & > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 1.25rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+
+  & > a {
+    width: 100%;
+  }
+}

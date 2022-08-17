@@ -1,0 +1,50 @@
+@use 'colors';
+@use 'typography';
+
+html,
+body {
+  --mtf-light: #{colors.$light};
+  --mtf-dark: #{colors.$dark};
+  --mtf-primary: #{colors.$primary};
+  --mtf-font-sans-serif: #{typography.$display};
+  --mtf-font-serif: #{typography.$display};
+  --mtf-font-monospace: #{typography.$display};
+  --mtf-font-display: #{typography.$display};
+  --mtf-max-width: 1130px;
+
+  @media (prefers-color-scheme: light) {
+    --mtf-material: var(--mtf-light);
+    --mtf-text: var(--mtf-dark);
+  }
+  @media (prefers-color-scheme: dark) {
+    --mtf-material: var(--mtf-dark);
+    --mtf-text: var(--mtf-light);
+  }
+
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 16px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+*,
+*::after {
+  box-sizing: border-box;
+  transition: all 1s;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}

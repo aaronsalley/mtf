@@ -1,0 +1,51 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+
+  span {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    max-width: var(--mtf-max-width);
+  }
+
+  & > * > span {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .appbar {
+    .brand {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 3.93875rem;
+      margin: 0.5rem;
+      aspect-ratio: 1 / 1;
+      transform: rotate(-15deg);
+      // height: 0;
+      // padding-bottom: 1 / 1 * 100%;
+    }
+  }
+
+  .message {
+    justify-content: space-between;
+    padding: 1rem 0rem;
+    background-color: var(--mtf-dark);
+    font-family: var(--mtf-font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--mtf-light);
+    text-transform: uppercase;
+
+    button {
+      color: var(--mtf-primary);
+      font-weight: bold;
+      background-color: transparent;
+      border: 0;
+    }
+  }
+}

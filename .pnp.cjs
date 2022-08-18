@@ -12751,6 +12751,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["bootstrap", [\
+        ["npm:5.2.0", {\
+          "packageLocation": "./.yarn/cache/bootstrap-npm-5.2.0-e6c71ad969-9dbfb5d26b.zip/node_modules/bootstrap/",\
+          "packageDependencies": [\
+            ["bootstrap", "npm:5.2.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
         ["npm:5.2.0-beta1", {\
           "packageLocation": "./.yarn/cache/bootstrap-npm-5.2.0-beta1-5f4712cb7b-742892b60e.zip/node_modules/bootstrap/",\
           "packageDependencies": [\
@@ -12762,6 +12769,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/bootstrap-virtual-25e0f3af79/0/cache/bootstrap-npm-5.2.0-beta1-5f4712cb7b-742892b60e.zip/node_modules/bootstrap/",\
           "packageDependencies": [\
             ["bootstrap", "virtual:a891f3d89990638e64e58178f9d475fd4c9e65e41767e5b86be9c0da2b8b059d62323d54070909ebb04912636a0a81ffcddecbc233f4c8e32a40a070b403fbb9#npm:5.2.0-beta1"],\
+            ["@popperjs/core", null],\
+            ["@types/popperjs__core", null]\
+          ],\
+          "packagePeers": [\
+            "@popperjs/core",\
+            "@types/popperjs__core"\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["virtual:b333a4c76c17b6be9377e46e444edd5354b35a7d595cc32733c45f21b7bd4ec3f6bdfdcfc8d62daf874d6361a5d80e23554274fe6d0e8ad5760a537b6b8fa941#npm:5.2.0", {\
+          "packageLocation": "./.yarn/__virtual__/bootstrap-virtual-32b23c9d81/0/cache/bootstrap-npm-5.2.0-e6c71ad969-9dbfb5d26b.zip/node_modules/bootstrap/",\
+          "packageDependencies": [\
+            ["bootstrap", "virtual:b333a4c76c17b6be9377e46e444edd5354b35a7d595cc32733c45f21b7bd4ec3f6bdfdcfc8d62daf874d6361a5d80e23554274fe6d0e8ad5760a537b6b8fa941#npm:5.2.0"],\
             ["@popperjs/core", null],\
             ["@types/popperjs__core", null]\
           ],\
@@ -20051,6 +20071,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.6"],\
             ["@types/react", "npm:18.0.17"],\
             ["@types/react-dom", "npm:18.0.6"],\
+            ["bootstrap", "virtual:b333a4c76c17b6be9377e46e444edd5354b35a7d595cc32733c45f21b7bd4ec3f6bdfdcfc8d62daf874d6361a5d80e23554274fe6d0e8ad5760a537b6b8fa941#npm:5.2.0"],\
             ["eslint", "npm:8.22.0"],\
             ["eslint-config-next", "virtual:b333a4c76c17b6be9377e46e444edd5354b35a7d595cc32733c45f21b7bd4ec3f6bdfdcfc8d62daf874d6361a5d80e23554274fe6d0e8ad5760a537b6b8fa941#npm:12.2.5"],\
             ["next", "virtual:b333a4c76c17b6be9377e46e444edd5354b35a7d595cc32733c45f21b7bd4ec3f6bdfdcfc8d62daf874d6361a5d80e23554274fe6d0e8ad5760a537b6b8fa941#npm:12.2.5"],\

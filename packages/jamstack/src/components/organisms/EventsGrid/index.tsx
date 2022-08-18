@@ -1,5 +1,5 @@
-import Button from '../Button';
-import Event from '../Event';
+import Button from '../../atoms/Button';
+import Event from '../../molecules/Event';
 import styles from './index.module.scss';
 
 const EventsGrid = () => {

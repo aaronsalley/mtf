@@ -1,7 +1,18 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import styles from './index.module.scss';
-import Button from '../Button';
+import Button from '../../atoms/Button';
+
+interface Event {
+  thumbnail: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+  summary: string;
+  link: {
+    text: string;
+    url: string;
+  };
+}
 
 const Event = ({
   thumbnail = '',
@@ -13,7 +24,7 @@ const Event = ({
     text: 'Details',
     url: '#',
   },
-}) => {
+}: Event) => {
   return (
     <article className={styles['container']}>
       <header>

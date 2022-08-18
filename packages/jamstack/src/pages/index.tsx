@@ -1,9 +1,12 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Events from '../components/Events';
-import Hero from '../components/Hero';
+import Header from '../components/organisms/Header';
+import Footer from '../components/organisms/Footer';
+import EventsGrid from '../components/organisms/EventsGrid';
+import Hero from '../components/organisms/Hero';
+import Gallery from '../components/organisms/Gallery';
+import NewsGrid from '../components/organisms/NewsGrid';
+import Programming from '../components/templates/Programming';
 
 const Home: NextPage = () => {
   return (
@@ -24,7 +27,10 @@ const Home: NextPage = () => {
           backgrounds at any stage of their career can be supported throughout
           their process.
         </blockquote>
-        <Events />
+        <EventsGrid />
+        <Gallery />
+        <Programming />
+        <NewsGrid />
       </main>
       <Footer />
     </div>

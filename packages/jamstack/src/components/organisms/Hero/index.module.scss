@@ -34,7 +34,7 @@
       left: 100%;
       width: $line;
       height: 3px;
-      background-color: white;
+      background-color: var(--mtf-light);
     }
 
     &::after {

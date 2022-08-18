@@ -1,0 +1,38 @@
+.container {
+  overflow: hidden;
+  position: relative;
+  margin-bottom: -6rem;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, #000000 100%);
+  background-position-y: -6rem;
+
+  & > div {
+    $overflow: 8%;
+
+    display: flex;
+    flex-wrap: no-wrap;
+    justify-content: center;
+    gap: 1rem;
+    width: calc(100% + $overflow);
+    transform: translateX(calc($overflow * -1 / 2));
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 calc(181 / 1561 * 100%);
+    gap: 1rem;
+    justify-content: center;
+
+    &:nth-of-type(3n - 3) {
+      flex-basis: calc(280 / 1561 * 100%);
+
+      :first-child {
+        max-width: calc(181 / 280 * 100%);
+      }
+
+      &:nth-of-type(6n - 6) {
+        align-items: flex-end;
+      }
+    }
+  }
+}

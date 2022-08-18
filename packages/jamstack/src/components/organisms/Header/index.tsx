@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import MegaMenu from '../MegaMenu';
-import Nav from '../Nav';
+import MegaMenu from '../../organisms/MegaMenu';
+import Nav from '../../organisms/Nav';
 import styles from './index.module.scss';
-import gearIcon from '../../../public/images/mtf_gear_icon.svg';
+import gearIcon from '../../../../public/images/mtf_gear_icon.svg';
 
 const Header = () => {
   const AppBar = () => {

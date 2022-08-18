@@ -34,9 +34,10 @@ a {
 }
 
 *,
+*::before,
 *::after {
   box-sizing: border-box;
-  transition: all 1s;
+  transition: all 1s, color 0.15s 0s;
 }
 
 @media (prefers-color-scheme: dark) {

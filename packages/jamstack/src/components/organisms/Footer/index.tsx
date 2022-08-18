@@ -1,7 +1,42 @@
+import Image from 'next/image';
+import Button from '../../atoms/Button';
+import MegaMenu from '../MegaMenu';
 import styles from './index.module.scss';
 
 const Footer = () => {
-  return <footer className={styles['container']}>Foo</footer>;
+  const thisYear = new Date().getFullYear();
+
+  return (
+    <footer className={styles['container']}>
+      <div className={styles['devo']}>
+        <a
+          className={styles['guidestar']}
+          href='https://www.guidestar.org/profile/47-1254076'
+        />
+        <a
+          className={styles['amazonsmile']}
+          href='https://smile.amazon.com/ch/47-1254076'
+        />
+        <p>
+          Musical Theatre Factory, Inc. (EIN 47-1254076) is a registered
+          501(c)(3) Public Charity incorporated in the State of New York. All
+          donations are tax-deductible to the fullest extent under the law.
+        </p>
+        <form className={styles['mailingList']}>
+          <div>
+            <input type='email' id='email' placeholder='name@example.com' />
+            <label htmlFor='email'>Email address</label>
+          </div>
+          <Button link={{ text: 'Sign up', url: '' }} />
+        </form>
+      </div>
+      <MegaMenu />
+      <p className={styles['copyright']}>
+        The gear logo and all lines of programming are ™ and ©{thisYear + ' '}
+        Musical Theatre Factory Inc. All Rights Reserved.
+      </p>
+    </footer>
+  );
 };
 
 export default Footer;

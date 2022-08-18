@@ -1,7 +1,86 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+// @import '~bootstrap/scss/maps';
+@import '~bootstrap/scss/mixins';
+// @import '~bootstrap/scss/root';
+@import '~bootstrap/scss/forms';
+
 .container {
+  display: flex;
+  flex-wrap: wrap;
   position: relative;
   margin: auto;
   width: 100%;
   max-width: var(--mtf-max-width);
   padding-top: 10.5rem;
+
+  > *:not(.copyright) {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 50%;
+  }
+
+  .devo {
+    gap: 1rem;
+
+    & > a {
+      position: relative;
+      width: 3.375rem;
+      height: 3.375rem;
+      background-position: center;
+      background-size: contain;
+
+      &.guidestar {
+        background-image: url('../../../../public/images/guidestar-transparency.png');
+      }
+      &.amazonsmile {
+        background-image: url('../../../../public/images/amazonsmile-logo.jpeg');
+      }
+    }
+
+    & > p {
+      flex: 1 1 0%;
+      font-size: 0.625rem;
+    }
+
+    .mailingList {
+      @extend .input-group;
+      margin-top: 0.5rem;
+
+      & > div {
+        @extend .form-floating;
+
+        input {
+          @extend .form-control;
+          height: calc(2.5rem + 2px);
+          padding: 0.75rem 0.5rem;
+          border: 0;
+          border-radius: 0;
+          border-bottom: 3px solid var(--mtf-dark);
+
+          &:focus,
+          &:not(:placeholder-shown),
+          &:-webkit-autofill {
+            color: var(--mtf-primary);
+            border-color: var(--mtf-dark);
+            box-shadow: none;
+
+            ~ label {
+              transform: scale(0.8) translateY(-0.7rem) translateX(0.15rem);
+            }
+          }
+        }
+
+        label {
+          padding: 0.75rem 0.5rem;
+        }
+      }
+    }
+  }
+
+  .copyright {
+    margin: 3.75rem auto;
+    font-size: 0.625rem;
+    text-align: center;
+  }
 }

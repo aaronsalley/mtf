@@ -1,13 +1,12 @@
 .container {
   max-width: var(--mtf-max-width);
-  margin: auto;
+  margin: 5rem auto;
 
   & > div {
     display: flex;
     gap: 1rem;
     width: 100%;
     max-width: var(--mtf-max-width);
-    margin-top: 5rem;
     margin-right: auto;
     margin-bottom: 1rem;
     margin-left: auto;

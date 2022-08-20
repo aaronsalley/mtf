@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import styles from './index.module.scss';
 
-const Message = ({ text = '' }) => {
+interface Message {
+  text: string;
+  link?: string;
+}
+
+const Message = ({ text = '', link = undefined }: Message) => {
   const [hasMessage, toggleMessage] = useState(true);
 
-  if (text.length < 1 || !hasMessage) return null;
+  if (!text || text.length < 1 || !hasMessage) return null;
 
   return (
     <aside className={styles['container']}>

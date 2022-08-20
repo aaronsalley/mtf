@@ -4,7 +4,7 @@ import Article from '../../molecules/Article';
 import styles from './index.module.scss';
 
 const NewsGrid = ({ posts = [], maxColumns = 4 }) => {
-  if (posts.length < 1) return null;
+  if (!posts || posts.length < 1) return null;
 
   const title = 'News';
   const articles = [];
@@ -35,13 +35,13 @@ const NewsGrid = ({ posts = [], maxColumns = 4 }) => {
   return (
     <section className={styles['container']}>
       <div>{articles}</div>
-      <Button link={{ text: 'See all ' + title, url: '#' }} />
+      <Button text={'See all ' + title} />
     </section>
   );
 };
 
 const mapStateToProps = (state: any, ownProps: any) => ({
-  posts: state.content.posts,
+  posts: state.content ? state.content.posts : null,
 });
 
 export default connect(mapStateToProps)(NewsGrid);

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Button from '../../atoms/Button';
 import MegaMenu from '../MegaMenu';
 import styles from './index.module.scss';
@@ -27,7 +26,7 @@ const Footer = () => {
             <input type='email' id='email' placeholder='name@example.com' />
             <label htmlFor='email'>Email address</label>
           </div>
-          <Button link={{ text: 'Sign up', url: '' }} />
+          <Button text={'Sign up'} />
         </form>
       </div>
       <MegaMenu />

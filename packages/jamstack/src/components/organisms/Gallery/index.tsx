@@ -7,14 +7,8 @@ interface Gallery {
   gap?: number;
 }
 
-const Gallery = ({
-  children = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-    22,
-  ],
-  maxColumns = 7,
-  gap = 2,
-}: Gallery) => {
+// TODO: can this be made recursive?
+const Gallery = ({ children = [], maxColumns = 7, gap = 2 }: Gallery) => {
   if (children.length < 1) return null;
 
   const gallery: any[] = [];
@@ -34,31 +28,43 @@ const Gallery = ({
 
     if (children.length !== 22) {
       const columnIndex = i % columnCount;
-      __columns[`column${columnIndex}`].push(<Tile key={i} />);
+      __columns[`column${columnIndex}`].push(
+        <Tile imageSrc='' alt='' key={i} />
+      );
     } else {
-      if (i < 4) __columns[`column${0}`].push(<Tile key={i} />);
-      else if (i < 7) __columns[`column${1}`].push(<Tile key={i} />);
+      if (i < 4)
+        __columns[`column${0}`].push(<Tile imageSrc='' alt='' key={i} />);
+      else if (i < 7)
+        __columns[`column${1}`].push(<Tile imageSrc='' alt='' key={i} />);
       else if (i === 7)
         __columns[`column${2}`].push(
           <Tile
+            imageSrc=''
+            alt=''
             minHeight={minHeightOverride}
             maxHeight={maxHeightOverride}
             key={i}
           />
         );
-      else if (i < 10) __columns[`column${2}`].push(<Tile key={i} />);
-      else if (i < 14) __columns[`column${3}`].push(<Tile key={i} />);
-      else if (i < 16) __columns[`column${4}`].push(<Tile key={i} />);
+      else if (i < 10)
+        __columns[`column${2}`].push(<Tile imageSrc='' alt='' key={i} />);
+      else if (i < 14)
+        __columns[`column${3}`].push(<Tile imageSrc='' alt='' key={i} />);
+      else if (i < 16)
+        __columns[`column${4}`].push(<Tile imageSrc='' alt='' key={i} />);
       else if (i === 16)
         __columns[`column${5}`].push(
           <Tile
+            imageSrc=''
+            alt=''
             minHeight={minHeightOverride}
             maxHeight={maxHeightOverride}
             key={i}
           />
         );
-      else if (i < 19) __columns[`column${5}`].push(<Tile key={i} />);
-      else __columns[`column${6}`].push(<Tile key={i} />);
+      else if (i < 19)
+        __columns[`column${5}`].push(<Tile imageSrc='' alt='' key={i} />);
+      else __columns[`column${6}`].push(<Tile imageSrc='' alt='' key={i} />);
     }
   }
 

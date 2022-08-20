@@ -3,8 +3,8 @@ import Button from '../../atoms/Button';
 import Event from '../../molecules/Event';
 import styles from './index.module.scss';
 
-const EventsGrid = ({ events = [] }) => {
-  if (events.length < 1) return null;
+const EventsGrid = ({ events = [] }: any) => {
+  if (!events || events.length < 1) return null;
 
   const title = 'Works In Progress';
   const items = events.map((event: any, i: number) => {
@@ -17,13 +17,13 @@ const EventsGrid = ({ events = [] }) => {
     <section className={styles['container']}>
       <h2>{title}</h2>
       <div>{items}</div>
-      <Button link={{ text: 'See all ' + title, url: '#' }} />
+      <Button text={'See all ' + title} />
     </section>
   );
 };
 
 const mapStateToProps = (state: any, ownProps: any) => ({
-  events: state.content.events,
+  events: state.content ? state.content.events : null,
 });
 
 export default connect(mapStateToProps)(EventsGrid);

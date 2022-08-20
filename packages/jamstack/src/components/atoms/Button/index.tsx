@@ -1,10 +1,20 @@
 import Link from 'next/link';
 import styles from './index.module.scss';
 
-const Button = ({ link = { text: '', url: '' } }) => {
+interface Button {
+  text: string;
+  url?: string | void;
+}
+
+const Button = ({ text = '', url = undefined }: Button) => {
+  // interactive buttons
+  if (typeof url !== 'string')
+    return <button className={styles['container']}>{text}</button>;
+
+  // a link buttons
   return (
-    <Link href={link.url}>
-      <a className={styles['container']}>{link.text}</a>
+    <Link href={url}>
+      <a className={styles['container']}>{text}</a>
     </Link>
   );
 };

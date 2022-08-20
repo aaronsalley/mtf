@@ -5,10 +5,7 @@ interface Article {
   title: string;
   pubDate: string;
   summary: string;
-  link: {
-    text: string;
-    url: string;
-  };
+  link: Button;
 }
 
 const Article = ({
@@ -17,6 +14,8 @@ const Article = ({
   summary = 'This is the article copy.',
   link = { text: 'Read more', url: '#' },
 }: Article) => {
+  const { text, url }: Button = link;
+
   return (
     <article className={styles['container']}>
       <header>
@@ -27,7 +26,7 @@ const Article = ({
         <div className={styles['summary']}>{summary}</div>
       </main>
       <footer>
-        <Button link={link} />
+        <Button text={text} url={url} />
       </footer>
     </article>
   );

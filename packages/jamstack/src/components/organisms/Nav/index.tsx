@@ -3,7 +3,7 @@ import { connect } from '../../../store';
 import styles from './index.module.scss';
 
 const Nav = ({ mainMenu = [] }) => {
-  if (mainMenu.length < 1) return null;
+  if (!mainMenu || mainMenu.length < 1) return null;
 
   const links = mainMenu.map((item: any, i: number) => {
     return (
@@ -21,7 +21,7 @@ const Nav = ({ mainMenu = [] }) => {
 };
 
 const mapStateToProps = (state: any, ownProps: any) => ({
-  mainMenu: state.theme.menus.main,
+  mainMenu: state.theme && state.theme.menus ? state.theme.menus.main : null,
 });
 
 export default connect(mapStateToProps)(Nav);

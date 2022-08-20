@@ -5,19 +5,16 @@ import Button from '../../atoms/Button';
 interface Event {
   thumbnail: string;
   title: string;
-  startDate: string;
+  startDate?: string;
   endDate: string;
   summary: string;
-  link: {
-    text: string;
-    url: string;
-  };
+  link: Button;
 }
 
 const Event = ({
   thumbnail = '',
   title = 'Event Title',
-  startDate = '12.01.2021',
+  startDate = undefined,
   endDate = '12.01.2021',
   summary = 'Event summary.',
   link = {
@@ -25,6 +22,8 @@ const Event = ({
     url: '#',
   },
 }: Event) => {
+  const { text, url }: Button = link;
+
   return (
     <article className={styles['container']}>
       <header>
@@ -42,7 +41,7 @@ const Event = ({
         <div className={styles['summary']}>{summary}</div>
       </main>
       <footer>
-        <Button link={link} />
+        <Button text={text} url={url} />
       </footer>
     </article>
   );

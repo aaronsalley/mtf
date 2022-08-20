@@ -3,14 +3,20 @@ import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 
 interface Tile {
-  src?: string;
-  alt?: string;
+  imageSrc: string;
+  alt: string;
   minHeight?: number;
   maxHeight?: number;
 }
 
-const Tile = ({ src = '', alt = '', minHeight = 181, maxHeight = 384 }) => {
+const Tile = ({
+  imageSrc = '',
+  alt = '',
+  minHeight = 181,
+  maxHeight = 384,
+}: Tile) => {
   const [randomHeight, setRandomHeight] = useState(0);
+
   useEffect(() => {
     const randomNum =
       Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
@@ -23,7 +29,7 @@ const Tile = ({ src = '', alt = '', minHeight = 181, maxHeight = 384 }) => {
       className={styles['container']}
       style={{ paddingBottom: `${randomHeight}%` }}
     >
-      <Image src={src} alt={alt} />
+      <Image src={imageSrc} alt={alt} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-@use '../../../styles/choreography';
+@use '../../templates/Layout/choreography';
 @mixin make-wrapper() {
   display: flex;
   width: calc(100% - 1rem);

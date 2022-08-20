@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 
 interface Tile {
@@ -9,9 +10,13 @@ interface Tile {
 }
 
 const Tile = ({ src = '', alt = '', minHeight = 181, maxHeight = 384 }) => {
-  const randomNum =
-    Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
-  const randomHeight = (randomNum / minHeight) * 100;
+  const [randomHeight, setRandomHeight] = useState(0);
+  useEffect(() => {
+    const randomNum =
+      Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
+    const randomHeight = (randomNum / minHeight) * 100;
+    setRandomHeight(randomHeight);
+  }, [minHeight, maxHeight]);
 
   return (
     <div

@@ -12,6 +12,8 @@ services:
     build: ./packages/jamstack
     image: mtfmusicals
     restart: always
+    env_file:
+      - .env
     ports:
       - '32768:3000'
 

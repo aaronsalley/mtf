@@ -30,22 +30,4 @@
       // padding-bottom: 1 / 1 * 100%;
     }
   }
-
-  .message {
-    justify-content: space-between;
-    padding: 1rem 0rem;
-    background-color: var(--mtf-dark);
-    font-family: var(--mtf-font-display);
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--mtf-light);
-    text-transform: uppercase;
-
-    button {
-      color: var(--mtf-primary);
-      font-weight: bold;
-      background-color: transparent;
-      border: 0;
-    }
-  }
 }

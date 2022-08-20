@@ -1,9 +1,10 @@
+import { connect } from '../../../store';
 import Button from '../../atoms/Button';
 import Article from '../../molecules/Article';
 import styles from './index.module.scss';
 
-const NewsGrid = ({ children = [1, 2, 3, 4, 5, 6, 7], maxColumns = 4 }) => {
-  if (children.length < 1) return null;
+const NewsGrid = ({ posts = [], maxColumns = 4 }) => {
+  if (posts.length < 1) return null;
 
   const title = 'News';
   const articles = [];
@@ -15,15 +16,14 @@ const NewsGrid = ({ children = [1, 2, 3, 4, 5, 6, 7], maxColumns = 4 }) => {
   }
 
   // Fill columns
-  for (let i = 0; i < children.length; i++) {
-    const minHeightOverride = 263;
-    const maxHeightOverride = 311;
-
+  posts.map((post: any, i: any) => {
     const columnIndex = i % maxColumns;
-    __columns[`column${columnIndex}`].push(<Article key={i} />);
-  }
 
-  // Fill gallery
+    __columns[`column${columnIndex}`].push(<Article {...post} key={i} />);
+    return;
+  });
+
+  // Fill grid
   for (let i = 0; i < maxColumns; i++) {
     articles.push(
       <div className={styles['col']} key={i}>
@@ -40,4 +40,8 @@ const NewsGrid = ({ children = [1, 2, 3, 4, 5, 6, 7], maxColumns = 4 }) => {
   );
 };
 
-export default NewsGrid;
+const mapStateToProps = (state: any, ownProps: any) => ({
+  posts: state.content.posts,
+});
+
+export default connect(mapStateToProps)(NewsGrid);

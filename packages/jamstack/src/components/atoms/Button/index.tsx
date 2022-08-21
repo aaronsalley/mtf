@@ -9,12 +9,18 @@ interface Button {
 const Button = ({ text = '', url = undefined }: Button) => {
   // interactive buttons
   if (typeof url !== 'string')
-    return <button className={styles['container']}>{text}</button>;
+    return (
+      <button type='button' className={styles['container']}>
+        {text}
+      </button>
+    );
 
   // a link buttons
   return (
     <Link href={url}>
-      <a className={styles['container']}>{text}</a>
+      <a type='button' className={styles['container']}>
+        {text}
+      </a>
     </Link>
   );
 };

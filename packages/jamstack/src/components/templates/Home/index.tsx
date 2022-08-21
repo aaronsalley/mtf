@@ -14,9 +14,9 @@ const Home: NextPage = () => {
         backgrounds at any stage of their career can be supported throughout
         their process.
       </blockquote>
-      <EventsGrid />
-      <Gallery />
-      <Programming />
+      <EventsGrid id='events' />
+      <Gallery filter='maker' />
+      <Programming id='programming' />
       <NewsGrid />
     </main>
   );

@@ -29,7 +29,7 @@ const Tile = ({
       className={styles['container']}
       style={{ paddingBottom: `${randomHeight}%` }}
     >
-      <Image src={imageSrc} alt={alt} />
+      <Image src={imageSrc} alt={alt} layout='fill' />
     </div>
   );
 };

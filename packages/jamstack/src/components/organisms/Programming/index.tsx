@@ -1,8 +1,8 @@
 import styles from './index.module.scss';
 
-const Programming = () => (
+const Programming = ({ id = undefined }: any) => (
   <>
-    <section className={styles['container']}>
+    <section id={id} className={styles['container']}>
       <article>
         <h2>MTF Makers™</h2>
         <div>

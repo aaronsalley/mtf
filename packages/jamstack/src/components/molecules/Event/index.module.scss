@@ -70,5 +70,9 @@
   footer {
     @include make-wrapper();
     justify-content: flex-end;
+
+    a[type='button'] {
+      flex-grow: 0;
+    }
   }
 }

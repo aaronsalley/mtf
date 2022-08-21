@@ -145,6 +145,118 @@ export const initialState = {
       },
     ],
   },
+  people: [
+    {
+      fullName: 'Person #1',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #2',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #3',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #4',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #5',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #6',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #7',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #8',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #9',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #10',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #11',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #12',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #13',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #14',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #15',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #16',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #17',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #18',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #19',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #20',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #21',
+      avatar: '',
+      segment: ['maker'],
+    },
+    {
+      fullName: 'Person #22',
+      avatar: '',
+      segment: ['maker'],
+    },
+  ],
   settings: {
     siteTitle: 'Musical Theatre Factory',
     tagline: '',
@@ -155,9 +267,8 @@ export const initialState = {
     favicon: '',
     menus: {
       main: [
-        { url: 'events', link: 'Events' },
-        { url: 'programming', link: 'Programming' },
-        { url: '', link: '' },
+        { url: '#events', link: 'Events' },
+        { url: '#programming', link: 'Programming' },
       ],
     },
   },

@@ -2,5 +2,43 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--mtf-light);
+
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  header & {
+    display: none;
+    color: var(--mtf-light);
+  }
+
+  footer & {
+    justify-content: flex-end;
+    margin-bottom: 3.625rem;
+    padding: 0;
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      column-gap: 2.5rem;
+      row-gap: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 0;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    > ul {
+      flex-wrap: nowrap;
+      flex-direction: row;
+
+      > li > a,
+      > li > p {
+        font-weight: bold;
+      }
+    }
+  }
 }

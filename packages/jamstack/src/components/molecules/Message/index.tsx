@@ -9,10 +9,11 @@ interface Message {
 const Message = ({ text = '', link = undefined }: Message) => {
   const [hasMessage, toggleMessage] = useState(true);
 
-  if (!text || text.length < 1 || !hasMessage) return null;
+  let visibility: any = 'visible';
+  if (!text || text.length < 1 || !hasMessage) visibility = 'collapse';
 
   return (
-    <aside className={styles['container']}>
+    <aside className={styles['container']} style={{ visibility: visibility }}>
       <span>
         {text} <button onClick={() => toggleMessage(!hasMessage)}>x</button>
       </span>

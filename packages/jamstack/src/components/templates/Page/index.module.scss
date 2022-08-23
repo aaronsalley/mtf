@@ -1,2 +1,18 @@
 .container {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 4.375rem;
+  max-width: var(--mtf-max-width);
+  margin: auto;
+  padding-top: 9rem;
+
+  & > aside {
+    width: 33%;
+  }
+
+  & > section {
+    flex: 1;
+  }
 }

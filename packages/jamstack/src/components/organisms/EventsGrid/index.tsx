@@ -17,7 +17,7 @@ const EventsGrid = ({ events = [], id = undefined, ownProps }: any) => {
     <section id={id || ownProps.id} className={styles['container']}>
       <h2>{title}</h2>
       <div>{items}</div>
-      <Button text={'See all ' + title} url={'events'} />
+      <Button text={'See all ' + title} url={'/events'} />
     </section>
   );
 };

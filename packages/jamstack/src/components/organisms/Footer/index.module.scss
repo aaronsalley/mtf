@@ -21,6 +21,8 @@
   }
 
   .devo {
+    align-content: flex-end;
+    flex-basis: 33%;
     gap: 1rem;
 
     & > a {

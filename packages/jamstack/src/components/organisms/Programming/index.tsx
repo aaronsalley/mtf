@@ -1,6 +1,6 @@
 import styles from './index.module.scss';
 
-const Programming = ({ id = undefined }: any) => (
+const Programming = ({ id }: any) => (
   <>
     <section id={id} className={styles['container']}>
       <article>

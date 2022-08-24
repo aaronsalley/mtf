@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
@@ -53,7 +54,7 @@ const MegaMenu = ({ button }: any) => {
 
         loadData(data.menuItems.nodes);
       } catch (error: any) {
-        console.error('Caught error: ' + error.message);
+        console.error(chalk.red(error.message));
       }
     })();
   }, []);

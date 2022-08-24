@@ -53,5 +53,6 @@ function add_theme_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'add_theme_scripts' );
 
+// include 'inc/cors.php';
 include 'inc/elementor.php';
 include 'inc/required-plugins.php';

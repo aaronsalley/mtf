@@ -2,6 +2,7 @@
   "name": "jamstack",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:32769",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

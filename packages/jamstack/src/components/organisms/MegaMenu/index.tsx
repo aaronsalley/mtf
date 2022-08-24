@@ -37,15 +37,15 @@ const MegaMenu = ({ button }: any) => {
         }`;
 
         const query = graphql.replaceAll(/\s/gi, '');
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/graphql?query=${query}`,
+        const res = await fetch(
+          process.env.NEXT_PUBLIC_API_URL + `/graphql?query=${query}`,
           {
             headers: {
               'Content-Type': 'application/json',
             },
           }
         );
-        const json = await response.json();
+        const json = await res.json();
         const data = json.data;
 
         if (!data.menuItems && !data.menuItems.nodes)

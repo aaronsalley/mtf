@@ -2,45 +2,21 @@ import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Page from '../components/templates/Page';
+import chalk from 'chalk';
 
 const Single: NextPage = (props: any) => {
-  // console.log(props);
+  console.debug(chalk.green(JSON.stringify(props)));
 
-  // const [content, fetchContent] = useState('');
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const query = `{
-  //         pageBy(pageId: 2) {
-  //           id,
-  //           title,
-  //           content
-  //         }
-  //       }`;
-  //       const graphQLQuery = query.replaceAll(/\s/gi, '');
-
-  //       const res = await fetch(
-  //         // `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/wp/v2/pages/2`,
-  //         `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/graphql?query=${graphQLQuery}`,
-  //         {
-  //           // mode: 'no-cors',
-  //           cache: 'no-cache',
-  //           headers: { 'Content-Type': 'application/json' },
-  //         }
-  //       );
-
-  //       if (!res.ok) {
-  //         throw new Error('Issues');
-  //       }
-
-  //       const json = await res.json();
-
-  //       fetchContent(json.data.pageBy.content);
-  //     } catch (error: any) {
-  //       console.log(error.message);
-  //     }
-  //   })();
-  // }, []);
+  const [data, loadData] = useState({});
+  useEffect(() => {
+    // console.debug(chalk.green('foo'));
+    (async () => {
+      try {
+      } catch (error: any) {
+        console.error(chalk.red('Error message:', error.message));
+      }
+    })();
+  }, []);
 
   return (
     <>
@@ -54,38 +30,75 @@ const Single: NextPage = (props: any) => {
   );
 };
 
-// export async function getStaticPaths() {
-//   return {
-//     paths: [{ params: { slug: ['page'] } }],
-//     fallback: false, // can also be true or 'blocking'
-//   };
-// }
+export const getStaticPaths = async () => {
+  try {
+    const graphql = `{
+      pages(where: {status: PUBLISH}, first: 100) {
+        nodes {
+          uri,
+          id
+        }
+      }    
+    }`;
 
-// export async function getStaticProps(context: any) {
-//   try {
-//     const query = `{
-//       pageBy(pageId: 2) {
-//         id,
-//         title,
-//         content
-//       }
-//     }`;
-//     const graphQLQuery = query.replaceAll(/\s/gi, '');
+    const query = graphql.replaceAll(/\s/gi, '');
+    const res = await fetch(process.env.API_URL + `/graphql?query=${query}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-//     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/wp/v2/pages/2`,
-//       {
-//         mode: 'no-cors',
-//       }
-//     );
-//     const json = await res.json();
+    const json = await res.json();
+    const data = json.data;
 
-//     return {
-//       props: { json }, // will be passed to the page component as props
-//     };
-//   } catch (error: any) {
-//     console.log(error.message);
-//   }
-// }
+    if (!data || !data.pages.nodes)
+      throw new Error(json.errors.map((error: any) => error.message));
+
+    const nodes = data.pages.nodes.map((node: any) => {
+      const slug = node.uri.split('/').filter(Boolean);
+      return { params: { slug: slug } };
+    });
+
+    return {
+      paths: nodes,
+      fallback: false,
+    };
+  } catch (error: any) {
+    console.error(chalk.red('Error message:', error.message));
+  }
+};
+
+export const getStaticProps = async (context: any) => {
+  try {
+    const graphql = `{
+      pageBy(uri: "${context.params.slug.join('/')}") {
+        title,
+        template {
+          templateName
+        },
+        content    
+      }  
+    }`;
+
+    const query = graphql.replaceAll(/\s/gi, '');
+    const res = await fetch(process.env.API_URL + `/graphql?query=${query}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const json = await res.json();
+    const data = json.data;
+
+    if (!data || !data.pageBy)
+      throw new Error(json.errors.map((error: any) => error.message));
+
+    return {
+      props: data.pageBy,
+    };
+  } catch (error: any) {
+    console.error(chalk.red('Error message:', error.message));
+  }
+};
 
 export default Single;

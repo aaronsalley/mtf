@@ -4,6 +4,7 @@ import Helmet from '../components/atoms/Helmet';
 import Home from '../components/templates/Home';
 
 const Index: NextPage = (props: any) => {
+  console.debug(props);
   return (
     <>
       <Helmet {...props} />
@@ -17,7 +18,15 @@ export const getStaticProps = async (context: any) => {
     const graphql = `{
       pageBy(uri: "/") {
         title,
-        content    
+        content,
+        excerpt,
+        featuredImage {
+          node {
+            mediaType,
+            mediaItemUrl,
+            altText,
+          }
+        },
       }  
     }`;
 
@@ -33,6 +42,8 @@ export const getStaticProps = async (context: any) => {
 
     if (!data || !data.pageBy)
       throw new Error(json.errors.map((error: any) => error.message));
+
+    data.pageBy['featuredImage'] = data.pageBy.featuredImage.node;
 
     return {
       props: data.pageBy,

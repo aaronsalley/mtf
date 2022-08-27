@@ -1,14 +1,15 @@
 @use 'colors';
 @use 'typography';
+@import 'wp-blocks';
 
 html,
 body {
   --mtf-light: #{colors.$light};
   --mtf-dark: #{colors.$dark};
   --mtf-primary: #{colors.$primary};
-  --mtf-font-sans-serif: #{typography.$display};
-  --mtf-font-serif: #{typography.$display};
-  --mtf-font-monospace: #{typography.$display};
+  --mtf-font-sans-serif: #{typography.$sans-serif};
+  --mtf-font-serif: #{typography.$serif};
+  --mtf-font-monospace: #{typography.$monospace};
   --mtf-font-display: #{typography.$display};
   --mtf-max-width: 1130px;
 
@@ -23,8 +24,9 @@ body {
 
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--mtf-font-sans-serif), -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
   font-size: 16px;
 
   #__next {
@@ -32,7 +34,7 @@ body {
     flex-direction: column;
     height: 100vh;
 
-    & > main {
+    > main {
       flex-grow: 1;
       flex-basis: 100%;
     }

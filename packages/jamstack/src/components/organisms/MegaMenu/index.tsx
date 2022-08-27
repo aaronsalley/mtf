@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { connect } from '../../../store';
 import styles from './index.module.scss';
 
 interface menuItem {
@@ -14,6 +15,7 @@ interface menuItem {
 }
 
 const MegaMenu = ({ button }: any) => {
+  // TODO: Move higher up tree and connect
   const [menuData, loadData] = useState([]);
   useEffect(() => {
     (async () => {
@@ -118,4 +120,8 @@ const MegaMenu = ({ button }: any) => {
   );
 };
 
-export default MegaMenu;
+const mapStateToProps = (state: any, ownProps: any) => {
+  return {};
+};
+
+export default connect()(MegaMenu);

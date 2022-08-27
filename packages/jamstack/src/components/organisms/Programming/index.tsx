@@ -1,3 +1,4 @@
+import { connect } from '../../../store';
 import styles from './index.module.scss';
 
 const Programming = ({ id }: any) => (
@@ -48,4 +49,8 @@ const Programming = ({ id }: any) => (
   </>
 );
 
-export default Programming;
+const mapStateToProps = (state: any, ownProps: any) => {
+  return {};
+};
+
+export default connect()(Programming);

@@ -55,10 +55,8 @@ export const getStaticProps = async (context: any) => {
     const graphql = `{
       pageBy(uri: "${context.params.slug.join('/')}") {
         title,
-        template {
-          templateName
-        },
-        content    
+        content,
+        excerpt
       }  
     }`;
 

@@ -1,9 +1,9 @@
 import styles from './index.module.scss';
 
 interface Page {
-  featuredImage: string;
+  featuredImage: any;
   title: string;
-  summary: string;
+  excerpt: string;
   template: string;
   slug: string;
   isFrontPage: boolean;
@@ -12,20 +12,36 @@ interface Page {
 
 const Page = ({
   featuredImage = '',
-  title = 'ABOUT musical theatre factory',
-  summary = `We develop changemaking new musicals in a joyous, collaborative community free from commercial constraints. 
-  
-  We are committed to dismantling oppressive ideologies toward collective liberation, centering artists of excellence who exist in the intersections of underrepresented groups.`,
+  title = '',
+  excerpt = '',
   template = '',
   slug = '',
   isFrontPage = false,
   content = '',
 }: Page) => {
+  const PageTitle = ({ title }: any) => {
+    if (!title) return null;
+
+    let words = title.split(' ');
+    const firstWord = words[0];
+    words.shift();
+    words = words.join(' ');
+
+    return (
+      <>
+        <span>{firstWord} </span>
+        {words}
+      </>
+    );
+  };
+
   return (
     <main className={styles['container']}>
       <aside className={styles['sidebar']}>
-        <h1>{title}</h1>
-        <div>{summary}</div>
+        <h1>
+          <PageTitle title={title} />
+        </h1>
+        <div dangerouslySetInnerHTML={{ __html: excerpt }}></div>
       </aside>
       <section dangerouslySetInnerHTML={{ __html: content }}></section>
     </main>

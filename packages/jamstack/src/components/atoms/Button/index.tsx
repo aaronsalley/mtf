@@ -6,7 +6,7 @@ interface Button {
   url?: string | void;
 }
 
-const Button = ({ text = '', url = undefined }: Button) => {
+const Button = ({ text = 'Label', url }: Button) => {
   // interactive buttons
   if (typeof url !== 'string')
     return (

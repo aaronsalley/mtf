@@ -1,7 +1,7 @@
 <?php
 
-add_action('init', 'handle_preflight');
-function handle_preflight() {
+add_action('init', 'mtfmusicals_handle_preflight');
+function mtfmusicals_handle_preflight() {
     $origin = get_http_origin();
     if ($origin === 'https://yourfrontenddomain') {
         header("Access-Control-Allow-Origin: yourfrontenddomain");
@@ -15,8 +15,8 @@ function handle_preflight() {
     }
 }
 
-add_filter('rest_authentication_errors', 'rest_filter_incoming_connections');
-function rest_filter_incoming_connections($errors) {
+add_filter('rest_authentication_errors', 'mtfmusicals_rest_filter_incoming_connections');
+function mtfmusicals_rest_filter_incoming_connections($errors) {
     $request_server = $_SERVER['REMOTE_ADDR'];
     $origin = get_http_origin();
     if ($origin !== 'https://yourfrontenddomain') return new WP_Error('forbidden_access', $origin, array(

@@ -9,10 +9,13 @@ const { withSentryConfig } = require('@sentry/nextjs');
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    domains: ['localhost'],
+  },
 };
 
 const moduleExports = {
-  nextConfig,
+  ...nextConfig,
 };
 
 const sentryWebpackPluginOptions = {

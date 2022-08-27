@@ -12,7 +12,7 @@
     max-width: var(--mtf-max-width);
   }
 
-  & > * > span {
+  > * > span {
     display: flex;
     justify-content: space-between;
   }

@@ -5,7 +5,7 @@
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, #000000 100%);
   background-position-y: -6rem;
 
-  & > div {
+  > div {
     $overflow: 8%;
 
     display: flex;

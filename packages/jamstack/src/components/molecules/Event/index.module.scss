@@ -8,8 +8,8 @@
 .container {
   display: flex;
   flex-direction: column;
+  flex-basis: 25%;
   align-items: center;
-  width: calc(25% - 1.25rem);
   height: 50vh;
   max-height: 26.25rem;
 

@@ -1,0 +1,74 @@
+.container {
+  .hero {
+    position: relative;
+    z-index: 0;
+    height: 100vh;
+    background-color: navy;
+
+    .stage {
+      height: 100%;
+
+      img {
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+
+    > aside {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--mtf-max-width);
+      height: 100%;
+
+      .scrollHint {
+        $line: 10rem;
+
+        position: absolute;
+        right: 0;
+        bottom: $line;
+        transform: rotate(90deg) translateX(-50%) translateY(-100%);
+        transform-origin: bottom;
+        margin: 0;
+        padding-right: 0.5rem;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--mtf-light);
+
+        &::before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 100%;
+          width: $line;
+          height: 3px;
+          background-color: var(--mtf-light);
+        }
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: calc(100% + $line);
+          width: 16rem;
+          height: 3px;
+          background-color: var(--mtf-text);
+        }
+      }
+    }
+  }
+
+  > blockquote {
+    height: 262px;
+    width: 50%;
+    margin-left: 40%;
+    padding-top: 5rem;
+    padding-right: 4.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}

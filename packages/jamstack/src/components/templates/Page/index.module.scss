@@ -8,11 +8,26 @@
   margin: auto;
   padding-top: 9rem;
 
-  & > aside {
+  > aside {
     width: 33%;
+
+    h1 {
+      margin: 0;
+      padding-bottom: 1.5rem;
+      // TODO: figure out how to make font scale to full box width
+      font-family: var(--mtf-font-display);
+      font-size: 5vmax;
+      line-height: 1.05;
+      text-transform: lowercase;
+
+      span {
+        display: block;
+        text-transform: uppercase;
+      }
+    }
   }
 
-  & > section {
+  > section {
     flex: 1;
     padding-right: 2.5rem;
   }

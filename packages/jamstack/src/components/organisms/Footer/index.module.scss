@@ -14,7 +14,7 @@
   max-width: var(--mtf-max-width);
   padding-top: 10.5rem;
 
-  > *:not(.copyright) {
+  > :not(.copyright) {
     display: flex;
     flex-wrap: wrap;
     flex: 1 1 50%;
@@ -25,7 +25,7 @@
     flex-basis: 33%;
     gap: 1rem;
 
-    & > a {
+    > a {
       position: relative;
       width: 3.375rem;
       height: 3.375rem;
@@ -40,17 +40,16 @@
       }
     }
 
-    & > p {
+    > p {
       flex: 1 1 0%;
       font-size: 0.625rem;
     }
 
-    // TODO: Make nightmode compatible
     .mailingList {
       @extend .input-group;
       margin-top: 0.5rem;
 
-      & > div {
+      > div {
         @extend .form-floating;
 
         input {
@@ -83,7 +82,7 @@
         }
       }
 
-      & > button {
+      > button {
         flex-grow: 0;
       }
     }

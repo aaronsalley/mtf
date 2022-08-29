@@ -1,19 +1,19 @@
 import Button from '../../atoms/Button';
 import styles from './index.module.scss';
 
-interface Article {
+interface ArticleTile {
   title: string;
   pubDate: string;
   summary: string;
   link: Button;
 }
 
-const Article = ({
-  title = 'Article title',
+const ArticleTile = ({
+  title = 'The Headline',
   pubDate = '12.01.2021',
-  summary = 'This is the article copy.',
+  summary = 'This is the teaser copy.',
   link = { text: 'Read more', url: '#' },
-}: Article) => {
+}: ArticleTile) => {
   const { text, url }: Button = link;
 
   return (
@@ -32,4 +32,4 @@ const Article = ({
   );
 };
 
-export default Article;
+export default ArticleTile;

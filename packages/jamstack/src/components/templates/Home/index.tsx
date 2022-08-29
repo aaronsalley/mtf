@@ -1,6 +1,6 @@
-import EventsGrid from '../../organisms/EventsGrid';
-import Gallery from '../../organisms/Gallery';
-import NewsGrid from '../../organisms/NewsGrid';
+import EventGrid from '../../organisms/EventGrid';
+import ImageGallery from '../../organisms/ImageGallery';
+import ArticleGrid from '../../organisms/ArticleGrid';
 import Programming from '../../organisms/Programming';
 import Page from '../Page';
 import styles from './index.module.scss';
@@ -34,10 +34,10 @@ const Home = ({
         </aside>
       </section>
       <blockquote dangerouslySetInnerHTML={{ __html: excerpt }}></blockquote>
-      <EventsGrid id='events' />
-      <Gallery filter='maker' />
+      <EventGrid id='events' />
+      <ImageGallery filter='maker' />
       <Programming id='programming' />
-      <NewsGrid />
+      <ArticleGrid />
     </main>
   );
 };

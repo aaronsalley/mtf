@@ -1,8 +1,8 @@
 import { connect } from '../../../store';
-import Tile from '../../molecules/Tile';
+import ImageTile from '../../molecules/ImageTile';
 import styles from './index.module.scss';
 
-interface Gallery {
+interface ImageGallery {
   items?: any;
   maxColumns?: number | any[];
   gap?: number;
@@ -11,13 +11,13 @@ interface Gallery {
 }
 
 // TODO: can this be made recursive?
-const Gallery = ({
+const ImageGallery = ({
   items = [],
   maxColumns = 7,
   gap = 2,
   filter = undefined,
   ownProps = {},
-}: Gallery) => {
+}: ImageGallery) => {
   if (items.length < 1) return null;
 
   let children: any[] = [];
@@ -49,9 +49,9 @@ const Gallery = ({
     const minHeightOverride = 263;
     const maxHeightOverride = 311;
 
-    const tile = <Tile imageSrc={imageSrc} alt={alt} key={i} />;
+    const tile = <ImageTile imageSrc={imageSrc} alt={alt} key={i} />;
     const bigTile = (
-      <Tile
+      <ImageTile
         imageSrc={imageSrc}
         alt={alt}
         minHeight={minHeightOverride}
@@ -98,4 +98,4 @@ const mapStateToProps = (state: any, ownProps: any) => {
   };
 };
 
-export default connect(mapStateToProps)(Gallery);
+export default connect(mapStateToProps)(ImageGallery);

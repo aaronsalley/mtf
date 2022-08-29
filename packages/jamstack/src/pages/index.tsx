@@ -4,7 +4,6 @@ import Helmet from '../components/atoms/Helmet';
 import Home from '../components/templates/Home';
 
 const Index: NextPage = (props: any) => {
-  console.debug(props);
   return (
     <>
       <Helmet {...props} />

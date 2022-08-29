@@ -2,19 +2,19 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 
-interface Tile {
+interface ImageTile {
   imageSrc: string;
   alt: string;
   minHeight?: number;
   maxHeight?: number;
 }
 
-const Tile = ({
+const ImageTile = ({
   imageSrc = '',
   alt = '',
   minHeight = 181,
   maxHeight = 384,
-}: Tile) => {
+}: ImageTile) => {
   const [randomHeight, setRandomHeight] = useState(0);
 
   useEffect(() => {
@@ -34,4 +34,4 @@ const Tile = ({
   );
 };
 
-export default Tile;
+export default ImageTile;

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import styles from './index.module.scss';
 import Button from '../../atoms/Button';
 
-interface Event {
+interface EventTile {
   thumbnail: string;
   title: string;
   startDate?: string;
@@ -11,7 +11,7 @@ interface Event {
   link: Button;
 }
 
-const Event = ({
+const EventTile = ({
   thumbnail = '',
   title = 'Event Title',
   startDate = undefined,
@@ -21,8 +21,10 @@ const Event = ({
     text: 'Details',
     url: '#',
   },
-}: Event) => {
+}: EventTile) => {
   const { text, url }: Button = link;
+
+  //TODO: If no image, use placeholder
 
   return (
     <article className={styles['container']}>
@@ -47,4 +49,4 @@ const Event = ({
   );
 };
 
-export default Event;
+export default EventTile;

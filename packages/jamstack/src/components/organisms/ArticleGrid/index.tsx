@@ -1,12 +1,8 @@
-import { connect } from '../../../store';
 import Button from '../../atoms/Button';
 import ArticleTile from '../../molecules/ArticleTile';
 import styles from './index.module.scss';
 
-const ArticleGrid = ({
-  posts = [{}, {}, {}, {}, {}, {}, {}, {}],
-  maxColumns = 4,
-}) => {
+const ArticleGrid = ({ posts = [], maxColumns = 4 }) => {
   if (!posts || posts.length < 1) return null;
 
   const title = 'News';
@@ -20,7 +16,10 @@ const ArticleGrid = ({
 
   // Fill columns
   posts.map((post: any, i: any) => {
+    if (i > 7) return;
     const columnIndex = i % maxColumns;
+
+    post['link'] = { text: 'Read More', url: post.slug };
 
     __columns[`column${columnIndex}`].push(<ArticleTile {...post} key={i} />);
     return;
@@ -43,8 +42,4 @@ const ArticleGrid = ({
   );
 };
 
-const mapStateToProps = (state: any, ownProps: any) => ({
-  posts: state.content ? state.content.posts : null,
-});
-
-export default connect(mapStateToProps)(ArticleGrid);
+export default ArticleGrid;

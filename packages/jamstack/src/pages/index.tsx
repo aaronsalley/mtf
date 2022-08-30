@@ -14,6 +14,7 @@ const Index: NextPage = (props: any) => {
 
 export const getStaticProps = async (context: any) => {
   try {
+    // TODO: fetch Makers images
     const graphql = `{
       pageBy(uri: "/") {
         title,
@@ -26,7 +27,29 @@ export const getStaticProps = async (context: any) => {
             altText,
           }
         },
-      }  
+      },
+      events(where: {status: PUBLISH}, first: 100) {
+        nodes {
+          id,
+          title,
+          excerpt,
+          uri,
+          slug,
+          featuredImage {
+            node {
+              sourceUrl
+            }
+          }    
+        }
+      },
+      posts(where: {status: PUBLISH}) {
+        nodes {
+          date,
+          title,
+          slug,
+          excerpt
+        }
+      }    
     }`;
 
     const query = graphql.replaceAll(/\s/gi, '');
@@ -45,7 +68,7 @@ export const getStaticProps = async (context: any) => {
     data.pageBy['featuredImage'] = data.pageBy.featuredImage.node;
 
     return {
-      props: data.pageBy,
+      props: data,
     };
   } catch (error: any) {
     console.error(chalk.red(error.message));

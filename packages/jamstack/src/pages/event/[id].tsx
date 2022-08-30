@@ -4,6 +4,7 @@ import Helmet from '../../components/atoms/Helmet';
 import EventPage from '../../components/templates/Event';
 
 const Event: NextPage = (props: any) => {
+  console.debug(props);
   return (
     <>
       <Helmet {...props} />
@@ -17,8 +18,7 @@ export const getStaticPaths = async () => {
     const graphql = `{
       events(where: {status: PUBLISH}, first: 100) {
         nodes {
-          slug,
-          title
+          slug
         }
       }    
     }`;
@@ -52,9 +52,30 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context: any) => {
   try {
     // TODO: get relevant data from Graph
+    // [ ] date & time
+    // [ ] location
+    // [ ] cost
+    // [ ] ticket link url
     const graphql = `{
       eventBy(slug: "${context.params.id}") {
-        title
+        title,
+        excerpt,
+        content,
+        categories {
+          nodes {
+            name
+          }
+        },
+        tags {
+          nodes {
+            name
+          }
+        },    
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }    
       }    
     }`;
 

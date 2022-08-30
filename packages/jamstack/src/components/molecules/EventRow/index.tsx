@@ -1,9 +1,10 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Button from '../../atoms/Button';
 import styles from './index.module.scss';
 
 const EventRow = ({
-  thumbnail = '',
+  featuredImage = '',
   title = 'Event Title',
   startDate = undefined,
   endDate = '12.01.2021',
@@ -16,21 +17,34 @@ const EventRow = ({
   const { text, url }: Button = link;
 
   return (
-    <article className={styles['container']}>
-      <div className={styles['thumbnail']}>
-        <Image src={thumbnail} alt={title + ' event thumbnail'} layout='fill' />
-      </div>
-      <section>
-        <header>
-          <h3>{title}</h3>
-          <time>Monday {endDate} Time </time>
-          <address>Location</address>
-        </header>
-        <div className={styles['summary']}>{excerpt}</div>
-        <footer>
-          <Button text={text} url={url} />
-        </footer>
-      </section>
+    <article>
+      <Link href={url as any}>
+        <a className={styles['container']}>
+          <div className={styles['thumbnail']}>
+            <Image
+              src={featuredImage}
+              alt={title + ' event thumbnail'}
+              layout='fill'
+              objectFit={'cover'}
+              unoptimized // TODO: Optimize remote images
+            />
+          </div>
+          <section>
+            <header>
+              <h3>{title}</h3>
+              <time>Monday {endDate} Time </time>
+              <address>Location</address>
+            </header>
+            <div
+              className={styles['summary']}
+              dangerouslySetInnerHTML={{ __html: excerpt }}
+            ></div>
+            <footer>
+              <Button text={text} />
+            </footer>
+          </section>
+        </a>
+      </Link>
     </article>
   );
 };

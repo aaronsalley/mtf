@@ -41,5 +41,9 @@
   footer {
     display: flex;
     justify-content: flex-end;
+
+    [type='button'] {
+      flex-grow: 0;
+    }
   }
 }

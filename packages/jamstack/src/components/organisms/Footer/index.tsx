@@ -1,4 +1,3 @@
-import { connect } from '../../../store';
 import Button from '../../atoms/Button';
 import MegaMenu from '../MegaMenu';
 import styles from './index.module.scss';
@@ -39,8 +38,4 @@ const Footer = () => {
   );
 };
 
-const mapStateToProps = (state: any, ownProps: any) => {
-  return {};
-};
-
-export default connect(mapStateToProps)(Footer);
+export default Footer;

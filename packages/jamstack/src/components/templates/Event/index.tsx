@@ -7,19 +7,36 @@ const Event = ({
   featuredImage = '',
   title = 'Event Title',
   content = 'Body copy',
+  categories = { nodes: [{ name: 'Program' }] },
+  tags = { nodes: [{ name: 'Artist' }] },
+  location = 'Location',
 }: any) => {
+  const cats: any[] =
+    categories.nodes.length > 0
+      ? categories.nodes.map((category: any) => category.name)
+      : null;
+
+  const artists: any[] =
+    tags.nodes.length > 0 ? tags.nodes.map((tag: any) => tag.name) : null;
+
   return (
     <main className={styles['container']}>
       <header>
         <div className={styles['stage']}>
-          <Image src={featuredImage} alt={title} layout={'fill'} />
+          <Image
+            src={featuredImage.node.sourceUrl}
+            alt={title}
+            layout={'fill'}
+            objectFit={'cover'}
+            unoptimized // TODO: Optimize remote image
+          />
         </div>
         <aside>
-          <p>Byline</p>
+          <p>{artists.join(', ')}&apos;s</p>
           <PageTitle title={title} />
-          <p>Category</p>
+          <p>{cats}</p>
           <time>Date Time</time>
-          <address>Location</address>
+          <address>{location}</address>
           <p>Cost</p>
           <Button text={'Find Tickets'} />
         </aside>

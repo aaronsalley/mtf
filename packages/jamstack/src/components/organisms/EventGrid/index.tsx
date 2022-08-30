@@ -1,4 +1,3 @@
-import { connect } from '../../../store';
 import Button from '../../atoms/Button';
 import EventTile from '../../molecules/EventTile';
 import styles from './index.module.scss';
@@ -12,6 +11,10 @@ const EventGrid = ({
 
   const title = 'Works In Progress';
   const items = events.map((event: any, i: number) => {
+    if (event.featuredImage.node)
+      event['featuredImage'] = event.featuredImage.node.sourceUrl;
+    event['link'] = { text: 'Details', url: event.uri };
+
     while (i < 8) {
       return <EventTile {...event} key={i} />;
     }
@@ -26,8 +29,4 @@ const EventGrid = ({
   );
 };
 
-const mapStateToProps = (state: any, ownProps: any) => ({
-  events: state.content ? state.content.events : null,
-});
-
-export default connect(mapStateToProps)(EventGrid);
+export default EventGrid;

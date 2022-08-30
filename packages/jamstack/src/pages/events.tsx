@@ -18,6 +18,8 @@ const Events: NextPage = (props: any) => {
 export const getStaticProps = async (context: any) => {
   try {
     // TODO: get relevant data from Graph
+    // [ ] date
+    // [ ] location
     const graphql = `{
       events(where: {status: PUBLISH}, first: 100) {
         nodes {
@@ -28,7 +30,7 @@ export const getStaticProps = async (context: any) => {
           slug,
           featuredImage {
             node {
-              srcSet
+              sourceUrl
             }
           }    
         }

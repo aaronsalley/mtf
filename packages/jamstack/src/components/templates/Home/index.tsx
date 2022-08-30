@@ -5,21 +5,29 @@ import Page from '../Page';
 import styles from './index.module.scss';
 import Image from 'next/image';
 
-const Home = ({
-  featuredImage,
-  title = '',
-  excerpt = '',
-  template = '',
-  slug = '',
-  isFrontPage = false,
-  content = '',
-}: Page) => {
+const Home = (props: any) => {
+  const {
+    featuredImage,
+    title = '',
+    excerpt = '',
+    template = '',
+    slug = '',
+    isFrontPage = false,
+    content = '',
+  }: Page = props.pageBy;
+
   let media = null;
   const { mediaType, altText, mediaItemUrl } = featuredImage;
   switch (mediaType) {
     case 'image':
       media = (
-        <Image src={mediaItemUrl} alt={altText} layout='fill' unoptimized />
+        <Image
+          src={mediaItemUrl}
+          alt={altText}
+          layout='fill'
+          objectFit={'cover'}
+          unoptimized // TODO: Optimize remote images
+        />
       );
       break;
   }
@@ -33,7 +41,7 @@ const Home = ({
         </aside>
       </section>
       <blockquote dangerouslySetInnerHTML={{ __html: excerpt }}></blockquote>
-      <EventGrid id='events' />
+      <EventGrid id='events' events={props.events.nodes} />
       <ImageGallery filter='maker' />
       <section id={'programming'} className={styles['container']}>
         <article>
@@ -78,7 +86,7 @@ const Home = ({
           <li>Rolling World Premieres</li>
         </ul>
       </div>
-      <ArticleGrid />
+      <ArticleGrid posts={props.posts.nodes} />
     </main>
   );
 };

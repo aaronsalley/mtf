@@ -40,8 +40,8 @@ export const initialState = {
     favicon: '',
     menus: {
       main: [
-        { url: '#events', link: 'Events' },
-        { url: '#programming', link: 'Programming' },
+        { url: '/events', link: 'Events' },
+        { url: '/programming', link: 'Programming' },
       ],
     },
   },

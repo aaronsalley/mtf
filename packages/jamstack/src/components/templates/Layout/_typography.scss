@@ -4,3 +4,22 @@ $sans-serif: 'Open Sans';
 $serif: 'Times New Roman';
 $monospace: '';
 $display: 'Oswald', sans-serif;
+
+html,
+body {
+  font-family: var(--mtf-font-sans-serif), -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
+  font-size: 16px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h2 {
+  font-family: var(--mtf-font-display);
+  font-size: 2rem;
+  text-transform: uppercase;
+}

@@ -1,5 +1,6 @@
 .container {
   position: relative;
+  z-index: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -30,8 +31,8 @@
   }
 
   &:hover {
-    padding-left: calc(3rem / 4);
-    padding-right: calc(3rem / 4);
+    padding-left: calc(3rem / 4) !important;
+    padding-right: calc(3rem / 4) !important;
     color: var(--mtf-material);
 
     &::after {

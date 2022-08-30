@@ -1,4 +1,6 @@
-.container {
+.container,
+.container--dark,
+.container--light {
   position: relative;
   width: 100%;
   max-width: var(--mtf-max-width);
@@ -15,7 +17,6 @@
     gap: 2.25rem;
     font-size: 0.75rem;
     text-transform: uppercase;
-    color: var(--mtf-light);
 
     li {
       list-style: none;
@@ -24,5 +25,13 @@
       font-weight: 700;
       text-transform: uppercase;
     }
+  }
+
+  &--light ul {
+    color: var(--mtf-text);
+  }
+
+  &--dark ul {
+    color: var(--mtf-light);
   }
 }

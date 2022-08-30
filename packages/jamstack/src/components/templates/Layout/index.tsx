@@ -4,6 +4,7 @@ import Footer from '../../organisms/Footer';
 import Header from '../../organisms/Header';
 
 const Layout = ({ children }: any) => {
+  // TODO: fetch state consts; move MegaMenu calls here
   return (
     <Context.Provider value={store}>
       <Header foo='bar' />

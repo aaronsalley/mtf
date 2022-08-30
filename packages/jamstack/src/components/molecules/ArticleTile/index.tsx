@@ -21,10 +21,10 @@ const ArticleTile = ({
       <header>
         <h3>{title}</h3>
       </header>
-      <main>
+      <section>
         <time>{pubDate}</time>
         <div className={styles['summary']}>{summary}</div>
-      </main>
+      </section>
       <footer>
         <Button text={text} url={url} />
       </footer>

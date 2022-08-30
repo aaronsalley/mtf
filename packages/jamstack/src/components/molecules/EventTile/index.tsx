@@ -19,7 +19,7 @@ const EventTile = ({
   summary = 'Event summary.',
   link = {
     text: 'Details',
-    url: '#',
+    url: '/event/cG9zdDoxNDQ=',
   },
 }: EventTile) => {
   const { text, url }: Button = link;
@@ -38,10 +38,10 @@ const EventTile = ({
         </div>
         <h3>{title}</h3>
       </header>
-      <main>
+      <section>
         <time>{endDate}</time>
         <div className={styles['summary']}>{summary}</div>
-      </main>
+      </section>
       <footer>
         <Button text={text} url={url} />
       </footer>

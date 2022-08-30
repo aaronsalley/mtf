@@ -1,0 +1,17 @@
+.container {
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  ~ aside {
+    h1 {
+      font-size: 4.3125rem;
+    }
+
+    span {
+      font-size: 1.85em;
+    }
+  }
+}

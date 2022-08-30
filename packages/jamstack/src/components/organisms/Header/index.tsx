@@ -36,10 +36,4 @@ const mapStateToProps = (state: any, ownProps: any) => ({
   gearIcon: state.theme ? state.theme.logo : null,
 });
 
-// const mapDispatchToProps = (dispatch: any) => {
-//   return {
-//     toggle: () => {},
-//   };
-// };
-
 export default connect(mapStateToProps)(Header);

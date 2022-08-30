@@ -1,0 +1,69 @@
+@use '../../templates/Layout/choreography';
+
+.container {
+  $mx: calc(1rem / 2);
+
+  display: flex;
+  position: relative;
+
+  &:hover {
+    .thumbnail {
+      @include choreography.pickup();
+    }
+  }
+
+  time {
+    display: block;
+    padding-top: calc($mx * 2);
+    padding-right: calc($mx * 2);
+    border-top: 3px solid var(--mtf-text);
+    font-size: 0.75rem;
+
+    p {
+      margin: 0;
+    }
+
+    :nth-child(2) {
+      font-weight: 600;
+    }
+  }
+
+  .thumbnail {
+    position: relative;
+    width: 17.5rem;
+    padding-bottom: 13.75rem;
+    background-color: black;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-left: calc($mx * 2);
+
+    h3 {
+      margin: 0;
+      padding-top: $mx;
+      padding-bottom: $mx;
+      font-size: 1.125rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    > div {
+      flex-grow: 1;
+      padding-top: calc($mx * 2);
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    footer {
+      display: flex;
+      justify-content: flex-end;
+
+      [type='button'] {
+        flex-grow: 0;
+      }
+    }
+  }
+}

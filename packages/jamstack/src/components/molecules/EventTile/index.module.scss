@@ -18,7 +18,7 @@
       @include choreography.pickup();
     }
 
-    main .summary {
+    section .summary {
       overflow: scroll;
       flex-grow: 1;
     }
@@ -29,7 +29,7 @@
 
     .thumbnail {
       position: relative;
-      height: 13.75rem;
+      padding-bottom: 13.75rem;
       width: 100%;
       background-color: navy;
     }
@@ -44,7 +44,7 @@
     }
   }
 
-  main {
+  section {
     @include make-wrapper();
     flex-direction: column;
     justify-content: flex-end;

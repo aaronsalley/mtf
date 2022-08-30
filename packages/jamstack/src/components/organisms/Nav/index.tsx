@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { connect } from '../../../store';
 import styles from './index.module.scss';
 
 const Nav = ({ mainMenu = [] }) => {
+  const router = useRouter();
   if (!mainMenu || mainMenu.length < 1) return null;
 
   const links = mainMenu.map((item: any, i: number) => {
@@ -14,7 +16,11 @@ const Nav = ({ mainMenu = [] }) => {
   });
 
   return (
-    <nav className={styles['container']}>
+    <nav
+      className={
+        styles[`container--${router.route === '/' ? 'dark' : 'light'}`]
+      }
+    >
       <ul>{links}</ul>
     </nav>
   );

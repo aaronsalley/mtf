@@ -7,7 +7,7 @@ const EventRow = ({
   title = 'Event Title',
   startDate = undefined,
   endDate = '12.01.2021',
-  summary = 'Event summary.',
+  excerpt = 'Event summary.',
   link = {
     text: 'Details',
     url: '',
@@ -26,7 +26,7 @@ const EventRow = ({
           <time>Monday {endDate} Time </time>
           <address>Location</address>
         </header>
-        <div className={styles['summary']}>{summary}</div>
+        <div className={styles['summary']}>{excerpt}</div>
         <footer>
           <Button text={text} url={url} />
         </footer>

@@ -6,6 +6,10 @@ const Events = ({ content = { events: [] } }: any) => {
     return <section>Check back later to see what`&apos;`s cooking.</section>;
 
   const items = content.events.map((event: any, i: number) => {
+    event['link'] = {
+      text: 'Details',
+      url: event.uri,
+    };
     return <EventRow key={i} {...event} />;
   });
 

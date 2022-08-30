@@ -3,7 +3,10 @@ import Button from '../../atoms/Button';
 import ArticleTile from '../../molecules/ArticleTile';
 import styles from './index.module.scss';
 
-const ArticleGrid = ({ posts = [], maxColumns = 4 }) => {
+const ArticleGrid = ({
+  posts = [{}, {}, {}, {}, {}, {}, {}, {}],
+  maxColumns = 4,
+}) => {
   if (!posts || posts.length < 1) return null;
 
   const title = 'News';

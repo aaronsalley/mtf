@@ -3,7 +3,11 @@ import Button from '../../atoms/Button';
 import EventTile from '../../molecules/EventTile';
 import styles from './index.module.scss';
 
-const EventGrid = ({ events = [], id = undefined, ownProps }: any) => {
+const EventGrid = ({
+  events = [{}, {}, {}, {}, {}, {}, {}, {}],
+  id = undefined,
+  ownProps,
+}: any) => {
   if (!events || events.length < 1) return null;
 
   const title = 'Works In Progress';

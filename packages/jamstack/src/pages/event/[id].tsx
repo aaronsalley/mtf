@@ -17,7 +17,7 @@ export const getStaticPaths = async () => {
     const graphql = `{
       events(where: {status: PUBLISH}, first: 100) {
         nodes {
-          id,
+          slug,
           title
         }
       }    
@@ -37,7 +37,7 @@ export const getStaticPaths = async () => {
     if (!nodes) throw new Error(json.errors.map((error: any) => error.message));
 
     const params = nodes.map((node: any) => {
-      return { params: { id: node.id } };
+      return { params: { id: node.slug } };
     });
 
     return {
@@ -53,7 +53,7 @@ export const getStaticProps = async (context: any) => {
   try {
     // TODO: get relevant data from Graph
     const graphql = `{
-      event(id: "${context.params.id}") {
+      eventBy(slug: "${context.params.id}") {
         title
       }    
     }`;
@@ -69,10 +69,10 @@ export const getStaticProps = async (context: any) => {
     if (json.errors) throw new Error(json.errors[0].message);
 
     const data = json.data;
-    const { event } = data;
+    const { eventBy } = data;
 
     return {
-      props: event,
+      props: eventBy,
     };
   } catch (error: any) {
     console.error(chalk.red(error.message));

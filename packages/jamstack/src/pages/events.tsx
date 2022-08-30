@@ -23,7 +23,14 @@ export const getStaticProps = async (context: any) => {
         nodes {
           id,
           title,
-          excerpt
+          excerpt,
+          uri,
+          slug,
+          featuredImage {
+            node {
+              srcSet
+            }
+          }    
         }
       }    
     }`;

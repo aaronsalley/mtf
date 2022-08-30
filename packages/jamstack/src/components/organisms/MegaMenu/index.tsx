@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from './index.module.scss';
-import menu from '../../../../public/images/menu.svg'; // TODO: replace with animation
 
 interface menuItem {
   id: string;
@@ -32,7 +31,7 @@ const MegaMenu = ({
 
     return (
       <button onClick={() => action(!state)}>
-        <Image {...menu} alt='' />
+        <i className='fa-solid fa-bars-staggered'></i>
       </button>
     );
   };
@@ -83,7 +82,7 @@ const MegaMenu = ({
       i++;
     }
 
-    return <ul>{nestedList}</ul>;
+    return <ul key={-1}>{nestedList}</ul>;
   };
 
   return (

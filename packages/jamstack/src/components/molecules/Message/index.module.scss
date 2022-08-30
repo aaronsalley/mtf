@@ -8,10 +8,22 @@
   color: var(--mtf-light);
   text-transform: uppercase;
 
+  * {
+    transition: all 0s;
+  }
+
+  span {
+    align-items: center;
+  }
+
   button {
     color: var(--mtf-primary);
     font-weight: bold;
     background-color: transparent;
     border: 0;
+
+    i {
+      font-size: 1.5rem;
+    }
   }
 }

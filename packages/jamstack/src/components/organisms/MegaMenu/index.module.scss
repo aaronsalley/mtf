@@ -30,17 +30,38 @@
       }
     }
 
-    header & {
-      color: var(--mtf-light);
+    [class*='--light'] & {
+      button i {
+        color: var(--mtf-text);
+      }
+      &--isVisible button i {
+        color: var(--mtf-light);
+      }
+    }
 
+    [class*='--dark'] & {
+      button i {
+        color: var(--mtf-material);
+      }
+      &--isVisible button i {
+        color: var(--mtf-light);
+      }
+    }
+
+    header & {
       button {
         z-index: 6;
         background-color: transparent;
         border: none;
+
+        i {
+          font-size: 1.5rem;
+        }
       }
 
       > ul {
         display: none;
+        color: var(--mtf-light);
       }
 
       &--isVisible {

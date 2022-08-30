@@ -1,4 +1,9 @@
 @use '../../templates/Layout/choreography';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/maps';
+@import '~bootstrap/scss/mixins';
+
 @mixin make-wrapper() {
   display: flex;
   width: calc(100% - 1rem);
@@ -70,7 +75,7 @@
     @include make-wrapper();
     justify-content: flex-end;
 
-    a[type='button'] {
+    [type='button'] {
       flex-grow: 0;
     }
   }

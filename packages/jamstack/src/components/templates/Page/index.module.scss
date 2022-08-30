@@ -1,19 +1,38 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/maps';
+@import '~bootstrap/scss/mixins';
+
 .container {
   display: flex;
   flex-wrap: nowrap;
-  flex-direction: row-reverse;
+  flex-direction: column-reverse;
   justify-content: space-between;
   column-gap: 4.375rem;
   max-width: var(--mtf-max-width);
   margin: auto;
   padding-top: 10rem;
+  padding-bottom: 10rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  @include media-breakpoint-up(md) {
+    flex-direction: row-reverse;
+    padding-bottom: unset;
+    padding-left: unset;
+    padding-right: unset;
+  }
 
   > aside {
-    width: 33%;
+    width: 100%;
+    @include media-breakpoint-up(md) {
+      width: 33%;
+    }
   }
 
   > section {
     flex: 1;
-    padding-right: 2.5rem;
+    @include media-breakpoint-up(md) {
+      padding-right: 2.5rem;
+    }
   }
 }

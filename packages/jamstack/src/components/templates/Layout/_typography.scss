@@ -7,6 +7,11 @@ $display: 'Oswald', sans-serif;
 
 html,
 body {
+  --mtf-font-sans-serif: #{$sans-serif};
+  --mtf-font-serif: #{$serif};
+  --mtf-font-monospace: #{$monospace};
+  --mtf-font-display: #{$display};
+
   font-family: var(--mtf-font-sans-serif), -apple-system, BlinkMacSystemFont,
     Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
     Helvetica Neue, sans-serif;

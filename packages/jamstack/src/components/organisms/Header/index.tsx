@@ -5,12 +5,14 @@ import styles from './index.module.scss';
 import Link from 'next/link';
 import Message from '../../molecules/Message';
 import Brand from '../../../../public/images/mtf_gear_icon.svg';
+import { useRouter } from 'next/router';
 
 const Header = ({
   gearIcon = Brand,
   message = 'This is a sample global message.',
   menuData,
 }: any) => {
+  const router = useRouter();
   const { menuItems: megaMenu, navItems: navMenu } = menuData;
 
   const AppBar = () => (
@@ -29,7 +31,11 @@ const Header = ({
   );
 
   return (
-    <header className={styles['container']}>
+    <header
+      className={
+        styles[`container--${router.route === '/' ? 'dark' : 'light'}`]
+      }
+    >
       <AppBar />
       <Message text={message} />
       <Nav menuData={navMenu} />

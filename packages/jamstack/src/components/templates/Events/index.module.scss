@@ -6,7 +6,9 @@
   > div {
     display: flex;
     flex-direction: column;
+    align-content: center;
     gap: 1rem;
+    margin: auto;
   }
 
   ~ aside {

@@ -1,29 +1,36 @@
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
-// @import '~bootstrap/scss/maps';
+@import '~bootstrap/scss/maps';
 @import '~bootstrap/scss/mixins';
-// @import '~bootstrap/scss/root';
 @import '~bootstrap/scss/forms';
 
 .container {
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  margin: auto;
-  width: 100%;
+  margin: 0 1.5rem;
   max-width: var(--mtf-max-width);
   padding-top: 10.5rem;
+  @include media-breakpoint-up(lg) {
+    margin: auto;
+  }
 
   > :not(.copyright) {
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     flex: 1 1 50%;
+    @include media-breakpoint-up(md) {
+      display: flex;
+    }
   }
 
   .devo {
+    display: flex;
     align-content: flex-end;
-    flex-basis: 33%;
     gap: 1rem;
+    @include media-breakpoint-up(md) {
+      flex-basis: 33%;
+    }
 
     > a {
       position: relative;

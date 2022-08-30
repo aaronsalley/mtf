@@ -15,7 +15,10 @@ const Message = ({ text = '', link = undefined }: Message) => {
   return (
     <aside className={styles['container']} style={{ visibility: visibility }}>
       <span>
-        {text} <button onClick={() => toggleMessage(!hasMessage)}>x</button>
+        {text}
+        <button onClick={() => toggleMessage(!hasMessage)}>
+          <i className='fa-solid fa-xmark'></i>
+        </button>
       </span>
     </aside>
   );

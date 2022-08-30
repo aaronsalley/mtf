@@ -1,10 +1,18 @@
 @use '../../templates/Layout/choreography';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/maps';
+@import '~bootstrap/scss/mixins';
 
 .container {
   $mx: calc(1rem / 2);
 
   display: flex;
+  flex-direction: column;
   position: relative;
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+  }
 
   &:hover {
     .thumbnail {
@@ -30,9 +38,11 @@
 
   .thumbnail {
     position: relative;
-    width: 17.5rem;
     padding-bottom: 13.75rem;
     background-color: black;
+    @include media-breakpoint-up(md) {
+      width: 17.5rem;
+    }
   }
 
   section {

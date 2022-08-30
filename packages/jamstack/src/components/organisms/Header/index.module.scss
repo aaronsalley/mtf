@@ -1,34 +1,47 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/maps';
+@import '~bootstrap/scss/mixins';
+
 .container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  width: 100%;
-
-  span {
-    position: relative;
-    margin: auto;
+  &,
+  &--light,
+  &--dark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
     width: 100%;
-    max-width: var(--mtf-max-width);
-  }
 
-  > * > span {
-    display: flex;
-    justify-content: space-between;
-  }
+    span {
+      position: relative;
+      width: 100%;
+      max-width: calc(100% - 1.5rem);
+      margin: auto;
+      padding-top: 0.25rem;
+      @include media-breakpoint-up(lg) {
+        max-width: var(--mtf-max-width);
+      }
+    }
 
-  .appbar {
-    .brand {
+    > * > span {
       display: flex;
-      justify-content: center;
-      z-index: 10;
-      align-items: center;
-      height: 3.93875rem;
-      margin: 0.5rem;
-      aspect-ratio: 1 / 1;
-      transform: rotate(-15deg);
-      // height: 0;
-      // padding-bottom: 1 / 1 * 100%;
+      justify-content: space-between;
+    }
+
+    .appbar {
+      .brand {
+        display: flex;
+        justify-content: center;
+        z-index: 10;
+        align-items: center;
+        height: 3.93875rem;
+        margin: 0.5rem;
+        aspect-ratio: 1 / 1;
+        transform: rotate(-15deg);
+        // height: 0;
+        // padding-bottom: 1 / 1 * 100%;
+      }
     }
   }
 }

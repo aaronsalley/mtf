@@ -2,3 +2,35 @@ $light: white;
 $dark: black;
 
 $primary: #ff282e;
+
+html,
+body {
+  --mtf-light: #{$light};
+  --mtf-dark: #{$dark};
+  --mtf-primary: #{$primary};
+
+  @media (prefers-color-scheme: light) {
+    --mtf-material: var(--mtf-light);
+    --mtf-text: var(--mtf-dark);
+  }
+  @media (prefers-color-scheme: dark) {
+    --mtf-material: var(--mtf-dark);
+    --mtf-text: var(--mtf-light);
+  }
+}
+
+a,
+a:hover,
+[type='button'] {
+  color: inherit;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}

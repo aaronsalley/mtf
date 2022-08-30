@@ -1,28 +1,11 @@
-@use 'colors';
-@use 'typography';
+@import '~bootstrap/scss/bootstrap';
 @import 'wp-blocks';
+@import 'colors';
 @import 'typography';
 
 html,
 body {
-  --mtf-light: #{colors.$light};
-  --mtf-dark: #{colors.$dark};
-  --mtf-primary: #{colors.$primary};
-  --mtf-font-sans-serif: #{typography.$sans-serif};
-  --mtf-font-serif: #{typography.$serif};
-  --mtf-font-monospace: #{typography.$monospace};
-  --mtf-font-display: #{typography.$display};
   --mtf-max-width: 1130px;
-
-  @media (prefers-color-scheme: light) {
-    --mtf-material: var(--mtf-light);
-    --mtf-text: var(--mtf-dark);
-  }
-  @media (prefers-color-scheme: dark) {
-    --mtf-material: var(--mtf-dark);
-    --mtf-text: var(--mtf-light);
-  }
-
   padding: 0;
   margin: 0;
 
@@ -44,14 +27,4 @@ body {
 *::after {
   box-sizing: border-box;
   transition: all 1s, color 0.15s 0s;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
 }

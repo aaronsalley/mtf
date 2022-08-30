@@ -1,3 +1,8 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/maps';
+@import '~bootstrap/scss/mixins';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -5,29 +10,40 @@
   header {
     position: relative;
     display: flex;
-    height: 82vh !important;
-    max-height: 52.6875rem;
+    flex-direction: column-reverse;
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+      height: 82vh !important;
+      max-height: 52.6875rem;
+    }
 
     .stage {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: -1;
+      position: relative;
+      width: 100%;
+      padding-bottom: 66%;
       background-color: navy !important;
+      @include media-breakpoint-up(md) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        padding-bottom: unset;
+      }
     }
 
     > aside {
       flex: 1;
       position: relative;
       max-width: var(--mtf-max-width);
-      margin-left: auto;
-      margin-right: auto;
       padding-top: 10rem;
+      @include media-breakpoint-up(md) {
+        margin-left: auto;
+        margin-right: auto;
+      }
 
       &::before {
-        content: '';
         display: block;
         position: absolute;
         bottom: 0;
@@ -35,21 +51,30 @@
         width: 33%;
         height: calc(52.6875rem - 10rem);
         background-color: var(--mtf-material);
+        @include media-breakpoint-up(md) {
+          content: '';
+        }
       }
 
       > * {
-        max-width: calc(33% - 2rem);
-        margin: 1rem;
+        margin: 0.25rem 1.5rem;
+        @include media-breakpoint-up(md) {
+          margin: 1rem;
+          max-width: calc(33% - 2rem);
+        }
 
         &:not(h1):not([type='button']) {
-          font-size: 1.25rem;
+          font-size: 1rem;
+          @include media-breakpoint-up(md) {
+            font-size: 1.25rem;
+          }
         }
 
         & + time,
         & + address {
           margin-top: 0;
           margin-bottom: 0;
-          font-size: 1.5rem;
+          font-size: 1.5em;
         }
 
         & + p:last-of-type {
@@ -72,12 +97,19 @@
     max-width: var(--mtf-max-width);
     margin: auto;
     padding-top: 6rem;
-    padding-right: 2.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    @include media-breakpoint-up(md) {
+      padding-left: unset;
+      padding-right: 2.5rem;
+    }
 
     > h2,
     > div {
-      width: calc(66% - 4.375rem);
-      margin-left: auto;
+      @include media-breakpoint-up(md) {
+        margin-left: auto;
+        width: calc(66% - 4.375rem);
+      }
     }
   }
 }

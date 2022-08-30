@@ -33,10 +33,15 @@ export const getStaticPaths = async () => {
     });
 
     const json = await res.json();
-    const data = json.data;
-    const nodes = data.pages.nodes;
+    if (json.errors)
+      json.errors.map((error: any) => {
+        throw new Error(error.message);
+      });
 
-    if (!nodes) throw new Error(json.errors.map((error: any) => error.message));
+    const data = json.data;
+
+    const nodes = data.pages.nodes;
+    if (!nodes) throw new Error('Empty nodes.');
 
     const params = nodes.map((node: any) => {
       const slug = node.uri.split('/').filter(Boolean);
@@ -70,13 +75,16 @@ export const getStaticProps = async (context: any) => {
     });
 
     const json = await res.json();
-    const data = json.data;
+    if (json.errors)
+      json.errors.map((error: any) => {
+        throw new Error(error.message);
+      });
 
-    if (!data || !data.pageBy)
+    if (!json.data || !json.data.pageBy)
       throw new Error(json.errors.map((error: any) => error.message));
 
     return {
-      props: data.pageBy,
+      props: json.data.pageBy,
     };
   } catch (error: any) {
     console.error(chalk.red(error.message));

@@ -4,9 +4,15 @@ import Nav from '../../organisms/Nav';
 import styles from './index.module.scss';
 import Link from 'next/link';
 import Message from '../../molecules/Message';
-import { connect } from '../../../store';
+import Brand from '../../../../public/images/mtf_gear_icon.svg';
 
-const Header = ({ gearIcon = {}, message = '' }: any) => {
+const Header = ({
+  gearIcon = Brand,
+  message = 'This is a sample global message.',
+  menuData,
+}: any) => {
+  const { menuItems: megaMenu, navItems: navMenu } = menuData;
+
   const AppBar = () => (
     <div className={styles['appbar']}>
       <span>
@@ -17,7 +23,7 @@ const Header = ({ gearIcon = {}, message = '' }: any) => {
             </a>
           </Link>
         </div>
-        <MegaMenu />
+        <MegaMenu withButton menuData={megaMenu} />
       </span>
     </div>
   );
@@ -26,14 +32,9 @@ const Header = ({ gearIcon = {}, message = '' }: any) => {
     <header className={styles['container']}>
       <AppBar />
       <Message text={message} />
-      <Nav />
+      <Nav menuData={navMenu} />
     </header>
   );
 };
 
-const mapStateToProps = (state: any, ownProps: any) => ({
-  message: state.content ? state.content.message : null,
-  gearIcon: state.theme ? state.theme.logo : null,
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;

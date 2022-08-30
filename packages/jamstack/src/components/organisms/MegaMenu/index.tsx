@@ -1,8 +1,8 @@
-import chalk from 'chalk';
+import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { connect } from '../../../store';
+import { useState } from 'react';
 import styles from './index.module.scss';
+import menu from '../../../../public/images/menu.svg'; // TODO: replace with animation
 
 interface menuItem {
   id: string;
@@ -14,52 +14,28 @@ interface menuItem {
   children?: any;
 }
 
-const MegaMenu = ({ button }: any) => {
-  // TODO: Move higher up tree and connect
-  const [menuData, loadData] = useState([]);
-  useEffect(() => {
-    (async () => {
-      try {
-        const graphql = `{
-          menuItems(where: {location: FOOTER, parentId: ""}, first: 1000) {
-            nodes {
-              label,
-              title,
-              target,
-              path,
-              childItems {
-                nodes {
-                  label,
-                  title,
-                  target,
-                  path,
-                }
-              }
-            }
-          }
-        }`;
+const MegaMenu = ({
+  withButton = false,
+  menuData = {
+    nodes: [],
+  },
+}: any) => {
+  const styleNames = ['container'];
 
-        const query = graphql.replaceAll(/\s/gi, '');
-        const res = await fetch(
-          process.env.NEXT_PUBLIC_API_URL + `/graphql?query=${query}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-        const json = await res.json();
-        const data = json.data;
+  const [menuVisible, setVisible] = useState(false);
+  if (menuVisible) styleNames.push('--isVisible');
 
-        if (!data.menuItems && !data.menuItems.nodes)
-          throw Error('Menu is empty.');
+  const MenuToggler = ({ button, state, action }: any) => {
+    // const [openMenu, toggle] = useState(false);
 
-        loadData(data.menuItems.nodes);
-      } catch (error: any) {
-        console.error(chalk.red(error.message));
-      }
-    })();
-  }, []);
+    if (!button) return null;
+
+    return (
+      <button onClick={() => action(!state)}>
+        <Image {...menu} alt='' />
+      </button>
+    );
+  };
 
   const MenuItem = ({
     path = '',
@@ -107,21 +83,19 @@ const MegaMenu = ({ button }: any) => {
       i++;
     }
 
-    return nestedList;
+    return <ul>{nestedList}</ul>;
   };
 
   return (
-    <menu className={styles['container']}>
-      {button}
-      <ul>
-        <MenuItems {...menuData} />
-      </ul>
+    <menu className={styles[`${styleNames.join('')}`]}>
+      <MenuToggler
+        button={withButton}
+        state={menuVisible}
+        action={setVisible}
+      />
+      <MenuItems {...menuData.nodes} />
     </menu>
   );
 };
 
-const mapStateToProps = (state: any, ownProps: any) => {
-  return {};
-};
-
-export default connect()(MegaMenu);
+export default MegaMenu;

@@ -1,29 +1,31 @@
-.container,
-.container--dark,
-.container--light {
-  position: relative;
-  width: 100%;
-  max-width: var(--mtf-max-width);
-  margin: auto;
+.container {
+  &,
+  &--light,
+  &--dark {
+    position: relative;
+    width: 100%;
+    max-width: var(--mtf-max-width);
+    margin: auto;
 
-  ul {
-    display: flex;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    transform: rotate(90deg) translateX(100%) translateY(50%);
-    transform-origin: right;
-    margin: 0;
-    gap: 2.25rem;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-
-    li {
-      list-style: none;
-      font-family: var(--mtf-font-display);
+    ul {
+      display: flex;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: rotate(90deg) translateX(100%) translateY(50%);
+      transform-origin: right;
+      margin: 0;
+      gap: 2.25rem;
       font-size: 0.75rem;
-      font-weight: 700;
       text-transform: uppercase;
+
+      li {
+        list-style: none;
+        font-family: var(--mtf-font-display);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
     }
   }
 

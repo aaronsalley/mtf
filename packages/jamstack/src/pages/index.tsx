@@ -60,15 +60,17 @@ export const getStaticProps = async (context: any) => {
     });
 
     const json = await res.json();
-    const data = json.data;
+    if (json.errors)
+      json.errors.map((error: any) => {
+        throw new Error(error.message);
+      });
 
-    if (!data || !data.pageBy)
-      throw new Error(json.errors.map((error: any) => error.message));
+    if (!json.data || !json.data.pageBy) throw new Error('Empty data');
 
-    data.pageBy['featuredImage'] = data.pageBy.featuredImage.node;
+    json.data.pageBy['featuredImage'] = json.data.pageBy.featuredImage.node;
 
     return {
-      props: data,
+      props: json.data,
     };
   } catch (error: any) {
     console.error(chalk.red(error.message));

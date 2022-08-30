@@ -40,7 +40,7 @@ if ( ! function_exists( 'mtfmusicals_setup' ) ) :
     add_theme_support( 'post-formats',  array ( 'aside', 'gallery', 'quote', 'image', 'video' ) );
     add_post_type_support( 'page', 'excerpt' );
     
-    register_nav_menus( array ( 'header' => 'Main Menu', 'footer' => 'Footer Site Map', 'nav' => 'Main Navigation' ) );
+    register_nav_menus( array ( 'mega' => 'Site Menu', 'nav' => 'Main Navigation' ) );
 }
 endif;
 add_action( 'after_setup_theme', 'mtfmusicals_setup' );

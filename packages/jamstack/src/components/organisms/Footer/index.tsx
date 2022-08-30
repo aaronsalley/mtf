@@ -2,7 +2,7 @@ import Button from '../../atoms/Button';
 import MegaMenu from '../MegaMenu';
 import styles from './index.module.scss';
 
-const Footer = () => {
+const Footer = ({ menuData }: any) => {
   const thisYear = new Date().getFullYear();
 
   return (
@@ -29,7 +29,7 @@ const Footer = () => {
           <Button text={'Sign up'} />
         </form>
       </div>
-      <MegaMenu />
+      <MegaMenu menuData={menuData} />
       <p className={styles['copyright']}>
         The gear logo and all lines of programming are ™ and ©{thisYear + ' '}
         Musical Theatre Factory Inc. All Rights Reserved.

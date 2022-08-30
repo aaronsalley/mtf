@@ -1,4 +1,3 @@
-import { connect } from '../../../store';
 import ImageTile from '../../molecules/ImageTile';
 import styles from './index.module.scss';
 
@@ -115,10 +114,4 @@ const ImageGallery = ({
   );
 };
 
-const mapStateToProps = (state: any, ownProps: any) => {
-  return {
-    items: state.people,
-  };
-};
-
-export default connect(mapStateToProps)(ImageGallery);
+export default ImageGallery;

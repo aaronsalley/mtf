@@ -45,15 +45,17 @@ export const getStaticProps = async (context: any) => {
     });
 
     const json = await res.json();
-    const data = json.data;
-    const nodes = data.events.nodes;
+    if (json.errors)
+      json.errors.map((error: any) => {
+        throw new Error(error.message);
+      });
 
-    if (!nodes) throw new Error(json.errors.map((error: any) => error.message));
+    if (!json.data.events.nodes) throw new Error('Empty nodes.');
 
     return {
       props: {
         title: 'Work in progress',
-        content: { events: nodes },
+        content: { events: json.data.events.nodes },
       },
     };
   } catch (error: any) {

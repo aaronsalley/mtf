@@ -4,7 +4,6 @@ import Helmet from '../../components/atoms/Helmet';
 import EventPage from '../../components/templates/Event';
 
 const Event: NextPage = (props: any) => {
-  console.debug(props);
   return (
     <>
       <Helmet {...props} />

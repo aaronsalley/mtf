@@ -11,7 +11,7 @@ const Event = ({
   tags = { nodes: [{ name: 'Artist' }] },
   location = 'Location',
 }: any) => {
-  const cats: any[] =
+  const programService: any[] =
     categories.nodes.length > 0
       ? categories.nodes.map((category: any) => category.name)
       : null;
@@ -32,13 +32,16 @@ const Event = ({
           />
         </div>
         <aside>
-          <p>{artists.join(', ')}&apos;s</p>
+          <p className={styles['artists']}>{artists.join(', ')}&apos;s</p>
           <PageTitle title={title} />
-          <p>{cats}</p>
-          <time>Date Time</time>
-          <address>{location}</address>
-          <p>Cost</p>
-          <Button text={'Find Tickets'} />
+          <p className={styles['programService']}>{programService}</p>
+          <time className={styles['time']}>
+            <strong>Date</strong> Time
+          </time>
+          <address className={styles['location']}>{location}</address>
+          <p className={styles['cost']}>Cost</p>
+          <Button text={'Find Tickets'} /> {/* Hide if past */}
+          <span></span>
         </aside>
       </header>
       <section>

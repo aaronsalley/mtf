@@ -18,6 +18,8 @@
   @include media-breakpoint-up(md) {
     flex-direction: row-reverse;
     padding-bottom: unset;
+  }
+  @include media-breakpoint-up(lg) {
     padding-left: unset;
     padding-right: unset;
   }

@@ -41,7 +41,7 @@
 
     [class*='--dark'] & {
       button i {
-        color: var(--mtf-material);
+        color: var(--mtf-light);
       }
       &--isVisible button i {
         color: var(--mtf-light);

@@ -1,19 +1,13 @@
 version: '3.9'
 
 services:
-  # optack:
-  #   volumes:
-  #     - ./packages/optack/packages/core/src:/app/src
+  optack:
+    volumes:
+      - ./packages/optack/packages/core/src:/app/src
 
-  # storybook:
-  #   build: ./packages/optack
-  #   image: optack
-  #   restart: always
-  #   command: yarn storybook
-  #   ports:
-  #     - '32766:6006'
-  #   volumes:
-  #     - ./packages/optack/packages/core/src:/app/src
+  storybook:
+    volumes:
+      - ./packages/optack/packages/core/src:/app/src
 
   site:
     command: yarn dev

@@ -6,5 +6,15 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "eslint.nodePath": ".yarn/sdks",
-  "prettier.prettierPath": ".yarn/sdks/prettier/index.js"
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+  "stylelint.packageManager": "yarn",
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "scss"
+  ],
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "eslint.packageManager": "yarn"
 }

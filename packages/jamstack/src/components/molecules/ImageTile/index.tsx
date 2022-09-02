@@ -29,7 +29,7 @@ const ImageTile = ({
       className={styles['container']}
       style={{ paddingBottom: `${randomHeight}%` }}
     >
-      <Image src={imageSrc} alt={alt} layout='fill' />
+      <Image src={imageSrc} alt={alt} layout="fill" />
     </div>
   );
 };

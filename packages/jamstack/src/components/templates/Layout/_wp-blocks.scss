@@ -7,6 +7,13 @@
     flex: 1;
   }
 
+  &-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+
   &-gallery {
     display: flex;
     flex-wrap: wrap;
@@ -24,12 +31,5 @@
         }
       }
     }
-  }
-
-  &-image {
-    display: flex;
-    margin: 0;
-    justify-content: center;
-    align-items: center;
   }
 }

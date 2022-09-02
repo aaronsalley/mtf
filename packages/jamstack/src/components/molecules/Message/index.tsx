@@ -17,7 +17,7 @@ const Message = ({ text = '', link = undefined }: Message) => {
       <span>
         {text}
         <button onClick={() => toggleMessage(!hasMessage)}>
-          <i className='fa-solid fa-xmark'></i>
+          <i className="fa-solid fa-xmark"></i>
         </button>
       </span>
     </aside>

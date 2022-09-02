@@ -1,12 +1,12 @@
 .container {
   justify-content: space-between;
-  padding: 1rem 0rem;
-  background-color: var(--mtf-dark);
-  font-family: var(--mtf-font-display);
-  font-size: 0.75rem;
-  font-weight: 600;
+  padding: 1rem 0;
   color: var(--mtf-light);
+  font-weight: 600;
+  font-size: 0.75rem;
+  font-family: var(--mtf-font-display);
   text-transform: uppercase;
+  background-color: var(--mtf-dark);
 
   * {
     transition: all 0s;

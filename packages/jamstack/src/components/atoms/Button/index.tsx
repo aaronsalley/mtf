@@ -10,7 +10,7 @@ const Button = ({ text = 'Label', url }: Button) => {
   // interactive buttons
   if (typeof url !== 'string')
     return (
-      <button type='button' className={styles['container']}>
+      <button type="button" className={styles['container']}>
         {text}
       </button>
     );
@@ -18,7 +18,7 @@ const Button = ({ text = 'Label', url }: Button) => {
   // a link buttons
   return (
     <Link href={url}>
-      <a type='button' className={styles['container']}>
+      <a type="button" className={styles['container']}>
         {text}
       </a>
     </Link>

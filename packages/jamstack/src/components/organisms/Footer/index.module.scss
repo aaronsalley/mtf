@@ -5,11 +5,11 @@
 @import '~bootstrap/scss/forms';
 
 .container {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
-  position: relative;
-  margin: 0 1.5rem;
   max-width: var(--mtf-max-width);
+  margin: 0 1.5rem;
   padding-top: 10.5rem;
   @include media-breakpoint-up(lg) {
     margin: auto;
@@ -17,8 +17,8 @@
 
   > :not(.copyright) {
     display: none;
-    flex-wrap: wrap;
     flex: 1 1 50%;
+    flex-wrap: wrap;
     @include media-breakpoint-up(md) {
       display: flex;
     }
@@ -26,8 +26,8 @@
 
   .devo {
     display: flex;
-    align-content: flex-end;
     gap: 1rem;
+    align-content: flex-end;
     @include media-breakpoint-up(md) {
       flex-basis: 33%;
     }
@@ -42,6 +42,7 @@
       &.guidestar {
         background-image: url('../../../../public/images/guidestar-transparency.png');
       }
+
       &.amazonsmile {
         background-image: url('../../../../public/images/amazonsmile-logo.jpeg');
       }
@@ -52,40 +53,44 @@
       font-size: 0.625rem;
     }
 
-    .mailingList {
-      @extend .input-group;
+    > form {
+      // TODO: move raw .input-group rules back here
       margin-top: 0.5rem;
 
+      label {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 0.5rem;
+      }
+
       > div {
-        @extend .form-floating;
+        // TODO: move raw .form-floating rules back here
+        display: flex;
+        flex: 1;
 
         input {
-          @extend .form-control;
+          // TODO: move raw .form-control rules back here
           height: calc(2.5rem + 2px);
           padding: 0.75rem 0.5rem;
-          border: 0;
-          border-radius: 0;
-          border-bottom: 3px solid var(--mtf-text);
           background-color: transparent;
+          border: 0;
+          border-bottom: 3px solid var(--mtf-text);
+          border-radius: 0;
 
           &:focus,
           &:not(:placeholder-shown),
           &:-webkit-autofill {
+            padding-top: 1.625rem;
+            padding-bottom: 0.625rem;
             color: var(--mtf-primary);
-            border-color: var(--mtf-text);
             background-color: transparent;
+            border-color: var(--mtf-text);
             box-shadow: none;
 
             ~ label {
               transform: scale(0.8) translateY(-0.7rem) translateX(0.15rem);
             }
           }
-        }
-
-        label {
-          display: flex;
-          align-items: center;
-          padding: 0.75rem 0.5rem;
         }
       }
 

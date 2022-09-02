@@ -1,9 +1,10 @@
 .container {
   margin: 0;
   padding-bottom: 1.5rem;
+  font-size: 5vmax;
+
   // TODO: figure out how to make font scale to full box width
   font-family: var(--mtf-font-display);
-  font-size: 5vmax;
   line-height: 1.05;
   text-transform: lowercase;
 

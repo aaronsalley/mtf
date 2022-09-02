@@ -23,61 +23,61 @@
       position: absolute;
       top: 0;
       left: 50%;
-      transform: translateX(-50%);
       width: 100%;
       max-width: var(--mtf-max-width);
       height: 100%;
+      transform: translateX(-50%);
 
-      .scrollHint {
+      .scroll-hint {
         $line: 10rem;
-        $lineOffset: calc(50% - 3px / 2);
+        $line-offset: calc(50% - 3px / 2);
 
         position: absolute;
         right: 0.75rem;
         bottom: $line;
-        transform: rotate(90deg) translateX(-50%) translateY(-50%);
-        transform-origin: bottom;
         margin: 0;
         padding-right: 0.5rem;
+        color: var(--mtf-light);
         font-size: 0.75rem;
         text-transform: uppercase;
-        color: var(--mtf-light);
+        transform: rotate(90deg) translateX(-50%) translateY(-50%);
+        transform-origin: bottom;
         @include media-breakpoint-up(lg) {
           right: 0;
         }
 
         &::before {
-          content: '';
-          display: block;
           position: absolute;
-          top: $lineOffset;
+          top: $line-offset;
           left: 100%;
+          display: block;
           width: $line;
           height: 3px;
           background-color: var(--mtf-light);
+          content: '';
         }
 
         &::after {
-          content: '';
-          display: block;
           position: absolute;
-          top: $lineOffset;
+          top: $line-offset;
           left: calc(100% + $line);
+          display: block;
           width: 16rem;
           height: 3px;
           background-color: var(--mtf-text);
+          content: '';
         }
       }
     }
   }
 
   > blockquote {
-    padding-top: 5rem;
     margin-left: 1.5rem;
+    padding-top: 5rem;
     padding-right: 1.5rem;
     padding-bottom: 5rem;
-    font-size: 2.5vmax;
     font-weight: 600;
+    font-size: 2.5vmax;
     text-align: center;
     @include media-breakpoint-up(md) {
       width: 66%;
@@ -96,11 +96,11 @@
   > .container {
     padding-top: 18rem;
     padding-bottom: 14.5rem;
-    background-color: rgba(0, 0, 0, 0.8);
-    background-image: url(../../../../public/images/brushstroke.png);
-    background-size: cover;
-    background-position: center;
     color: var(--mtf-light);
+    background-color: rgb(0 0 0 / 80%);
+    background-image: url('../../../../public/images/brushstroke.png');
+    background-position: center;
+    background-size: cover;
 
     article {
       display: flex;
@@ -150,12 +150,12 @@
       li {
         width: 100%;
         padding-top: 1.5em;
-        padding-left: 1.5em;
         padding-bottom: 1.5em;
-        border-bottom: 1px solid var(--mtf-light);
-        font-family: var(--mtf-font-display);
-        font-size: 1.5rem;
+        padding-left: 1.5em;
         color: var(--mtf-light);
+        font-size: 1.5rem;
+        font-family: var(--mtf-font-display);
+        border-bottom: 1px solid var(--mtf-light);
         @include media-breakpoint-up(md) {
           width: 75%;
         }

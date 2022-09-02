@@ -4,10 +4,10 @@
 @import '~bootstrap/scss/mixins';
 
 .container {
-  overflow: hidden;
   position: relative;
   margin-bottom: -6rem;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, #000000 100%);
+  overflow: hidden;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 50%, #000 100%);
   background-position-y: -6rem;
 
   > div {
@@ -15,8 +15,8 @@
 
     display: flex;
     flex-wrap: no-wrap;
-    justify-content: center;
     gap: 0.25rem;
+    justify-content: center;
     width: calc(100% + $overflow);
     transform: translateX(calc($overflow * -1 / 2));
     @include media-breakpoint-up(md) {
@@ -26,8 +26,8 @@
 
   .col {
     display: flex;
-    flex-direction: column;
     flex: 1 1 calc(181 / 1561 * 100%);
+    flex-direction: column;
     gap: 0.25rem;
     justify-content: center;
     @include media-breakpoint-up(md) {

@@ -2,18 +2,18 @@
   &,
   &--isVisible {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     ul {
       display: flex;
       flex-direction: column;
-      column-gap: 2.5rem;
-      row-gap: 1rem;
       margin-top: 1rem;
       margin-bottom: 0;
       padding-left: 0;
+      column-gap: 2.5rem;
       list-style: none;
+      row-gap: 1rem;
 
       p {
         margin: 0;
@@ -21,30 +21,11 @@
     }
 
     > ul {
-      flex-wrap: nowrap;
-      flex-direction: row;
+      flex-flow: row nowrap;
 
       > li > a,
       > li > p {
         font-weight: bold;
-      }
-    }
-
-    [class*='--light'] & {
-      button i {
-        color: var(--mtf-text);
-      }
-      &--isVisible button i {
-        color: var(--mtf-light);
-      }
-    }
-
-    [class*='--dark'] & {
-      button i {
-        color: var(--mtf-light);
-      }
-      &--isVisible button i {
-        color: var(--mtf-light);
       }
     }
 
@@ -66,12 +47,12 @@
 
       &--isVisible {
         > ul {
-          display: flex;
           position: absolute;
-          justify-content: space-evenly;
           top: 0%;
           right: 0;
           z-index: 5;
+          display: flex;
+          justify-content: space-evenly;
           width: 100%;
           padding: 4rem;
           background-color: var(--mtf-dark);
@@ -84,5 +65,25 @@
     justify-content: flex-end;
     margin-bottom: 3.625rem;
     padding: 0;
+  }
+
+  [class*='--light'] & {
+    button i {
+      color: var(--mtf-text);
+    }
+
+    &--isVisible button i {
+      color: var(--mtf-light);
+    }
+  }
+
+  [class*='--dark'] & {
+    button i {
+      color: var(--mtf-light);
+    }
+
+    &--isVisible button i {
+      color: var(--mtf-light);
+    }
   }
 }

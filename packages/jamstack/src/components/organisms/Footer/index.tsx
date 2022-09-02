@@ -10,21 +10,26 @@ const Footer = ({ menuData }: any) => {
       <div className={styles['devo']}>
         <a
           className={styles['guidestar']}
-          href='https://www.guidestar.org/profile/47-1254076'
+          href="https://www.guidestar.org/profile/47-1254076"
         />
         <a
           className={styles['amazonsmile']}
-          href='https://smile.amazon.com/ch/47-1254076'
+          href="https://smile.amazon.com/ch/47-1254076"
         />
         <p>
           Musical Theatre Factory, Inc. (EIN 47-1254076) is a registered
           501(c)(3) Public Charity incorporated in the State of New York. All
           donations are tax-deductible to the fullest extent under the law.
         </p>
-        <form className={styles['mailingList']}>
-          <div>
-            <input type='email' id='email' placeholder='name@example.com' />
-            <label htmlFor='email'>Email address</label>
+        <form className={'input-group'}>
+          <div className="form-floating">
+            <input
+              type="email"
+              id="email"
+              placeholder="name@example.com"
+              className={'form-control'}
+            />
+            <label htmlFor="email">Email address</label>
           </div>
           <Button text={'Sign up'} />
         </form>

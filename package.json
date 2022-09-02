@@ -17,11 +17,10 @@
     "start": "docker compose -f compose.yaml -f compose.prod.yaml up -d"
   },
   "lint-staged": {
-    "**/*.{js,ts,jsx,tsx}": [
-      "eslint --fix",
-      "prettier --write --ignore-unknown"
+    "**/*.(j|t)s?(x)": [
+      "yarn prettier --write --ignore-unknown"
     ],
-    "**/*.{css,scss}": "stylelint --fix"
+    "**/*.?(s)css": "yarn stylelint --fix"
   },
   "dependencies": {
     "husky": "^8.0.1",

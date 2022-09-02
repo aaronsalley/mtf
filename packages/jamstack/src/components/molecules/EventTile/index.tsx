@@ -34,9 +34,9 @@ const EventTile = ({
               <Image
                 src={featuredImage} //TODO: If no image, use placeholder
                 alt={title + ' event thumbnail'}
-                layout='fill'
+                layout="fill"
                 unoptimized // TODO: optimze remote image
-                objectFit='cover'
+                objectFit="cover"
               />
             </div>
             <h3>{title}</h3>

@@ -31,7 +31,7 @@ const MegaMenu = ({
 
     return (
       <button onClick={() => action(!state)}>
-        <i className='fa-solid fa-bars-staggered'></i>
+        <i className="fa-solid fa-bars-staggered"></i>
       </button>
     );
   };

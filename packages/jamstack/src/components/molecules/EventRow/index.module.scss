@@ -7,33 +7,11 @@
 .container {
   $mx: calc(1rem / 2);
 
+  position: relative;
   display: flex;
   flex-direction: column;
-  position: relative;
   @include media-breakpoint-up(lg) {
     flex-direction: row;
-  }
-
-  &:hover {
-    .thumbnail {
-      @include choreography.pickup();
-    }
-  }
-
-  time {
-    display: block;
-    padding-top: calc($mx * 2);
-    padding-right: calc($mx * 2);
-    border-top: 3px solid var(--mtf-text);
-    font-size: 0.75rem;
-
-    p {
-      margin: 0;
-    }
-
-    :nth-child(2) {
-      font-weight: 600;
-    }
   }
 
   .thumbnail {
@@ -45,26 +23,48 @@
     }
   }
 
+  &:hover {
+    .thumbnail {
+      @include choreography.pickup;
+    }
+  }
+
+  time {
+    display: block;
+    padding-top: calc($mx * 2);
+    padding-right: calc($mx * 2);
+    font-size: 0.75rem;
+    border-top: 3px solid var(--mtf-text);
+
+    p {
+      margin: 0;
+    }
+
+    :nth-child(2) {
+      font-weight: 600;
+    }
+  }
+
   section {
     display: flex;
-    flex-direction: column;
     flex: 1;
+    flex-direction: column;
     padding-left: calc($mx * 2);
 
-    h3 {
+    h2 {
       margin: 0;
       padding-top: $mx;
       padding-bottom: $mx;
-      font-size: 1.125rem;
       font-weight: bold;
+      font-size: 1.125rem;
       text-transform: uppercase;
     }
 
     > div {
       flex-grow: 1;
       padding-top: calc($mx * 2);
-      font-size: 0.875rem;
       font-weight: 600;
+      font-size: 0.875rem;
     }
 
     footer {

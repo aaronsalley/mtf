@@ -19,9 +19,9 @@ const Header = ({
     <div className={styles['appbar']}>
       <span>
         <div className={styles['brand']}>
-          <Link href='/'>
+          <Link href="/">
             <a>
-              <Image {...gearIcon} alt='MTF gear icon' />
+              <Image {...gearIcon} alt="MTF gear icon" />
             </a>
           </Link>
         </div>
@@ -37,7 +37,7 @@ const Header = ({
       }
     >
       <AppBar />
-      <Message text={message} />
+      {/* <Message text={message} /> */}
       <Nav menuData={navMenu} />
     </header>
   );

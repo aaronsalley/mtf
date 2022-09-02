@@ -4,12 +4,6 @@
 @import '~bootstrap/scss/maps';
 @import '~bootstrap/scss/mixins';
 
-@mixin make-wrapper() {
-  display: flex;
-  width: calc(100% - 1rem);
-  margin: auto;
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -17,15 +11,10 @@
   height: 50vh;
   max-height: 26.25rem;
 
-  &:hover {
-    header .thumbnail {
-      @include choreography.pickup();
-    }
-
-    section .summary {
-      overflow: scroll;
-      flex-grow: 1;
-    }
+  %wrapper {
+    display: flex;
+    width: calc(100% - 1rem);
+    margin: auto;
   }
 
   header {
@@ -33,46 +22,60 @@
 
     .thumbnail {
       position: relative;
-      padding-bottom: 13.75rem;
       width: 100%;
+      padding-bottom: 13.75rem;
       background-color: navy;
     }
 
     h3 {
-      @include make-wrapper();
+      @extend %wrapper;
+
       padding-top: calc(1rem / 2);
       padding-bottom: calc(1rem / 2);
-      font-size: 1.125rem;
       font-weight: bold;
+      font-size: 1.125rem;
       text-transform: uppercase;
     }
   }
 
   section {
-    @include make-wrapper();
+    @extend %wrapper;
+
     flex-direction: column;
-    justify-content: flex-end;
     flex-grow: 1;
+    justify-content: flex-end;
 
     time {
       width: 100%;
       padding-bottom: calc(1rem / 2);
-      border-bottom: 3px solid var(--mtf-text);
-      font-size: 0.75rem;
       font-weight: 600;
+      font-size: 0.75rem;
+      border-bottom: 3px solid var(--mtf-text);
     }
 
     .summary {
-      overflow: hidden;
       width: 100%;
       height: 0;
-      font-size: 0.875rem;
+      overflow: hidden;
       font-weight: 600;
+      font-size: 0.875rem;
+    }
+  }
+
+  &:hover {
+    header .thumbnail {
+      @include choreography.pickup;
+    }
+
+    section .summary {
+      flex-grow: 1;
+      overflow: scroll;
     }
   }
 
   footer {
-    @include make-wrapper();
+    @extend %wrapper;
+
     justify-content: flex-end;
 
     [type='button'] {

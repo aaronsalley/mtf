@@ -24,7 +24,7 @@ const Home = (props: any) => {
         <Image
           src={mediaItemUrl}
           alt={altText}
-          layout='fill'
+          layout="fill"
           objectFit={'cover'}
           unoptimized // TODO: Optimize remote images
         />
@@ -37,12 +37,12 @@ const Home = (props: any) => {
       <section className={styles['hero']}>
         <div className={styles['stage']}>{media}</div>
         <aside>
-          <span className={styles['scrollHint']}>scroll</span>
+          <span className={styles['scroll-hint']}>scroll</span>
         </aside>
       </section>
       <blockquote dangerouslySetInnerHTML={{ __html: excerpt }}></blockquote>
-      <EventGrid id='events' events={props.events.nodes} />
-      <ImageGallery filter='maker' />
+      <EventGrid id="events" events={props.events.nodes} />
+      <ImageGallery filter="maker" />
       <section id={'programming'} className={styles['container']}>
         <article>
           <h2>MTF Makers™</h2>

@@ -13,23 +13,23 @@
   }
 
   ul {
-    display: flex;
     position: absolute;
     right: 0;
     bottom: 0;
-    transform: rotate(90deg) translateX(100%) translateY(50%);
-    transform-origin: right;
-    margin: 0;
+    display: flex;
     gap: 2.25rem;
+    margin: 0;
     font-size: 0.75rem;
     text-transform: uppercase;
+    transform: rotate(90deg) translateX(100%) translateY(50%);
+    transform-origin: right;
 
     li {
-      list-style: none;
-      font-family: var(--mtf-font-display);
-      font-size: 0.75rem;
       font-weight: 700;
+      font-size: 0.75rem;
+      font-family: var(--mtf-font-display);
       text-transform: uppercase;
+      list-style: none;
     }
   }
 

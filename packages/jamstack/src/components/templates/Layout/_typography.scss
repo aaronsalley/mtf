@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap');
+@import 'https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap';
 
 $sans-serif: 'Open Sans';
 $serif: 'Times New Roman';
@@ -12,10 +12,10 @@ body {
   --mtf-font-monospace: #{$monospace};
   --mtf-font-display: #{$display};
 
-  font-family: var(--mtf-font-sans-serif), -apple-system, BlinkMacSystemFont,
-    Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-    Helvetica Neue, sans-serif;
   font-size: 16px;
+  font-family: var(--mtf-font-sans-serif), -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
 }
 
 a {
@@ -24,7 +24,17 @@ a {
 }
 
 h2 {
-  font-family: var(--mtf-font-display);
   font-size: 2rem;
+  font-family: var(--mtf-font-display);
   text-transform: uppercase;
+
+  .content & {
+    font-size: 1em;
+  }
+}
+
+h3 {
+  .content & {
+    font-size: 0.75em;
+  }
 }

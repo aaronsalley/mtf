@@ -18,9 +18,10 @@ const Events = ({ content = { events: [] } }: any) => {
 
   return (
     <section className={styles['container']}>
-      <menu>menu options</menu>
+      {/* <menu>menu options</menu>
+      Add menu to filter events */}
       <div>{items}</div>
-      <Button text='See past events' />
+      <Button text="See past events" />
     </section>
   );
 };

@@ -8,7 +8,10 @@ const Single: NextPage = (props: any) => {
     <>
       <Helmet {...props} />
       <Page {...props}>
-        <section dangerouslySetInnerHTML={{ __html: props.content }}></section>
+        <section
+          className={'content'}
+          dangerouslySetInnerHTML={{ __html: props.content }}
+        ></section>
       </Page>
     </>
   );

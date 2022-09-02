@@ -10,6 +10,7 @@ interface ImageGallery {
 }
 
 // TODO: can this be made recursive?
+// TODO: add motion on scroll
 const ImageGallery = ({
   items = [
     {},

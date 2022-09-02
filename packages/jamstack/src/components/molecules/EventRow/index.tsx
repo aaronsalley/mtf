@@ -24,14 +24,14 @@ const EventRow = ({
             <Image
               src={featuredImage}
               alt={title + ' event thumbnail'}
-              layout='fill'
+              layout="fill"
               objectFit={'cover'}
               unoptimized // TODO: Optimize remote images
             />
           </div>
           <section>
             <header>
-              <h3>{title}</h3>
+              <h2>{title}</h2>
               <time>Monday {endDate} Time </time>
               <address>Location</address>
             </header>

@@ -2,37 +2,34 @@
   position: relative;
   z-index: 1;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
   flex-grow: 1;
-  padding-top: calc(1rem / 2);
-  padding-bottom: calc(1rem / 2);
-  padding-left: calc(3rem / 2);
-  padding-right: 0;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 3px solid var(--mtf-text);
-  background-color: inherit;
-  font-size: 0.75rem;
+  align-items: center;
+  justify-content: flex-end;
+  padding: calc(1rem / 2) 0 calc(1rem / 2) calc(3rem / 2);
   font-weight: bold;
+  font-size: 0.75rem;
   text-align: right;
   text-transform: uppercase;
+  background-color: inherit;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 3px solid var(--mtf-text);
+  border-left: 0;
 
   &::after {
-    content: '';
     position: absolute;
     top: 100%;
     right: 0;
     bottom: -3px;
-    width: 100%;
     z-index: -1;
+    width: 100%;
     background-color: var(--mtf-text);
+    content: '';
   }
 
   &:hover {
-    padding-left: calc(3rem / 4) !important;
     padding-right: calc(3rem / 4) !important;
+    padding-left: calc(3rem / 4) !important;
     color: var(--mtf-material);
 
     &::after {

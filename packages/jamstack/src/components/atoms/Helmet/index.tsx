@@ -3,7 +3,7 @@ import Head from 'next/head';
 const Helmet = ({ title, summary }: any) => (
   <Head>
     <title>{title}</title>
-    <meta name='description' content={summary} />
+    <meta name="description" content={summary} />
   </Head>
 );
 

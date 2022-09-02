@@ -31,14 +31,14 @@
 
     .appbar {
       .brand {
-        display: flex;
-        justify-content: center;
         z-index: 10;
+        display: flex;
         align-items: center;
-        height: 3.93875rem;
+        justify-content: center;
+        height: 3.9388rem;
         margin: 0.5rem;
-        aspect-ratio: 1 / 1;
         transform: rotate(-15deg);
+        aspect-ratio: 1 / 1;
       }
     }
   }

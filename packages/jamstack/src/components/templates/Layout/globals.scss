@@ -6,17 +6,19 @@
 html,
 body {
   --mtf-max-width: 1130px;
-  padding: 0;
-  margin: 0;
 
+  margin: 0;
+  padding: 0;
+
+  /* stylelint-disable-next-line selector-id-pattern */
   #__next {
     display: flex;
     flex-direction: column;
     height: 100vh;
 
     > main {
-      flex-grow: 1;
       flex-basis: 100%;
+      flex-grow: 1;
       width: 100%;
     }
   }

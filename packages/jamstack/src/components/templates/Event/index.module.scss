@@ -27,9 +27,9 @@
       @include media-breakpoint-up(lg) {
         position: absolute;
         top: 0;
-        left: 0;
         right: 0;
         bottom: 0;
+        left: 0;
         z-index: -1;
         width: 100%;
         margin: unset;
@@ -39,27 +39,27 @@
     }
 
     > aside {
+      position: relative;
       display: flex;
       flex: 1;
       flex-wrap: wrap;
-      position: relative;
       max-width: var(--mtf-max-width);
-      padding-top: 10rem;
-      margin-left: 1.5rem;
       margin-right: 1.5rem;
+      margin-left: 1.5rem;
+      padding-top: 10rem;
       @include media-breakpoint-up(lg) {
         display: block;
-        margin-left: auto;
         margin-right: auto;
+        margin-left: auto;
       }
 
       &::after {
-        display: block;
         position: absolute;
+        top: 10rem;
         bottom: 0;
         z-index: -1;
+        display: block;
         width: 33%;
-        height: calc(52.6875rem - 10rem);
         background-color: var(--mtf-material);
         @include media-breakpoint-up(lg) {
           content: '';
@@ -69,11 +69,11 @@
       > * {
         margin: 0;
         @include media-breakpoint-up(lg) {
-          margin: 1rem;
           max-width: calc(33% - 2rem);
+          margin: 1rem;
         }
 
-        &:not(h1):not([type='button']) {
+        &:not(h1, [type='button']) {
           font-size: 1rem;
           @include media-breakpoint-up(lg) {
             font-size: 1.25rem;
@@ -83,6 +83,7 @@
 
       h1 {
         font-size: 5vmax;
+
         span {
           font-size: 1.85em;
         }
@@ -101,45 +102,52 @@
 
       [type='button'] {
         justify-content: flex-start;
-        padding-left: 0;
         padding-right: 1.5rem;
+        padding-left: 0;
       }
 
       @include media-breakpoint-down(lg) {
         > :nth-child(1) {
-          order: 3;
           flex-basis: 100%;
+          order: 3;
           margin-bottom: 1rem;
         }
+
         > :nth-child(2) {
-          order: 4;
           flex-basis: 100%;
+          order: 4;
         }
+
         > :nth-child(3) {
-          order: 5;
           flex-basis: 100%;
           flex-grow: 1;
+          order: 5;
           margin-bottom: 2rem;
         }
+
         > :nth-child(4) {
           order: 1;
           margin-right: 1.5rem;
         }
+
         > :nth-child(5) {
-          order: 2;
           flex-grow: 1;
+          order: 2;
         }
+
         > :nth-child(6) {
+          flex-basis: 100%;
           order: 8;
-          flex-basis: 100%;
         }
+
         > :nth-child(7) {
-          order: 7;
           flex-grow: 0;
+          order: 7;
         }
+
         > :nth-child(8) {
-          order: 6;
           flex-basis: 100%;
+          order: 6;
         }
       }
     }
@@ -152,30 +160,31 @@
     max-width: var(--mtf-max-width);
     margin: auto;
     padding-top: 6rem;
-    padding-left: 1.5rem;
     padding-right: 1.5rem;
+    padding-left: 1.5rem;
     @include media-breakpoint-up(lg) {
-      padding-left: unset;
       padding-right: 2.5rem;
+      padding-left: unset;
     }
 
     > h2,
     > div {
       @include media-breakpoint-up(lg) {
-        margin-left: auto;
         width: calc(66% - 4.375rem);
+        margin-left: auto;
       }
     }
 
     h2 {
-      &:before {
+      &::before {
         $thickness: 0.5rem;
-        content: '';
+
         display: block;
         width: 50%;
         margin-top: calc(-3rem + $thickness / 2);
         margin-bottom: calc(3rem - $thickness / 2);
         border-bottom: $thickness solid var(--mtf-text);
+        content: '';
       }
     }
   }

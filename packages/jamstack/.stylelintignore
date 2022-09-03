@@ -1,0 +1,8 @@
+/.github
+/.husky
+/.vscode
+/.yarn
+/logs
+/.next
+/node_modules
+/optack

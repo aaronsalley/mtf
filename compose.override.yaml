@@ -55,7 +55,7 @@ services:
         define( 'GRAPHQL_JWT_AUTH_SECRET_KEY', 'YOUR_STRONG_SECRET' );
 
     volumes:
-      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./packages/theme/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       # Persist wp-content
       - wp_data:/var/www/html/wp-content/plugins
       - wp_data:/var/www/html/wp-content/uploads

@@ -34,5 +34,6 @@
       "yarn eslint --fix"
     ],
     "**/*.?(s)css": "yarn stylelint --fix"
-  }
+  },
+  "packageManager": "yarn@3.2.3"
 }

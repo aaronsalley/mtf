@@ -11,7 +11,7 @@ services:
     volumes:
       - ./packages/optack/packages/core/src:/app/src
 
-  site:
+  jamstack:
     command: yarn dev
     image: mtfmusicals
     env_file:

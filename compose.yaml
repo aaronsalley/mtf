@@ -23,8 +23,6 @@ services:
     build: ./packages/jamstack
     image: ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/mtfmusicals:${TAG}
     restart: always
-    env_file:
-      - .env
     ports:
       - '32768:3000'
     networks:

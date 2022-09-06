@@ -93,7 +93,7 @@ jobs:
       - name: Build and Push Container
         # id: build-push
         run: |-
-          docker compose build jamstack && docker push
+          docker compose build jamstack && docker compose push
         # run: |-
         #   docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" ./
         #   docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"

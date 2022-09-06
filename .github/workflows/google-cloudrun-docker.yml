@@ -43,7 +43,9 @@ jobs:
           registry: '${{ env.GAR_LOCATION }}-docker.pkg.dev'
 
       - name: Build and Push Container
-        run: docker compose build jamstack && docker compose push
+        run: docker compose build jamstack
+        # && \
+        # docker compose push
 
       # - name: Deploy to Cloud Run
       # id: deploy

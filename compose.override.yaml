@@ -28,6 +28,8 @@ services:
     image: mtfmusicals
     env_file:
       - .env
+    ports:
+      - '32768:3000'
     volumes:
       - ./packages/jamstack/public:/home/public
       - ./packages/jamstack/src:/home/src
@@ -70,7 +72,8 @@ services:
         # define( 'FORCE_SSL_ADMIN', true );
         # define( 'WP_HTTP_BLOCK_EXTERNAL', true );
         define( 'GRAPHQL_JWT_AUTH_SECRET_KEY', 'YOUR_STRONG_SECRET' );
-
+    ports:
+      - '32769:80'
     volumes:
       - ./packages/theme/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       # Persist wp-content

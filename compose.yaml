@@ -5,8 +5,6 @@ services:
     build: ./packages/jamstack
     image: ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/jamstack:${TAG}
     restart: always
-    ports:
-      - '32768:3000'
     networks:
       - wordpress
 
@@ -24,8 +22,6 @@ services:
   wp:
     image: wordpress:latest
     restart: always
-    ports:
-      - '32769:80'
     environment:
       WORDPRESS_DB_HOST: ${DB_HOST}
       WORDPRESS_DB_NAME: ${DB_NAME}

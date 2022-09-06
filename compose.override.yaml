@@ -2,12 +2,24 @@ version: '3.9'
 
 services:
   optack:
+    extends:
+      file: ./packages/optack/compose.yaml
+      service: core
     image: optack
+    restart: always
+    ports:
+      - '32767:3000'
     volumes:
       - ./packages/optack/packages/core/src:/app/src
 
   storybook:
+    extends:
+      file: ./packages/optack/compose.yaml
+      service: storybook
     image: optack
+    restart: always
+    ports:
+      - '32766:6006'
     volumes:
       - ./packages/optack/packages/core/src:/app/src
 

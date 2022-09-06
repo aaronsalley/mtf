@@ -44,8 +44,7 @@ jobs:
 
       - name: Build and Push Container
         id: build-push
-        run: docker compose build jamstack && \
-        docker compose push jamstack
+        run: docker compose build jamstack && docker compose push jamstack
 
       # - name: Deploy to Cloud Run
       # id: deploy

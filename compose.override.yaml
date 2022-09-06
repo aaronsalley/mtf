@@ -2,15 +2,18 @@ version: '3.9'
 
 services:
   optack:
+    image: optack
     volumes:
       - ./packages/optack/packages/core/src:/app/src
 
   storybook:
+    image: optack
     volumes:
       - ./packages/optack/packages/core/src:/app/src
 
   site:
     command: yarn dev
+    image: mtfmusicals
     volumes:
       - ./packages/jamstack/public:/home/public
       - ./packages/jamstack/src:/home/src

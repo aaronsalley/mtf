@@ -5,7 +5,7 @@ services:
     extends:
       file: ./packages/optack/compose.yaml
       service: core
-    image: optack
+    image: ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/optack:${TAG}
     restart: always
     ports:
       - '32767:3000'
@@ -14,14 +14,14 @@ services:
     extends:
       file: ./packages/optack/compose.yaml
       service: storybook
-    image: optack
+    image: ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/optack:${TAG}
     restart: always
     ports:
       - '32766:6006'
 
   site:
     build: ./packages/jamstack
-    image: mtfmusicals
+    image: ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/mtfmusicals:${TAG}
     restart: always
     env_file:
       - .env

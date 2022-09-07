@@ -51,7 +51,7 @@ on:
 env:
   PROJECT_ID: mtfmusicals # TODO: update Google Cloud project id ${{ secrets.PROJECT_ID }}
   GAR_LOCATION: us-central1 # TODO: update Artifact Registry location ${{ secrets.GAR_LOCATION }}
-  SERVICE: jamstack # TODO: update Cloud Run service name ${{ secrets.SERVICE }}
+  SERVICE: public-web # TODO: update Cloud Run service name ${{ secrets.SERVICE }}
   REGION: us-central1 # TODO: update Cloud Run service region
   TAG: ${{ github.sha }}
   DB_HOST: ${{ secrets.DB_HOST }}

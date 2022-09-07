@@ -3,7 +3,7 @@ version: '3.9'
 services:
   jamstack:
     build: ./packages/jamstack
-    image: ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${SERVICE}/jamstack:${TAG:latest}
+    image: ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${SERVICE}/jamstack:${TAG:-latest}
     restart: always
     networks:
       - wordpress

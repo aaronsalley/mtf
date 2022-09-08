@@ -1,23 +1,32 @@
 import EventGrid from '../../organisms/EventGrid';
 import ImageGallery from '../../organisms/ImageGallery';
 import ArticleGrid from '../../organisms/ArticleGrid';
-import Page from '../Page';
 import styles from './index.module.scss';
 import Image from 'next/image';
 
-const Home = (props: any) => {
-  const {
+const Home = ({
+  pageBy: {
     featuredImage,
-    title = '',
-    excerpt = '',
-    template = '',
-    slug = '',
-    isFrontPage = false,
-    content = '',
-  }: Page = props.pageBy;
-
+    title,
+    excerpt,
+    template,
+    slug,
+    isFrontPage,
+    content,
+  } = {
+    featuredImage: {},
+    title: 'Page Title',
+    excerpt: 'This is a page excerpt.',
+    template: '',
+    slug: '',
+    isFrontPage: true,
+    content: '',
+  },
+  events,
+  posts,
+}: any) => {
   let media = null;
-  const { mediaType, altText, mediaItemUrl } = featuredImage;
+  const { mediaType = '', altText = '', mediaItemUrl = '' } = featuredImage;
   switch (mediaType) {
     case 'image':
       media = (
@@ -30,6 +39,8 @@ const Home = (props: any) => {
         />
       );
       break;
+    case 'video':
+      break;
   }
 
   return (
@@ -41,7 +52,7 @@ const Home = (props: any) => {
         </aside>
       </section>
       <blockquote dangerouslySetInnerHTML={{ __html: excerpt }}></blockquote>
-      <EventGrid id="events" events={props.events.nodes} />
+      {!events ?? <EventGrid id="events" events={events.nodes} />}
       <ImageGallery filter="maker" />
       <section id={'programming'} className={styles['container']}>
         <article>
@@ -86,7 +97,7 @@ const Home = (props: any) => {
           <li>Rolling World Premieres</li>
         </ul>
       </div>
-      <ArticleGrid posts={props.posts.nodes} />
+      <ArticleGrid posts={posts?.nodes} />
     </main>
   );
 };

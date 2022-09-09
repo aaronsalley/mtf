@@ -24,7 +24,7 @@ const Event = ({
       <header>
         <div className={styles['stage']}>
           <Image
-            src={featuredImage.node.sourceUrl}
+            src={featuredImage.node?.sourceUrl}
             alt={title}
             layout={'fill'}
             objectFit={'cover'}

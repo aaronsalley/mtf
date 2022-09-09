@@ -14,7 +14,17 @@ export const wpContent = async () => {
   const pages = `pages(where: {status: PUBLISH}, first: 100) {
     nodes {
       uri,
-      id
+      id,
+      title,
+      content,
+      excerpt,
+      featuredImage {
+        node {
+          mediaType,
+          mediaItemUrl,
+          altText
+        }
+      }
     }
   }`;
   const events = `events(where: {status: PUBLISH}, first: 100) {
@@ -22,6 +32,17 @@ export const wpContent = async () => {
       id,
       title,
       excerpt,
+      content,
+      categories {
+        nodes {
+          name
+        }
+      },
+      tags {
+        nodes {
+          name
+        }
+      },
       uri,
       slug,
       featuredImage {
@@ -79,11 +100,7 @@ export const wpContent = async () => {
     ${posts}
   }`.replaceAll(/\s/gi, '');
 
-    const res = await fetch(url + `/graphql?query=${query}`, {
-      // headers: {
-      //   'Content-Type': 'application/json',
-      // },
-    });
+    const res = await fetch(url + `/graphql?query=${query}`);
 
     const json = await res.json();
     if (json.errors)

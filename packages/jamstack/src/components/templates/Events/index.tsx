@@ -2,11 +2,15 @@ import Button from '../../atoms/Button';
 import EventRow from '../../molecules/EventRow';
 import styles from './index.module.scss';
 
-const Events = ({ content = { events: [] } }: any) => {
-  if (!content.events)
-    return <section>Check back later to see what`&apos;`s cooking.</section>;
+const Events = ({ events = [] }: any) => {
+  if (events.length < 1)
+    return (
+      <section className={styles['container']}>
+        Check back later to see what&apos;s cooking.
+      </section>
+    );
 
-  const items = content.events.map((event: any, i: number) => {
+  const items = events.map((event: any, i: number) => {
     event['link'] = {
       text: 'Details',
       url: event.uri,

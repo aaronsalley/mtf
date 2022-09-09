@@ -6,3 +6,5 @@ RUN yarn
 
 COPY . /home/
 CMD yarn start
+
+EXPOSE 3000

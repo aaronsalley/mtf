@@ -18,16 +18,11 @@ const EventTile = ({
   startDate = undefined,
   endDate = '12.01.2021',
   excerpt = 'Event summary.',
-  link = {
-    text: 'Details',
-    url: '',
-  },
+  link: { text = 'Details', url = '/' },
 }: EventTile) => {
-  const { text, url }: Button = link;
-
   return (
     <article>
-      <Link href={url as any}>
+      <Link href={url}>
         <a className={styles['container']}>
           <header>
             <div className={styles['thumbnail']}>

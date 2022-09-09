@@ -52,7 +52,7 @@ const Home = ({
         </aside>
       </section>
       <blockquote dangerouslySetInnerHTML={{ __html: excerpt }}></blockquote>
-      {!events ?? <EventGrid id="events" events={events.nodes} />}
+      <EventGrid id="events" events={events?.nodes} />
       <ImageGallery filter="maker" />
       <section id={'programming'} className={styles['container']}>
         <article>

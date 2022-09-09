@@ -14,7 +14,7 @@
   "scripts": {
     "postinstall": "husky install",
     "dev": "docker compose up",
-    "start": "docker compose -f compose.yaml -f compose.prod.yaml up -d",
+    "start": "docker compose up -d",
     "validate": "yarn dlx lint-staged"
   },
   "dependencies": {

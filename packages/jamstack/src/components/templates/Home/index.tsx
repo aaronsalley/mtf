@@ -6,7 +6,9 @@ import Image from 'next/image';
 
 const Home = ({
   pageBy: {
-    featuredImage,
+    featuredImage: {
+      node: { mediaType, altText, mediaItemUrl },
+    },
     title,
     excerpt,
     template,
@@ -14,7 +16,9 @@ const Home = ({
     isFrontPage,
     content,
   } = {
-    featuredImage: {},
+    featuredImage: {
+      node: { mediaType: '', altText: '', mediaItemUrl: '' },
+    },
     title: 'Page Title',
     excerpt: 'This is a page excerpt.',
     template: '',
@@ -26,7 +30,6 @@ const Home = ({
   posts,
 }: any) => {
   let media = null;
-  const { mediaType = '', altText = '', mediaItemUrl = '' } = featuredImage;
   switch (mediaType) {
     case 'image':
       media = (

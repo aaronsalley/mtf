@@ -1,26 +1,12 @@
-import { Dispatch, useEffect, useState } from 'react';
-import { wpContent } from '../../../pages/lib/getWPData';
 import Footer from '../../organisms/Footer';
 import Header from '../../organisms/Header';
 
-const Layout = ({ children }: any) => {
-  const [menuData, loadMenuData]: [any, Dispatch<any>] = useState([]);
-  useEffect(() => {
-    (async () => {
-      try {
-        const { navItems, menuItems } = await wpContent();
-        loadMenuData({ navItems, menuItems });
-      } catch (error: any) {
-        console.error(error.message);
-      }
-    })();
-  }, []);
-
+const Layout = ({ navItems, menuItems, children }: any) => {
   return (
     <>
-      <Header menuData={menuData} />
+      <Header menuData={{ navItems, menuItems }} />
       {children}
-      <Footer menuData={menuData.menuItems} />
+      <Footer menuData={menuItems} />
     </>
   );
 };

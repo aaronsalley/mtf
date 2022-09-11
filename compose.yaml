@@ -34,9 +34,5 @@ services:
     networks:
       - public-web
 
-volumes:
-  sql_data:
-  wp_data:
-
 networks:
   public-web:

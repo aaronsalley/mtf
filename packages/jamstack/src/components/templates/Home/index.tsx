@@ -6,9 +6,7 @@ import Image from 'next/image';
 
 const Home = ({
   pageBy: {
-    featuredImage: {
-      node: { mediaType, altText, mediaItemUrl },
-    },
+    featuredImage,
     title,
     excerpt,
     template,
@@ -30,22 +28,25 @@ const Home = ({
   posts,
 }: any) => {
   let media = null;
-  switch (mediaType) {
-    case 'image':
-      media = (
-        <Image
-          src={mediaItemUrl}
-          alt={altText}
-          layout="fill"
-          objectFit={'cover'}
-          unoptimized // TODO: Optimize remote images
-        />
-      );
-      break;
-    case 'video':
-      break;
-  }
+  if (featuredImage) {
+    const { mediaType, altText, mediaItemUrl } = featuredImage.node;
 
+    switch (mediaType) {
+      case 'image':
+        media = (
+          <Image
+            src={mediaItemUrl}
+            alt={altText}
+            layout="fill"
+            objectFit={'cover'}
+            unoptimized // TODO: Optimize remote images
+          />
+        );
+        break;
+      case 'video':
+        break;
+    }
+  }
   return (
     <main className={styles['container']}>
       <section className={styles['hero']}>

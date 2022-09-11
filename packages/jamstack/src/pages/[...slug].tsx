@@ -20,7 +20,7 @@ const Single: NextPage = (props: any) => {
 export const getStaticPaths = async () => {
   try {
     const data = await wpContent();
-    const paths = data.pages.nodes.map((page: any) => {
+    const paths = data.pages?.nodes.map((page: any) => {
       const slug = page?.uri.split('/').filter(Boolean);
 
       return { params: { slug } };
@@ -32,19 +32,27 @@ export const getStaticPaths = async () => {
     };
   } catch (error: any) {
     console.error(error.message);
+    return {
+      paths: [],
+      fallback: true,
+    };
   }
 };
 
 export const getStaticProps = async ({ params: { slug }, locale }: any) => {
   try {
     const data = await wpContent();
-    const props = data.pages.nodes.find((page: any) =>
+    const props = data.pages?.nodes.find((page: any) =>
       page.uri.match(slug.join('/'))
     );
+
+    if (!props) throw Error('No data returned from CMS.');
 
     return { props };
   } catch (error: any) {
     console.error(error.message);
+
+    return { props: {} };
   }
 };
 

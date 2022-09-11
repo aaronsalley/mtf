@@ -100,7 +100,14 @@ export const wpContent = async () => {
     ${posts}
   }`.replaceAll(/\s/gi, '');
 
-    const res = await fetch(url + `/graphql?query=${query}`);
+    const res = await fetch(url + `/graphql`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query: query }),
+      // mode: 'no-cors',
+    });
 
     const json = await res.json();
     if (json.errors)
@@ -110,7 +117,7 @@ export const wpContent = async () => {
 
     return json.data;
   } catch (error: any) {
-    console.error(error);
+    console.error(error.message);
 
     return {
       notFound: true,

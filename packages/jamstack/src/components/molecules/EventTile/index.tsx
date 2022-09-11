@@ -4,7 +4,7 @@ import Button from '../../atoms/Button';
 import Link from 'next/link';
 
 interface EventTile {
-  featuredImage: string;
+  featuredImage: any;
   title: string;
   startDate?: string;
   endDate: string;
@@ -13,7 +13,7 @@ interface EventTile {
 }
 
 const EventTile = ({
-  featuredImage = '',
+  featuredImage,
   title = 'Event Title',
   startDate = undefined,
   endDate = '12.01.2021',
@@ -27,7 +27,7 @@ const EventTile = ({
           <header>
             <div className={styles['thumbnail']}>
               <Image
-                src={featuredImage} //TODO: If no image, use placeholder
+                src={featuredImage?.node.sourceUrl ?? '#'} //TODO: If no image, use placeholder
                 alt={title + ' event thumbnail'}
                 layout="fill"
                 unoptimized // TODO: optimze remote image

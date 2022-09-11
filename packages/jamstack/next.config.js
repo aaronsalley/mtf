@@ -17,6 +17,9 @@ const nextConfig = {
 
 const moduleExports = {
   ...nextConfig,
+  sentry: {
+    hideSourceMaps: true,
+  },
 };
 
 const sentryWebpackPluginOptions = {
@@ -26,7 +29,6 @@ const sentryWebpackPluginOptions = {
   //   release, url, org, project, authToken, configFile, stripPrefix,
   //   urlPrefix, include, ignore
 
-  hideSourceMaps: true,
   silent: true, // Suppresses all logs
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
@@ -34,4 +36,5 @@ const sentryWebpackPluginOptions = {
 
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
+// module.exports = moduleExports;
 module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);

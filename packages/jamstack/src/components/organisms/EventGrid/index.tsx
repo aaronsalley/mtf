@@ -10,12 +10,10 @@ const EventGrid = ({
   if (!events || events.length < 1) return null;
 
   const title = 'Works In Progress';
-  const items = events.map((event: any, i: number) => {
-    if (event.featuredImage?.node)
-      event['featuredImage'] = event.featuredImage.node.sourceUrl;
-    event['link'] = { text: 'Details', url: event.uri };
 
+  const items = events.map((event: any, i: number) => {
     while (i < 8) {
+      event['link'] = { text: 'Details', url: event?.uri };
       return <EventTile {...event} key={i} />;
     }
   });

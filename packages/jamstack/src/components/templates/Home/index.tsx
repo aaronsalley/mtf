@@ -29,7 +29,7 @@ const Home = ({
 }: any) => {
   let media = null;
   if (featuredImage) {
-    const { mediaType, altText, mediaItemUrl } = featuredImage.node;
+    const { mediaType, altText, mediaItemUrl } = featuredImage?.node;
 
     switch (mediaType) {
       case 'image':
@@ -47,6 +47,7 @@ const Home = ({
         break;
     }
   }
+
   return (
     <main className={styles['container']}>
       <section className={styles['hero']}>

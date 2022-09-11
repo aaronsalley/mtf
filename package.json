@@ -8,8 +8,7 @@
   "homepage": "https://mtf.nyc/",
   "private": true,
   "workspaces": [
-    "packages/*",
-    "packages/optack/core"
+    "packages/*"
   ],
   "scripts": {
     "postinstall": "husky install",

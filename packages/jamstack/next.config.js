@@ -7,6 +7,7 @@
 const { withSentryConfig } = require('@sentry/nextjs');
 
 const nextConfig = {
+  poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
   images: {

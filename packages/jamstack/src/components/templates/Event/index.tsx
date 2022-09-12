@@ -17,14 +17,16 @@ const Event = ({
       : null;
 
   const artists: any[] =
-    tags.nodes.length > 0 ? tags.nodes.map((tag: any) => tag.name) : null;
+    tags.nodes.length > 0
+      ? tags.nodes.map((tag: any) => tag.name).join(', ')
+      : null;
 
   return (
     <main className={styles['container']}>
       <header>
         <div className={styles['stage']}>
           <Image
-            src={featuredImage.node?.sourceUrl}
+            src={featuredImage?.node.sourceUrl}
             alt={title}
             layout={'fill'}
             objectFit={'cover'}
@@ -32,7 +34,7 @@ const Event = ({
           />
         </div>
         <aside>
-          <p className={styles['artists']}>{artists.join(', ')}&apos;s</p>
+          {!artists ?? <p className={styles['artists']}>{artists}&apos;s</p>}
           <PageTitle title={title} />
           <p className={styles['programService']}>{programService}</p>
           <time className={styles['time']}>

@@ -2,16 +2,19 @@ version: '3.9'
 
 services:
   jamstack:
-    build: ./packages/jamstack
-    image: ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${SERVICE}/jamstack:${TAG:-latest}
-    restart: always
-    depends_on:
-      - wordpress
+    image: jamstack
+    build:
+      context: ./packages/jamstack
+      tags:
+        - ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${NETWORK}/jamstack:${TAG:-latest}
+    restart: on-failure
+    expose:
+      - '3000'
     networks:
       - public-web
 
-  web_db:
-    image: mariadb
+  db:
+    image: mariadb:latest
     restart: always
     environment:
       MYSQL_DATABASE: ${DB_NAME}
@@ -21,16 +24,18 @@ services:
     networks:
       - public-web
 
-  wordpress:
+  cms:
     image: wordpress:latest
     restart: always
+    expose:
+      - '8080'
     environment:
       WORDPRESS_DB_HOST: ${DB_HOST}
       WORDPRESS_DB_NAME: ${DB_NAME}
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
       WORDPRESS_DB_USER: ${DB_USER}
     depends_on:
-      - web_db
+      - db
     networks:
       - public-web
 

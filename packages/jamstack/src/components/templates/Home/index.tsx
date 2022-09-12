@@ -7,29 +7,24 @@ import Image from 'next/image';
 const Home = ({
   pageBy: {
     featuredImage,
-    title,
-    excerpt,
+    title = 'Page Title',
+    excerpt = 'This is a page excerpt.',
     template,
     slug,
-    isFrontPage,
+    isFrontPage = true,
     content,
-  } = {
-    featuredImage: {
-      node: { mediaType: '', altText: '', mediaItemUrl: '' },
-    },
-    title: 'Page Title',
-    excerpt: 'This is a page excerpt.',
-    template: '',
-    slug: '',
-    isFrontPage: true,
-    content: '',
   },
   events,
   posts,
+  mediaItems,
 }: any) => {
   let media = null;
   if (featuredImage) {
-    const { mediaType, altText, mediaItemUrl } = featuredImage?.node;
+    const {
+      mediaType = '',
+      altText = '',
+      mediaItemUrl = '',
+    } = featuredImage?.node ?? '';
 
     switch (mediaType) {
       case 'image':
@@ -39,7 +34,6 @@ const Home = ({
             alt={altText}
             layout="fill"
             objectFit={'cover'}
-            unoptimized // TODO: Optimize remote images
           />
         );
         break;
@@ -58,7 +52,7 @@ const Home = ({
       </section>
       <blockquote dangerouslySetInnerHTML={{ __html: excerpt }}></blockquote>
       <EventGrid id="events" events={events?.nodes} />
-      <ImageGallery filter="maker" />
+      <ImageGallery items={mediaItems?.nodes} />
       <section id={'programming'} className={styles['container']}>
         <article>
           <h2>MTF Makers™</h2>

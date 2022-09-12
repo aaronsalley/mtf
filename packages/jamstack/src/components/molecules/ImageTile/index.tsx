@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 
 interface ImageTile {
-  imageSrc: string;
+  src: string;
   alt: string;
   minHeight?: number;
   maxHeight?: number;
 }
 
 const ImageTile = ({
-  imageSrc = '',
+  src = '',
   alt = '',
   minHeight = 181,
   maxHeight = 384,
@@ -29,7 +29,7 @@ const ImageTile = ({
       className={styles['container']}
       style={{ paddingBottom: `${randomHeight}%` }}
     >
-      <Image src={imageSrc} alt={alt} layout="fill" />
+      <Image src={src} alt={alt} layout="fill" objectFit="cover" />
     </div>
   );
 };

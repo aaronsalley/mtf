@@ -7,8 +7,16 @@ export const wpContent = async () => {
       node {
         mediaType,
         mediaItemUrl,
-        altText
+        altText,
       }
+    }
+  }`;
+  const makers = `mediaItems(where: {category: "maker"}, first: 50) {
+    nodes {
+      title,
+      mediaType,
+      mediaItemUrl,
+      altText,
     }
   }`;
   const pages = `pages(where: {status: PUBLISH}, first: 100) {
@@ -22,7 +30,7 @@ export const wpContent = async () => {
         node {
           mediaType,
           mediaItemUrl,
-          altText
+          altText,
         }
       }
     }
@@ -35,21 +43,23 @@ export const wpContent = async () => {
       content,
       categories {
         nodes {
-          name
-        }
+          name,
+        },
       },
       tags {
         nodes {
-          name
-        }
+          name,
+        },
       },
       uri,
       slug,
       featuredImage {
         node {
-          sourceUrl
+          mediaType,
+          mediaItemUrl,
+          altText,
         }
-      }    
+      }
     }
   }`;
   const posts = `posts(where: {status: PUBLISH}) {
@@ -95,6 +105,7 @@ export const wpContent = async () => {
     ${megaMenuItems},
     ${navItems},
     ${home},
+    ${makers},
     ${pages},
     ${events},
     ${posts}

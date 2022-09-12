@@ -4,14 +4,14 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 /** @type {import('next').NextConfig} */
-const { withSentryConfig } = require('@sentry/nextjs');
+// const { withSentryConfig } = require('@sentry/nextjs');
 
 const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'aarons-macbook-pro.local'],
   },
 };
 
@@ -36,5 +36,5 @@ const sentryWebpackPluginOptions = {
 
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
-// module.exports = moduleExports;
-module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
+module.exports = moduleExports;
+// module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);

@@ -4,24 +4,29 @@ import Button from '../../atoms/Button';
 import styles from './index.module.scss';
 
 const EventRow = ({
-  featuredImage = '',
+  featuredImage,
   title = 'Event Title',
   startDate = undefined,
   endDate = '12.01.2021',
   excerpt = 'Event summary.',
   link: { text = 'Details', url = '' },
 }: any) => {
+  const {
+    mediaType = '',
+    altText = '',
+    mediaItemUrl = '',
+  } = featuredImage?.node ?? '';
+
   return (
     <article>
       <Link href={url as any}>
         <a className={styles['container']}>
           <div className={styles['thumbnail']}>
             <Image
-              src={featuredImage ?? '#'}
+              src={mediaItemUrl ?? '#'}
               alt={title + ' event thumbnail'}
               layout="fill"
               objectFit={'cover'}
-              unoptimized // TODO: Optimize remote images
             />
           </div>
           <section>

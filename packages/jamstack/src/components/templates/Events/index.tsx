@@ -15,8 +15,6 @@ const Events = ({ events = [] }: any) => {
       text: 'Details',
       url: event.uri,
     };
-    if (event.featuredImage?.node)
-      event['featuredImage'] = event.featuredImage.node.sourceUrl;
     return <EventRow key={i} {...event} />;
   });
 

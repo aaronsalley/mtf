@@ -20,6 +20,12 @@ const EventTile = ({
   excerpt = 'Event summary.',
   link: { text = 'Details', url = '/' },
 }: EventTile) => {
+  const {
+    mediaType = '',
+    altText = '',
+    mediaItemUrl = '',
+  } = featuredImage?.node ?? '';
+
   return (
     <article>
       <Link href={url}>
@@ -27,10 +33,9 @@ const EventTile = ({
           <header>
             <div className={styles['thumbnail']}>
               <Image
-                src={featuredImage?.node.sourceUrl ?? '#'} //TODO: If no image, use placeholder
+                src={mediaItemUrl ?? '#'} //TODO: If no image, use placeholder
                 alt={title + ' event thumbnail'}
                 layout="fill"
-                unoptimized // TODO: optimze remote image
                 objectFit="cover"
               />
             </div>

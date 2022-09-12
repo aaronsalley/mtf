@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Helmet from '../components/atoms/Helmet';
 import Page from '../components/templates/Page';
-import { wpContent } from './lib/getWPData';
+import { wpContent } from '../lib/getWPData';
 
 const Single: NextPage = (props: any) => {
   return (
@@ -26,12 +26,15 @@ export const getStaticPaths = async () => {
       return { params: { slug } };
     });
 
+    if (!paths) throw new Error('No pages returned from CMS.');
+
     return {
       paths,
-      fallback: true,
+      fallback: 'blocking',
     };
   } catch (error: any) {
     console.error(error.message);
+
     return {
       paths: [],
       fallback: true,
@@ -52,7 +55,9 @@ export const getStaticProps = async ({ params: { slug }, locale }: any) => {
   } catch (error: any) {
     console.error(error.message);
 
-    return { props: {} };
+    return {
+      notFound: true,
+    };
   }
 };
 

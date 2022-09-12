@@ -4,13 +4,19 @@ import PageTitle from '../../atoms/PageTitle';
 import styles from './index.module.scss';
 
 const Event = ({
-  featuredImage = '',
+  featuredImage,
   title = 'Event Title',
   content = 'Body copy',
   categories = { nodes: [{ name: 'Program' }] },
   tags = { nodes: [{ name: 'Artist' }] },
   location = 'Location',
 }: any) => {
+  const {
+    mediaType = '',
+    altText = '',
+    mediaItemUrl = '',
+  } = featuredImage?.node ?? '';
+
   const programService: any[] =
     categories.nodes.length > 0
       ? categories.nodes.map((category: any) => category.name)
@@ -26,11 +32,10 @@ const Event = ({
       <header>
         <div className={styles['stage']}>
           <Image
-            src={featuredImage?.node.sourceUrl}
-            alt={title}
-            layout={'fill'}
-            objectFit={'cover'}
-            unoptimized // TODO: Optimize remote image
+            src={mediaItemUrl}
+            alt={title + ' event thumbnail'}
+            layout="fill"
+            objectFit="cover"
           />
         </div>
         <aside>

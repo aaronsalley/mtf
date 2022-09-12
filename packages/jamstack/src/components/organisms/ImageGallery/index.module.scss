@@ -45,7 +45,7 @@
     &:nth-of-type(3n - 3) {
       flex-basis: calc(280 / 1561 * 100%);
 
-      :first-child {
+      > :first-child {
         max-width: calc(181 / 280 * 100%);
       }
 

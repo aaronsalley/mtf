@@ -3242,6 +3242,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mtfmusicals/jamstack@workspace:packages/jamstack":
+  version: 0.0.0-use.local
+  resolution: "@mtfmusicals/jamstack@workspace:packages/jamstack"
+  dependencies:
+    "@sentry/nextjs": ^7.11.1
+    "@types/node": 18.7.6
+    "@types/react": 18.0.17
+    "@types/react-dom": 18.0.6
+    bootstrap: ^5.2.0
+    chalk: ^5.0.1
+    eslint: 8.22.0
+    eslint-config-next: 12.2.5
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.2.1
+    next: 12.2.5
+    prettier: ^2.7.1
+    react: 18.2.0
+    react-dom: 18.2.0
+    sass: ^1.54.4
+    stylelint: ^14.11.0
+    stylelint-config-prettier: ^9.0.3
+    stylelint-config-prettier-scss: ^0.0.1
+    stylelint-config-rational-order: ^0.1.2
+    stylelint-config-standard: ^28.0.0
+    stylelint-config-standard-scss: ^5.0.0
+    stylelint-prettier: ^2.0.0
+    stylelint-webpack-plugin: ^3.3.0
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
 "@next/env@npm:12.2.5":
   version: 12.2.5
   resolution: "@next/env@npm:12.2.5"
@@ -14557,37 +14588,6 @@ __metadata:
   checksum: 56c913ecf5a8d74325d0af9bc17a233bad50977438d44864d925bb6c45c946e0fee8c4c1f5fe2225471ef40df5222e943047982717ebff0d624770564d3c46ba
   languageName: node
   linkType: hard
-
-"jamstack@workspace:packages/jamstack":
-  version: 0.0.0-use.local
-  resolution: "jamstack@workspace:packages/jamstack"
-  dependencies:
-    "@sentry/nextjs": ^7.11.1
-    "@types/node": 18.7.6
-    "@types/react": 18.0.17
-    "@types/react-dom": 18.0.6
-    bootstrap: ^5.2.0
-    chalk: ^5.0.1
-    eslint: 8.22.0
-    eslint-config-next: 12.2.5
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-prettier: ^4.2.1
-    next: 12.2.5
-    prettier: ^2.7.1
-    react: 18.2.0
-    react-dom: 18.2.0
-    sass: ^1.54.4
-    stylelint: ^14.11.0
-    stylelint-config-prettier: ^9.0.3
-    stylelint-config-prettier-scss: ^0.0.1
-    stylelint-config-rational-order: ^0.1.2
-    stylelint-config-standard: ^28.0.0
-    stylelint-config-standard-scss: ^5.0.0
-    stylelint-prettier: ^2.0.0
-    stylelint-webpack-plugin: ^3.3.0
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
 
 "jest-changed-files@npm:^27.5.1":
   version: 27.5.1

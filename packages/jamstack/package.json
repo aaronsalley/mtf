@@ -1,5 +1,5 @@
 {
-  "name": "jamstack",
+  "name": "@mtfmusicals/jamstack",
   "version": "0.1.0",
   "private": true,
   "scripts": {

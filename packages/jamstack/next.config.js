@@ -11,7 +11,11 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['localhost', 'aarons-macbook-pro.local'],
+    domains: [
+      'localhost',
+      'aarons-macbook-pro.local',
+      'storage.googleapis.com',
+    ],
   },
 };
 

@@ -49,11 +49,11 @@ on:
     branches: ['develop', 'feature/devops']
 
 env:
-  PROJECT_ID: 'mtfmusicals' # TODO: update Google Cloud project id ${{ secrets.PROJECT_ID }}
-  GAR_LOCATION: ${{ secrets.GAR_LOCATION }} # TODO: update Artifact Registry location ${{ secrets.GAR_LOCATION }}
-  REPOSITORY: 'public-web' # TODO: update Cloud Run service name ${{ secrets.REPOSITORY }}
-  SERVICE: 'jamstack' # TODO: update Cloud Run service name ${{ secrets.SERVICE }}
-  REGION: 'us-central1' # TODO: update Cloud Run service region
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  GAR_LOCATION: ${{ secrets.GAR_LOCATION }}
+  REPOSITORY: ${{ secrets.REPOSITORY }}
+  SERVICE: ${{ secrets.SERVICE }}
+  REGION: ${{ secrets.REGION }}
   TAG: ${{ github.sha }}
 
 jobs:
@@ -63,8 +63,8 @@ jobs:
       id-token: 'write'
 
     environment: staging
-
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3

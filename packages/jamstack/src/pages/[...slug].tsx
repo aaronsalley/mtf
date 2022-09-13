@@ -20,11 +20,16 @@ const Single: NextPage = (props: any) => {
 export const getStaticPaths = async () => {
   try {
     const data = await wpContent();
-    const paths = data.pages?.nodes.map((page: any) => {
-      const slug = page?.uri.split('/').filter(Boolean);
+    const paths = data.pages?.nodes
+      .map((page: any) => {
+        //Exclude the root page since it has its own template
+        if (page.uri === '/') return;
 
-      return { params: { slug } };
-    });
+        const slug = page?.uri.split('/').filter(Boolean);
+
+        return { params: { slug } };
+      })
+      .filter(Boolean);
 
     if (!paths) throw new Error('No pages returned from CMS.');
 
@@ -45,9 +50,11 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params: { slug }, locale }: any) => {
   try {
     const data = await wpContent();
-    const props = data.pages?.nodes.find((page: any) =>
-      page.uri.match(slug.join('/'))
-    );
+    const props = data.pages?.nodes.find((page: any) => {
+      if (page.uri === '/') return;
+
+      return '/' + slug.join('/') + '/' === page.uri;
+    });
 
     if (!props) throw Error('No data returned from CMS.');
 

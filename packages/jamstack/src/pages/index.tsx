@@ -15,8 +15,8 @@ const Index: NextPage = (props: any) => {
 export const getStaticProps = async (context: any) => {
   try {
     const props = await wpContent();
-
-    if (!props.pageBy) throw new Error('Did you forget to set a homepage?');
+    props['page'] = props.pages?.nodes.find((page: any) => page.uri === '/');
+    delete props.pages;
 
     return { props, revalidate: 60 };
   } catch (error: any) {

@@ -1,16 +1,4 @@
 export const wpContent = async () => {
-  const home = `pageBy(uri: "/") {
-    title,
-    content,
-    excerpt,
-    featuredImage {
-      node {
-        mediaType,
-        mediaItemUrl,
-        altText,
-      }
-    }
-  }`;
   const makers = `mediaItems(where: {category: "maker"}, first: 50) {
     nodes {
       title,
@@ -104,7 +92,6 @@ export const wpContent = async () => {
     const query = `{
     ${megaMenuItems},
     ${navItems},
-    ${home},
     ${makers},
     ${pages},
     ${events},

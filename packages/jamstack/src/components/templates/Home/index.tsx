@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 import Image from 'next/image';
 
 const Home = ({
-  pageBy: {
+  page: {
     featuredImage,
     title = 'Page Title',
     excerpt = 'This is a page excerpt.',
@@ -34,6 +34,7 @@ const Home = ({
             alt={altText}
             layout="fill"
             objectFit={'cover'}
+            priority
           />
         );
         break;

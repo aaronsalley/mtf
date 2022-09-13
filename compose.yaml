@@ -6,7 +6,7 @@ services:
     build:
       context: ./packages/jamstack
       tags:
-        - ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${NETWORK}/jamstack:${TAG:-latest}
+        - ${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${SERVICE}:${TAG:-latest}
     restart: on-failure
     expose:
       - '3000'

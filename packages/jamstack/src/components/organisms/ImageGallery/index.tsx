@@ -25,7 +25,7 @@ const ImageGallery = ({ items = [], maxColumns = 7, gap = 2 }) => {
 
     const minHeightOverride = 263;
     const maxHeightOverride = 311;
-    const alt = [altText, title].join(' ');
+    const alt = [title, altText].join(' ');
 
     const tile = <ImageTile src={mediaItemUrl} alt={alt} key={i} />;
     const bigTile = (

@@ -23,7 +23,7 @@
     .thumbnail {
       position: relative;
       width: 100%;
-      padding-bottom: 13.75rem;
+      padding-bottom: calc(3 / 5 * 100%);
       background-color: navy;
     }
 

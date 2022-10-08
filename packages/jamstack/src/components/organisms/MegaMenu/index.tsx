@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import styles from './index.module.scss';
 
 interface menuItem {
@@ -43,14 +43,17 @@ const MegaMenu = ({
     label = '',
     children,
   }: menuItem) => {
-    let text: any = <p>{label}</p>;
+    let text: ReactElement;
 
-    if (path !== '#')
+    if (path !== '#') {
       text = (
         <Link href={path} target={target} title={title}>
           {label}
         </Link>
       );
+    } else {
+      text = <p>{label}</p>;
+    }
 
     return (
       <li>
@@ -61,28 +64,38 @@ const MegaMenu = ({
   };
 
   const MenuItems = (props: any) => {
-    if (props === undefined) return null;
+    if (props.length < 1) return null;
 
-    const nestedList: any = [];
+    const list: any = [];
+    let sublist: any = [];
     let i = 0;
 
+    // Loop through each entry
     for (const [key, value] of Object.entries(props) as [string, any]) {
-      const inner: any = [];
+      const children = value.childItems?.nodes;
 
-      if (value['childItems'] && value['childItems']['nodes'].length > 0) {
-        inner.push(MenuItems({ ...value.childItems.nodes }));
+      // At the lowest node
+      if (!children?.length) {
+        list.push(<MenuItem {...value} key={key} />);
+      } else {
+        // Do this again using children
+        sublist.push(MenuItems(children));
+
+        // Add new tree to the list
+        list.push(
+          <MenuItem {...value} key={key}>
+            {sublist}
+          </MenuItem>
+        );
+
+        // Reset the list for the next time
+        sublist = [];
       }
-
-      nestedList.push(
-        <MenuItem {...value} key={key}>
-          {inner}
-        </MenuItem>
-      );
 
       i++;
     }
 
-    return <ul key={-1}>{nestedList}</ul>;
+    return <ul key={i}>{list}</ul>;
   };
 
   return (

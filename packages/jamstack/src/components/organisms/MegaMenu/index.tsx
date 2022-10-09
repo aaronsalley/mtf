@@ -1,6 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import styles from './index.module.scss';
 
 interface menuItem {
@@ -43,14 +42,17 @@ const MegaMenu = ({
     label = '',
     children,
   }: menuItem) => {
-    let text: any = <p>{label}</p>;
+    let text: ReactElement;
 
-    if (path !== '#')
+    if (path !== '#') {
       text = (
         <Link href={path} target={target} title={title}>
           {label}
         </Link>
       );
+    } else {
+      text = <p>{label}</p>;
+    }
 
     return (
       <li>
@@ -61,28 +63,29 @@ const MegaMenu = ({
   };
 
   const MenuItems = (props: any) => {
-    if (props === undefined) return null;
+    if (props.length < 1) return null;
 
-    const nestedList: any = [];
+    const list: any = [];
     let i = 0;
 
     for (const [key, value] of Object.entries(props) as [string, any]) {
-      const inner: any = [];
+      const nodes: any = [];
+      const children = value.childItems?.nodes;
 
-      if (value['childItems'] && value['childItems']['nodes'].length > 0) {
-        inner.push(MenuItems({ ...value.childItems.nodes }));
+      if (children) {
+        nodes.push(MenuItems({ ...children }));
       }
 
-      nestedList.push(
+      list.push(
         <MenuItem {...value} key={key}>
-          {inner}
+          {nodes}
         </MenuItem>
       );
 
       i++;
     }
 
-    return <ul key={-1}>{nestedList}</ul>;
+    return <ul>{list}</ul>;
   };
 
   return (

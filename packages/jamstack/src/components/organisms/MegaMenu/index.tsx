@@ -85,7 +85,7 @@ const MegaMenu = ({
       i++;
     }
 
-    return <ul>{list}</ul>;
+    return <ul key={i}>{list}</ul>;
   };
 
   return (

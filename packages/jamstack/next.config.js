@@ -24,14 +24,6 @@ const moduleExports = {
   sentry: {
     hideSourceMaps: true,
   },
-  env: {
-    SENTRY_DSN:
-      process.env.SENTRY_DSN ||
-      'https://7e0abe374a764ced9073998fb0e4a5d2@o178341.ingest.sentry.io/6670520',
-    API_URL: process.env.API_URL || 'http://localhost:32769',
-    NEXT_PUBLIC_API_URL:
-      process.env.NEXT_PUBLIC_API_URL || 'http://localhost:32769',
-  },
 };
 
 const sentryWebpackPluginOptions = {

@@ -59,18 +59,20 @@ export const wpContent = async () => {
     }
   }`;
   // TODO: fetch state consts
-  const megaMenuItems = `menuItems(where: {location: MEGA, parentId: ""}, first: 1000) {
+  const menuItems = `menuItems(where: {location: MEGA, parentId: ""}, first: 1000) {
     nodes {
       label,
       title,
       target,
       path,
+      parentId,
       childItems {
         nodes {
           label,
           title,
           target,
           path,
+          parentId,
         }
       }
     }
@@ -90,7 +92,7 @@ export const wpContent = async () => {
         ? process.env.NEXT_PUBLIC_API_URL
         : process.env.API_URL;
     const query = `{
-    ${megaMenuItems},
+    ${menuItems},
     ${navItems},
     ${makers},
     ${pages},
@@ -112,6 +114,12 @@ export const wpContent = async () => {
       json.errors.map((error: any) => {
         throw Error(error);
       });
+
+    const megaMenu = [];
+    for (const item of json.data.menuItems.nodes) {
+      if (!item.parentId) megaMenu.push(item);
+    }
+    json.data.menuItems.nodes = megaMenu;
 
     return json.data;
   } catch (error: any) {

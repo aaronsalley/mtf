@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { ReactElement, useState } from 'react';
 import styles from './index.module.scss';
@@ -67,35 +66,26 @@ const MegaMenu = ({
     if (props.length < 1) return null;
 
     const list: any = [];
-    let sublist: any = [];
     let i = 0;
 
-    // Loop through each entry
     for (const [key, value] of Object.entries(props) as [string, any]) {
+      const nodes: any = [];
       const children = value.childItems?.nodes;
 
-      // At the lowest node
-      if (!children?.length) {
-        list.push(<MenuItem {...value} key={key} />);
-      } else {
-        // Do this again using children
-        sublist.push(MenuItems(children));
-
-        // Add new tree to the list
-        list.push(
-          <MenuItem {...value} key={key}>
-            {sublist}
-          </MenuItem>
-        );
-
-        // Reset the list for the next time
-        sublist = [];
+      if (children) {
+        nodes.push(MenuItems({ ...children }));
       }
+
+      list.push(
+        <MenuItem {...value} key={key}>
+          {nodes}
+        </MenuItem>
+      );
 
       i++;
     }
 
-    return <ul key={i}>{list}</ul>;
+    return <ul>{list}</ul>;
   };
 
   return (

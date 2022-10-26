@@ -6,8 +6,8 @@ import { wpContent } from '../../lib/getWPData';
 const Event: NextPage = (props: any) => {
   return (
     <>
-      <Helmet {...props} />
-      <EventPage {...props} />
+      <Helmet {...props.event} />
+      <EventPage {...props.event} />
     </>
   );
 };
@@ -37,10 +37,12 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { id }, locale }: any) => {
   try {
-    const data = await wpContent();
-    const props = data.events.nodes.find((event: any) => event.uri.match(id));
-
+    const props = await wpContent();
     if (!props) throw new Error('Event data not found.');
+
+    props['event'] = props.events.nodes.find((event: any) =>
+      event.uri.match(id)
+    );
 
     return { props };
   } catch (error: any) {

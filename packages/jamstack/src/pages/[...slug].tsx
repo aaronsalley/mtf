@@ -6,11 +6,11 @@ import { wpContent } from '../lib/getWPData';
 const Single: NextPage = (props: any) => {
   return (
     <>
-      <Helmet {...props} />
-      <Page {...props}>
+      <Helmet {...props.page} />
+      <Page {...props.page}>
         <section
           className={'content'}
-          dangerouslySetInnerHTML={{ __html: props.content }}
+          dangerouslySetInnerHTML={{ __html: props.page.content }}
         ></section>
       </Page>
     </>
@@ -49,16 +49,18 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { slug }, locale }: any) => {
   try {
-    const data = await wpContent();
-    const props = data.pages?.nodes.find((page: any) => {
+    const props = await wpContent();
+    if (!props) throw Error('No data returned from CMS.');
+
+    props['page'] = props.pages?.nodes.find((page: any) => {
       if (page.uri === '/') return;
 
       return '/' + slug.join('/') + '/' === page.uri;
     });
+    delete props.pages;
 
-    if (!props) throw Error('No data returned from CMS.');
-
-    return { props };
+    // TODO - Refactor: return only page props
+    return { props, revalidate: 60 };
   } catch (error: any) {
     console.error(error.message);
 

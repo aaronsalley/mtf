@@ -4,6 +4,7 @@ import { wpContent } from '../lib/getWPData';
 import '../components/templates/Layout/globals.scss';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  // TODO - REFACTOR: move call for menus here
   const { navItems, menuItems }: any = wpContent();
 
   return (

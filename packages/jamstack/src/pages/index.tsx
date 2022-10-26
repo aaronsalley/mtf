@@ -6,7 +6,7 @@ import { wpContent } from '../lib/getWPData';
 const Index: NextPage = (props: any) => {
   return (
     <>
-      <Helmet {...props} />
+      <Helmet {...props.page} />
       <Home {...props} />
     </>
   );

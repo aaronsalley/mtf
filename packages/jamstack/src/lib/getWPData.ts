@@ -88,7 +88,7 @@ export const wpContent = async () => {
 
   try {
     const API_URL =
-      process.env.NODE_ENV !== 'development'
+      process.env.SENTRY_ENVIRONMENT !== 'development'
         ? typeof window !== 'undefined'
           ? process.env.NEXT_PUBLIC_API_URL
           : process.env.API_URL

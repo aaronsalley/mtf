@@ -9,7 +9,7 @@ const Events: NextPage = (props: any) => {
     <>
       <Helmet {...props} />
       <Page {...props}>
-        <EventsPage {...props} />
+        <EventsPage {...props?.events} />
       </Page>
     </>
   );
@@ -17,13 +17,17 @@ const Events: NextPage = (props: any) => {
 
 export const getStaticProps = async (context: any) => {
   try {
-    const data = await wpContent();
+    const props = await wpContent();
+    if (!props) throw Error('No data returned from CMS.');
+
+    props['title'] = 'Work in progress';
 
     return {
-      props: {
-        title: 'Work in progress',
-        events: data?.events.nodes ?? null,
-      },
+      // props: {
+      //   title: 'Work in progress',
+      //   events: props?.events.nodes ?? null,
+      // },
+      props,
       revalidate: 60,
     };
   } catch (error: any) {

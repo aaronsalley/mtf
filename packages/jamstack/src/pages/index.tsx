@@ -15,8 +15,9 @@ const Index: NextPage = (props: any) => {
 export const getStaticProps = async (context: any) => {
   try {
     const props = await wpContent();
+    if (!props) throw new Error('Event data not found.');
+
     props['page'] = props.pages?.nodes.find((page: any) => page.uri === '/');
-    delete props.pages;
 
     return { props, revalidate: 60 };
   } catch (error: any) {

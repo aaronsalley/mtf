@@ -57,7 +57,6 @@ export const getStaticProps = async ({ params: { slug }, locale }: any) => {
 
       return '/' + slug.join('/') + '/' === page.uri;
     });
-    delete props.pages;
 
     // TODO - Refactor: return only page props
     return { props, revalidate: 60 };

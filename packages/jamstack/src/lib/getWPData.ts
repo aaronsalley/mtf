@@ -87,10 +87,14 @@ export const wpContent = async () => {
   }`;
 
   try {
-    const url =
-      typeof window !== 'undefined'
-        ? process.env.NEXT_PUBLIC_API_URL
-        : process.env.API_URL;
+    const API_URL =
+      process.env.NODE_ENV !== 'development'
+        ? typeof window !== 'undefined'
+          ? process.env.NEXT_PUBLIC_API_URL
+          : process.env.API_URL
+        : typeof window !== 'undefined'
+        ? 'http://aarons-macbook-pro.local:32769'
+        : 'http://cms';
     const query = `{
     ${menuItems},
     ${navItems},
@@ -100,7 +104,7 @@ export const wpContent = async () => {
     ${posts}
   }`.replaceAll(/\s/gi, '');
 
-    const res = await fetch(url + `/graphql`, {
+    const res = await fetch(API_URL + `/graphql`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',

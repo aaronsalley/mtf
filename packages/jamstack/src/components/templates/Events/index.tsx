@@ -2,7 +2,7 @@ import Button from '../../atoms/Button';
 import EventRow from '../../molecules/EventRow';
 import styles from './index.module.scss';
 
-const Events = ({ events = [] }: any) => {
+const Events = ({ nodes: events = [] }: any) => {
   if (events.length < 1)
     return (
       <section className={styles['container']}>

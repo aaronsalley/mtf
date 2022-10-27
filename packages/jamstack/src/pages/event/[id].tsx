@@ -44,7 +44,7 @@ export const getStaticProps = async ({ params: { id }, locale }: any) => {
       event.uri.match(id)
     );
 
-    return { props };
+    return { props, revalidate: 60 };
   } catch (error: any) {
     console.error(error.message);
 

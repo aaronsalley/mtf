@@ -5,15 +5,13 @@ import styles from './index.module.scss';
 import Image from 'next/image';
 
 const Home = ({
-  page: {
-    featuredImage,
-    title = 'Page Title',
-    excerpt = 'This is a page excerpt.',
-    template,
-    slug,
-    isFrontPage = true,
-    content,
-  },
+  featuredImage,
+  title = 'Page Title',
+  excerpt = 'This is a page excerpt.',
+  template,
+  slug,
+  isFrontPage = true,
+  content,
   events,
   posts,
   mediaItems,

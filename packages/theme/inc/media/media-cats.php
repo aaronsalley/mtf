@@ -1,7 +1,7 @@
 <?php
 // Add category functionality to medias
-add_action( 'init', 'mtfmusicals_add_attachment_cats_taxonomy' );
-function mtfmusicals_add_attachment_cats_taxonomy() {
+// TODO: Don't show at root
+add_action( 'init', function () {
   $labels = array(
       'name'              => 'Media Categories',
       'singular_name'     => 'Media Category',
@@ -23,34 +23,33 @@ function mtfmusicals_add_attachment_cats_taxonomy() {
       'rewrite' => 'true',
       'show_admin_column' => 'true',
       'show_in_graphql' => true,
-      'graphql_single_name' => 'category',
-      'graphql_plural_name' => 'categories',  
+      'graphql_single_name' => 'MediaCategory',
+      'graphql_plural_name' => 'MediaCategories',  
   );
 
   register_taxonomy( 'media_cats', 'attachment', $args );
-}
+});
+
 
 /**
  * Add capability to query media categories using where in Graph
  */
 // Register media categories 'where' args
-add_action('graphql_register_types', 'mtfmusicals_graph_media_cats');
-function mtfmusicals_graph_media_cats() {
+add_action('graphql_register_types', function () {
 
   // Registered post type in Graph (use PascalCase singular name)
-  $post_type = "MediaItem";
+  $GraphQLType = "MediaItem";
 
-  register_graphql_field('RootQueryTo' . $post_type . 'ConnectionWhereArgs', 'category', [
+  register_graphql_field('RootQueryTo' . $GraphQLType . 'ConnectionWhereArgs', 'mediaCategory', [
       'type' => 'String',
-      'description' => __('The category to filter by', 'mtfmusicals'),
+      'description' => __('The category to filter by.', 'mtfmusicals'),
   ]);
-};
+});
 
 // Make media categories queryable by name
-add_filter('graphql_post_object_connection_query_args', 'mtfmusicals_graph_where_media_cats', 10, 5);
-function mtfmusicals_graph_where_media_cats($query_args, $source, $args, $context, $info) {
+add_filter('graphql_post_object_connection_query_args', function ($query_args, $source, $args, $context, $info) {
 
-  $category = $args['where']['category'];
+  $category = $args['where']['mediaCategory'];
 
   if (isset($category)) {
       $query_args['tax_query'] = [
@@ -63,4 +62,4 @@ function mtfmusicals_graph_where_media_cats($query_args, $source, $args, $contex
   }
 
   return $query_args;
-};
+}, 10, 5);

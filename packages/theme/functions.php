@@ -20,16 +20,16 @@
 if ( ! isset ( $content_width) )
   $content_width = 800;
 
-if ( ! function_exists( 'mtfmusicals_setup' ) ) :
-  /**
-  * Sets up theme defaults and registers support for various WordPress features
+/**
+  *  Sets up theme defaults and registers support for various WordPress features
   *
   *  It is important to set up these functions before the init hook so that none of these
   *  features are lost.
   *
   *  @since Musical Theatre Factory 1.0
   */
-  function mtfmusicals_setup() {
+if ( ! function_exists( 'mtfmusicals_setup' ) ) :
+  add_action( 'after_setup_theme', function () {
     load_theme_textdomain( 'mtfmusicals', get_template_directory() . '/i18n' );
 
     add_theme_support( 'automatic-feed-links' );
@@ -41,21 +41,21 @@ if ( ! function_exists( 'mtfmusicals_setup' ) ) :
     add_post_type_support( 'page', 'excerpt' );
     
     register_nav_menus( array ( 'mega' => 'Site Menu', 'nav' => 'Main Navigation' ) );
-}
+  });
 endif;
-add_action( 'after_setup_theme', 'mtfmusicals_setup' );
 
-function add_theme_scripts() {
+add_action( 'wp_enqueue_scripts', function () {
   wp_enqueue_style( 'style', get_stylesheet_uri() ); 
 
   if ( wp_get_environment_type() === 'development' ) {
     
   }
-}
-add_action( 'wp_enqueue_scripts', 'add_theme_scripts' );
+});
+
 
 // include 'inc/cors.php';
 include 'inc/elementor.php';
 include 'inc/events/events.php';
 include 'inc/media/media.php';
 include 'inc/required-plugins.php';
+include 'inc/logger.php';

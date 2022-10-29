@@ -1,16 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Button from '../../atoms/Button';
+import { EventItem } from '../Event';
 import styles from './index.module.scss';
 
 const EventRow = ({
   featuredImage,
   title = 'Event Title',
-  startDate = undefined,
-  endDate = '12.01.2021',
   excerpt = 'Event summary.',
+  location = 'Location',
+  datetimeStart = undefined,
+  datetimeEnd = '12.01.2021',
+  isAllDay,
+  eventURL,
   link: { text = 'Details', url = '' },
-}: any) => {
+}: EventItem) => {
   const {
     mediaType = '',
     altText = '',
@@ -32,8 +36,8 @@ const EventRow = ({
           <section>
             <header>
               <h2>{title}</h2>
-              <time>Monday {endDate} Time </time>
-              <address>Location</address>
+              <time>{datetimeEnd}</time>
+              <address>{location}</address>
             </header>
             <div
               className={styles['summary']}

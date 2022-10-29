@@ -50,13 +50,14 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params: { slug }, locale }: any) => {
   try {
     const props = await wpContent();
-    if (!props) throw Error('No data returned from CMS.');
+    if (!props['page']) throw Error('No data returned from CMS.');
 
-    props['page'] = props.pages?.nodes.find((page: any) => {
-      if (page.uri === '/') return;
+    props['page'] =
+      props.pages?.nodes.find((page: any) => {
+        if (page.uri === '/') return;
 
-      return '/' + slug.join('/') + '/' === page.uri;
-    });
+        return '/' + slug.join('/') + '/' === page.uri;
+      }) ?? null;
 
     // TODO - Refactor: return only page props
     return { props, revalidate: 60 };

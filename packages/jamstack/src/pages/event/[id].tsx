@@ -40,9 +40,8 @@ export const getStaticProps = async ({ params: { id }, locale }: any) => {
     const props = await wpContent();
     if (!props) throw new Error('Event data not found.');
 
-    props['event'] = props.events.nodes.find((event: any) =>
-      event.uri.match(id)
-    );
+    props['event'] =
+      props.events.nodes.find((event: any) => event.uri.match(id)) ?? null;
 
     return { props, revalidate: 60 };
   } catch (error: any) {

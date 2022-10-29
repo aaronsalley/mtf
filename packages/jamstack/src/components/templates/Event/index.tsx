@@ -1,16 +1,23 @@
 import Image from 'next/image';
 import Button from '../../atoms/Button';
 import PageTitle from '../../atoms/PageTitle';
+import { EventItem } from '../../molecules/Event';
 import styles from './index.module.scss';
 
 const Event = ({
   featuredImage,
   title = 'Event Title',
+  location = 'Location',
+  datetimeStart = undefined,
+  datetimeEnd = '12.01.2021',
+  isAllDay,
+  excerpt = 'Event summary.',
+  eventURL,
+  ticketPrice,
   content = 'Body copy',
   categories = { nodes: [{ name: 'Program' }] },
   tags = { nodes: [{ name: 'Artist' }] },
-  location = 'Location',
-}: any) => {
+}: EventItem) => {
   const {
     mediaType = '',
     altText = '',
@@ -43,10 +50,10 @@ const Event = ({
           <PageTitle title={title} />
           <p className={styles['programService']}>{programService}</p>
           <time className={styles['time']}>
-            <strong>Date</strong> Time
+            <strong>{datetimeEnd}</strong> Time
           </time>
           <address className={styles['location']}>{location}</address>
-          <p className={styles['cost']}>Cost</p>
+          <p className={styles['cost']}>{ticketPrice}</p>
           <Button text={'Find Tickets'} /> {/* Hide if past */}
           <span></span>
         </aside>

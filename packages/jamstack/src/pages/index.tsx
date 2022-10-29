@@ -14,10 +14,16 @@ const Index: NextPage = (props: any) => {
 
 export const getStaticProps = async (context: any) => {
   try {
-    const props = await wpContent();
-    if (!props) throw new Error('Event data not found.');
+    const data: any = await wpContent();
+    if (!data) throw new Error('Data not found.');
 
-    props['page'] = props.pages?.nodes.find((page: any) => page.uri === '/');
+    const page =
+      data.pages?.nodes.find((page: any) => page.uri === '/') ?? null;
+    if (!page) throw new Error('No homepage set.');
+
+    const props = { ...data, ...page };
+
+    if (process.env.NODE_ENV !== 'production') console.debug(props);
 
     return { props, revalidate: 60 };
   } catch (error: any) {

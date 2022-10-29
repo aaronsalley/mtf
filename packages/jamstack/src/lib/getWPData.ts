@@ -1,5 +1,5 @@
 export const wpContent = async () => {
-  const makers = `mediaItems(where: {category: "maker"}, first: 50) {
+  const makers = `mediaItems(where: {mediaCategory: "maker"}, first: 50) {
     nodes {
       title,
       mediaType,
@@ -29,7 +29,12 @@ export const wpContent = async () => {
       title,
       excerpt,
       content,
-      categories {
+      isAllDay,
+      ticketPrice,
+      datetimeEnd,
+      datetimeStart,
+      eventURL,
+      eventCategories {
         nodes {
           name,
         },
@@ -47,7 +52,7 @@ export const wpContent = async () => {
           mediaItemUrl,
           altText,
         }
-      }
+      },
     }
   }`;
   const posts = `posts(where: {status: PUBLISH}) {
@@ -95,29 +100,30 @@ export const wpContent = async () => {
         : typeof window !== 'undefined'
         ? 'http://aarons-macbook-pro.local:32769'
         : 'http://cms';
-    const query = `{
-    ${menuItems},
-    ${navItems},
-    ${makers},
-    ${pages},
-    ${events},
-    ${posts}
-  }`.replaceAll(/\s/gi, '');
+    const GraphQLQuery = {
+      // operationName: 'fetchAllWPData',
+      query: `query {
+        ${menuItems},
+        ${navItems},
+        ${makers},
+        ${pages},
+        ${events},
+        ${posts}
+      }`.replaceAll(/\s/gi, ''),
+      variables: {},
+    };
 
     const res = await fetch(API_URL + `/graphql`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ query: query }),
+      body: JSON.stringify(GraphQLQuery),
       // mode: 'no-cors',
     });
-
     const json = await res.json();
-    if (json.errors)
-      json.errors.map((error: any) => {
-        throw Error(error);
-      });
+
+    if (json.errors) throw Error(JSON.stringify(json.errors));
 
     const megaMenu = [];
     for (const item of json.data.menuItems.nodes) {
@@ -125,9 +131,11 @@ export const wpContent = async () => {
     }
     json.data.menuItems.nodes = megaMenu;
 
+    if (process.env.NODE_ENV !== 'production') console.debug(json.data);
+
     return json.data;
   } catch (error: any) {
-    console.error(error.message);
+    console.error('Fetch error: ', error.message);
 
     return {
       notFound: true,

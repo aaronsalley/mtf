@@ -1,4 +1,4 @@
-import Button from '../../atoms/Button';
+import MarketingEmailRegistration from '../../molecules/forms/EmailSub';
 import MegaMenu from '../MegaMenu';
 import styles from './index.module.scss';
 
@@ -21,18 +21,7 @@ const Footer = ({ menuData }: any) => {
           501(c)(3) Public Charity incorporated in the State of New York. All
           donations are tax-deductible to the fullest extent under the law.
         </p>
-        <form className={'input-group'}>
-          <div className="form-floating">
-            <input
-              type="email"
-              id="email"
-              placeholder="name@example.com"
-              className={'form-control'}
-            />
-            <label htmlFor="email">Email address</label>
-          </div>
-          <Button text={'Sign up'} />
-        </form>
+        <MarketingEmailRegistration />
       </div>
       <MegaMenu menuData={menuData} />
       <p className={styles['copyright']}>

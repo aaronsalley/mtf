@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import * as UTCto from '../../../lib/utcToLocale';
 import Button from '../../atoms/Button';
 import { EventItem } from '../Event';
 import styles from './index.module.scss';
@@ -36,7 +37,7 @@ const EventRow = ({
           <section>
             <header>
               <h2>{title}</h2>
-              <time>{datetimeEnd}</time>
+              <time>{UTCto.formattedDate(datetimeEnd)}</time>
               <address>{location}</address>
             </header>
             <div

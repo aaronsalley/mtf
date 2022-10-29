@@ -3,6 +3,7 @@ import styles from './index.module.scss';
 import Button from '../../atoms/Button';
 import Link from 'next/link';
 import { EventItem } from '../Event';
+import * as UTCto from '../../../lib/utcToLocale';
 
 const EventTile = ({
   featuredImage,
@@ -37,7 +38,7 @@ const EventTile = ({
             <h3>{title}</h3>
           </header>
           <section>
-            <time>{datetimeEnd}</time>
+            <time>{UTCto.formattedDate(datetimeEnd)}</time>
             <div
               className={styles['summary']}
               dangerouslySetInnerHTML={{ __html: excerpt }}

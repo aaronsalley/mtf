@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import * as UTCto from '../../../lib/utcToLocale';
 import Button from '../../atoms/Button';
 import PageTitle from '../../atoms/PageTitle';
 import { EventItem } from '../../molecules/Event';
@@ -50,7 +51,8 @@ const Event = ({
           <PageTitle title={title} />
           <p className={styles['programService']}>{programService}</p>
           <time className={styles['time']}>
-            <strong>{datetimeEnd}</strong> Time
+            <strong>{UTCto.formattedDate(datetimeEnd)}</strong>{' '}
+            {UTCto.formattedTime(datetimeEnd)}
           </time>
           <address className={styles['location']}>{location}</address>
           <p className={styles['cost']}>{ticketPrice}</p>

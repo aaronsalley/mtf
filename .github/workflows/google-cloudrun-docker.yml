@@ -36,6 +36,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Build Next.js
+        run: yarn && yarn build
+
       - name: Google Auth
         id: auth
         uses: 'google-github-actions/auth@v0'

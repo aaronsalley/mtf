@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 import Button from '../../atoms/Button';
 import Link from 'next/link';
 import { EventItem } from '../Event';
-import * as UTCto from '../../../lib/utcToLocale';
+import * as UTCto from '../../../lib/UTCto';
 
 const EventTile = ({
   featuredImage,

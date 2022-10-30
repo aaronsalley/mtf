@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import * as UTCto from '../../../lib/utcToLocale';
+import * as UTCto from '../../../lib/UTCto';
 import Button from '../../atoms/Button';
 import PageTitle from '../../atoms/PageTitle';
 import { EventItem } from '../../molecules/Event';

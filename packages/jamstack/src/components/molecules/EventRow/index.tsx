@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import * as UTCto from '../../../lib/utcToLocale';
+import * as UTCto from '../../../lib/UTCto';
 import Button from '../../atoms/Button';
 import { EventItem } from '../Event';
 import styles from './index.module.scss';

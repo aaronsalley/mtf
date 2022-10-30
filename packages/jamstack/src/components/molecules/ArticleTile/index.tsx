@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Button from '../../atoms/Button';
+import * as UTCto from '../../../lib/UTCto';
 import styles from './index.module.scss';
 
 interface ArticleTile {
@@ -25,7 +26,7 @@ const ArticleTile = ({
             <h3>{title}</h3>
           </header>
           <section>
-            <time>{date}</time>
+            <time>{UTCto.formattedDate(date)}</time>
             <div
               className={styles['summary']}
               dangerouslySetInnerHTML={{ __html: excerpt }}

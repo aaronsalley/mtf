@@ -1,4 +1,5 @@
 @mixin pickup() {
+  z-index: 10;
   box-shadow: 0 1px 36px -2px rgb(0 0 0 / 40%);
   transform: scale(1.08);
 }

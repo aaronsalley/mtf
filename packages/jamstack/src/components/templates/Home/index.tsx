@@ -1,8 +1,8 @@
 import EventGrid from '../../organisms/EventGrid';
 import ImageGallery from '../../organisms/ImageGallery';
 import ArticleGrid from '../../organisms/ArticleGrid';
+import Spotlight from '../../organisms/Spotlight';
 import styles from './index.module.scss';
-import Image from 'next/image';
 
 const Home = ({
   featuredImage,
@@ -16,35 +16,16 @@ const Home = ({
   posts,
   mediaItems,
 }: any) => {
-  let media = null;
-  if (featuredImage) {
-    const {
-      mediaType = '',
-      altText = '',
-      mediaItemUrl = '',
-    } = featuredImage?.node ?? '';
-
-    switch (mediaType) {
-      case 'image':
-        media = (
-          <Image
-            src={mediaItemUrl}
-            alt={altText}
-            layout="fill"
-            objectFit={'cover'}
-            priority
-          />
-        );
-        break;
-      case 'video':
-        break;
-    }
-  }
+  const accordionBackground = content.match(/<img (.+?)>/g)
+    ? content.match(/<img (.+?)>/g)[0]
+    : null;
 
   return (
     <main className={styles['container']}>
       <section className={styles['hero']}>
-        <div className={styles['stage']}>{media}</div>
+        <div className={styles['stage']}>
+          <Spotlight {...featuredImage?.node} />
+        </div>
         <aside>
           <span className={styles['scroll-hint']}>scroll</span>
         </aside>
@@ -85,6 +66,7 @@ const Home = ({
         </article>
       </section>
       <div className={styles['accordion']}>
+        <span dangerouslySetInnerHTML={{ __html: accordionBackground }} />
         <ul>
           <li>R&D</li>
           <li>Factory Salon</li>

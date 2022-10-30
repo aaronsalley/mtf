@@ -1,3 +1,4 @@
+@use '../Layout/choreography';
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/maps';
@@ -8,7 +9,6 @@
     position: relative;
     z-index: 0;
     height: 100vh;
-    background-color: navy;
 
     .stage {
       height: 100%;
@@ -94,6 +94,7 @@
   }
 
   > .container {
+    position: relative;
     padding-top: 18rem;
     padding-bottom: 14.5rem;
     color: var(--mtf-light);
@@ -131,14 +132,23 @@
         }
       }
     }
+
+    &::before {
+      @include choreography.fader($position: top);
+    }
+
+    &::after {
+      @include choreography.fader($position: bottom);
+    }
   }
 
   .accordion {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
-    background-color: navy;
 
     ul {
+      z-index: 1;
       width: 100%;
       max-width: var(--mtf-max-width);
       margin: auto;
@@ -163,6 +173,27 @@
           width: 50%;
           padding-left: unset;
         }
+      }
+    }
+
+    > span {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 0;
+      overflow: hidden;
+
+      &::before {
+        @include choreography.fader($position: top);
+      }
+
+      /* stylelint-disable-next-line no-descending-specificity */
+      img {
+        width: 100%;
+        max-width: 100%;
+        object-fit: cover;
       }
     }
   }

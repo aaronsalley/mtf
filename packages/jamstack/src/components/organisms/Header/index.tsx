@@ -10,10 +10,9 @@ import { useRouter } from 'next/router';
 const Header = ({
   gearIcon = Brand,
   message = 'This is a sample global message.',
-  menuData,
+  menuData: { menuItems: megaMenu, navItems: navMenu },
 }: any) => {
   const router = useRouter();
-  const { menuItems: megaMenu, navItems: navMenu } = menuData;
 
   const AppBar = () => (
     <div className={styles['appbar']}>

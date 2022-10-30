@@ -1,12 +1,23 @@
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { layoutData } from '../../../lib/getLayoutData';
 import Footer from '../../organisms/Footer';
 import Header from '../../organisms/Header';
 
-const Layout = ({ navItems, menuItems, children }: any) => {
+const Layout = ({ children }: any) => {
+  const [menus, setMenus]: [any, Dispatch<SetStateAction<{}>>] = useState({});
+  useEffect(() => {
+    (async () => {
+      // TODO - REFACTOR: separate header/footer data from rest of content
+      const { navItems, menuItems }: any = await layoutData();
+      setMenus({ navItems, menuItems });
+    })();
+  }, []);
+
   return (
     <>
-      <Header menuData={{ navItems, menuItems }} />
+      <Header menuData={menus ?? null} />
       {children}
-      <Footer menuData={menuItems} />
+      <Footer menuData={menus?.menuItems} />
     </>
   );
 };

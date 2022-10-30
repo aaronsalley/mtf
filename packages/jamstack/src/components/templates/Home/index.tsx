@@ -65,6 +65,7 @@ const Home = ({
           </div>
         </article>
       </section>
+      {/* TODO: Build interactive accordion */}
       <div className={styles['accordion']}>
         <span dangerouslySetInnerHTML={{ __html: accordionBackground }} />
         <ul>

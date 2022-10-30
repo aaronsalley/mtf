@@ -23,10 +23,6 @@ export const getStaticProps = async (context: any) => {
     props['title'] = 'Work in progress';
 
     return {
-      // props: {
-      //   title: 'Work in progress',
-      //   events: props?.events.nodes ?? null,
-      // },
       props,
       revalidate: 60,
     };

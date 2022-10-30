@@ -63,33 +63,6 @@ export const wpContent = async () => {
       excerpt
     }
   }`;
-  // TODO: fetch state consts
-  const menuItems = `menuItems(where: {location: MEGA, parentId: ""}, first: 1000) {
-    nodes {
-      label,
-      title,
-      target,
-      path,
-      parentId,
-      childItems {
-        nodes {
-          label,
-          title,
-          target,
-          path,
-          parentId,
-        }
-      }
-    }
-  }`;
-  const navItems = `navItems: menuItems(where: {location: NAV, parentId: ""}, first: 1000) {
-    nodes {
-      label,
-      title,
-      target,
-      path,
-    }
-  }`;
 
   try {
     const API_URL =
@@ -103,8 +76,6 @@ export const wpContent = async () => {
     const GraphQLQuery = {
       // operationName: 'fetchAllWPData',
       query: `query {
-        ${menuItems},
-        ${navItems},
         ${makers},
         ${pages},
         ${events},
@@ -122,16 +93,7 @@ export const wpContent = async () => {
       // mode: 'no-cors',
     });
     const json = await res.json();
-
     if (json.errors) throw Error(JSON.stringify(json.errors));
-
-    const megaMenu = [];
-    for (const item of json.data.menuItems.nodes) {
-      if (!item.parentId) megaMenu.push(item);
-    }
-    json.data.menuItems.nodes = megaMenu;
-
-    if (process.env.NODE_ENV !== 'production') console.debug(json.data);
 
     return json.data;
   } catch (error: any) {

@@ -62,8 +62,6 @@ export const getStaticProps = async ({ params: { slug }, locale }: any) => {
 
     const props = { ...data, ...page };
 
-    if (process.env.NODE_ENV !== 'production') console.debug(props);
-
     return { props, revalidate: 60 };
   } catch (error: any) {
     console.error(error.message);

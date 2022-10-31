@@ -7,7 +7,6 @@ const Layout = ({ children }: any) => {
   const [menus, setMenus]: [any, Dispatch<SetStateAction<{}>>] = useState({});
   useEffect(() => {
     (async () => {
-      // TODO - REFACTOR: separate header/footer data from rest of content
       const { navItems, menuItems }: any = await layoutData();
       setMenus({ navItems, menuItems });
     })();

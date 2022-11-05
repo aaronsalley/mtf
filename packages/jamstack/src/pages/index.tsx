@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Helmet from '../components/atoms/Helmet';
 import Home from '../components/templates/Home';
-import { wpContent } from '../lib/getWPData';
+import { getAll } from '../lib/WPData';
 
 const Index: NextPage = (props: any) => {
   return (
@@ -14,7 +14,7 @@ const Index: NextPage = (props: any) => {
 
 export const getStaticProps = async (context: any) => {
   try {
-    const data: any = await wpContent();
+    const data: any = await getAll();
     if (!data) throw new Error('Data not found.');
 
     const page =

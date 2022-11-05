@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Helmet from '../components/atoms/Helmet';
 import Page from '../components/templates/Page';
-import { wpContent } from '../lib/getWPData';
+import { getAll, getContent } from '../lib/WPData';
 
 const Single: NextPage = (props: any) => {
   return (
@@ -19,13 +19,17 @@ const Single: NextPage = (props: any) => {
 
 export const getStaticPaths = async () => {
   try {
-    const data = await wpContent();
-    const paths = data.pages?.nodes
-      .map((page: any) => {
-        //Exclude the root page since it has its own template
-        if (page.uri === '/') return;
+    const data = await getContent();
+    if (!data) throw Error('No data returned from CMS.');
 
-        const slug = page?.uri.split('/').filter(Boolean);
+    const content = [...data.pages?.nodes, ...data.posts?.nodes];
+
+    const paths = content
+      .map((single: any) => {
+        //Exclude the root page since it has its own template
+        if (single.uri === '/') return;
+
+        const slug = single?.uri.split('/').filter(Boolean);
 
         return { params: { slug } };
       })
@@ -49,20 +53,22 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { slug }, locale }: any) => {
   try {
-    const data = await wpContent();
+    // TODO: Get only the slug page/post
+    const data = await getContent();
     if (!data) throw Error('No data returned from CMS.');
 
-    const page =
-      data.pages?.nodes.find((page: any) => {
-        if (page.uri === '/') return;
+    const content = [...data.pages?.nodes, ...data.posts?.nodes];
 
-        return '/' + slug.join('/') + '/' === page.uri;
+    const single =
+      content.find((single: any) => {
+        if (single.uri === '/') return;
+
+        return '/' + slug.join('/') + '/' === single.uri;
       }) ?? null;
-    if (!page) throw new Error('Page not found.');
 
-    const props = { ...data, ...page };
+    if (!single) throw new Error('Content not found.');
 
-    return { props, revalidate: 60 };
+    return { props: { ...data, ...single }, revalidate: 60 };
   } catch (error: any) {
     console.error(error.message);
 

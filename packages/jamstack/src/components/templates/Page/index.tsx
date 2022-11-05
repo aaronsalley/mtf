@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import PageTitle from '../../atoms/PageTitle';
 import styles from './index.module.scss';
 
@@ -13,14 +12,7 @@ interface Page {
   children?: any;
 }
 
-const Page = ({
-  title = 'Page Title',
-  excerpt = '',
-  slug = '',
-  isFrontPage = false,
-  content = '',
-  children,
-}: Page) => {
+const Page = ({ title = 'Page Title', excerpt, children }: Page) => {
   return (
     <main className={styles['container']}>
       {children}

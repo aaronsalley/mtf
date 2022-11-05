@@ -8,7 +8,7 @@ add_action( 'graphql_register_types', function() {
     'resolve' => function( $event ) {
 
       if( 'WP_ENVIRONMENT_TYPE' !== 'production' ){
-        logger( get_post_custom_keys($event -> databaseId) );
+        // logger( get_post_custom_keys($event -> databaseId) ); // BUG: Can uncomment after moved to a class
       }
 
       return get_post_meta( $event -> databaseId, '_EventStartDateUTC', true );

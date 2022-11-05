@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Helmet from '../components/atoms/Helmet';
 import EventsPage from '../components/templates/Events';
 import Page from '../components/templates/Page';
-import { wpContent } from '../lib/getWPData';
+import { getEvents } from '../lib/WPData';
 
 const Events: NextPage = (props: any) => {
   return (
@@ -17,10 +17,8 @@ const Events: NextPage = (props: any) => {
 
 export const getStaticProps = async (context: any) => {
   try {
-    const props = await wpContent();
+    const props = await getEvents();
     if (!props) throw Error('No data returned from CMS.');
-
-    props['title'] = 'Work in progress';
 
     return {
       props,

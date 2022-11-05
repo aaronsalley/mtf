@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Helmet from '../../components/atoms/Helmet';
 import EventPage from '../../components/templates/Event';
-import { wpContent } from '../../lib/getWPData';
+import { getAll } from '../../lib/WPData';
 
 const Event: NextPage = (props: any) => {
   return (
@@ -14,7 +14,7 @@ const Event: NextPage = (props: any) => {
 
 export const getStaticPaths = async () => {
   try {
-    const data = await wpContent();
+    const data = await getAll();
     const paths = data.events?.nodes.map((event: any) => {
       return { params: { id: event.slug } };
     });
@@ -37,7 +37,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { id }, locale }: any) => {
   try {
-    const props = await wpContent();
+    const props = await getAll();
     if (!props) throw new Error('Event data not found.');
 
     props['event'] =

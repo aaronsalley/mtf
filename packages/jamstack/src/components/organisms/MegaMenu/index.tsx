@@ -46,8 +46,10 @@ const MegaMenu = ({
 
     if (path !== '#') {
       text = (
-        <Link href={path} target={target} title={title}>
-          {label}
+        <Link href={path}>
+          <a target={target} title={title}>
+            {label}
+          </a>
         </Link>
       );
     } else {

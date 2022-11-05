@@ -28,7 +28,7 @@
     "stylelint": "^14.11.0"
   },
   "lint-staged": {
-    "**/*.(j|t)s?(x)": [
+    "src/**/*.(j|t)s?(x)": [
       "yarn prettier --write --ignore-unknown",
       "yarn eslint --fix"
     ],

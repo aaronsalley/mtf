@@ -43,6 +43,15 @@ if ( ! class_exists( 'MTF_Musicals' ) ){
         register_nav_menus( array ( 'mega' => 'Site Menu', 'nav' => 'Main Navigation' ) );
       });
     }
+
+    function manual_excerpts() {
+      add_filter( 'wp_trim_excerpt', function ( $excerpt, $raw_excerpt ){
+        if ( $raw_excerpt )
+          return $excerpt;
+
+        return null;
+      }, 99, 2);
+    }
     
     function enable_elementor() {
       add_action( 'elementor/theme/register_locations', function ( $elementor_theme_manager ) {
@@ -66,7 +75,6 @@ if ( ! class_exists( 'MTF_Musicals' ) ){
     
     function load_files() {
       // include_once self::$ROOT_DIR . '/admin/cors.php';
-      include_once self::$ROOT_DIR . '/admin/elementor.php';
       include_once self::$ROOT_DIR . '/admin/events/events.php';
       include_once self::$ROOT_DIR . '/admin/media/media.php';
       include_once self::$ROOT_DIR . '/includes/required-plugins.php';
@@ -76,6 +84,7 @@ if ( ! class_exists( 'MTF_Musicals' ) ){
       $this->load_files();
       $this->theme_mods();
       $this->enable_elementor();
+      $this->manual_excerpts();
     }
   }
 

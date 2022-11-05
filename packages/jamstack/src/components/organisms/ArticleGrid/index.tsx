@@ -19,7 +19,7 @@ const ArticleGrid = ({ posts = [], maxColumns = 4 }) => {
     if (i > 7) return;
     const columnIndex = i % maxColumns;
 
-    post['link'] = { text: 'Read More', url: post.slug };
+    post['link'] = { text: 'Read More', url: post.uri };
 
     __columns[`column${columnIndex}`].push(<ArticleTile {...post} key={i} />);
     return;

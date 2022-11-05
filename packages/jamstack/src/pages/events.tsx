@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Helmet from '../components/atoms/Helmet';
 import EventsPage from '../components/templates/Events';
-import Page from '../components/templates/Page';
+import Page from '../components/templates/Single';
 import { getEvents } from '../lib/WPData';
 
 const Events: NextPage = (props: any) => {

@@ -97,14 +97,17 @@ const posts = `posts(where: {status: PUBLISH}) {
     excerpt
   }
 }`;
+const site = `allSettings {
+  siteName:generalSettingsTitle,
+  metaDescription:generalSettingsDescription,
+}`;
 
 export const getLayoutData = async () => {
-  // TODO: fetch state consts
-
   try {
     const GraphQLQuery = {
       // operationName: 'getLayoutData',
       query: `query {
+        ${site},
         ${menuItems},
         ${navItems},
       }`.replaceAll(/\s/gi, ''),

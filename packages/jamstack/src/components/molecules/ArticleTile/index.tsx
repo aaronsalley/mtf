@@ -20,7 +20,7 @@ const ArticleTile = ({
 
   return (
     <article className={styles['container']}>
-      <Link href={url as any}>
+      <Link href={url as string}>
         <a>
           <header>
             <h3>{title}</h3>

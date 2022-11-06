@@ -1,4 +1,4 @@
-import MarketingEmailRegistration from '../../molecules/forms/EmailSub';
+import EmailSubscribeForm from '../../molecules/form/EmailSubscribe';
 import MegaMenu from '../MegaMenu';
 import styles from './index.module.scss';
 
@@ -21,7 +21,7 @@ const Footer = ({ menuData }: any) => {
           501(c)(3) Public Charity incorporated in the State of New York. All
           donations are tax-deductible to the fullest extent under the law.
         </p>
-        <MarketingEmailRegistration />
+        <EmailSubscribeForm />
       </div>
       <MegaMenu menuData={menuData} />
       <p className={styles['copyright']}>

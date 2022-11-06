@@ -6,3 +6,4 @@
 [ ] Post (single) page
 [ ] Posts (archive) page
 [ ] Posts (archive) paging
+[ ] Show future events only

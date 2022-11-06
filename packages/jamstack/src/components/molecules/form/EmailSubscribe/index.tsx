@@ -2,14 +2,14 @@ import { useState } from 'react';
 import Button from '../../../atoms/Button';
 import styles from './index.module.scss';
 
-const MarketingEmailRegistration = () => {
+const EmailSubscribeForm = () => {
   const style = ['input-group'];
   style.push(styles['mereg']);
-  const [email, setEmail] = useState('');
+  const [formData, setFormData] = useState('');
 
   const handleInput = (e: any): void => {
     const { value } = e.target;
-    setEmail(value);
+    setFormData(value);
 
     return;
   };
@@ -18,7 +18,7 @@ const MarketingEmailRegistration = () => {
     e.preventDefault();
 
     try {
-      const body: any = { email: email };
+      const body: any = { email: formData };
       const options = {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -56,4 +56,4 @@ const MarketingEmailRegistration = () => {
   );
 };
 
-export default MarketingEmailRegistration;
+export default EmailSubscribeForm;

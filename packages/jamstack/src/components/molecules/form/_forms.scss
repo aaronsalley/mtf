@@ -1,0 +1,48 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/maps';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/forms';
+
+@mixin base {
+  // TODO: move raw .input-group rules back here
+  margin-top: 0.5rem !important;
+
+  label {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.75rem 0.5rem !important;
+  }
+
+  > div {
+    // TODO: move raw .form-floating rules back here
+    display: flex !important;
+    flex: 1 !important;
+  }
+
+  select {
+    // TODO: remove — moved to Atoms > Input
+    padding: 0.75rem 0.5rem !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    border-bottom: 3px solid var(--mtf-text) !important;
+    border-radius: 0 !important;
+
+    &:not(:placeholder-shown) {
+      padding-top: 1.625rem !important;
+      padding-bottom: 0.625rem !important;
+      color: var(--mtf-primary) !important;
+      background-color: transparent !important;
+      border-color: var(--mtf-text) !important;
+      box-shadow: none !important;
+
+      ~ label {
+        transform: scale(0.8) translateY(-0.7rem) translateX(0.15rem) !important;
+      }
+    }
+  }
+
+  > button {
+    flex-grow: 0 !important;
+  }
+}

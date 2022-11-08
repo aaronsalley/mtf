@@ -1,0 +1,27 @@
+@mixin input {
+  // TODO: move raw .form-control rules back here
+  padding: 0.75rem 0.5rem !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-bottom: 3px solid var(--mtf-text) !important;
+  border-radius: 0 !important;
+
+  &:focus,
+  &:not(:placeholder-shown),
+  &:-webkit-autofill {
+    padding-top: 1.625rem !important;
+    padding-bottom: 0.625rem !important;
+    color: var(--mtf-primary) !important;
+    background-color: transparent !important;
+    border-color: var(--mtf-text) !important;
+    box-shadow: none !important;
+
+    ~ label {
+      transform: scale(0.8) translateY(-0.7rem) translateX(0.15rem) !important;
+    }
+  }
+}
+
+.container {
+  @include input;
+}

@@ -15,11 +15,12 @@
     "dev": "docker compose up",
     "start": "docker compose up -d",
     "validate": "yarn dlx lint-staged",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook --quiet -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
     "lerna": "^4.0.0",
+    "next": "^13.0.2",
     "typescript": "^4.7.4"
   },
   "devDependencies": {
@@ -36,16 +37,21 @@
     "@storybook/builder-webpack5": "^6.5.13",
     "@storybook/manager-webpack5": "^6.5.13",
     "@storybook/node-logger": "^6.5.9",
+    "@storybook/preset-scss": "^1.0.3",
     "@storybook/preset-typescript": "^3.0.0",
     "@storybook/react": "^6.5.13",
     "@storybook/testing-library": "^0.0.13",
     "@typescript-eslint/eslint-plugin": "^5.30.0",
     "@typescript-eslint/parser": "^5.30.0",
     "babel-loader": "^8.3.0",
+    "css-loader": "^6.7.1",
     "eslint": "8.22.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
+    "sass": "^1.56.0",
+    "sass-loader": "^13.1.0",
+    "style-loader": "^3.3.1",
     "stylelint": "^14.11.0"
   },
   "lint-staged": {

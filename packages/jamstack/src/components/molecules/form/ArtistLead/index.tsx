@@ -1,22 +1,22 @@
-import { useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import styles from './index.module.scss';
 
 const ArtistLeadForm = () => {
-  const [formData, setFormData] = useState();
+  const initialState = {};
+  const [state, setState] = useState(initialState);
 
-  return (
-    <form>
-      <input name="fname"></input>
-      <input name="lname"></input>
-      <input name="email"></input>
-      <input name=""></input>
-      <input name=""></input>
-      <input name=""></input>
-      <input name=""></input>
-      <input name=""></input>
-      <input name=""></input>
-      <input name=""></input>
-    </form>
-  );
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
+
+  const handleSubmit = async (e: any): Promise<void> => {
+    e.preventDefault();
+
+    // TODO: enter into artist DB & subscribe to mailing list
+  };
+
+  return <form className={styles['container']}></form>;
 };
 
 export default ArtistLeadForm;

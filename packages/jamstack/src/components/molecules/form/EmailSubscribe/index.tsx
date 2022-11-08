@@ -1,24 +1,26 @@
-import { useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import Button from '../../../atoms/Button';
+import Input from '../../../atoms/Input';
 import styles from './index.module.scss';
 
 const EmailSubscribeForm = () => {
-  const style = ['input-group'];
-  style.push(styles['mereg']);
-  const [formData, setFormData] = useState('');
+  const initialState = {
+    fname: '',
+    lname: '',
+    email: '',
+  };
+  const [state, setState] = useState(initialState);
 
-  const handleInput = (e: any): void => {
-    const { value } = e.target;
-    setFormData(value);
-
-    return;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
   };
 
   const handleSubmit = async (e: any): Promise<void> => {
     e.preventDefault();
 
     try {
-      const body: any = { email: formData };
+      const body: any = { email: state };
       const options = {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -27,7 +29,7 @@ const EmailSubscribeForm = () => {
       };
 
       const res = await fetch('/api/mailchimp/add', options);
-      if (res.error) throw res.error;
+      // if (res.error) throw res.error;
 
       return;
     } catch (error) {
@@ -37,20 +39,32 @@ const EmailSubscribeForm = () => {
     return;
   };
 
+  const style = ['input-group'];
+  style.push(styles['container']);
+
   return (
     <form className={style.join(' ')} onSubmit={handleSubmit}>
-      <input name="first_name" hidden />
-      <input name="last_name" hidden />
-      <div className="form-floating">
-        <input
-          type="email"
-          name="email"
-          placeholder="name@example.com"
-          className={'form-control'}
-          onChange={handleInput}
-        />
-        <label htmlFor="email">Email address</label>
-      </div>
+      <Input
+        name="fname"
+        label="First Name"
+        value={state['fname']}
+        cb={handleChange}
+        hidden
+      />
+      <Input
+        name="lname"
+        label="Last Name"
+        value={state['lname']}
+        cb={handleChange}
+        hidden
+      />
+      <Input
+        type="email"
+        name="email"
+        label="Email address"
+        value={state['email']}
+        cb={handleChange}
+      />
       <Button text={'Sign up'} submit />
     </form>
   );

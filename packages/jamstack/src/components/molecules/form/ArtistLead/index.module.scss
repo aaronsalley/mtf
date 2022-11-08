@@ -1,0 +1,5 @@
+@use '../forms';
+
+.container {
+  @include forms.base;
+}

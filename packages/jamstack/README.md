@@ -6,4 +6,5 @@
 [ ] Post (single) page
 [ ] Posts (archive) page
 [ ] Posts (archive) paging
-[ ] Show future events only
+[x] Show future events only
+[x] [Finish Storybook config](https://storybook.js.org/blog/get-started-with-storybook-and-next-js/)

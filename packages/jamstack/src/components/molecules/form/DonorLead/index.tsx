@@ -1,13 +1,26 @@
-import { useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import Button from '../../../atoms/Button';
+import Input from '../../../atoms/Input';
+import styles from './index.module.scss';
 
 const DonorLeadForm = () => {
-  const [formData, setFormData] = useState();
+  const initialState = {};
+  const [state, setState] = useState(initialState);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
+
+  const handleSubmit = async (e: any): Promise<void> => {
+    e.preventDefault();
+
+    // TODO: enter donor into Kindful
+  };
 
   return (
-    <form>
-      <input name="fname"></input>
-      <input name="lname"></input>
-      <input name="email"></input>
+    <form className={styles['container']}>
+      <Button text={'Sign up'} submit />
     </form>
   );
 };

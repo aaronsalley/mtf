@@ -7,6 +7,43 @@ const API_URL =
     ? 'http://aarons-macbook-pro.local:32769'
     : 'http://cms';
 
+// metaKeywords,
+// focuskw,
+// canonical,
+// cornerstone,
+// opengraphPublishedTime,
+// opengraphAuthor,
+const SEO = `seo {
+  title,
+  metaDesc,
+  metaRobotsNofollow,
+  metaRobotsNoindex,
+  readingTime,
+  opengraphType,
+  opengraphTitle,
+  opengraphDescription,
+  opengraphUrl,
+  opengraphSiteName,
+  opengraphModifiedTime,
+  opengraphImage {
+    mediaItemUrl,
+    mediaDetails {
+      width,
+      height
+    },
+    mimeType,
+  },
+  opengraphPublisher,
+  twitterTitle,
+  twitterDescription,
+  twitterImage {
+    mediaItemUrl,
+  },
+  schema {
+    raw
+  }
+}`;
+
 const menuItems = `menuItems(where: {location: MEGA, parentId: ""}, first: 1000) {
   nodes {
     label,
@@ -44,7 +81,6 @@ const makers = `mediaItems(where: {mediaCategory: "maker"}, first: 50) {
 const pages = `pages(where: {status: PUBLISH}, first: 100) {
   nodes {
     uri,
-    id,
     title,
     content,
     excerpt,
@@ -54,7 +90,9 @@ const pages = `pages(where: {status: PUBLISH}, first: 100) {
         mediaItemUrl,
         altText,
       }
-    }
+    },
+    contentTypeName,
+    ${SEO},
   }
 }`;
 const events = `events(where: {status: PUBLISH}, first: 100) {
@@ -87,6 +125,19 @@ const events = `events(where: {status: PUBLISH}, first: 100) {
         altText,
       }
     },
+    ${SEO},
+  },
+},
+seo {
+  contentTypes {
+    event {
+      title,
+      metaDesc,
+      schemaType,
+      schema {
+        raw
+      }
+    }
   }
 }`;
 const posts = `posts(where: {status: PUBLISH}) {
@@ -94,7 +145,22 @@ const posts = `posts(where: {status: PUBLISH}) {
     date,
     title,
     uri,
-    excerpt
+    content,
+    excerpt,
+    contentTypeName,
+    ${SEO},
+  }
+},
+seo {
+  contentTypes {
+    event {
+      title,
+      metaDesc,
+      schemaType,
+      schema {
+        raw
+      }
+    }
   }
 }`;
 const site = `allSettings {
@@ -217,6 +283,70 @@ export const getContent = async () => {
       // operationName: 'getContent',
       query: `query {
         ${pages},
+        ${posts},
+      }`.replaceAll(/\s/gi, ''),
+      variables: {},
+    };
+
+    const res = await fetch(API_URL + `/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(GraphQLQuery),
+      // mode: 'no-cors',
+    });
+
+    const json = await res.json();
+    if (json.errors) throw JSON.stringify(json.errors);
+
+    return json.data;
+  } catch (error: any) {
+    console.error('Fetch error: ', error.message);
+
+    return {
+      notFound: true,
+    };
+  }
+};
+
+export const getPages = async () => {
+  try {
+    const GraphQLQuery = {
+      // operationName: 'getContent',
+      query: `query {
+        ${pages},
+      }`.replaceAll(/\s/gi, ''),
+      variables: {},
+    };
+
+    const res = await fetch(API_URL + `/graphql`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(GraphQLQuery),
+      // mode: 'no-cors',
+    });
+
+    const json = await res.json();
+    if (json.errors) throw JSON.stringify(json.errors);
+
+    return json.data;
+  } catch (error: any) {
+    console.error('Fetch error: ', error.message);
+
+    return {
+      notFound: true,
+    };
+  }
+};
+
+export const getPosts = async () => {
+  try {
+    const GraphQLQuery = {
+      // operationName: 'getContent',
+      query: `query {
         ${posts},
       }`.replaceAll(/\s/gi, ''),
       variables: {},

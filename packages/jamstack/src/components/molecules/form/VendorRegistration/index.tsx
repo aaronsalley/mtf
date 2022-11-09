@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Button from '../../../atoms/Button';
 import Input from '../../../atoms/Input';
 import styles from './index.module.scss';
@@ -15,14 +15,15 @@ const VendorRegistrationForm = () => {
     phone: '',
     street: '',
     city: '',
+    state: '',
     zip: '',
     country: '',
   };
   const [state, setState] = useState(initialState);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement> | any): void => {
     const { name, value } = e.target;
-    // setState({ ...state, [name]: value });
+    setState({ ...state, [name]: value });
   };
 
   const handleSubmit = async (e: any): Promise<void> => {
@@ -30,6 +31,8 @@ const VendorRegistrationForm = () => {
 
     // TODO: enter into QBO & subscribe to mailing list
     // if artist & not listed, add to artist DB
+    try {
+    } catch (error) {}
   };
 
   const StateOptions = () => {
@@ -101,7 +104,7 @@ const VendorRegistrationForm = () => {
   };
 
   return (
-    <form className={styles['container']}>
+    <form className={styles['container']} onSubmit={handleSubmit}>
       <div>
         <label>Name</label>
         <fieldset>
@@ -180,11 +183,12 @@ const VendorRegistrationForm = () => {
               className="form-select"
               name="state"
               size={1}
-              defaultValue={'--'}
               placeholder="State"
+              value={state['state']}
+              onChange={handleChange}
             >
-              <option value="--" disabled>
-                State
+              <option value="" disabled>
+                {'   '}
               </option>
               <StateOptions />
             </select>
@@ -204,7 +208,7 @@ const VendorRegistrationForm = () => {
           />
         </fieldset>
       </div>
-      <Button text="Submit" />
+      <Button text="Submit" submit />
     </form>
   );
 };

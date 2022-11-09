@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Button from '../../../atoms/Button';
 import Input from '../../../atoms/Input';
 import styles from './index.module.scss';
@@ -16,10 +16,12 @@ const DonorLeadForm = () => {
     e.preventDefault();
 
     // TODO: enter donor into Kindful
+    try {
+    } catch (error) {}
   };
 
   return (
-    <form className={styles['container']}>
+    <form className={styles['container']} onSubmit={handleSubmit}>
       <Button text={'Sign up'} submit />
     </form>
   );

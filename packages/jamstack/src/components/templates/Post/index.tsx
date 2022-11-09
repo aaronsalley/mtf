@@ -1,17 +1,6 @@
 import PageTitle from '../../atoms/PageTitle';
 import styles from './index.module.scss';
 
-export type Page = {
-  title: string;
-  content?: string;
-  excerpt?: string;
-  featuredImage?: any;
-  template?: string;
-  slug: string;
-  isFrontPage?: boolean;
-  children?: any;
-};
-
 export type Post = {
   title: string;
   content?: string;
@@ -23,7 +12,7 @@ export type Post = {
   children?: any;
 };
 
-const Single = ({ title = 'Page Title', excerpt, children }: Page | Post) => {
+const Post = ({ title = 'Page Title', excerpt, children }: Post) => {
   return (
     <main className={styles['container']}>
       {children}
@@ -35,4 +24,4 @@ const Single = ({ title = 'Page Title', excerpt, children }: Page | Post) => {
   );
 };
 
-export default Single;
+export default Post;

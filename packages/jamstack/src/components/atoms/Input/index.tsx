@@ -10,34 +10,41 @@ interface Input {
   cb?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ name, label, value, type, hidden, cb }: Input) => {
+const Input = ({ name, label, value, type, hidden, cb }: Input): any => {
   const [state, setState]: [string | undefined, Dispatch<SetStateAction<any>>] =
     useState(value);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (cb) cb(e);
-    setState(e.target.value); // FIXME: react useState input lose focus
+    setState(e.target.value);
+
+    if (cb) cb(e); // HACK to pass back up
   };
 
-  const Field = () => (
-    <input
-      className={`form-control ` + styles['container']}
-      value={state}
-      type={type}
-      name={name}
-      placeholder={label}
-      onChange={handleChange}
-      hidden={hidden}
-    />
-  );
-
   if (hidden) {
-    return <Field />;
+    return (
+      <input
+        className={`form-control ` + styles['container']}
+        value={state}
+        type={type}
+        name={name}
+        placeholder={label}
+        onChange={handleChange}
+        hidden={hidden}
+      />
+    );
   }
 
   return (
     <div className="form-floating">
-      <Field />
+      <input
+        className={`form-control ` + styles['container']}
+        value={state}
+        type={type}
+        name={name}
+        placeholder={label}
+        onChange={handleChange}
+        hidden={hidden}
+      />
       <label htmlFor={name}>{label}</label>
     </div>
   );

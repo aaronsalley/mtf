@@ -1,0 +1,36 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/maps';
+@import '~bootstrap/scss/mixins';
+
+.container {
+  display: flex;
+  flex-flow: column-reverse nowrap;
+  justify-content: space-between;
+  max-width: var(--mtf-max-width);
+  margin: auto;
+  padding: 10rem 1.5rem;
+  column-gap: 4.375rem;
+  @include media-breakpoint-up(md) {
+    flex-direction: row-reverse;
+    padding-bottom: unset;
+  }
+  @include media-breakpoint-up(lg) {
+    padding-right: unset;
+    padding-left: unset;
+  }
+
+  > aside {
+    width: 100%;
+    @include media-breakpoint-up(md) {
+      width: 33%;
+    }
+  }
+
+  > section {
+    flex: 1;
+    @include media-breakpoint-up(md) {
+      padding-right: 2.5rem;
+    }
+  }
+}

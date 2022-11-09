@@ -4,16 +4,18 @@ import styles from './index.module.scss';
 interface Button {
   text: string;
   url?: string | void;
-  submit?: any | void;
+  submit?: boolean;
+  action?: () => {};
 }
 
-const Button = ({ text = 'Label', url, submit }: Button) => {
+const Button = ({ text = 'Label', url, submit, action }: Button) => {
   // interactive buttons
   if (typeof url !== 'string')
     return (
       <button
         type={submit ? 'submit' : 'button'}
         className={styles['container']}
+        onClick={action ?? undefined}
       >
         {text}
       </button>

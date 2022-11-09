@@ -1,18 +1,30 @@
 import type { NextPage } from 'next';
-import Helmet from '../components/atoms/Helmet';
-import Page from '../components/templates/Single';
-import { getAll, getContent } from '../lib/WPData';
+import Helmet from '../components/templates/Helmet';
+import Page from '../components/templates/Page';
+import Post from '../components/templates/Post';
+import { getContent } from '../lib/WPData';
 
 const Single: NextPage = (props: any) => {
+  if (process.env.NODE_ENV !== 'production') console.debug(props);
+
   return (
     <>
-      <Helmet {...props} />
-      <Page {...props}>
-        <section
-          className={'content'}
-          dangerouslySetInnerHTML={{ __html: props.content }}
-        ></section>
-      </Page>
+      <Helmet {...props.seo} />
+      {props.contentTypeName === 'page' ? (
+        <Page {...props}>
+          <section
+            className={'content'}
+            dangerouslySetInnerHTML={{ __html: props.content }}
+          ></section>
+        </Page>
+      ) : (
+        <Post {...props}>
+          <section
+            className={'content'}
+            dangerouslySetInnerHTML={{ __html: props.content }}
+          ></section>
+        </Post>
+      )}
     </>
   );
 };
@@ -20,8 +32,6 @@ const Single: NextPage = (props: any) => {
 export const getStaticPaths = async () => {
   try {
     const data = await getContent();
-    if (!data) throw Error('No data returned from CMS.');
-
     const content = [...data.pages?.nodes, ...data.posts?.nodes];
 
     const paths = content
@@ -35,7 +45,7 @@ export const getStaticPaths = async () => {
       })
       .filter(Boolean);
 
-    if (!paths) throw new Error('No pages returned from CMS.');
+    if (!paths) throw new Error('No content returned from CMS.');
 
     return {
       paths,
@@ -53,22 +63,19 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { slug }, locale }: any) => {
   try {
-    // TODO: Get only the slug page/post
     const data = await getContent();
-    if (!data) throw Error('No data returned from CMS.');
-
     const content = [...data.pages?.nodes, ...data.posts?.nodes];
 
-    const single =
+    const props =
       content.find((single: any) => {
         if (single.uri === '/') return;
 
         return '/' + slug.join('/') + '/' === single.uri;
       }) ?? null;
 
-    if (!single) throw new Error('Content not found.');
+    if (!props) throw new Error('Content not found.');
 
-    return { props: { ...data, ...single }, revalidate: 60 };
+    return { props, revalidate: 3600 };
   } catch (error: any) {
     console.error(error.message);
 

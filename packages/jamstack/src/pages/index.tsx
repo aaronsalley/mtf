@@ -1,12 +1,14 @@
 import type { NextPage } from 'next';
-import Helmet from '../components/atoms/Helmet';
+import Helmet from '../components/templates/Helmet';
 import Home from '../components/templates/Home';
 import { getAll } from '../lib/WPData';
 
 const Index: NextPage = (props: any) => {
+  if (process.env.NODE_ENV !== 'production') console.debug(props);
+
   return (
     <>
-      <Helmet {...props} />
+      <Helmet {...props.seo} />
       <Home {...props} />
     </>
   );

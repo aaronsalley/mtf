@@ -2,8 +2,8 @@
 
 [ ] Past events paging
 [ ] Event (single) page data
-[ ] Different events views
-[ ] Post (single) page
+[ ] Different events listing views (calendar, list, etc)
+[x] Post (single) page
 [ ] Posts (archive) page
 [ ] Posts (archive) paging
 [x] Show future events only

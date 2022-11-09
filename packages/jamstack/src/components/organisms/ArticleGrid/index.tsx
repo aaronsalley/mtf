@@ -37,7 +37,7 @@ const ArticleGrid = ({ posts = [], maxColumns = 4 }) => {
   return (
     <section className={styles['container']}>
       <div>{articles}</div>
-      <Button text={'See all ' + title} url="/category/news/" />
+      <Button text={'See all ' + title} url="/news/" />
     </section>
   );
 };

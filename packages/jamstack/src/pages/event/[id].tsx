@@ -1,13 +1,15 @@
 import type { NextPage } from 'next';
-import Helmet from '../../components/atoms/Helmet';
+import Helmet from '../../components/templates/Helmet';
 import EventPage from '../../components/templates/Event';
 import { getAll } from '../../lib/WPData';
 
 const Event: NextPage = (props: any) => {
+  if (process.env.NODE_ENV !== 'production') console.debug(props);
+
   return (
     <>
-      <Helmet {...props.event} />
-      <EventPage {...props.event} />
+      <Helmet {...props.seo} />
+      <EventPage {...props} />
     </>
   );
 };
@@ -37,10 +39,10 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { id }, locale }: any) => {
   try {
-    const props = await getAll();
+    let props = await getAll();
     if (!props) throw new Error('Event data not found.');
 
-    props['event'] =
+    props =
       props.events.nodes.find((event: any) => event.uri.match(id)) ?? null;
 
     return { props, revalidate: 60 };

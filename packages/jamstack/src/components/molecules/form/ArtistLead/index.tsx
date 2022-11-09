@@ -1,4 +1,5 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import Button from '../../../atoms/Button';
 import styles from './index.module.scss';
 
 const ArtistLeadForm = () => {
@@ -14,9 +15,15 @@ const ArtistLeadForm = () => {
     e.preventDefault();
 
     // TODO: enter into artist DB & subscribe to mailing list
+    try {
+    } catch (error) {}
   };
 
-  return <form className={styles['container']}></form>;
+  return (
+    <form className={styles['container']} onSubmit={handleSubmit}>
+      <Button text={'Sign up'} submit />
+    </form>
+  );
 };
 
 export default ArtistLeadForm;

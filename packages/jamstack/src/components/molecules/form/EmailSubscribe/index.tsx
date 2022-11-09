@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Button from '../../../atoms/Button';
 import Input from '../../../atoms/Input';
 import styles from './index.module.scss';

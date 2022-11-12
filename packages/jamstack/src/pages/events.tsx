@@ -2,7 +2,7 @@
 import type { NextPage } from 'next';
 import EventsPage from '../components/templates/Events';
 import Page from '../components/templates/Page';
-import { getEvents } from '../lib/WPData';
+import { getEvents } from '../lib/WordPressGraph';
 import Head from 'next/head';
 
 const Events: NextPage = (props: any) => {

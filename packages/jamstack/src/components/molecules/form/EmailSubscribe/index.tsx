@@ -20,7 +20,7 @@ const EmailSubscribeForm = () => {
     e.preventDefault();
 
     try {
-      const body: any = { email: state };
+      const body: any = state;
       const options = {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -28,8 +28,12 @@ const EmailSubscribeForm = () => {
         body: JSON.stringify(body),
       };
 
-      const res = await fetch('/api/mailchimp/add', options);
-      // if (res.error) throw res.error;
+      const res = await fetch('/api/marketing/addContact', options);
+      if (!res.ok) throw res.statusText;
+
+      if (res.status === 200) {
+        setState(initialState); // FIXME: should clear form upon success
+      }
 
       return;
     } catch (error) {
@@ -39,11 +43,11 @@ const EmailSubscribeForm = () => {
     return;
   };
 
-  const style = ['input-group'];
-  style.push(styles['container']);
-
   return (
-    <form className={style.join(' ')} onSubmit={handleSubmit}>
+    <form
+      className={`${styles['container']} input-group`}
+      onSubmit={handleSubmit}
+    >
       <Input
         name="fname"
         label="First Name"

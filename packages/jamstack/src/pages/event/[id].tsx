@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Helmet from '../../components/templates/Helmet';
 import EventPage from '../../components/templates/Event';
-import { getAll } from '../../lib/WPData';
+import { getEvents } from '../../lib/WordPressGraph';
 
 const Event: NextPage = (props: any) => {
   if (process.env.NODE_ENV !== 'production') console.debug(props);
@@ -16,7 +16,7 @@ const Event: NextPage = (props: any) => {
 
 export const getStaticPaths = async () => {
   try {
-    const data = await getAll();
+    const data = await getEvents();
     const paths = data.events?.nodes.map((event: any) => {
       return { params: { id: event.slug } };
     });
@@ -39,11 +39,11 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { id }, locale }: any) => {
   try {
-    let props = await getAll();
-    if (!props) throw new Error('Event data not found.');
+    const data = await getEvents();
+    if (!data) throw new Error('Event data not found.');
 
-    props =
-      props.events.nodes.find((event: any) => event.uri.match(id)) ?? null;
+    const props =
+      data.events.nodes.find((event: any) => event.uri.match(id)) ?? null;
 
     return { props, revalidate: 60 };
   } catch (error: any) {

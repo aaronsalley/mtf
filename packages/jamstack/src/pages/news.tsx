@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import type { NextPage } from 'next';
 import Page from '../components/templates/Page';
-import { getPosts } from '../lib/WPData';
+import { getPosts } from '../lib/WordPressGraph';
 import Head from 'next/head';
 
 const News: NextPage = (props: any) => {

@@ -1,10 +1,30 @@
+import { ReactNode } from 'react';
+
 export const locale = (date: string) => {
   const theDate = new Date(Date.parse(date));
 
   return theDate.toLocaleDateString();
 };
 
-export const formattedDate = (date: string, delimiter = '.'): string => {
+export const dates = (
+  startDate?: string,
+  endDate?: string,
+  startTime?: string,
+  endTime?: string
+): ReactNode => {
+  if (!startDate) return null;
+
+  return startDate === endDate
+    ? formattedDate(startDate)
+    : `${formattedDate(startDate)} – ${formattedDate(endDate)}`;
+};
+
+export const formattedDate = (
+  date: string | undefined,
+  delimiter = '.'
+): string => {
+  if (typeof date === 'undefined') return '';
+
   const theDate = new Date(Date.parse(date));
   const options = {
     weekday: undefined,
@@ -35,7 +55,9 @@ export const formattedDate = (date: string, delimiter = '.'): string => {
   return delimitedDate;
 };
 
-export const formattedTime = (date: string): string => {
+export const formattedTime = (date: string | undefined): string => {
+  if (typeof date === 'undefined') return '';
+
   const theDate = new Date(Date.parse(date));
   const options = {
     weekday: undefined,

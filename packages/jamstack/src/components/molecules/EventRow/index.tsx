@@ -2,18 +2,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import * as UTCto from '../../../lib/UTCto';
 import Button from '../../atoms/Button';
-import { EventItem } from '../Event';
+import { EventItem } from '../../../schemas/event';
 import styles from './index.module.scss';
 
 const EventRow = ({
   featuredImage,
-  title = 'Event Title',
-  excerpt = 'Event summary.',
-  location = 'Location',
-  datetimeStart = undefined,
-  datetimeEnd = '12.01.2021',
-  isAllDay,
-  eventURL,
+  title,
+  excerpt,
+  locationName,
+  datetimeStart,
+  datetimeEnd,
   link: { text = 'Details', url = '' },
 }: EventItem) => {
   const {
@@ -24,7 +22,7 @@ const EventRow = ({
 
   return (
     <article>
-      <Link href={url as any}>
+      <Link href={url}>
         <a className={styles['container']}>
           <div className={styles['thumbnail']}>
             <Image
@@ -37,8 +35,8 @@ const EventRow = ({
           <section>
             <header>
               <h2>{title}</h2>
-              <time>{UTCto.formattedDate(datetimeEnd)}</time>
-              <address>{location}</address>
+              <time>{UTCto.dates(datetimeStart, datetimeEnd)}</time>
+              <address>{locationName}</address>
             </header>
             <div
               className={styles['summary']}

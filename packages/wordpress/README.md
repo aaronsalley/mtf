@@ -2,5 +2,5 @@
 
 [x] Remove default excerpt from pages and posts
 [ ] Replace shortcodes with React components
-[ ] Event data
-[ ] Migration to plugin classes
+[x] Event data
+[x] Migration to plugin classes

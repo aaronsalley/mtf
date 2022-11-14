@@ -20,8 +20,10 @@ const Template: ComponentStory<typeof EventRowComponent> = (args: any) => (
 
 export const EventRow = Template.bind({});
 EventRow.args = {
-  title: 'The Headline',
+  title: 'Event Title',
+  datetimeStart: '12.01.2021',
   datetimeEnd: '12.01.2021',
-  excerpt: 'This is the teaser copy.',
-  link: { text: 'Read more', url: '#' },
+  excerpt: 'This event summary.',
+  locationName: 'Musical Theatre Factory',
+  link: { text: 'Details', url: '#' },
 };

@@ -2,18 +2,15 @@ import Image from 'next/image';
 import styles from './index.module.scss';
 import Button from '../../atoms/Button';
 import Link from 'next/link';
-import { EventItem } from '../Event';
+import { EventItem } from '../../../schemas/event';
 import * as UTCto from '../../../lib/UTCto';
 
 const EventTile = ({
   featuredImage,
-  title = 'Event Title',
-  excerpt = 'Event summary.',
-  location = 'Location',
-  datetimeStart = undefined,
-  datetimeEnd = '12.01.2021',
-  isAllDay,
-  eventURL,
+  title,
+  excerpt,
+  datetimeStart,
+  datetimeEnd,
   link: { text = 'Details', url = '/' },
 }: EventItem) => {
   const {
@@ -38,7 +35,7 @@ const EventTile = ({
             <h3>{title}</h3>
           </header>
           <section>
-            <time>{UTCto.formattedDate(datetimeEnd)}</time>
+            <time>{UTCto.dates(datetimeStart, datetimeEnd)}</time>
             <div
               className={styles['summary']}
               dangerouslySetInnerHTML={{ __html: excerpt }}

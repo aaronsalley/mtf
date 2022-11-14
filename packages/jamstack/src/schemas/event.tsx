@@ -1,4 +1,4 @@
-import Button from '../../atoms/Button';
+import Button from '../components/atoms/Button';
 
 export interface EventItem {
   featuredImage: any;
@@ -7,7 +7,7 @@ export interface EventItem {
   excerpt: string;
   categories: any;
   tags: any;
-  location?: string;
+  locationName?: string;
   datetimeStart?: string;
   datetimeEnd: string;
   isAllDay: boolean;

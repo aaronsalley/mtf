@@ -32,7 +32,16 @@ const VendorRegistrationForm = () => {
     // TODO: enter into QBO & subscribe to mailing list
     // if artist & not listed, add to artist DB
     try {
-    } catch (error) {}
+      const res = await fetch(
+        'http://aarons-macbook-pro.local:32768/api/finance/addVendor',
+        {
+          method: 'POST',
+          body: JSON.stringify(state),
+        }
+      );
+    } catch (error: any) {
+      console.error(error);
+    }
   };
 
   const StateOptions = () => {

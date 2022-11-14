@@ -22,9 +22,13 @@ const Button = ({ text = 'Label', url, submit, action }: Button) => {
     );
 
   // a link buttons
+  const target = url.match(/^((http(s)?:\/\/mtf.nyc)?\/)/g)
+    ? undefined
+    : '_blank';
+
   return (
     <Link href={url}>
-      <a type="button" className={styles['container']}>
+      <a type="button" className={styles['container']} target={target}>
         {text}
       </a>
     </Link>

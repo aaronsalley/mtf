@@ -2,22 +2,22 @@ import Image from 'next/image';
 import * as UTCto from '../../../lib/UTCto';
 import Button from '../../atoms/Button';
 import PageTitle from '../../atoms/PageTitle';
-import { EventItem } from '../../molecules/Event';
+import { EventItem } from '../../../schemas/event';
 import styles from './index.module.scss';
 
 const Event = ({
   featuredImage,
-  title = 'Event Title',
-  location = 'Location',
-  datetimeStart = undefined,
-  datetimeEnd = '12.01.2021',
+  title,
+  locationName,
+  datetimeStart,
+  datetimeEnd,
   isAllDay,
-  excerpt = 'Event summary.',
+  excerpt,
   eventURL,
   ticketPrice,
-  content = 'Body copy',
-  categories = { nodes: [{ name: 'Program' }] },
-  tags = { nodes: [{ name: 'Artist' }] },
+  content,
+  categories,
+  tags,
 }: EventItem) => {
   const {
     mediaType = '',
@@ -26,14 +26,23 @@ const Event = ({
   } = featuredImage?.node ?? '';
 
   const programService: any[] =
-    categories.nodes.length > 0
+    categories?.nodes.length > 0
       ? categories.nodes.map((category: any) => category.name)
       : null;
 
   const artists: any[] =
-    tags.nodes.length > 0
+    tags?.nodes.length > 0
       ? tags.nodes.map((tag: any) => tag.name).join(', ')
       : null;
+
+  const date =
+    datetimeStart === datetimeEnd
+      ? UTCto.formattedDate(datetimeStart)
+      : `${UTCto.formattedDate(datetimeStart)} – ${UTCto.formattedDate(
+          datetimeEnd
+        )}`;
+
+  const time = isAllDay ? 'All Day' : UTCto.formattedTime(datetimeStart);
 
   return (
     <main className={styles['container']}>
@@ -51,12 +60,13 @@ const Event = ({
           <PageTitle title={title} />
           <p className={styles['programService']}>{programService}</p>
           <time className={styles['time']}>
-            <strong>{UTCto.formattedDate(datetimeEnd)}</strong>{' '}
-            {UTCto.formattedTime(datetimeEnd)}
+            <strong>{date}</strong> {time}
           </time>
-          <address className={styles['location']}>{location}</address>
+          <address className={styles['location']}>
+            {locationName ?? 'Online'}
+          </address>
           <p className={styles['cost']}>{ticketPrice}</p>
-          <Button text={'Find Tickets'} /> {/* Hide if past */}
+          <Button text={'Find Tickets'} url={eventURL} /> {/* Hide if past */}
           <span></span>
         </aside>
       </header>

@@ -111,6 +111,7 @@ export const EVENTS = `events(where: {status: PUBLISH}, first: 100) {
         name,
       },
     },
+    locationName,
     tags {
       nodes {
         name,

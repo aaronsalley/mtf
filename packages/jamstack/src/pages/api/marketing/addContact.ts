@@ -1,4 +1,4 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+// https://mailchimp.com/developer/marketing/api/list-members/update-list-member/
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type Data = {
@@ -14,7 +14,8 @@ const handler = async (
   res: NextApiResponse<Data | Error>
 ) => {
   if (req.method !== 'POST')
-    res.status(405).send({ message: 'Method not allowed.' });
+    res.status(405).json({ message: 'Method not allowed.' });
+
   try {
     const { email } = req.body;
 

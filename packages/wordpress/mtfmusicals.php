@@ -19,18 +19,35 @@
 
 if ( ! class_exists( 'MTF_Musicals' ) ){
   class MTF_Musicals {
+    protected static $DOMAIN = 'mtfmusicals';
     protected static $ROOT_DIR;
 
+    protected static $EVENTS;
+    protected static $MEDIA;
+    
     protected $loader;
 
-    function __construct()
-    {
+    function __construct() {
       self::$ROOT_DIR = __DIR__;
 
-      $this->init();
+      $this -> init();
     }
     
-    function theme_mods() {
+    protected function logger( $message ) {
+      // Dump message, or any other variable for that matter
+      ob_start();
+      var_dump($message);
+      $contents = ob_get_contents();
+      ob_end_clean();
+      
+      error_log($contents);
+    }
+
+    protected function get_loader() {
+      return $this->loader;
+    }
+
+    private function theme_mods() {
       add_action( 'after_setup_theme', function () {
         add_theme_support( 'menus' );
         add_theme_support( 'custom-logo' );
@@ -44,7 +61,7 @@ if ( ! class_exists( 'MTF_Musicals' ) ){
       });
     }
 
-    function manual_excerpts() {
+    private function manual_excerpts() {
       add_filter( 'wp_trim_excerpt', function ( $excerpt, $raw_excerpt ){
         if ( $raw_excerpt )
           return $excerpt;
@@ -53,38 +70,27 @@ if ( ! class_exists( 'MTF_Musicals' ) ){
       }, 99, 2);
     }
     
-    function enable_elementor() {
+    private function enable_elementor() {
       add_action( 'elementor/theme/register_locations', function ( $elementor_theme_manager ) {
         $elementor_theme_manager->register_all_core_location();
       });
     }
-    
-    function logger( $message ) {
-      // Dump message, or any other variable for that matter
-      ob_start();
-      var_dump($message);
-      $contents = ob_get_contents();
-      ob_end_clean();
-      
-      error_log($contents);
-    }
-
-    function get_loader() {
-      return $this->loader;
-    }
-    
-    function load_files() {
+   
+    private function load_files() {
       // include_once self::$ROOT_DIR . '/admin/cors.php';
-      include_once self::$ROOT_DIR . '/admin/events/events.php';
-      include_once self::$ROOT_DIR . '/admin/media/media.php';
+      include_once self::$ROOT_DIR . '/admin/events.php';
+      include_once self::$ROOT_DIR . '/admin/media.php';
       include_once self::$ROOT_DIR . '/includes/required-plugins.php';
+
+      self::$EVENTS = new Events;
+      self::$MEDIA = new Media;
     }
     
-    function init() {
-      $this->load_files();
-      $this->theme_mods();
-      $this->enable_elementor();
-      $this->manual_excerpts();
+    private function init() {
+      $this -> load_files();
+      $this -> theme_mods();
+      $this -> enable_elementor();
+      $this -> manual_excerpts();
     }
   }
 

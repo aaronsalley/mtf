@@ -6,11 +6,7 @@ import styles from './index.module.scss';
 
 const Home = ({
   featuredImage,
-  title = 'Page Title',
-  excerpt = 'This is a page excerpt.',
-  template,
-  slug,
-  isFrontPage = true,
+  excerpt,
   content,
   events,
   posts,

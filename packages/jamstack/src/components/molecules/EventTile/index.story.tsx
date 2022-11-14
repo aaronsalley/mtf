@@ -20,10 +20,9 @@ const Template: ComponentStory<typeof EventTileComponent> = (args: any) => (
 
 export const EventTile = Template.bind({});
 EventTile.args = {
-  title: 'Example page title',
-  excerpt: 'Event summary.',
-  location: 'Location',
-  datetimeStart: undefined,
+  title: 'Event Title',
+  datetimeStart: '12.01.2021',
   datetimeEnd: '12.01.2021',
-  link: { text: 'Details' },
+  excerpt: 'This event summary.',
+  link: { text: 'Details', url: '#' },
 };

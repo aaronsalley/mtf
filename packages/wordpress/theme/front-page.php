@@ -1,7 +1,6 @@
 <?php
 $regex = '/<!-- wp:image[\w\d\s\/\.,{};:="<>-]+<!-- \/wp:image -->/';
 preg_match($regex, get_the_content(), $images);
-print_r($images);
 ?>
 
 <?php get_header(); ?>

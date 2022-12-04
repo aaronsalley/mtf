@@ -1,0 +1,35 @@
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/maps';
+@import '../../node_modules/bootstrap/scss/mixins';
+
+#events {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: var(--mtf-max-width);
+  margin: 0 1.5rem;
+  padding-bottom: 1rem;
+  @include media-breakpoint-up(lg) {
+    margin: auto;
+  }
+
+  > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    row-gap: 1.25rem;
+    width: 100%;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+
+    article {
+      width: 100%;
+      @include media-breakpoint-up(md) {
+        width: 50%;
+      }
+      @include media-breakpoint-up(lg) {
+        width: 25%;
+      }
+    }
+  }
+}

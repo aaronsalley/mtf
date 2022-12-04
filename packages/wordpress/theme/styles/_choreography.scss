@@ -1,0 +1,20 @@
+@mixin pickup() {
+  z-index: 10;
+  box-shadow: 0 1px 36px -2px rgb(0 0 0 / 40%);
+  transform: scale(1.08);
+}
+
+@mixin fader($position: top) {
+  $rotation: 0deg;
+  @if $position == top {
+    $rotation: 180deg;
+  }
+
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 4rem;
+  background: linear-gradient($rotation, #000 0%, rgb(0 0 0 / 0%) 100%);
+  content: '';
+  #{$position}: 0;
+}

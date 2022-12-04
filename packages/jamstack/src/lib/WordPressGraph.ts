@@ -7,6 +7,8 @@ export const API_URL =
     ? 'http://aarons-macbook-pro.local:32769'
     : 'http://cms';
 
+console.debug(API_URL);
+
 // metaKeywords,
 // focuskw,
 // canonical,

@@ -1,0 +1,207 @@
+@use 'choreography';
+
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/maps';
+@import '../../node_modules/bootstrap/scss/mixins';
+
+.Home_container {
+  .hero {
+    position: relative;
+    z-index: 0;
+    height: 100vh;
+
+    .stage {
+      height: 100%;
+
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+
+    > aside {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 100%;
+      max-width: var(--mtf-max-width);
+      height: 100%;
+      transform: translateX(-50%);
+
+      .scroll-hint {
+        $line: 10rem;
+        $line-offset: calc(50% - 3px / 2);
+
+        position: absolute;
+        right: 0.75rem;
+        bottom: $line;
+        margin: 0;
+        padding-right: 0.5rem;
+        color: var(--mtf-light);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        transform: rotate(90deg) translateX(-50%) translateY(-50%);
+        transform-origin: bottom;
+        @include media-breakpoint-up(lg) {
+          right: 0;
+        }
+
+        &::before {
+          position: absolute;
+          top: $line-offset;
+          left: 100%;
+          display: block;
+          width: $line;
+          height: 3px;
+          background-color: var(--mtf-light);
+          content: '';
+        }
+
+        &::after {
+          position: absolute;
+          top: $line-offset;
+          left: calc(100% + $line);
+          display: block;
+          width: 16rem;
+          height: 3px;
+          background-color: var(--mtf-text);
+          content: '';
+        }
+      }
+    }
+  }
+
+  > blockquote {
+    margin-left: 1.5rem;
+    padding-top: 5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 5rem;
+    font-weight: 600;
+    font-size: 2.5vmax;
+    text-align: center;
+    @include media-breakpoint-up(md) {
+      width: 66%;
+      max-width: 48.125rem;
+      margin-left: auto;
+      padding-right: 4.75rem;
+      font-size: 1.5rem;
+      text-align: right;
+    }
+    @include media-breakpoint-up(lg) {
+      width: 50%;
+      margin-left: 40%;
+    }
+  }
+
+  > #programming {
+    position: relative;
+    padding-top: 18rem;
+    padding-bottom: 14.5rem;
+    color: var(--mtf-light);
+    background-color: rgb(0 0 0 / 80%);
+    background-image: url('static/brushstroke.png');
+    background-position: center;
+    background-size: cover;
+
+    article {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: var(--mtf-max-width);
+      margin: 0 1.5rem;
+      @include media-breakpoint-up(md) {
+        margin: auto;
+      }
+
+      &:not(:last-of-type) {
+        margin-bottom: 8rem;
+      }
+
+      h2 {
+        width: 100%;
+        @include media-breakpoint-up(md) {
+          width: 35%;
+          padding-left: 4.75rem;
+        }
+      }
+
+      p {
+        width: 100%;
+        @include media-breakpoint-up(md) {
+          width: 65%;
+          padding-right: 4.75rem;
+        }
+      }
+    }
+
+    &::before {
+      @include choreography.fader($position: top);
+    }
+
+    &::after {
+      @include choreography.fader($position: bottom);
+    }
+  }
+
+  .accordion {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+
+    ul {
+      z-index: 1;
+      width: 100%;
+      max-width: var(--mtf-max-width);
+      margin: auto;
+      margin-top: 14.5rem;
+      margin-bottom: 11.25rem;
+      padding-left: 0;
+      list-style: none;
+
+      li {
+        width: 100%;
+        padding-top: 1.5em;
+        padding-bottom: 1.5em;
+        padding-left: 1.5em;
+        color: var(--mtf-light);
+        font-size: 1.5rem;
+        font-family: var(--mtf-font-display);
+        border-bottom: 1px solid var(--mtf-light);
+        @include media-breakpoint-up(md) {
+          width: 75%;
+        }
+        @include media-breakpoint-up(lg) {
+          width: 50%;
+          padding-left: unset;
+        }
+      }
+    }
+
+    > figure {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 0;
+      overflow: hidden;
+
+      &::before {
+        @include choreography.fader($position: top);
+      }
+
+      img {
+        width: 100%;
+        min-width: 100%;
+        height: 100%;
+        min-height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/maps';
+@import '../../node_modules/bootstrap/scss/mixins';
+
+.Footer_container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: var(--mtf-max-width);
+  margin: 0 1.5rem;
+  padding-top: 10.5rem;
+  @include media-breakpoint-up(lg) {
+    margin: auto;
+  }
+
+  > :not(.copyright) {
+    display: none;
+    flex: 1 1 50%;
+    flex-wrap: wrap;
+    @include media-breakpoint-up(md) {
+      display: flex;
+    }
+  }
+
+  .devo {
+    display: flex;
+    gap: 1rem;
+    align-content: flex-end;
+    @include media-breakpoint-up(md) {
+      flex-basis: 33%;
+    }
+
+    > a {
+      position: relative;
+      width: 3.375rem;
+      height: 3.375rem;
+      background-position: center;
+      background-size: contain;
+
+      &.guidestar {
+        background-image: url('static/guidestar-transparency.png');
+      }
+
+      &.amazonsmile {
+        background-image: url('static/amazonsmile-logo.jpeg');
+      }
+    }
+
+    > p {
+      flex: 1 1 0%;
+      font-size: 0.625rem;
+    }
+
+    input {
+      height: calc(2.5rem + 2px);
+    }
+  }
+
+  menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 3.625rem;
+    padding: 0;
+  }
+
+  .copyright {
+    margin: 3.75rem auto;
+    font-size: 0.625rem;
+    text-align: center;
+  }
+}

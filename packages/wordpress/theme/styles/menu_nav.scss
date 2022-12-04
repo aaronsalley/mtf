@@ -1,0 +1,38 @@
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/maps';
+@import '../../node_modules/bootstrap/scss/mixins';
+
+.Menu_nav_container {
+  position: relative;
+  width: 100%;
+  max-width: calc(100% - 1.5rem);
+  margin: auto;
+  z-index: 10;
+
+  @include media-breakpoint-up(lg) {
+    max-width: var(--mtf-max-width);
+  }
+
+  ul {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    gap: 2.25rem;
+    margin: 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    transform: rotate(90deg) translateX(100%) translateY(50%);
+    transform-origin: right;
+
+    li {
+      font-weight: 700;
+      font-size: 0.75rem;
+      font-family: var(--mtf-font-display);
+      text-transform: uppercase;
+      list-style: none;
+      color: var(--mtf-text);
+    }
+  }
+}

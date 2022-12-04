@@ -1,0 +1,102 @@
+/*!
+ * Theme Name: MTF Musicals
+ * Author: Salley & Co.
+ * Author URI: https://aaronsalley.com
+ */
+
+@use '_colors';
+@use '_typography';
+@use '_forms';
+
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+html {
+  overflow: hidden;
+}
+
+.mtfmusicals {
+  --mtf-max-width: 1130px;
+
+  @import 'article_grid';
+  @import 'article_tile';
+  @import 'event_grid';
+  @import 'event_tile';
+  @import 'image_gallery';
+  @import 'menu_mega';
+  @import 'menu_nav';
+
+  @import 'header';
+  @import 'footer';
+
+  &.home {
+    @import 'home';
+    .Menu_nav_container ul li {
+      color: var(--mtf-light) !important;
+    }
+  }
+
+  &.page {
+    @import 'page';
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    transition: all 1s, color 0.15s 0s;
+  }
+
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  > main {
+    flex-basis: 100%;
+    flex-grow: 1;
+    width: 100%;
+  }
+
+  button,
+  input[type='submit'],
+  .button {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: flex-end;
+    padding: calc(1rem / 2) 0 calc(1rem / 2) calc(3rem / 2);
+    font-weight: bold;
+    font-size: 0.75rem;
+    text-align: right;
+    text-transform: uppercase;
+    background-color: inherit;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 3px solid var(--mtf-text);
+    border-left: 0;
+
+    &::after {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      bottom: -3px;
+      z-index: -1;
+      width: 100%;
+      background-color: var(--mtf-text);
+      content: '';
+    }
+
+    &:hover {
+      padding-right: calc(3rem / 4) !important;
+      padding-left: calc(3rem / 4) !important;
+      color: var(--mtf-material);
+
+      &::after {
+        top: 0;
+      }
+    }
+  }
+}

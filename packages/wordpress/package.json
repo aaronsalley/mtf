@@ -1,0 +1,14 @@
+{
+  "name": "wordpress",
+  "packageManager": "yarn@3.2.3",
+  "scripts": {
+    "sass": "sass theme/styles/mtfmusicals.scss theme/styles/index.css",
+    "sass::watch": "sass --watch theme/styles/mtfmusicals.scss theme/styles/index.css"
+  },
+  "devDependencies": {
+    "sass": "^1.56.1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.2.2"
+  }
+}

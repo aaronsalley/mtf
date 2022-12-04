@@ -1,0 +1,45 @@
+@import 'https://use.typekit.net/kpj5mtz.css';
+@import 'https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap';
+
+$sans-serif: 'forma-djr-deck', 'Open Sans';
+$serif: 'Times New Roman';
+$monospace: '';
+$display: 'forma-djr-deck', 'Oswald', sans-serif;
+
+.mtfmusicals {
+  --mtf-font-sans-serif: #{$sans-serif};
+  --mtf-font-serif: #{$serif};
+  --mtf-font-monospace: #{$monospace};
+  --mtf-font-display: #{$display};
+
+  font-weight: 500;
+  font-size: 16px;
+  font-family: var(--mtf-font-sans-serif), -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  font-style: normal;
+  letter-spacing: 0.09em;
+
+  a {
+    text-decoration: none;
+  }
+
+  h2 {
+    font-weight: 800;
+    font-size: 2rem;
+    font-family: var(--mtf-font-display);
+    text-transform: uppercase;
+
+    .content & {
+      font-size: 1em;
+    }
+  }
+
+  h3 {
+    font-weight: 800;
+
+    .content & {
+      font-size: 0.75em;
+    }
+  }
+}

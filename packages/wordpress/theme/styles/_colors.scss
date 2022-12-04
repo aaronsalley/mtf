@@ -1,0 +1,27 @@
+$light: white;
+$dark: black;
+$primary: #ff282e;
+
+.mtfmusicals {
+  --mtf-primary: #{$primary};
+  --mtf-light: #{$light};
+  --mtf-dark: #{$dark};
+  --mtf-material: var(--mtf-light);
+  --mtf-text: var(--mtf-dark);
+
+  @media (prefers-color-scheme: dark) {
+    --mtf-material: var(--mtf-dark);
+    --mtf-text: var(--mtf-light);
+  }
+
+  color-scheme: dark;
+  color: var(--mtf-text);
+  background: var(--mtf-material);
+
+  a,
+  a:hover,
+  button,
+  [type='button'] {
+    color: inherit;
+  }
+}

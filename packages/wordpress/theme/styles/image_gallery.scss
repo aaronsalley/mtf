@@ -1,0 +1,75 @@
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/maps';
+@import '../../node_modules/bootstrap/scss/mixins';
+
+#makers {
+  position: relative;
+  z-index: 4;
+  margin-bottom: -6rem;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 50%, #000 100%);
+  background-position-y: -6rem;
+
+  // wrapper
+  > div {
+    $overflow: 8%;
+
+    display: flex;
+    flex-wrap: no-wrap;
+    gap: 0.25rem;
+    justify-content: center;
+    width: calc(100% + $overflow);
+    transform: translateX(calc($overflow * -1 / 2));
+    @include media-breakpoint-up(md) {
+      gap: 1rem;
+    }
+
+    // columns
+    > div {
+      display: flex;
+      flex: 1 1 calc(181 / 1561 * 100%);
+      flex-direction: column;
+      gap: 0.25rem;
+      justify-content: center;
+      @include media-breakpoint-up(md) {
+        gap: 1rem;
+      }
+
+      &:first-of-type,
+      &:last-of-type {
+        display: none;
+        @include media-breakpoint-up(md) {
+          display: flex;
+        }
+      }
+
+      &:nth-of-type(3n - 3) {
+        flex-basis: calc(280 / 1561 * 100%);
+
+        > :first-child {
+          max-width: calc(181 / 280 * 100%);
+        }
+
+        &:nth-of-type(6n - 6) {
+          align-items: flex-end;
+        }
+      }
+
+      figure {
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%;
+        overflow: hidden;
+        border-radius: 1rem;
+
+        img {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}

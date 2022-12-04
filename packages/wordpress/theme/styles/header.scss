@@ -1,0 +1,71 @@
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/maps';
+@import '../../node_modules/bootstrap/scss/mixins';
+
+.Header_container,
+.Header_container--light,
+.Header_container--dark {
+  position: relative;
+
+  .appbar {
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+
+    span {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      width: 100%;
+      max-width: calc(100% - 1.5rem);
+      margin: auto;
+      padding-top: 0.25rem;
+      @include media-breakpoint-up(lg) {
+        max-width: var(--mtf-max-width);
+      }
+    }
+  }
+
+  .brand {
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3.9388rem;
+    margin: 0.5rem;
+    transform: rotate(-15deg);
+    aspect-ratio: 1 / 1;
+
+    > * {
+      max-height: 100%;
+      max-width: 100%;
+    }
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  // mega menu
+  menu {
+    button {
+      z-index: 6;
+      background-color: transparent;
+      border: none;
+
+      i {
+        font-size: 1.5rem;
+      }
+    }
+
+    > ul {
+      display: none;
+      color: var(--mtf-light);
+    }
+  }
+}

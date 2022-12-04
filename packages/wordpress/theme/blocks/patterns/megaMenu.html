@@ -1,0 +1,8 @@
+<menu className={styles[`${styleNames.join('')}`]}>
+  <MenuToggler
+    button={withButton}
+    state={menuVisible}
+    action={setVisible}
+  />
+  <MenuItems {...menuData.nodes} />
+</menu>

@@ -12278,11 +12278,11 @@ html {
     padding-left: 4.75rem;
   }
 }
-.mtfmusicals.home .Home_container > #programming article p {
+.mtfmusicals.home .Home_container > #programming article h2 + * {
   width: 100%;
 }
 @media (min-width: 768px) {
-  .mtfmusicals.home .Home_container > #programming article p {
+  .mtfmusicals.home .Home_container > #programming article h2 + * {
     width: 65%;
     padding-right: 4.75rem;
   }

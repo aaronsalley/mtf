@@ -128,13 +128,13 @@
           width: 35%;
           padding-left: 4.75rem;
         }
-      }
 
-      p {
-        width: 100%;
-        @include media-breakpoint-up(md) {
-          width: 65%;
-          padding-right: 4.75rem;
+        + * {
+          width: 100%;
+          @include media-breakpoint-up(md) {
+            width: 65%;
+            padding-right: 4.75rem;
+          }
         }
       }
     }

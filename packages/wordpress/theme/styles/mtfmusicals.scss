@@ -3,12 +3,10 @@
  * Author: Salley & Co.
  * Author URI: https://aaronsalley.com
  */
-
+@use '../../node_modules/bootstrap/scss/bootstrap.scss';
 @use '_colors';
 @use '_typography';
 @use '_forms';
-
-@import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
 html {
   overflow: hidden;
@@ -28,6 +26,12 @@ html {
   @import 'header';
   @import 'footer';
 
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
   &.home {
     @import 'home';
     .Menu_nav_container ul li {
@@ -45,12 +49,6 @@ html {
     box-sizing: border-box;
     transition: all 1s, color 0.15s 0s;
   }
-
-  height: 100vh;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
 
   > main {
     flex-basis: 100%;
@@ -98,5 +96,9 @@ html {
         top: 0;
       }
     }
+  }
+
+  .wp-block-columns {
+    margin-bottom: 0;
   }
 }

@@ -18,6 +18,6 @@
   </header>
   <section>
     <h2>Description</h2>
-    <div><?php the_content(); ?></div>
+    <div class="content"><?php the_content(); ?></div>
   </section>
 </main>

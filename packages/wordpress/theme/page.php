@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <main class="Page_container">
-  <section><?php the_content(); ?></section>
+  <section class="content"><?php the_content(); ?></section>
   <aside>
     <?php get_template_part('components/the_title'); ?>
     <div>

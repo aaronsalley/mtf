@@ -23,15 +23,18 @@ if (!class_exists('MTF_Musicals')) {
   {
     protected static $DOMAIN = 'mtfmusicals';
     protected static $ROOT_DIR;
+    protected static $WP_PLUGIN_DIR;
 
     protected static $EVENTS;
     protected static $MEDIA;
+    protected static $PLUGINS;
 
     protected $loader;
 
     function __construct()
     {
-      self::$ROOT_DIR = __DIR__;
+      self::$ROOT_DIR = dirname(__FILE__);
+      self::$WP_PLUGIN_DIR = dirname(__FILE__, 2);
 
       $this->init();
     }
@@ -98,10 +101,7 @@ if (!class_exists('MTF_Musicals')) {
       // include_once self::$ROOT_DIR . '/admin/cors.php';
       include_once self::$ROOT_DIR . '/admin/events.php';
       include_once self::$ROOT_DIR . '/admin/media.php';
-      include_once self::$ROOT_DIR . '/includes/required-plugins.php';
-
-      self::$EVENTS = new MTF_Musicals\Events;
-      self::$MEDIA = new MTF_Musicals\Media;
+      include_once self::$ROOT_DIR . '/admin/plugins.php';
     }
 
     private function init()
@@ -110,6 +110,10 @@ if (!class_exists('MTF_Musicals')) {
       $this->theme_mods();
       $this->enable_elementor();
       $this->manual_excerpts();
+
+      self::$EVENTS = new MTF_Musicals\Events;
+      self::$MEDIA = new MTF_Musicals\Media;
+      self::$PLUGINS = new MTF_Musicals\Plugins;
     }
   }
 

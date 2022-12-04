@@ -44,7 +44,7 @@ const MegaMenu = ({
   }: menuItem) => {
     let text: ReactElement;
 
-    if (path !== '#') {
+    if (path !== null) {
       text = (
         <Link href={path}>
           <a target={target} title={title}>

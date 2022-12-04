@@ -5,7 +5,7 @@ export const API_URL =
       : process.env.API_URL
     : typeof window !== 'undefined'
     ? 'http://aarons-macbook-pro.local:32769'
-    : 'http://cms';
+    : 'http://aarons-macbook-pro.local:32769';
 
 console.debug(API_URL);
 

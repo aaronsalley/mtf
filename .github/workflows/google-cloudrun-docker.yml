@@ -19,7 +19,6 @@ env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
   GAR_LOCATION: ${{ secrets.GAR_LOCATION }}
   REPOSITORY: ${{ secrets.REPOSITORY }}
-  SERVICE: ${{ secrets.SERVICE }}
   REGION: ${{ secrets.REGION }}
   TAG: ${{ github.sha }}
 
@@ -55,17 +54,17 @@ jobs:
       - name: Build and Push Container
         id: build-push
         run: |-
-          docker compose build ${{ env.SERVICE }}
+          docker compose build wordpress
           docker compose push
 
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0
         with:
-          service: ${{ env.SERVICE }}
+          service: wordpress
           region: ${{ env.REGION }}
           # NOTE: If using a pre-built image, update the image name here
-          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ env.TAG }}
+          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/wordpress:${{ env.TAG }}
 
       # # If required, use the Cloud Run url output in later steps
       - name: Show Output

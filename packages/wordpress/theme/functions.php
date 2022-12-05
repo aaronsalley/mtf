@@ -42,13 +42,6 @@ if (!function_exists('mtfmusicals_scripts')) :
     $theme_version = wp_get_theme()->get('Version');
 
     $version_string = is_string($theme_version) ? $theme_version : false;
-    wp_register_script(
-      'font-awesome',
-      "https://kit.fontawesome.com/07e616e69d.js",
-    );
-
-    // Enqueue theme stylesheet.
-    wp_enqueue_script('font-awesome');
   }
 
 endif;

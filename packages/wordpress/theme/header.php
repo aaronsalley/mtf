@@ -1,3 +1,4 @@
+<?php $NEXT_PUBLIC_GOOGLE_TM = getenv('NEXT_PUBLIC_GOOGLE_TM'); ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js">
 
@@ -23,14 +24,13 @@
       j.src =
         'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
       f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', '${process.env.NEXT_PUBLIC_GOOGLE_TM}');
+    })(window, document, 'script', 'dataLayer', '<?php echo $NEXT_PUBLIC_GOOGLE_TM; ?>');
   </script>
-
   <?php wp_head(); ?>
 </head>
 
 <body <?php body_class('mtfmusicals'); ?>>
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GOOGLE_TM}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <noscript><iframe src='<?php echo "https://www.googletagmanager.com/ns.html?id=$NEXT_PUBLIC_GOOGLE_TM"; ?>' height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <header class="Header_container">
     <div class="appbar">
       <span>
@@ -38,7 +38,7 @@
           <?php the_custom_logo(); ?>
         </div>
         <menu class="Menu_mega_container">
-          <button type=""><i className="fa-solid fa-bars-staggered"></i></button>
+          <button><i class="fa-solid fa-bars-staggered"></i></button>
           <?php wp_nav_menu([
             'theme_location' => 'mega',
             'container' => null,

@@ -7,9 +7,10 @@
 @use '_colors';
 @use '_typography';
 @use '_forms';
+@use '_choreography';
 
 html {
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .mtfmusicals {
@@ -27,7 +28,7 @@ html {
   @import 'footer';
 
   height: 100vh;
-  overflow: auto;
+  // overflow: auto;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -43,11 +44,17 @@ html {
     @import 'page';
   }
 
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    transition: all 1s, color 0.15s 0s;
+  // a,
+  article,
+  // div,
+  // section,
+  button,
+  .button {
+    &,
+    &::before,
+    &::after {
+      @include choreography.transition;
+    }
   }
 
   > main {
@@ -56,7 +63,7 @@ html {
     width: 100%;
   }
 
-  button,
+  > :not(header) button,
   input[type='submit'],
   .button {
     position: relative;

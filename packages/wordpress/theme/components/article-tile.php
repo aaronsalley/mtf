@@ -1,6 +1,5 @@
 <article class="Article_tile_container">
-  <Link href={url as string}>
-  <a>
+  <a href=<?php the_permalink(); ?>>
     <header>
       <h3><?php the_title(); ?></h3>
     </header>
@@ -12,5 +11,4 @@
       <button type="button">Read more</button>
     </footer>
   </a>
-  </Link>
 </article>

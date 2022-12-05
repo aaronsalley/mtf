@@ -6,16 +6,13 @@
 .Header_container,
 .Header_container--light,
 .Header_container--dark {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
 
   .appbar {
-    position: absolute;
-    display: flex;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    width: 100%;
-
     span {
       display: flex;
       justify-content: space-between;

@@ -16,12 +16,6 @@ export default function Document() {
       })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GOOGLE_TM}');`,
           }}
         />
-        <script
-          id="font-awesome"
-          src="https://kit.fontawesome.com/07e616e69d.js"
-          crossOrigin="anonymous"
-          async
-        />
       </Head>
       <body>
         <noscript

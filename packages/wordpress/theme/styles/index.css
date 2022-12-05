@@ -12133,10 +12133,10 @@ html {
   background-size: contain;
 }
 .mtfmusicals .Footer_container .devo > a.guidestar {
-  background-image: url("static/guidestar-transparency.png");
+  background-image: url("../static/guidestar-transparency.png");
 }
 .mtfmusicals .Footer_container .devo > a.amazonsmile {
-  background-image: url("static/amazonsmile-logo.jpeg");
+  background-image: url("../static/amazonsmile-logo.jpeg");
 }
 .mtfmusicals .Footer_container .devo > p {
   flex: 1 1 0%;

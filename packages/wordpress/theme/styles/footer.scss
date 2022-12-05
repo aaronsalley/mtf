@@ -39,11 +39,11 @@
       background-size: contain;
 
       &.guidestar {
-        background-image: url('static/guidestar-transparency.png');
+        background-image: url('../static/guidestar-transparency.png');
       }
 
       &.amazonsmile {
-        background-image: url('static/amazonsmile-logo.jpeg');
+        background-image: url('../static/amazonsmile-logo.jpeg');
       }
     }
 

@@ -3,8 +3,10 @@ header {
 }
 
 .tribe-events-pg-template {
-  --tec-color-text-primary: var(--mtf-text);
   --tec-font-family-sans-serif: var(--mtf-font-sans-serif);
+  --tec-color-text-primary: var(--mtf-text);
+  --tec-color-text-event-title: var(--mtf-text);
+  --tec-color-text-event-date: var(--mtf-text);
 
   //   --tec-border-radius-default: 4px;
   //   --tec-border-width-week-event: 2px;

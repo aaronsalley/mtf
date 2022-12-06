@@ -53,44 +53,71 @@ html {
   }
 
   > :not(header) button,
-  input[type='submit'],
-  .button {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-grow: 1;
-    align-items: center;
-    justify-content: flex-end;
-    padding: calc(1rem / 2) 0 calc(1rem / 2) calc(3rem / 2);
-    font-weight: bold;
-    font-size: 0.75rem;
-    text-align: right;
-    text-transform: uppercase;
-    background-color: inherit;
-    border-top: 0;
-    border-right: 0;
-    border-bottom: 3px solid var(--mtf-text);
-    border-left: 0;
-
-    &::after {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      bottom: -3px;
-      z-index: -1;
-      width: 100%;
-      background-color: var(--mtf-text);
-      content: '';
-    }
-
-    &:hover {
-      padding-right: calc(3rem / 4) !important;
-      padding-left: calc(3rem / 4) !important;
-      color: var(--mtf-material);
+  input[type='submit'] {
+    @mixin button() {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      justify-content: flex-end;
+      padding: calc(1rem / 2) 0 calc(1rem / 2) calc(3rem / 2);
+      font-weight: bold;
+      font-size: 0.75rem;
+      text-align: right;
+      text-transform: uppercase;
+      background-color: inherit;
+      border-top: 0;
+      border-right: 0;
+      border-bottom: 3px solid var(--mtf-text);
+      border-left: 0;
 
       &::after {
-        top: 0;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        bottom: -3px;
+        z-index: -1;
+        width: 100%;
+        background-color: var(--mtf-text);
+        content: '';
       }
+
+      &:hover {
+        padding-right: calc(3rem / 4) !important;
+        padding-left: calc(3rem / 4) !important;
+        color: var(--mtf-material);
+
+        &::after {
+          top: 0;
+        }
+      }
+    }
+
+    &,
+    .button {
+      @include button();
+    }
+
+    &.inverted,
+    &.button--inverted {
+      @include button();
+      color: var(--mtf-light);
+      border-bottom-color: var(--mtf-light);
+
+      &::after {
+        background-color: var(--mtf-light);
+      }
+
+      &:hover {
+        color: var(--mtf-dark);
+      }
+    }
+
+    &.left,
+    &.button--left {
+      padding-left: 0;
+      padding-right: 1.5rem;
     }
   }
 
@@ -110,6 +137,9 @@ html {
   }
 
   &.archive {
+    > header {
+      position: relative;
+    }
     @import 'posts';
   }
 }

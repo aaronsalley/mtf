@@ -27,31 +27,33 @@
   ?>
     <!-- display recent sticky from the past quarter; else display most recent -->
     <article>
-      <span><?php the_post_thumbnail('large'); ?></span>
+      <span class="image"><?php the_post_thumbnail('large'); ?></span>
       <div>
-        <caption><?php the_category(); ?></caption>
+        <span class="post-categories"><?php the_category(' '); ?></span>
         <header>
-          <h3><?php the_title(); ?></h3>
-          <p><?php the_excerpt(); ?></p>
+          <h3 class="headline"><?php the_title(); ?></h3>
+          <p class="lede"><?php the_excerpt(); ?></p>
         </header>
-        <button><?php echo $article_CTA; ?></button>
+        <button class="left"><?php echo $article_CTA; ?></button>
       </div>
     </article>
+
     <section>
       <h2>Press</h2>
       <div>
         <button></button>
         <div>
-          <?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
+          <?php while ($the_query->have_posts()) : $the_query->the_post(); // TODO: make carousel
+          ?>
             <article>
-              <span><?php the_post_thumbnail('medium'); ?></span>
+              <span class="image"><?php the_post_thumbnail('medium'); ?></span>
               <div>
-                <caption><?php the_category(); ?></caption>
+                <span class="post-categories"><?php the_category(' '); ?></span>
                 <header>
-                  <h3><?php the_title(); ?></h3>
-                  <p><?php the_excerpt(); ?></p>
+                  <h3 class="headline"><?php the_title(); ?></h3>
+                  <p class="lede"><?php the_excerpt(); ?></p>
                 </header>
-                <button><?php echo $article_CTA; ?></button>
+                <button class="left"><?php echo $article_CTA; ?></button>
               </div>
             </article>
           <?php endwhile; ?>
@@ -70,15 +72,15 @@
   if ($the_query->have_posts()) :
   ?>
     <div>
+      <h2>News</h2>
       <section>
-        <h2>News</h2>
         <div>
           <?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
             <article>
-              <span><?php the_post_thumbnail('medium'); ?></span>
+              <span class="image"><?php the_post_thumbnail('medium'); ?></span>
               <div>
-                <h3><?php the_title(); ?></h3>
-                <button><?php echo $article_CTA; ?></button>
+                <h3 class="headline"><?php the_title(); ?></h3>
+                <button class="left"><?php echo $article_CTA; ?></button>
               </div>
             </article>
           <?php endwhile; ?>
@@ -112,17 +114,22 @@
       <?php
       $i = 0;
       while ($the_query->have_posts()) : $the_query->the_post();
-        if ($i === 1) echo '<div>'; ?>
+        // TODO: make carousel
+        if ($i === 1) {
+          echo '<div>';
+        } ?>
         <article>
-          <span><?php the_post_thumbnail('large'); ?></span>
+          <span class="image"><?php the_post_thumbnail('large'); ?></span>
           <div>
-            <caption><?php the_category(); ?></caption>
-            <h3><?php the_title(); ?></h3>
+            <span class="post-categories"><?php the_category(' '); ?></span>
+            <h3 class="headline"><?php the_title(); ?></h3>
             <div>Watch <button></button><span></span><time></time></div>
           </div>
         </article>
       <?php $i++;
-        if ($i === count($the_query->posts)) echo '</div>';
+        if ($i === count($the_query->posts)) {
+          echo '</div>';
+        }
       endwhile; ?>
     </section>
   <?php
@@ -130,9 +137,11 @@
   wp_reset_postdata();
   ?>
   <div>
+    <h2>Thought Leadership</h2>
     <section>
       <?php
       $args = [
+        'posts_per_page' => 3,
         'tax_query' => [
           'relation'  => 'AND',
           [
@@ -151,18 +160,17 @@
       $the_query = new WP_Query($args);
       if ($the_query->have_posts()) :
       ?>
-        <h2>Thought Leadership</h2>
         <div>
           <?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
             <article>
-              <span><?php the_post_thumbnail('medium'); ?></span>
+              <span class="image"><?php the_post_thumbnail('medium'); ?></span>
               <div>
-                <caption><?php the_category(); ?></caption>
+                <span class="post-categories"><?php the_category(' '); ?></span>
                 <header>
-                  <h3><?php the_title(); ?></h3>
-                  <p><?php the_excerpt(); ?></p>
+                  <h3 class="headline"><?php the_title(); ?></h3>
+                  <p class="lede"><?php the_excerpt(); ?></p>
                 </header>
-                <button><?php echo $article_CTA; ?></button>
+                <button class="left"><?php echo $article_CTA; ?></button>
               </div>
             </article>
           <?php endwhile; ?>
@@ -173,14 +181,14 @@
       ?>
     </section>
     <article>
-      <span><?php the_post_thumbnail('large'); ?></span>
+      <!-- <span class="image"><?php the_post_thumbnail('large'); ?></span>
       <div>
         <header>
-          <h3><?php the_title(); ?></h3>
-          <p><?php the_excerpt(); ?></p>
+          <h3 class="headline"><?php the_title(); ?></h3>
+          <p class="lede"><?php the_excerpt(); ?></p>
         </header>
-        <button><?php echo $article_CTA; ?></button>
-      </div>
+        <button class="inverted left"><?php echo $article_CTA; ?></button>
+      </div> -->
     </article>
   </div>
 </main>

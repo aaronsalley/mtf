@@ -141,14 +141,14 @@ main {
       width: 100%;
       max-width: var(--mtf-max-width);
       margin: auto;
+    }
 
-      > div {
-        display: flex;
+    > div {
+      display: flex;
 
-        article {
-          width: 100%;
-          max-width: calc(100% / 3);
-        }
+      article {
+        width: 100%;
+        max-width: calc(100% / 3);
       }
     }
   }

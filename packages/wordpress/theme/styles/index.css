@@ -12615,10 +12615,10 @@ form:not(#adminbarsearch) > button {
   max-width: var(--mtf-max-width);
   margin: auto;
 }
-.mtfmusicals.archive main > :nth-child(4) > * > div {
+.mtfmusicals.archive main > :nth-child(4) > div {
   display: flex;
 }
-.mtfmusicals.archive main > :nth-child(4) > * > div article {
+.mtfmusicals.archive main > :nth-child(4) > div article {
   width: 100%;
   max-width: 33.3333333333%;
 }

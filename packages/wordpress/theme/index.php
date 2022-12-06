@@ -93,6 +93,7 @@
   wp_reset_postdata();
 
   $args = [
+    'posts_per_page' => 4,
     'tax_query' => [
       'relation'  => 'AND',
       [
@@ -121,7 +122,7 @@
         <article>
           <span class="image"><?php the_post_thumbnail('large'); ?></span>
           <div>
-            <span class="post-categories"><?php the_category(' '); ?></span>
+            <span class="post-categories"><?php the_tags(' '); ?></span>
             <h3 class="headline"><?php the_title(); ?></h3>
             <div>Watch <button></button><span></span><time></time></div>
           </div>

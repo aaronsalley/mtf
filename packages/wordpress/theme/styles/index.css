@@ -12650,23 +12650,11 @@ form:not(#adminbarsearch) > button {
 .mtfmusicals.archive main > :nth-child(2) > div > div {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 2rem;
 }
 .mtfmusicals.archive main > :nth-child(2) article {
   flex: 1;
   width: 25%;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-}
-.mtfmusicals.archive main > :nth-child(2) article:hover {
-  z-index: 10;
-  box-shadow: 0 1px 36px -2px rgba(0, 0, 0, 0.4);
-  transform: scale(1.08);
-}
-.mtfmusicals.archive main > :nth-child(2) article:hover,
-.mtfmusicals.archive main > :nth-child(2) article:hover * {
-  transition: all 1s, color 0.15s 0s;
 }
 .mtfmusicals.archive main > :nth-child(2) article > a {
   flex-direction: column;
@@ -12715,15 +12703,6 @@ form:not(#adminbarsearch) > button {
 .mtfmusicals.archive main > :nth-child(3) article {
   display: flex;
   margin: auto;
-}
-.mtfmusicals.archive main > :nth-child(3) article:hover {
-  z-index: 10;
-  box-shadow: 0 1px 36px -2px rgba(0, 0, 0, 0.4);
-  transform: scale(1.08);
-}
-.mtfmusicals.archive main > :nth-child(3) article:hover,
-.mtfmusicals.archive main > :nth-child(3) article:hover * {
-  transition: all 1s, color 0.15s 0s;
 }
 .mtfmusicals.archive main > :nth-child(3) article > a > * {
   display: flex;
@@ -12822,18 +12801,6 @@ form:not(#adminbarsearch) > button {
 .mtfmusicals.archive main > :nth-child(5) > section,
 .mtfmusicals.archive main > :nth-child(5) > article {
   flex: 1;
-}
-.mtfmusicals.archive main > :nth-child(5) > section:nth-child(2) article:hover,
-.mtfmusicals.archive main > :nth-child(5) > article:nth-child(2) article:hover {
-  z-index: 10;
-  box-shadow: 0 1px 36px -2px rgba(0, 0, 0, 0.4);
-  transform: scale(1.08);
-}
-.mtfmusicals.archive main > :nth-child(5) > section:nth-child(2) article:hover,
-.mtfmusicals.archive main > :nth-child(5) > section:nth-child(2) article:hover *,
-.mtfmusicals.archive main > :nth-child(5) > article:nth-child(2) article:hover,
-.mtfmusicals.archive main > :nth-child(5) > article:nth-child(2) article:hover * {
-  transition: all 1s, color 0.15s 0s;
 }
 .mtfmusicals.archive main > :nth-child(5) > section:last-child,
 .mtfmusicals.archive main > :nth-child(5) > article:last-child {

@@ -113,7 +113,7 @@ echo $article_CTA = 'Read Article';
       <?php
       $i = 0;
       while ($the_query->have_posts()) : $the_query->the_post();
-        if ($i = 1) echo '<div>'; ?>
+        if ($i === 1) echo '<div>'; ?>
         <article>
           <span><?php the_post_thumbnail('large'); ?></span>
           <div>
@@ -123,7 +123,7 @@ echo $article_CTA = 'Read Article';
           </div>
         </article>
       <?php $i++;
-        if ($i = count($the_query->posts)) echo '</div>';
+        if ($i === count($the_query->posts)) echo '</div>';
       endwhile; ?>
     </section>
   <?php

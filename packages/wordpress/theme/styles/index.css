@@ -12619,6 +12619,7 @@ form:not(#adminbarsearch) > button {
   display: flex;
 }
 .mtfmusicals.archive main > :nth-child(4) > * > div article {
+  width: 100%;
   max-width: 33.3333333333%;
 }
 .mtfmusicals.archive main > :nth-child(5) {

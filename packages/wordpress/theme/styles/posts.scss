@@ -25,7 +25,6 @@ main {
   }
 
   article {
-    // @include choreography.pickup();
     > a {
       display: flex;
       width: 100%;
@@ -118,13 +117,20 @@ main {
       > div {
         display: flex;
         flex-wrap: wrap;
-        gap: 2rem;
+        gap: 1rem;
       }
     }
 
     article {
-      width: 25%;
       flex: 1;
+      width: 25%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      padding-bottom: 1rem;
+
+      &:hover {
+        @include choreography.pickup;
+      }
 
       > a {
         flex-direction: column;
@@ -180,6 +186,10 @@ main {
     article {
       display: flex;
       margin: auto;
+
+      &:hover {
+        @include choreography.pickup;
+      }
 
       > a > * {
         display: flex;
@@ -252,6 +262,10 @@ main {
         width: 100%;
         max-width: calc(100% / 3);
         padding-bottom: 20%;
+
+        &:hover {
+          @include choreography.pickup;
+        }
       }
     }
   }
@@ -272,6 +286,14 @@ main {
     > section,
     > article {
       flex: 1;
+
+      &:nth-child(2) {
+        article {
+          &:hover {
+            @include choreography.pickup;
+          }
+        }
+      }
 
       &:last-child {
         position: relative;

@@ -52,6 +52,7 @@ html {
     width: 100%;
   }
 
+  .button,
   > :not(header) button,
   input[type='submit'] {
     @mixin button() {
@@ -94,13 +95,11 @@ html {
       }
     }
 
-    &,
-    .button {
+    & {
       @include button();
     }
 
-    &.inverted,
-    &.button--inverted {
+    &.inverted {
       @include button();
       color: var(--mtf-light);
       border-bottom-color: var(--mtf-light);
@@ -114,8 +113,7 @@ html {
       }
     }
 
-    &.left,
-    &.button--left {
+    &.left {
       padding-left: 0;
       padding-right: 1.5rem;
     }

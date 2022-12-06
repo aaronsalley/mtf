@@ -12179,10 +12179,9 @@ form:not(#adminbarsearch) > button {
   flex-grow: 1;
   width: 100%;
 }
+.mtfmusicals .button,
 .mtfmusicals > :not(header) button,
-.mtfmusicals > :not(header) button .button,
-.mtfmusicals input[type=submit],
-.mtfmusicals input[type=submit] .button {
+.mtfmusicals input[type=submit] {
   position: relative;
   z-index: 1;
   display: flex;
@@ -12200,10 +12199,9 @@ form:not(#adminbarsearch) > button {
   border-bottom: 3px solid var(--mtf-text);
   border-left: 0;
 }
+.mtfmusicals .button::after,
 .mtfmusicals > :not(header) button::after,
-.mtfmusicals > :not(header) button .button::after,
-.mtfmusicals input[type=submit]::after,
-.mtfmusicals input[type=submit] .button::after {
+.mtfmusicals input[type=submit]::after {
   position: absolute;
   top: 100%;
   right: 0;
@@ -12213,23 +12211,21 @@ form:not(#adminbarsearch) > button {
   background-color: var(--mtf-text);
   content: "";
 }
+.mtfmusicals .button:hover,
 .mtfmusicals > :not(header) button:hover,
-.mtfmusicals > :not(header) button .button:hover,
-.mtfmusicals input[type=submit]:hover,
-.mtfmusicals input[type=submit] .button:hover {
+.mtfmusicals input[type=submit]:hover {
   padding-right: 0.75rem !important;
   padding-left: 0.75rem !important;
   color: var(--mtf-material);
 }
+.mtfmusicals .button:hover::after,
 .mtfmusicals > :not(header) button:hover::after,
-.mtfmusicals > :not(header) button .button:hover::after,
-.mtfmusicals input[type=submit]:hover::after,
-.mtfmusicals input[type=submit] .button:hover::after {
+.mtfmusicals input[type=submit]:hover::after {
   top: 0;
 }
-.mtfmusicals > :not(header) button.inverted, .mtfmusicals > :not(header) button.button--inverted,
-.mtfmusicals input[type=submit].inverted,
-.mtfmusicals input[type=submit].button--inverted {
+.mtfmusicals .button.inverted,
+.mtfmusicals > :not(header) button.inverted,
+.mtfmusicals input[type=submit].inverted {
   position: relative;
   z-index: 1;
   display: flex;
@@ -12249,9 +12245,9 @@ form:not(#adminbarsearch) > button {
   color: var(--mtf-light);
   border-bottom-color: var(--mtf-light);
 }
-.mtfmusicals > :not(header) button.inverted::after, .mtfmusicals > :not(header) button.button--inverted::after,
-.mtfmusicals input[type=submit].inverted::after,
-.mtfmusicals input[type=submit].button--inverted::after {
+.mtfmusicals .button.inverted::after,
+.mtfmusicals > :not(header) button.inverted::after,
+.mtfmusicals input[type=submit].inverted::after {
   position: absolute;
   top: 100%;
   right: 0;
@@ -12261,31 +12257,31 @@ form:not(#adminbarsearch) > button {
   background-color: var(--mtf-text);
   content: "";
 }
-.mtfmusicals > :not(header) button.inverted:hover, .mtfmusicals > :not(header) button.button--inverted:hover,
-.mtfmusicals input[type=submit].inverted:hover,
-.mtfmusicals input[type=submit].button--inverted:hover {
+.mtfmusicals .button.inverted:hover,
+.mtfmusicals > :not(header) button.inverted:hover,
+.mtfmusicals input[type=submit].inverted:hover {
   padding-right: 0.75rem !important;
   padding-left: 0.75rem !important;
   color: var(--mtf-material);
 }
-.mtfmusicals > :not(header) button.inverted:hover::after, .mtfmusicals > :not(header) button.button--inverted:hover::after,
-.mtfmusicals input[type=submit].inverted:hover::after,
-.mtfmusicals input[type=submit].button--inverted:hover::after {
+.mtfmusicals .button.inverted:hover::after,
+.mtfmusicals > :not(header) button.inverted:hover::after,
+.mtfmusicals input[type=submit].inverted:hover::after {
   top: 0;
 }
-.mtfmusicals > :not(header) button.inverted::after, .mtfmusicals > :not(header) button.button--inverted::after,
-.mtfmusicals input[type=submit].inverted::after,
-.mtfmusicals input[type=submit].button--inverted::after {
+.mtfmusicals .button.inverted::after,
+.mtfmusicals > :not(header) button.inverted::after,
+.mtfmusicals input[type=submit].inverted::after {
   background-color: var(--mtf-light);
 }
-.mtfmusicals > :not(header) button.inverted:hover, .mtfmusicals > :not(header) button.button--inverted:hover,
-.mtfmusicals input[type=submit].inverted:hover,
-.mtfmusicals input[type=submit].button--inverted:hover {
+.mtfmusicals .button.inverted:hover,
+.mtfmusicals > :not(header) button.inverted:hover,
+.mtfmusicals input[type=submit].inverted:hover {
   color: var(--mtf-dark);
 }
-.mtfmusicals > :not(header) button.left, .mtfmusicals > :not(header) button.button--left,
-.mtfmusicals input[type=submit].left,
-.mtfmusicals input[type=submit].button--left {
+.mtfmusicals .button.left,
+.mtfmusicals > :not(header) button.left,
+.mtfmusicals input[type=submit].left {
   padding-left: 0;
   padding-right: 1.5rem;
 }

@@ -1,6 +1,5 @@
 <?php get_header(); ?>
-<?php
-echo $article_CTA = 'Read Article';
+<?php $article_CTA = 'Read Article';
 // $args  = array(
 //   'posts_per_page'      => 1,
 //   'post__in'            => get_option('sticky_posts'),

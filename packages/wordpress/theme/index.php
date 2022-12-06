@@ -20,7 +20,7 @@
 <main>
   <?php
   $args = [
-    'posts_per_page' => 5,
+    'posts_per_page' => 4,
     'category_name' => 'press'
   ];
   $the_query = new WP_Query($args);

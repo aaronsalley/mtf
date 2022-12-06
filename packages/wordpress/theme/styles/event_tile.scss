@@ -10,6 +10,7 @@
   align-items: center;
   height: 50vh;
   max-height: 26.25rem;
+  @include choreography.transition;
 
   %wrapper {
     display: flex;

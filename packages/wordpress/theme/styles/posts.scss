@@ -89,6 +89,8 @@ main {
       }
 
       img {
+        height: 100%;
+        width: 100%;
         object-fit: cover;
       }
 
@@ -108,13 +110,8 @@ main {
   > :nth-child(4) {
     background-color: var(--mtf-dark);
 
-    > * {
-      width: 100%;
-      max-width: var(--mtf-max-width);
-      margin: auto;
-    }
-
     article {
+      display: flex;
       position: relative;
       padding-bottom: 40%;
 
@@ -126,6 +123,8 @@ main {
         height: 100%;
 
         img {
+          height: 100%;
+          width: 100%;
           object-fit: cover;
         }
       }
@@ -135,6 +134,20 @@ main {
         top: 50%;
         left: 2.5rem;
         transform: translateY(-50%);
+      }
+    }
+
+    > * {
+      width: 100%;
+      max-width: var(--mtf-max-width);
+      margin: auto;
+
+      > div {
+        display: flex;
+
+        article {
+          max-width: calc(100% / 3);
+        }
       }
     }
   }
@@ -187,6 +200,8 @@ main {
       }
 
       img {
+        height: 100%;
+        width: 100%;
         object-fit: cover;
       }
 

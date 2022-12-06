@@ -110,11 +110,11 @@ echo $article_CTA = 'Read Article';
   if ($the_query->have_posts()) :
   ?>
     <section>
-      <?php $i = 0;
-      while ($the_query->have_posts()) : $the_query->the_post(); ?>
-        <?php if ($i > 0) {
-          echo '<div>';
-        } ?>
+      <?php
+      $i = 0;
+      MTF_Musicals::logger(count($the_query->posts));
+      while ($the_query->have_posts()) : if ($i = 1) echo '<div>';
+        $the_query->the_post(); ?>
         <article>
           <span><?php the_post_thumbnail('large'); ?></span>
           <div>
@@ -123,11 +123,9 @@ echo $article_CTA = 'Read Article';
             <div>Watch <button></button><span></span><time></time></div>
           </div>
         </article>
-        <?php if ($i > 0) {
-          echo '</div>';
-        } ?>
       <?php $i++;
-      endwhile; ?>
+      endwhile;
+      if ($i > 0 && count($the_query->posts) > 1) echo '</div>'; ?>
     </section>
   <?php
   endif;

@@ -12572,6 +12572,8 @@ form:not(#adminbarsearch) > button {
   flex-direction: column;
 }
 .mtfmusicals.archive main > :nth-child(3) article img {
+  height: 100%;
+  width: 100%;
   object-fit: cover;
 }
 .mtfmusicals.archive main > :nth-child(3) article div {
@@ -12585,12 +12587,8 @@ form:not(#adminbarsearch) > button {
 .mtfmusicals.archive main > :nth-child(4) {
   background-color: var(--mtf-dark);
 }
-.mtfmusicals.archive main > :nth-child(4) > * {
-  width: 100%;
-  max-width: var(--mtf-max-width);
-  margin: auto;
-}
 .mtfmusicals.archive main > :nth-child(4) article {
+  display: flex;
   position: relative;
   padding-bottom: 40%;
 }
@@ -12602,6 +12600,8 @@ form:not(#adminbarsearch) > button {
   height: 100%;
 }
 .mtfmusicals.archive main > :nth-child(4) article > span img {
+  height: 100%;
+  width: 100%;
   object-fit: cover;
 }
 .mtfmusicals.archive main > :nth-child(4) article > div {
@@ -12609,6 +12609,17 @@ form:not(#adminbarsearch) > button {
   top: 50%;
   left: 2.5rem;
   transform: translateY(-50%);
+}
+.mtfmusicals.archive main > :nth-child(4) > * {
+  width: 100%;
+  max-width: var(--mtf-max-width);
+  margin: auto;
+}
+.mtfmusicals.archive main > :nth-child(4) > * > div {
+  display: flex;
+}
+.mtfmusicals.archive main > :nth-child(4) > * > div article {
+  max-width: 33.3333333333%;
 }
 .mtfmusicals.archive main > :nth-child(5) {
   display: flex;
@@ -12651,6 +12662,8 @@ form:not(#adminbarsearch) > button {
   flex-direction: column;
 }
 .mtfmusicals.archive main > :nth-child(5) article img {
+  height: 100%;
+  width: 100%;
   object-fit: cover;
 }
 .mtfmusicals.archive main > :nth-child(5) article div {

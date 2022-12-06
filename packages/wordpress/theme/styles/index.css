@@ -12575,6 +12575,9 @@ form:not(#adminbarsearch) > button {
   width: 100%;
   margin: 4.5rem auto;
 }
+.mtfmusicals.archive main h2 {
+  font-size: 1rem;
+}
 .mtfmusicals.archive main article > a {
   display: flex;
   width: 100%;
@@ -12869,6 +12872,13 @@ form:not(#adminbarsearch) > button {
 }
 .mtfmusicals.archive main > :nth-child(5) article div button {
   flex-grow: 0;
+}
+.mtfmusicals.single-tribe_events header {
+  position: relative;
+}
+.mtfmusicals.single-tribe_events .tribe-events-pg-template {
+  --tec-color-text-primary: var(--mtf-text);
+  --tec-font-family-sans-serif: var(--mtf-font-sans-serif);
 }
 
 /*# sourceMappingURL=index.css.map */

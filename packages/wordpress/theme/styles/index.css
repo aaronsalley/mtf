@@ -12590,7 +12590,6 @@ form:not(#adminbarsearch) > button {
   position: relative;
   display: block;
   overflow: hidden;
-  background-color: navy;
 }
 .mtfmusicals.archive main article .image img {
   position: absolute;
@@ -12792,6 +12791,7 @@ form:not(#adminbarsearch) > button {
 .mtfmusicals.archive main > :nth-child(5) > article:last-child {
   position: relative;
   padding-bottom: 50%;
+  background-color: var(--mtf-text);
 }
 .mtfmusicals.archive main > :nth-child(5) > section:last-child .image,
 .mtfmusicals.archive main > :nth-child(5) > article:last-child .image {

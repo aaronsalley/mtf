@@ -40,7 +40,7 @@ main {
       position: relative;
       display: block;
       overflow: hidden;
-      background-color: navy;
+      // background-color: navy;
 
       img {
         position: absolute;
@@ -265,6 +265,7 @@ main {
       &:last-child {
         position: relative;
         padding-bottom: 50%;
+        background-color: var(--mtf-text);
 
         .image {
           position: absolute;

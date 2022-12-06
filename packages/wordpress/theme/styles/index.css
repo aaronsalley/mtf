@@ -11791,12 +11791,14 @@ form:not(#adminbarsearch) > button {
   align-items: center;
   height: 50vh;
   max-height: 26.25rem;
-  transition: all 1s, color 0.15s 0s;
 }
 .mtfmusicals .Event_tile_container footer, .mtfmusicals .Event_tile_container section, .mtfmusicals .Event_tile_container header h3 {
   display: flex;
   width: calc(100% - 1rem);
   margin: auto;
+}
+.mtfmusicals .Event_tile_container * {
+  transition: all 1s, color 0.15s 0s;
 }
 .mtfmusicals .Event_tile_container header {
   width: 100%;

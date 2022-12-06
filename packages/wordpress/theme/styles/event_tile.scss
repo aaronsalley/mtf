@@ -10,12 +10,15 @@
   align-items: center;
   height: 50vh;
   max-height: 26.25rem;
-  @include choreography.transition;
 
   %wrapper {
     display: flex;
     width: calc(100% - 1rem);
     margin: auto;
+  }
+
+  * {
+    @include choreography.transition;
   }
 
   header {

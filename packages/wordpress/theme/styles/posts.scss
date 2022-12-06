@@ -1,3 +1,5 @@
+@use 'choreography';
+
 @mixin scrim() {
   & + * {
     z-index: 2;
@@ -23,7 +25,13 @@ main {
   }
 
   article {
-    .post-categories {
+    // @include choreography.pickup();
+    > a {
+      display: flex;
+      width: 100%;
+    }
+
+    .categories {
       font-size: 0.875em;
     }
 
@@ -59,17 +67,16 @@ main {
 
   // Feature
   > :nth-child(1) {
-    display: flex;
     margin-top: 0;
 
-    > * {
+    > a > * {
       position: relative;
       display: flex;
       width: 50%;
       flex-direction: column;
     }
 
-    > div {
+    > a > div {
       align-items: flex-start;
       justify-content: center;
       max-width: calc(var(--mtf-max-width) * 0.5);
@@ -118,6 +125,10 @@ main {
     article {
       width: 25%;
       flex: 1;
+
+      > a {
+        flex-direction: column;
+      }
 
       .image {
         padding-bottom: 100%;
@@ -170,13 +181,13 @@ main {
       display: flex;
       margin: auto;
 
-      > * {
+      > a > * {
         display: flex;
         width: 50%;
-        flex-direction: column;
       }
 
       div {
+        flex-direction: column;
         align-items: flex-start;
         justify-content: center;
         margin: 1rem;
@@ -218,7 +229,7 @@ main {
         @include scrim();
       }
 
-      > div {
+      > a > div {
         position: absolute;
         top: 50%;
         left: 2.5rem;
@@ -265,7 +276,7 @@ main {
       &:last-child {
         position: relative;
         padding-bottom: 50%;
-        background-color: var(--mtf-text);
+        @include scrim();
 
         .image {
           position: absolute;
@@ -276,7 +287,7 @@ main {
           @include scrim();
         }
 
-        > div {
+        > a > div {
           position: absolute;
           top: 50%;
           left: 50%;
@@ -289,7 +300,7 @@ main {
       display: flex;
       margin: auto;
 
-      > * {
+      > a > * {
         display: flex;
         width: 50%;
         flex-direction: column;

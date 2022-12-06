@@ -1,5 +1,27 @@
 <?php get_header(); ?>
 <?php $article_CTA = 'Read Article';
+function the_post_terms($taxonomy = 'category', $separator = ' ')
+{
+  $__terms = [];
+
+  if ($taxonomy === 'tags') {
+    $__terms = get_the_tags();
+  } else {
+    $__terms = get_the_category();
+  }
+
+  if ($__terms) {
+    $terms = [];
+
+    foreach ($__terms as $term) {
+      $terms[] = $term->name;
+    }
+
+    echo implode($separator, $terms);
+  }
+
+  return;
+}
 // $args  = array(
 //   'posts_per_page'      => 1,
 //   'post__in'            => get_option('sticky_posts'),
@@ -28,15 +50,17 @@
   ?>
     <!-- display recent sticky from the past quarter; else display most recent -->
     <article>
-      <span class="image"><?php the_post_thumbnail('large'); ?></span>
-      <div>
-        <span class="post-categories"><?php the_category(' '); ?></span>
-        <header>
-          <h3 class="headline"><?php the_title(); ?></h3>
-          <p class="lede"><?php the_excerpt(); ?></p>
-        </header>
-        <button class="left"><?php echo $article_CTA; ?></button>
-      </div>
+      <a href=<?php the_permalink(); ?>>
+        <span class="image"><?php the_post_thumbnail('large'); ?></span>
+        <div>
+          <span class="categories"><?php the_post_terms(); ?></span>
+          <header>
+            <h3 class="headline"><?php the_title(); ?></h3>
+            <p class="lede"><?php the_excerpt(); ?></p>
+          </header>
+          <button class="left"><?php echo $article_CTA; ?></button>
+        </div>
+      </a>
     </article>
 
     <section>
@@ -47,15 +71,16 @@
           <?php while ($the_query->have_posts()) : $the_query->the_post(); // TODO: make carousel
           ?>
             <article>
-              <span class="image"><?php the_post_thumbnail('medium'); ?></span>
-              <div>
-                <span class="post-categories"><?php the_category(' '); ?></span>
-                <header>
-                  <h3 class="headline"><?php the_title(); ?></h3>
-                  <p class="lede"><?php the_excerpt(); ?></p>
-                </header>
-                <button class="left"><?php echo $article_CTA; ?></button>
-              </div>
+              <a href=<?php the_permalink(); ?>>
+                <span class="image"><?php the_post_thumbnail('medium'); ?></span>
+                <div>
+                  <header>
+                    <h3 class="headline"><?php the_title(); ?></h3>
+                    <p class="lede"><?php the_excerpt(); ?></p>
+                  </header>
+                  <button class="left"><?php echo $article_CTA; ?></button>
+                </div>
+              </a>
             </article>
           <?php endwhile; ?>
         </div>
@@ -78,11 +103,13 @@
         <div>
           <?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
             <article>
-              <span class="image"><?php the_post_thumbnail('medium'); ?></span>
-              <div>
-                <h3 class="headline"><?php the_title(); ?></h3>
-                <button class="left"><?php echo $article_CTA; ?></button>
-              </div>
+              <a href=<?php the_permalink(); ?>>
+                <span class="image"><?php the_post_thumbnail('medium'); ?></span>
+                <div>
+                  <h3 class="headline"><?php the_title(); ?></h3>
+                  <button class="left"><?php echo $article_CTA; ?></button>
+                </div>
+              </a>
             </article>
           <?php endwhile; ?>
         </div>
@@ -121,12 +148,14 @@
           echo '<div>';
         } ?>
         <article>
-          <span class="image"><?php the_post_thumbnail('large'); ?></span>
-          <div>
-            <span class="post-categories"><?php the_tags(' '); ?></span>
-            <h3 class="headline"><?php the_title(); ?></h3>
-            <div>Watch <button></button><span></span><time></time></div>
-          </div>
+          <a href=<?php the_permalink(); ?>>
+            <span class="image"><?php the_post_thumbnail('large'); ?></span>
+            <div>
+              <span class="categories"><?php the_post_terms('tags'); ?></span>
+              <h3 class="headline"><?php the_title(); ?></h3>
+              <div>Watch <button></button><span></span><time></time></div>
+            </div>
+          </a>
         </article>
       <?php $i++;
         if ($i === count($the_query->posts)) {
@@ -165,15 +194,16 @@
         <div>
           <?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
             <article>
-              <span class="image"><?php the_post_thumbnail('medium'); ?></span>
-              <div>
-                <span class="post-categories"><?php the_category(' '); ?></span>
-                <header>
-                  <h3 class="headline"><?php the_title(); ?></h3>
-                  <p class="lede"><?php the_excerpt(); ?></p>
-                </header>
-                <button class="left"><?php echo $article_CTA; ?></button>
-              </div>
+              <a href=<?php the_permalink(); ?>>
+                <span class="image"><?php the_post_thumbnail('medium'); ?></span>
+                <div>
+                  <header>
+                    <h3 class="headline"><?php the_title(); ?></h3>
+                    <p class="lede"><?php the_excerpt(); ?></p>
+                  </header>
+                  <button class="left"><?php echo $article_CTA; ?></button>
+                </div>
+              </a>
             </article>
           <?php endwhile; ?>
         </div>
@@ -183,14 +213,19 @@
       ?>
     </section>
     <article>
-      <!-- <span class="image"><?php the_post_thumbnail('large'); ?></span>
-      <div>
-        <header>
-          <h3 class="headline"><?php the_title(); ?></h3>
-          <p class="lede"><?php the_excerpt(); ?></p>
-        </header>
-        <button class="inverted left"><?php echo $article_CTA; ?></button>
-      </div> -->
+      <!--
+          <a href=<?php the_permalink(); ?>>
+          <span class="image"><?php the_post_thumbnail('large'); ?></span>
+        <div>
+                  <span class="categories"><?php the_post_terms(); ?></span>
+          <header>
+            <h3 class="headline"><?php the_title(); ?></h3>
+            <p class="lede"><?php the_excerpt(); ?></p>
+          </header>
+          <button class="inverted left"><?php echo $article_CTA; ?></button>
+        </div>
+      </a>
+             -->
     </article>
   </div>
 </main>

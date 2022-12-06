@@ -33,17 +33,6 @@ html {
   flex-direction: column;
   height: 100vh;
 
-  &.home {
-    @import 'home';
-    .Menu_nav_container ul li {
-      color: var(--mtf-light) !important;
-    }
-  }
-
-  &.page {
-    @import 'page';
-  }
-
   // a,
   article,
   // div,
@@ -107,5 +96,20 @@ html {
 
   .wp-block-columns {
     margin-bottom: 0;
+  }
+
+  &.home {
+    @import 'home';
+    .Menu_nav_container ul li {
+      color: var(--mtf-light) !important;
+    }
+  }
+
+  &.page {
+    @import 'page';
+  }
+
+  &.archive {
+    @import 'posts';
   }
 }

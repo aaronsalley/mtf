@@ -1,0 +1,204 @@
+main {
+  // Feature
+  > :nth-child(1) {
+    display: flex;
+    margin: auto;
+
+    > * {
+      position: relative;
+      display: flex;
+      width: 50%;
+      flex-direction: column;
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: -3rem;
+      bottom: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    div {
+      align-items: flex-start;
+      justify-content: center;
+      max-width: calc(var(--mtf-max-width) * 0.5);
+      padding: 7rem 4.5rem;
+
+      button {
+        flex-grow: 0;
+      }
+    }
+  }
+
+  // Press
+  > :nth-child(2) {
+    width: 100%;
+    max-width: var(--mtf-max-width);
+    margin: auto;
+
+    > div {
+      button {
+      }
+
+      > div {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    article {
+      width: 25%;
+    }
+  }
+
+  // News
+  > :nth-child(3) {
+    display: flex;
+    width: 100%;
+    max-width: var(--mtf-max-width);
+    margin: auto;
+
+    > * {
+      width: 50%;
+
+      :first-child {
+        @media (prefers-color-scheme: light) {
+          background-color: #f6f6f6;
+        }
+      }
+
+      :last-child {
+        @media (prefers-color-scheme: light) {
+          background-color: #ecf3fe;
+        }
+      }
+    }
+
+    article {
+      display: flex;
+      margin: auto;
+
+      > * {
+        display: flex;
+        width: 50%;
+        flex-direction: column;
+      }
+
+      img {
+        object-fit: cover;
+      }
+
+      div {
+        align-items: flex-start;
+        justify-content: center;
+        margin: 1rem;
+
+        button {
+          flex-grow: 0;
+        }
+      }
+    }
+  }
+
+  // Makers profiles
+  > :nth-child(4) {
+    background-color: var(--mtf-dark);
+
+    > * {
+      width: 100%;
+      max-width: var(--mtf-max-width);
+      margin: auto;
+    }
+
+    article {
+      position: relative;
+      padding-bottom: 40%;
+
+      > span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        img {
+          object-fit: cover;
+        }
+      }
+
+      > div {
+        position: absolute;
+        top: 50%;
+        left: 2.5rem;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  // OpEd/Blog
+  > :nth-child(5) {
+    display: flex;
+    width: 100%;
+    max-width: var(--mtf-max-width);
+    margin: auto;
+
+    > * {
+      width: 50%;
+
+      &:last-child {
+        position: relative;
+        padding-bottom: 50%;
+
+        > span {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+
+          img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+          }
+        }
+
+        > div {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+
+    article {
+      display: flex;
+      margin: auto;
+
+      > * {
+        display: flex;
+        width: 50%;
+        flex-direction: column;
+      }
+
+      img {
+        object-fit: cover;
+      }
+
+      div {
+        align-items: flex-start;
+        justify-content: center;
+        margin: 1rem;
+
+        button {
+          flex-grow: 0;
+        }
+      }
+    }
+  }
+}

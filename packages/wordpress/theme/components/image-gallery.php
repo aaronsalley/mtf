@@ -22,7 +22,7 @@ function tile($min = 181, $max = 384)
   MTF_Musicals::logger($height);
 
 
-  return "<figure style='padding-bottom: $height%;'>" . wp_get_attachment_image(get_the_ID(), 'large') . "</figure>";
+  return "<figure style='padding-bottom: $height%;'>" . wp_get_attachment_image(get_the_ID(), 'medium-large') . "</figure>";
 }
 
 if ($the_query->have_posts()) :

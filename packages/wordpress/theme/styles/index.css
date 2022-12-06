@@ -12588,7 +12588,9 @@ form:not(#adminbarsearch) > button {
 }
 .mtfmusicals.archive main article .image {
   position: relative;
+  display: block;
   overflow: hidden;
+  background-color: navy;
 }
 .mtfmusicals.archive main article .image img {
   position: absolute;
@@ -12625,15 +12627,35 @@ form:not(#adminbarsearch) > button {
   max-width: var(--mtf-max-width);
 }
 .mtfmusicals.archive main > :nth-child(2) > div {
-  display: flex;
-  flex-wrap: nowrap;
+  position: relative;
+}
+.mtfmusicals.archive main > :nth-child(2) > div > button {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2rem;
+  border-bottom: 0;
+}
+.mtfmusicals.archive main > :nth-child(2) > div > button::after {
+  bottom: 0;
+}
+.mtfmusicals.archive main > :nth-child(2) > div > button:first-of-type {
+  right: calc(100% + 2rem);
+}
+.mtfmusicals.archive main > :nth-child(2) > div > button:last-of-type {
+  left: calc(100% + 2rem);
 }
 .mtfmusicals.archive main > :nth-child(2) > div > div {
   display: flex;
   flex-wrap: wrap;
+  gap: 2rem;
 }
 .mtfmusicals.archive main > :nth-child(2) article {
   width: 25%;
+  flex: 1;
+}
+.mtfmusicals.archive main > :nth-child(2) article .image {
+  padding-bottom: 100%;
 }
 .mtfmusicals.archive main > :nth-child(3) {
   display: flex;

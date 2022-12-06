@@ -38,7 +38,9 @@ main {
 
     .image {
       position: relative;
+      display: block;
       overflow: hidden;
+      background-color: navy;
 
       img {
         position: absolute;
@@ -85,20 +87,41 @@ main {
     max-width: var(--mtf-max-width);
 
     > div {
-      display: flex;
-      flex-wrap: nowrap;
+      position: relative;
 
-      button {
+      > button {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 2rem;
+        border-bottom: 0;
+
+        &::after {
+          bottom: 0;
+        }
+
+        &:first-of-type {
+          right: calc(100% + 2rem);
+        }
+        &:last-of-type {
+          left: calc(100% + 2rem);
+        }
       }
 
       > div {
         display: flex;
         flex-wrap: wrap;
+        gap: 2rem;
       }
     }
 
     article {
       width: 25%;
+      flex: 1;
+
+      .image {
+        padding-bottom: 100%;
+      }
     }
   }
 

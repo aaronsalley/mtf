@@ -147,6 +147,11 @@ html {
     --tec-color-text-event-title: var(--mtf-text);
     --tec-color-text-event-date: var(--mtf-text);
     --tec-color-text-events-title: var(--mtf-text);
-    @import 'event_page';
+
+    &.tribe_events-template-default {
+      header {
+        position: relative;
+      }
+    }
   }
 }

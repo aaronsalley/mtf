@@ -12880,7 +12880,7 @@ form:not(#adminbarsearch) > button {
   --tec-color-text-event-date: var(--mtf-text);
   --tec-color-text-events-title: var(--mtf-text);
 }
-.mtfmusicals.tribe-js header {
+.mtfmusicals.tribe-js.tribe_events-template-default header {
   position: relative;
 }
 

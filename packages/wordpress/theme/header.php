@@ -24,13 +24,13 @@
       j.src =
         'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
       f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', '<?php echo $NEXT_PUBLIC_GOOGLE_TM; ?>');
+    })(window, document, 'script', 'dataLayer', '<?php echo $GOOGLE_TM; ?>');
   </script>
   <?php wp_head(); ?>
 </head>
 
 <body <?php body_class('mtfmusicals'); ?>>
-  <noscript><iframe src='<?php echo "https://www.googletagmanager.com/ns.html?id=$NEXT_PUBLIC_GOOGLE_TM"; ?>' height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <noscript><iframe src='<?php echo "https://www.googletagmanager.com/ns.html?id=$GOOGLE_TM"; ?>' height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <header class="Header_container">
     <div class="appbar">
       <span>

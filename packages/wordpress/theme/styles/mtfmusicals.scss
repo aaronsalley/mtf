@@ -153,5 +153,10 @@ html {
         position: relative;
       }
     }
+
+    .tribe-common--breakpoint-medium.tribe-events
+      .tribe-events-header__events-bar {
+      display: none;
+    }
   }
 }

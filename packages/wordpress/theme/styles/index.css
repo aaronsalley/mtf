@@ -12883,5 +12883,8 @@ form:not(#adminbarsearch) > button {
 .mtfmusicals.tribe-js.tribe_events-template-default header {
   position: relative;
 }
+.mtfmusicals.tribe-js .tribe-common--breakpoint-medium.tribe-events .tribe-events-header__events-bar {
+  display: none;
+}
 
 /*# sourceMappingURL=index.css.map */

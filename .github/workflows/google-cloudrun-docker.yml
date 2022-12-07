@@ -55,6 +55,7 @@ jobs:
         id: build-push
         run: |-
           docker compose build jamstack
+          docker compose build cms
           docker compose push
 
       - name: Deploy to Cloud Run

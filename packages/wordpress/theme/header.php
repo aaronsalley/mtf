@@ -1,4 +1,4 @@
-<?php $NEXT_PUBLIC_GOOGLE_TM = getenv('NEXT_PUBLIC_GOOGLE_TM'); ?>
+<?php $GOOGLE_TM = getenv('GOOGLE_TM'); ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js">
 

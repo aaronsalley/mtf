@@ -141,7 +141,12 @@ html {
     @import 'posts';
   }
 
-  &.single-tribe_events {
+  &.tribe-js {
+    --tec-font-family-sans-serif: var(--mtf-font-sans-serif);
+    --tec-color-text-primary: var(--mtf-text);
+    --tec-color-text-event-title: var(--mtf-text);
+    --tec-color-text-event-date: var(--mtf-text);
+    --tec-color-text-events-title: var(--mtf-text);
     @import 'event_page';
   }
 }

@@ -12873,14 +12873,15 @@ form:not(#adminbarsearch) > button {
 .mtfmusicals.archive main > :nth-child(5) article div button {
   flex-grow: 0;
 }
-.mtfmusicals.single-tribe_events header {
-  position: relative;
-}
-.mtfmusicals.single-tribe_events .tribe-events-pg-template {
+.mtfmusicals.tribe-js {
   --tec-font-family-sans-serif: var(--mtf-font-sans-serif);
   --tec-color-text-primary: var(--mtf-text);
   --tec-color-text-event-title: var(--mtf-text);
   --tec-color-text-event-date: var(--mtf-text);
+  --tec-color-text-events-title: var(--mtf-text);
+}
+.mtfmusicals.tribe-js header {
+  position: relative;
 }
 
 /*# sourceMappingURL=index.css.map */

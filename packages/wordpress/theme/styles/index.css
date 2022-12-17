@@ -12478,7 +12478,6 @@ form:not(#adminbarsearch) > button {
   display: block;
   height: auto;
   margin-top: 2rem;
-  margin-bottom: 1rem;
 }
 .mtfmusicals.home .Home_container .accordion span:target ~ div .button {
   display: inline-flex;

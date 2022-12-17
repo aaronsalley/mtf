@@ -1,6 +1,14 @@
 <?php
-$regex = '/<!-- wp:image[\w\d\s\/\.,{};:="<>-]+<!-- \/wp:image -->/';
-preg_match($regex, get_the_content(), $images);
+$programming = [
+  'makers',
+  'mtfxr',
+  'assemblyline'
+];
+$programs = [];
+foreach ($programming as $service) {
+  $programs[] = get_page_by_path($service);
+}
+MTF_Musicals::logger($programs);
 ?>
 
 <?php get_header(); ?>
@@ -17,10 +25,15 @@ preg_match($regex, get_the_content(), $images);
   <?php get_template_part('components/event', 'grid'); ?>
   <?php get_template_part('components/image', 'gallery'); ?>
   <section id="programming">
-    <?php echo preg_replace($regex, '', get_the_content()); ?>
+    <?php foreach ($programs as $program) : ?>
+      <article>
+        <h2><?php echo get_the_title($program); ?></h2>
+        <p><?php echo get_the_excerpt($program); ?></p>
+      </article>
+    <?php endforeach; ?>
   </section>
   <div class="accordion">
-    <?php echo $images[0]; ?>
+    <figure><?php echo get_the_post_thumbnail($programs[2], 'full'); ?></figure>
     <ul>
       <li>R&D</li>
       <li>Factory Salon</li>

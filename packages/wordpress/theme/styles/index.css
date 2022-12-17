@@ -12473,6 +12473,9 @@ form:not(#adminbarsearch) > button {
   display: block;
   height: auto;
 }
+.mtfmusicals.home .Home_container .accordion span:target ~ div .button {
+  display: inline-flex;
+}
 .mtfmusicals.home .Home_container .accordion span:target ~ h3 :not([href*=accordion]) {
   display: none;
 }

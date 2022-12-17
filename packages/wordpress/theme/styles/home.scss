@@ -179,6 +179,10 @@
       ~ div {
         display: block;
         height: auto;
+
+        .button {
+          display: inline-flex;
+        }
       }
 
       ~ h3 :not([href*='accordion']) {

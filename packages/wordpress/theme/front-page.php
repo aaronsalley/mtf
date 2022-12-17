@@ -28,7 +28,10 @@ MTF_Musicals::logger($programs);
     <?php foreach ($programs as $program) : ?>
       <article>
         <h2><?php echo get_the_title($program); ?></h2>
-        <p><?php echo get_the_excerpt($program); ?></p>
+        <div>
+          <p><?php echo get_the_excerpt($program); ?></p>
+          <a href="<?php echo get_the_permalink($program); ?>">Learn More</a>
+        </div>
       </article>
     <?php endforeach; ?>
   </section>

@@ -92,14 +92,6 @@ foreach ($programming as $service) {
           <a class="button left" href="<?php echo get_the_permalink($programs[2]); ?>">Read More</a>
         </div>
       </li>
-      <li>
-        <span id="rnd"></span>
-        <h3>
-          <a href="#rnd">R&D</a>
-          <a href="#accordion">R&D</a>
-        </h3>
-        <div>Content</div>
-      </li>
     </ul>
   </div>
   <?php get_template_part('components/article', 'grid'); ?>

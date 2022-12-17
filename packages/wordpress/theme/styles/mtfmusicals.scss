@@ -9,10 +9,6 @@
 @use '_forms';
 @use '_choreography';
 
-html {
-  // overflow: hidden;
-}
-
 .mtfmusicals {
   --mtf-max-width: 1130px;
 
@@ -122,6 +118,12 @@ html {
 
   .wp-block-columns {
     margin-bottom: 0;
+    gap: 0;
+
+    .wp-block-column:nth-child(2):last-child {
+      flex-basis: calc(100% * 2 / 3);
+      flex-grow: 0;
+    }
   }
 
   &.home {
@@ -135,11 +137,15 @@ html {
     @import 'page';
   }
 
+  &.single {
+    @import 'article_single';
+  }
+
   &.archive {
     > header {
       position: relative;
     }
-    @import 'posts';
+    @import 'article_archive';
   }
 
   &.tribe-js {

@@ -12289,6 +12289,11 @@ form:not(#adminbarsearch) > button {
 }
 .mtfmusicals .wp-block-columns {
   margin-bottom: 0;
+  gap: 0;
+}
+.mtfmusicals .wp-block-columns .wp-block-column:nth-child(2):last-child {
+  flex-basis: 66.6666666667%;
+  flex-grow: 0;
 }
 .mtfmusicals.home .Home_container .hero {
   position: relative;
@@ -12603,6 +12608,58 @@ form:not(#adminbarsearch) > button {
 }
 .mtfmusicals.page .Page_container > section .kindful-embed-wrapper {
   max-height: 480px;
+}
+.mtfmusicals.single main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: var(--mtf-max-width);
+  margin: auto;
+  padding: 10rem 1.5rem;
+  column-gap: 4.375rem;
+}
+@media (min-width: 768px) {
+  .mtfmusicals.single main {
+    padding-bottom: unset;
+  }
+}
+@media (min-width: 992px) {
+  .mtfmusicals.single main {
+    padding-right: unset;
+    padding-left: unset;
+  }
+}
+.mtfmusicals.single main > aside {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .mtfmusicals.single main > aside {
+    width: 33%;
+  }
+}
+.mtfmusicals.single main > aside h1 {
+  margin: 0;
+  padding-bottom: 1.5rem;
+  font-weight: 900;
+  font-size: 5vmax;
+  font-family: var(--mtf-font-display);
+  line-height: 1.05;
+}
+@media (min-width: 768px) {
+  .mtfmusicals.single main > aside h1 {
+    font-size: 4rem;
+  }
+}
+.mtfmusicals.single main > aside h1 span {
+  display: block;
+}
+.mtfmusicals.single main > section {
+  flex: 1;
+}
+@media (min-width: 768px) {
+  .mtfmusicals.single main > section {
+    padding-right: 2.5rem;
+  }
 }
 .mtfmusicals.archive > header {
   position: relative;

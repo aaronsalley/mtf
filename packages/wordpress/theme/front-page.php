@@ -8,7 +8,6 @@ $programs = [];
 foreach ($programming as $service) {
   $programs[] = get_page_by_path($service);
 }
-MTF_Musicals::logger($programs);
 ?>
 
 <?php get_header(); ?>

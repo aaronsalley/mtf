@@ -12,9 +12,9 @@ const Home = ({
   posts,
   mediaItems,
 }: any) => {
-  const accordionBackground = content.match(/<img (.+?)>/g)
-    ? content.match(/<img (.+?)>/g)[0]
-    : null;
+  // const accordionBackground = content.match(/<img (.+?)>/g)
+  //   ? content.match(/<img (.+?)>/g)[0]
+  //   : null;
 
   return (
     <main className={styles['container']}>
@@ -30,7 +30,8 @@ const Home = ({
       <EventGrid id="events" events={events?.nodes} />
       <ImageGallery items={mediaItems?.nodes} />
       <section id={'programming'} className={styles['container']}>
-        <article>
+        {/* TODO: replace with page excerpts & titles */}
+        {/* <article>
           <h2>MTF Makers™</h2>
           <div>
             Our 18-month Artist-in-Residence program serves cohorts of
@@ -59,11 +60,12 @@ const Home = ({
             development and process over product without the pressures of
             critical or commercial success — all at no cost to the artists.
           </div>
-        </article>
+        </article> */}
       </section>
       {/* TODO: Build interactive accordion */}
       <div className={styles['accordion']}>
-        <span dangerouslySetInnerHTML={{ __html: accordionBackground }} />
+        {/* TODO: replace with background from Assembly Line page */}
+        {/* <span dangerouslySetInnerHTML={{ __html: accordionBackground }} />
         <ul>
           <li>R&D</li>
           <li>Factory Salon</li>
@@ -72,7 +74,7 @@ const Home = ({
           <li>Labs</li>
           <li>Concert series</li>
           <li>Rolling World Premieres</li>
-        </ul>
+        </ul> */}
       </div>
       <ArticleGrid posts={posts?.nodes} />
     </main>

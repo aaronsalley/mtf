@@ -153,6 +153,49 @@
     display: flex;
     flex-wrap: wrap;
 
+    h3 {
+      margin-bottom: 0;
+      font-size: 1.5rem;
+      font-family: var(--mtf-font-display);
+      font-weight: unset;
+
+      a {
+        display: block;
+
+        &[href*='accordion'] {
+          display: none;
+        }
+      }
+    }
+
+    li > span {
+      position: fixed;
+      display: block;
+      top: 0;
+      left: 0;
+    }
+
+    span:target {
+      ~ div {
+        display: block;
+        height: auto;
+      }
+
+      ~ h3 :not([href*='accordion']) {
+        display: none;
+      }
+
+      ~ h3 [href*='accordion'] {
+        display: block;
+      }
+    }
+
+    li > div {
+      height: 0;
+      overflow: hidden;
+      @include choreography.transition;
+    }
+
     ul {
       z-index: 1;
       width: 100%;
@@ -169,8 +212,6 @@
         padding-bottom: 1.5em;
         padding-left: 1.5em;
         color: var(--mtf-light);
-        font-size: 1.5rem;
-        font-family: var(--mtf-font-display);
         border-bottom: 1px solid var(--mtf-light);
         @include media-breakpoint-up(md) {
           width: 75%;

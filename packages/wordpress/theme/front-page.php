@@ -30,21 +30,62 @@ MTF_Musicals::logger($programs);
         <h2><?php echo get_the_title($program); ?></h2>
         <div>
           <p><?php echo get_the_excerpt($program); ?></p>
-          <a href="<?php echo get_the_permalink($program); ?>">Learn More</a>
+          <a class="button left" href="<?php echo get_the_permalink($program); ?>">Learn More</a>
         </div>
       </article>
     <?php endforeach; ?>
   </section>
   <div class="accordion">
     <figure><?php echo get_the_post_thumbnail($programs[2], 'full'); ?></figure>
-    <ul>
-      <li>R&D</li>
-      <li>Factory Salon</li>
-      <li>Representation Roundtables</li>
-      <li>4x15™ Series</li>
-      <li>Labs</li>
-      <li>Concert series</li>
-      <li>Rolling World Premieres</li>
+    <ul id="accordion">
+      <li>
+        <span id="salons"></span>
+        <h3>
+          <a href="#salons">Factory Salons</a>
+          <a href="#accordion">Factory Salons</a>
+        </h3>
+        <div>Content</div>
+      </li>
+      <li>
+        <span id="roundtables"></span>
+        <h3>
+          <a href="#roundtables">Roundtables</a>
+          <a href="#accordion">Roundtables</a>
+        </h3>
+        <div>Content</div>
+      </li>
+      <li>
+        <span id="4x15"></span>
+        <h3>
+          <a href="#4x15">4x15™ Rounds</a>
+          <a href="#accordion">4x15™ Rounds</a>
+        </h3>
+        <div>Content</div>
+      </li>
+      <li>
+        <span id="labs"></span>
+        <h3>
+          <a href="#labs">Labs</a>
+          <a href="#accordion">Labs</a>
+        </h3>
+        <div>Content</div>
+      </li>
+      <li>
+        <span id="concerts"></span>
+        <h3>
+          <a href="#concerts">Concert Series</a>
+          <a href="#accordion">Concert Series</a>
+        </h3>
+        <div>Content</div>
+      </li>
+      <li>
+        <span id="rnd"></span>
+        <h3>
+          <a href="#rnd">R&D</a>
+          <a href="#accordion">R&D</a>
+        </h3>
+        <div>Content</div>
+      </li>
     </ul>
   </div>
   <?php get_template_part('components/article', 'grid'); ?>

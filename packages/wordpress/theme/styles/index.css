@@ -12172,7 +12172,7 @@ form:not(#adminbarsearch) > button {
 }
 @media (min-width: 768px) {
   .mtfmusicals .Footer_container .copyright {
-    max-width: 50%;
+    max-width: 75%;
   }
 }
 .mtfmusicals article, .mtfmusicals article::before, .mtfmusicals article::after,

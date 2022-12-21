@@ -17,7 +17,7 @@
         ]); ?>
       </menu>
       <p class="copyright">
-        The gear logo and all lines of programming are ™ and ©<?php echo date('Y'); ?>
+        The gear logo, MTF Makers™, MTFxR™, Assembly Line™, 4x15™, Research & Dramaturgy™ (R&D™), artistic practice incubator™, new development accelerator™, manifested imagination™, and all lines of programming are ™ and ©<?php echo date('Y'); ?>
         Musical Theatre Factory Inc. All Rights Reserved.
       </p>
     </footer>

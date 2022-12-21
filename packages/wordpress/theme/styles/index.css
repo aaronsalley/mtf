@@ -12170,6 +12170,11 @@ form:not(#adminbarsearch) > button {
   font-size: 0.625rem;
   text-align: center;
 }
+@media (min-width: 768px) {
+  .mtfmusicals .Footer_container .copyright {
+    max-width: 50%;
+  }
+}
 .mtfmusicals article, .mtfmusicals article::before, .mtfmusicals article::after,
 .mtfmusicals button,
 .mtfmusicals button::before,

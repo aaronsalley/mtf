@@ -80,5 +80,8 @@
     margin: 3.75rem auto;
     font-size: 0.625rem;
     text-align: center;
+    @include media-breakpoint-up(md) {
+      max-width: 50%;
+    }
   }
 }

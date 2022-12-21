@@ -12434,6 +12434,9 @@ form:not(#adminbarsearch) > button {
     padding-right: 4.75rem;
   }
 }
+.mtfmusicals.home .Home_container > #programming article .button {
+  display: inline-flex;
+}
 .mtfmusicals.home .Home_container > #programming::before {
   position: absolute;
   z-index: 1;

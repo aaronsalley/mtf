@@ -137,6 +137,10 @@
           }
         }
       }
+
+      .button {
+        display: inline-flex;
+      }
     }
 
     &::before {

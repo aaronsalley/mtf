@@ -12992,9 +12992,6 @@ form:not(#adminbarsearch) > button {
 .mtfmusicals.tribe-js .tribe-common--breakpoint-medium.tribe-events .tribe-events-header__events-bar {
   display: none;
 }
-.mtfmusicals.admin-bar {
-  margin-top: 2rem;
-}
 .mtfmusicals.admin-bar header {
   top: 2rem;
 }

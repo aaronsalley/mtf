@@ -3,25 +3,24 @@
  * Author: Salley & Co.
  * Author URI: https://aaronsalley.com
  */
-@use '../../node_modules/bootstrap/scss/bootstrap.scss';
+@use '../../../node_modules/bootstrap/scss/bootstrap.scss';
 @use '_colors';
 @use '_typography';
-@use '_forms';
 @use '_choreography';
 
 .mtfmusicals {
   --mtf-max-width: 1130px;
 
-  @import 'article_grid';
-  @import 'article_tile';
-  @import 'event_grid';
-  @import 'event_tile';
-  @import 'image_gallery';
-  @import 'menu_mega';
-  @import 'menu_nav';
-
-  @import 'header';
-  @import 'footer';
+  @import '../molecules/Article';
+  @import '../molecules/Event';
+  @import '../molecules/form/forms';
+  @import '../organisms/Article';
+  @import '../organisms/Event';
+  @import '../organisms/ImageGallery';
+  @import '../organisms/footer';
+  @import '../organisms/header';
+  @import '../organisms/menu_mega';
+  @import '../organisms/menu_nav';
 
   height: 100vh;
   // overflow: auto;

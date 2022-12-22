@@ -7,7 +7,7 @@
           501(c)(3) Public Charity incorporated in the State of New York. All
           donations are tax-deductible to the fullest extent under the law.
         </p>
-        <?php get_template_part('components/form', 'email_subscribe'); ?>
+        <?php get_template_part('components/molecules/form/form', 'email_subscribe'); ?>
       </div>
       <menu class="Menu_mega_container">
         <?php wp_nav_menu([

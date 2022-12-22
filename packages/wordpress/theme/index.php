@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main class="Post_container">
   <header>
-    <?php get_template_part('components/the_title'); ?>
+    <?php get_template_part('components/molecules/TheTitle/index'); ?>
     <div>
       <?php the_excerpt(); ?>
     </div>

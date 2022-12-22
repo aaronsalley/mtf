@@ -1,4 +1,8 @@
 @use 'choreography';
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
+@import '../../../node_modules/bootstrap/scss/maps';
+@import '../../../node_modules/bootstrap/scss/mixins';
 
 @mixin scrim() {
   & + * {
@@ -32,6 +36,10 @@ main {
     > a {
       display: flex;
       width: 100%;
+      flex-wrap: wrap;
+      @include media-breakpoint-up(md) {
+        flex-wrap: nowrap;
+      }
     }
 
     .categories {
@@ -51,7 +59,11 @@ main {
       position: relative;
       display: block;
       overflow: hidden;
-      // background-color: navy;
+      height: auto;
+      width: auto;
+      @include media-breakpoint-up(md) {
+        // flex-wrap: nowrap;
+      }
 
       img {
         position: absolute;
@@ -71,19 +83,28 @@ main {
   // Feature
   > :nth-child(1) {
     margin-top: 0;
+    max-width: calc(var(--mtf-max-width) * 0.5);
+    @include media-breakpoint-up(md) {
+      max-width: unset;
+    }
 
     > a > * {
       position: relative;
       display: flex;
-      width: 50%;
       flex-direction: column;
+      @include media-breakpoint-up(md) {
+        width: 50%;
+      }
     }
 
     > a > div {
       align-items: flex-start;
       justify-content: center;
+      padding: 3.5rem 0;
       max-width: calc(var(--mtf-max-width) * 0.5);
-      padding: 7rem 4.5rem;
+      @include media-breakpoint-up(md) {
+        padding: 7rem 4.5rem;
+      }
 
       .headline {
         margin: 1.375em 0;
@@ -105,6 +126,10 @@ main {
         bottom: 0;
         width: 2rem;
         border-bottom: 0;
+        display: none;
+        @include media-breakpoint-up(md) {
+          display: flex;
+        }
 
         &::after {
           bottom: 0;
@@ -126,8 +151,11 @@ main {
     }
 
     article {
-      flex: 1;
-      width: 25%;
+      width: 100%;
+      @include media-breakpoint-up(md) {
+        flex: 1;
+        width: 25%;
+      }
 
       > a {
         flex-direction: column;
@@ -154,8 +182,11 @@ main {
     > section,
     > aside {
       position: relative;
-      flex: 1;
-      padding-bottom: 50%;
+      flex: 1 0 100%;
+      @include media-breakpoint-up(md) {
+        flex: 1;
+        padding-bottom: 50%;
+      }
 
       &:nth-child(2) {
         @media (prefers-color-scheme: light) {
@@ -163,13 +194,15 @@ main {
         }
 
         > div {
-          overflow: scroll;
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
           padding: 2rem;
+          @include media-breakpoint-up(md) {
+            overflow: scroll;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          }
         }
       }
 
@@ -205,10 +238,14 @@ main {
   // Makers profiles
   > :nth-child(4) {
     position: relative;
-    padding-top: 9.6875rem;
+    padding: 4rem 0;
+    background-color: var(--mtf-dark);
+    @include media-breakpoint-up(md) {
+      padding-top: 9.6875rem;
+      padding-bottom: 0;
+    }
 
     &::before {
-      content: '';
       display: block;
       position: absolute;
       top: 0;
@@ -216,12 +253,21 @@ main {
       height: 93%;
       width: 100%;
       background-color: var(--mtf-dark);
+      @include media-breakpoint-up(md) {
+        content: '';
+      }
     }
 
     article {
       display: flex;
       position: relative;
       padding-bottom: 35%;
+
+      @include media-breakpoint-down(sm) {
+        &:hover {
+          @include choreography.pickup;
+        }
+      }
 
       .image {
         position: absolute;
@@ -253,8 +299,11 @@ main {
 
       article {
         width: 100%;
-        max-width: calc(100% / 3);
-        padding-bottom: 20%;
+        padding-bottom: 35%;
+        @include media-breakpoint-up(md) {
+          padding-bottom: 20%;
+          max-width: calc(100% / 3);
+        }
 
         &:hover {
           @include choreography.pickup;
@@ -273,12 +322,16 @@ main {
 
     h2 {
       width: 100%;
-      padding-right: 50%;
+      @include media-breakpoint-up(md) {
+        padding-right: 50%;
+      }
     }
 
     > section,
     > article {
-      flex: 1;
+      @include media-breakpoint-up(md) {
+        flex: 1;
+      }
 
       &:last-child {
         position: relative;

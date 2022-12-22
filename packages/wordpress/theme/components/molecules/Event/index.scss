@@ -1,8 +1,8 @@
-@use '_choreography';
-@import '../../node_modules/bootstrap/scss/functions';
-@import '../../node_modules/bootstrap/scss/variables';
-@import '../../node_modules/bootstrap/scss/maps';
-@import '../../node_modules/bootstrap/scss/mixins';
+@use '../../templates/choreography';
+@import '../../../../node_modules/bootstrap/scss/functions';
+@import '../../../../node_modules/bootstrap/scss/variables';
+@import '../../../../node_modules/bootstrap/scss/maps';
+@import '../../../../node_modules/bootstrap/scss/mixins';
 
 .Event_tile_container {
   display: flex;

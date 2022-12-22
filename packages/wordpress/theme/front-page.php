@@ -21,8 +21,8 @@ foreach ($programming as $service) {
     </aside>
   </section>
   <blockquote><?php the_excerpt(); ?></blockquote>
-  <?php get_template_part('components/event', 'grid'); ?>
-  <?php get_template_part('components/image', 'gallery'); ?>
+  <?php get_template_part('components/organisms/Event/event', 'grid'); ?>
+  <?php get_template_part('components/organisms/ImageGallery/index'); ?>
   <section id="programming">
     <?php foreach ($programs as $program) : ?>
       <article>
@@ -94,6 +94,6 @@ foreach ($programming as $service) {
       </li>
     </ul>
   </div>
-  <?php get_template_part('components/article', 'grid'); ?>
+  <?php get_template_part('components/organisms/Article/article', 'grid'); ?>
 </main>
 <?php get_footer(); ?>

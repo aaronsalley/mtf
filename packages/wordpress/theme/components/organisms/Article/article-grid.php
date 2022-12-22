@@ -25,7 +25,7 @@ if ($the_query->have_posts()) :
 
     array_push(
       $columns["column${i}"],
-      MTF_Musicals::load_template_part('components/article', 'tile')
+      MTF_Musicals::load_template_part('components/molecules/Article/article', 'tile')
     );
 
     $j++;

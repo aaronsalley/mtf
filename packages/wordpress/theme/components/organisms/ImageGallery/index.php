@@ -19,7 +19,7 @@ function tile($min = 181, $max = 384)
   $random = floor(mt_rand() / mt_getrandmax() * ($max - $min + 1)) + $min;
   $height = ($random / $min) * 100;
 
-  MTF_Musicals::logger($height);
+  // MTF_Musicals::logger($height);
 
 
   return "<figure style='padding-bottom: $height%;'>" . wp_get_attachment_image(get_the_ID(), 'medium-large') . "</figure>";

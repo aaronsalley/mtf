@@ -12872,7 +12872,6 @@ h3 {
 .mtfmusicals.archive main > :nth-child(4) {
   position: relative;
   padding: 4rem 0;
-  background-color: var(--mtf-dark);
 }
 @media (min-width: 768px) {
   .mtfmusicals.archive main > :nth-child(4) {

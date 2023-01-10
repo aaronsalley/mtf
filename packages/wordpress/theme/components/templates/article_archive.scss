@@ -239,7 +239,6 @@ main {
   > :nth-child(4) {
     position: relative;
     padding: 4rem 0;
-    background-color: var(--mtf-dark);
     @include media-breakpoint-up(md) {
       padding-top: 9.6875rem;
       padding-bottom: 0;

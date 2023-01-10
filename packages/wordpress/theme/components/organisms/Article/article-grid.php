@@ -6,7 +6,7 @@ $the_query = new WP_Query([
     [
       'taxonomy'  => 'category',
       'field' => 'slug',
-      'terms' => 'news'
+      'terms' => ['news', 'opportunity', 'press']
     ]
   ],
   'posts_per_page'  => 8,

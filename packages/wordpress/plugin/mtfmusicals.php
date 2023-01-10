@@ -96,6 +96,34 @@ if (!class_exists('MTF_Musicals')) {
       });
     }
 
+    private function enable_elementor_landing_pages()
+    {
+      add_action('pre_get_posts', function (\WP_Query $query) {
+        if (
+          // If the post type includes the Elementor landing page CPT.
+          class_exists('\Elementor\Modules\LandingPages\Module')
+          && is_array($query->get('post_type'))
+          && in_array(\Elementor\Modules\LandingPages\Module::CPT, $query->get('post_type'), true)
+          // If custom permalinks are enabled.
+          && '' !== get_option('permalink_structure')
+          // If the query is for a front-end page.
+          && (!is_admin() || wp_doing_ajax())
+          && $query->is_main_query()
+          // If the query is for a page.
+          && isset($query->query['page'])
+          // If the query is not for a static home/blog page.
+          && !is_home()
+          // If the page name has been set and is not for a path.
+          && !empty($query->query['pagename'])
+          && false === strpos($query->query['pagename'], '/')
+          // If the name has not already been set.
+          && empty($query->query['name'])
+        ) {
+          $query->set('name', $query->query['pagename']);
+        }
+      }, 100);
+    }
+
     private function load_files()
     {
       // include_once self::$ROOT_DIR . '/admin/cors.php';
@@ -109,6 +137,7 @@ if (!class_exists('MTF_Musicals')) {
       $this->load_files();
       $this->theme_mods();
       $this->enable_elementor();
+      $this->enable_elementor_landing_pages();
       $this->manual_excerpts();
 
       self::$EVENTS = new MTF_Musicals\Events;

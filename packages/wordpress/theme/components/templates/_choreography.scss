@@ -1,5 +1,5 @@
 @mixin transition() {
-  transition: all 1s, color 0.15s 0s;
+  transition: all 1s, color 0.15s 0s, border-radius 0s;
 }
 
 @mixin pickup() {

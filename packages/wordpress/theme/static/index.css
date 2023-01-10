@@ -10857,7 +10857,7 @@ h3 {
 }
 .mtfmusicals .Article_tile_container:hover,
 .mtfmusicals .Article_tile_container:hover * {
-  transition: all 1s, color 0.15s 0s;
+  transition: all 1s, color 0.15s 0s, border-radius 0s;
 }
 .mtfmusicals .Article_tile_container h3 {
   margin-top: 0.75em;
@@ -10901,7 +10901,7 @@ h3 {
   margin: auto;
 }
 .mtfmusicals .Event_tile_container * {
-  transition: all 1s, color 0.15s 0s;
+  transition: all 1s, color 0.15s 0s, border-radius 0s;
 }
 .mtfmusicals .Event_tile_container header {
   width: 100%;
@@ -10951,7 +10951,7 @@ h3 {
 }
 .mtfmusicals .Event_tile_container:hover header > div,
 .mtfmusicals .Event_tile_container:hover header > div * {
-  transition: all 1s, color 0.15s 0s;
+  transition: all 1s, color 0.15s 0s, border-radius 0s;
 }
 .mtfmusicals .Event_tile_container:hover section > div {
   flex-grow: 1;
@@ -12124,23 +12124,31 @@ h3 {
   list-style: none;
   color: var(--mtf-text);
 }
-.mtfmusicals article, .mtfmusicals article::before, .mtfmusicals article::after,
-.mtfmusicals button,
-.mtfmusicals button::before,
-.mtfmusicals button::after,
-.mtfmusicals .button,
-.mtfmusicals .button::before,
-.mtfmusicals .button::after {
-  transition: all 1s, color 0.15s 0s;
-}
 .mtfmusicals > main {
   flex-basis: 100%;
   flex-grow: 1;
   width: 100%;
 }
+.mtfmusicals .wp-block-button a, .mtfmusicals .wp-block-button a::before, .mtfmusicals .wp-block-button a::after,
 .mtfmusicals .button,
-.mtfmusicals > :not(header) button,
-.mtfmusicals input[type=submit] {
+.mtfmusicals .button::before,
+.mtfmusicals .button::after,
+.mtfmusicals article,
+.mtfmusicals article::before,
+.mtfmusicals article::after,
+.mtfmusicals button,
+.mtfmusicals button::before,
+.mtfmusicals button::after {
+  transition: all 1s, color 0.15s 0s, border-radius 0s;
+}
+.mtfmusicals .wp-block-button:not(.wp-block-button),
+.mtfmusicals .wp-block-button a,
+.mtfmusicals .button:not(.wp-block-button),
+.mtfmusicals .button a,
+.mtfmusicals > :not(header) button:not(.wp-block-button),
+.mtfmusicals > :not(header) button a,
+.mtfmusicals input[type=submit]:not(.wp-block-button),
+.mtfmusicals input[type=submit] a {
   position: relative;
   z-index: 1;
   display: flex;
@@ -12158,9 +12166,14 @@ h3 {
   border-bottom: 3px solid var(--mtf-text);
   border-left: 0;
 }
-.mtfmusicals .button::after,
-.mtfmusicals > :not(header) button::after,
-.mtfmusicals input[type=submit]::after {
+.mtfmusicals .wp-block-button:not(.wp-block-button)::after,
+.mtfmusicals .wp-block-button a::after,
+.mtfmusicals .button:not(.wp-block-button)::after,
+.mtfmusicals .button a::after,
+.mtfmusicals > :not(header) button:not(.wp-block-button)::after,
+.mtfmusicals > :not(header) button a::after,
+.mtfmusicals input[type=submit]:not(.wp-block-button)::after,
+.mtfmusicals input[type=submit] a::after {
   position: absolute;
   top: 100%;
   right: 0;
@@ -12170,20 +12183,34 @@ h3 {
   background-color: var(--mtf-text);
   content: "";
 }
-.mtfmusicals .button:hover,
-.mtfmusicals > :not(header) button:hover,
-.mtfmusicals input[type=submit]:hover {
+.mtfmusicals .wp-block-button:not(.wp-block-button):hover,
+.mtfmusicals .wp-block-button a:hover,
+.mtfmusicals .button:not(.wp-block-button):hover,
+.mtfmusicals .button a:hover,
+.mtfmusicals > :not(header) button:not(.wp-block-button):hover,
+.mtfmusicals > :not(header) button a:hover,
+.mtfmusicals input[type=submit]:not(.wp-block-button):hover,
+.mtfmusicals input[type=submit] a:hover {
   padding-right: 0.75rem !important;
   padding-left: 0.75rem !important;
   color: var(--mtf-material);
 }
-.mtfmusicals .button:hover::after,
-.mtfmusicals > :not(header) button:hover::after,
-.mtfmusicals input[type=submit]:hover::after {
+.mtfmusicals .wp-block-button:not(.wp-block-button):hover::after,
+.mtfmusicals .wp-block-button a:hover::after,
+.mtfmusicals .button:not(.wp-block-button):hover::after,
+.mtfmusicals .button a:hover::after,
+.mtfmusicals > :not(header) button:not(.wp-block-button):hover::after,
+.mtfmusicals > :not(header) button a:hover::after,
+.mtfmusicals input[type=submit]:not(.wp-block-button):hover::after,
+.mtfmusicals input[type=submit] a:hover::after {
   top: 0;
 }
+.mtfmusicals .wp-block-button.is-style-outline a, .mtfmusicals .wp-block-button.inverted,
+.mtfmusicals .button.is-style-outline a,
 .mtfmusicals .button.inverted,
+.mtfmusicals > :not(header) button.is-style-outline a,
 .mtfmusicals > :not(header) button.inverted,
+.mtfmusicals input[type=submit].is-style-outline a,
 .mtfmusicals input[type=submit].inverted {
   position: relative;
   z-index: 1;
@@ -12204,8 +12231,12 @@ h3 {
   color: var(--mtf-light);
   border-bottom-color: var(--mtf-light);
 }
+.mtfmusicals .wp-block-button.is-style-outline a::after, .mtfmusicals .wp-block-button.inverted::after,
+.mtfmusicals .button.is-style-outline a::after,
 .mtfmusicals .button.inverted::after,
+.mtfmusicals > :not(header) button.is-style-outline a::after,
 .mtfmusicals > :not(header) button.inverted::after,
+.mtfmusicals input[type=submit].is-style-outline a::after,
 .mtfmusicals input[type=submit].inverted::after {
   position: absolute;
   top: 100%;
@@ -12216,42 +12247,61 @@ h3 {
   background-color: var(--mtf-text);
   content: "";
 }
+.mtfmusicals .wp-block-button.is-style-outline a:hover, .mtfmusicals .wp-block-button.inverted:hover,
+.mtfmusicals .button.is-style-outline a:hover,
 .mtfmusicals .button.inverted:hover,
+.mtfmusicals > :not(header) button.is-style-outline a:hover,
 .mtfmusicals > :not(header) button.inverted:hover,
+.mtfmusicals input[type=submit].is-style-outline a:hover,
 .mtfmusicals input[type=submit].inverted:hover {
   padding-right: 0.75rem !important;
   padding-left: 0.75rem !important;
   color: var(--mtf-material);
 }
+.mtfmusicals .wp-block-button.is-style-outline a:hover::after, .mtfmusicals .wp-block-button.inverted:hover::after,
+.mtfmusicals .button.is-style-outline a:hover::after,
 .mtfmusicals .button.inverted:hover::after,
+.mtfmusicals > :not(header) button.is-style-outline a:hover::after,
 .mtfmusicals > :not(header) button.inverted:hover::after,
+.mtfmusicals input[type=submit].is-style-outline a:hover::after,
 .mtfmusicals input[type=submit].inverted:hover::after {
   top: 0;
 }
+.mtfmusicals .wp-block-button.is-style-outline a::after, .mtfmusicals .wp-block-button.inverted::after,
+.mtfmusicals .button.is-style-outline a::after,
 .mtfmusicals .button.inverted::after,
+.mtfmusicals > :not(header) button.is-style-outline a::after,
 .mtfmusicals > :not(header) button.inverted::after,
+.mtfmusicals input[type=submit].is-style-outline a::after,
 .mtfmusicals input[type=submit].inverted::after {
   background-color: var(--mtf-light);
 }
+.mtfmusicals .wp-block-button.is-style-outline a:hover, .mtfmusicals .wp-block-button.inverted:hover,
+.mtfmusicals .button.is-style-outline a:hover,
 .mtfmusicals .button.inverted:hover,
+.mtfmusicals > :not(header) button.is-style-outline a:hover,
 .mtfmusicals > :not(header) button.inverted:hover,
+.mtfmusicals input[type=submit].is-style-outline a:hover,
 .mtfmusicals input[type=submit].inverted:hover {
   color: var(--mtf-dark);
 }
+.mtfmusicals .wp-block-button.left a, .mtfmusicals .wp-block-button.left,
+.mtfmusicals .button.left a,
 .mtfmusicals .button.left,
+.mtfmusicals > :not(header) button.left a,
 .mtfmusicals > :not(header) button.left,
+.mtfmusicals input[type=submit].left a,
 .mtfmusicals input[type=submit].left {
   padding-left: 0;
   padding-right: 1.5rem;
   justify-content: flex-start;
 }
-.mtfmusicals .wp-block-columns {
-  margin-bottom: 0;
-  gap: 0;
-}
-.mtfmusicals .wp-block-columns .wp-block-column:nth-child(2):last-child {
-  flex-basis: 66.6666666667%;
-  flex-grow: 0;
+.mtfmusicals .wp-block-button .wp-block-button__link,
+.mtfmusicals .button .wp-block-button__link,
+.mtfmusicals > :not(header) button .wp-block-button__link,
+.mtfmusicals input[type=submit] .wp-block-button__link {
+  box-shadow: none;
+  border-radius: unset;
 }
 .mtfmusicals.home .Home_container .hero {
   position: relative;
@@ -12397,7 +12447,7 @@ h3 {
 }
 .mtfmusicals.home .Home_container > #programming::before,
 .mtfmusicals.home .Home_container > #programming::before * {
-  transition: all 1s, color 0.15s 0s;
+  transition: all 1s, color 0.15s 0s, border-radius 0s;
 }
 .mtfmusicals.home .Home_container > #programming::after {
   position: absolute;
@@ -12410,7 +12460,7 @@ h3 {
 }
 .mtfmusicals.home .Home_container > #programming::after,
 .mtfmusicals.home .Home_container > #programming::after * {
-  transition: all 1s, color 0.15s 0s;
+  transition: all 1s, color 0.15s 0s, border-radius 0s;
 }
 .mtfmusicals.home .Home_container .accordion {
   position: relative;
@@ -12452,7 +12502,7 @@ h3 {
 .mtfmusicals.home .Home_container .accordion li > div {
   height: 0;
   overflow: hidden;
-  transition: all 1s, color 0.15s 0s;
+  transition: all 1s, color 0.15s 0s, border-radius 0s;
 }
 .mtfmusicals.home .Home_container .accordion ul {
   z-index: 1;
@@ -12503,7 +12553,7 @@ h3 {
 }
 .mtfmusicals.home .Home_container .accordion > figure::before,
 .mtfmusicals.home .Home_container .accordion > figure::before * {
-  transition: all 1s, color 0.15s 0s;
+  transition: all 1s, color 0.15s 0s, border-radius 0s;
 }
 .mtfmusicals.home .Home_container .accordion > figure img {
   width: 100%;
@@ -12857,7 +12907,7 @@ h3 {
   }
   .mtfmusicals.archive main > :nth-child(4) article:hover,
   .mtfmusicals.archive main > :nth-child(4) article:hover * {
-    transition: all 1s, color 0.15s 0s;
+    transition: all 1s, color 0.15s 0s, border-radius 0s;
   }
 }
 .mtfmusicals.archive main > :nth-child(4) article .image {
@@ -12914,7 +12964,7 @@ h3 {
 }
 .mtfmusicals.archive main > :nth-child(4) > div article:hover,
 .mtfmusicals.archive main > :nth-child(4) > div article:hover * {
-  transition: all 1s, color 0.15s 0s;
+  transition: all 1s, color 0.15s 0s, border-radius 0s;
 }
 .mtfmusicals.archive main > :nth-child(5) {
   display: flex;
@@ -13018,6 +13068,17 @@ h3 {
 }
 .mtfmusicals.tribe-js .tribe-common--breakpoint-medium.tribe-events .tribe-events-header__events-bar {
   display: none;
+}
+.mtfmusicals .wp-block-columns {
+  margin-bottom: 0;
+  gap: 0;
+}
+.mtfmusicals .wp-block-columns .wp-block-column:nth-child(2):last-child {
+  flex-basis: 66.6666666667%;
+  flex-grow: 0;
+}
+.mtfmusicals .wp-block-buttons {
+  margin-bottom: 1rem;
 }
 .mtfmusicals.admin-bar header {
   top: 2rem;
